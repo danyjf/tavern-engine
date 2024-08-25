@@ -1,2 +1,2 @@
-# tavern-engine
+# Tavern
 Tavern Engine
