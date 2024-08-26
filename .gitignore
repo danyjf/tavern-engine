@@ -4,6 +4,7 @@
 **cmake_install.cmake
 **CMakeCache.txt
 **cmake_pch.pch
+**cmake_pch.cxx.pch
 
 **.vcxproj
 **.vcxproj.filters

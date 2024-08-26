@@ -5,17 +5,22 @@ set(SOURCES
 	src/Tavern/Engine.h
 	src/Tavern/Log.cpp
 	src/Tavern/Log.h
+
+	vendor/Glad/src/glad.c
 )
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)
 
+add_subdirectory(vendor/GLFW)
+
 add_library(Tavern SHARED ${SOURCES})
 
 target_include_directories(Tavern PRIVATE 
-    ${CMAKE_SOURCE_DIR}/Tavern/vendor/spdlog/include
     ${CMAKE_SOURCE_DIR}/Tavern/src
+    ${CMAKE_SOURCE_DIR}/Tavern/vendor/spdlog/include
+    ${CMAKE_SOURCE_DIR}/Tavern/vendor/Glad/include
 )
 
 target_compile_definitions(Tavern PRIVATE
@@ -29,17 +34,29 @@ if(WIN32)
 endif()
 
 target_precompile_headers(Tavern PRIVATE 
-	<iostream>
-	<memory>
-	<utility>
-	<algorithm>
-	<functional>
+	$<$<COMPILE_LANGUAGE:CXX>:<iostream$<ANGLE-R>>
+	$<$<COMPILE_LANGUAGE:CXX>:<iostream$<ANGLE-R>>
+	$<$<COMPILE_LANGUAGE:CXX>:<memory$<ANGLE-R>>
+	$<$<COMPILE_LANGUAGE:CXX>:<utility$<ANGLE-R>>
+	$<$<COMPILE_LANGUAGE:CXX>:<algorithm$<ANGLE-R>>
+	$<$<COMPILE_LANGUAGE:CXX>:<functional$<ANGLE-R>>
 
-	<string>
-	<sstream>
-	<vector>
-	<unordered_map>
-	<unordered_set>
+	$<$<COMPILE_LANGUAGE:CXX>:<string$<ANGLE-R>>
+	$<$<COMPILE_LANGUAGE:CXX>:<sstream$<ANGLE-R>>
+	$<$<COMPILE_LANGUAGE:CXX>:<vector$<ANGLE-R>>
+	$<$<COMPILE_LANGUAGE:CXX>:<unordered_map$<ANGLE-R>>
+	$<$<COMPILE_LANGUAGE:CXX>:<unordered_set$<ANGLE-R>>
 
-	$<$<PLATFORM_ID:Windows>:<Windows.h>>
+	# Include only for windows
+	$<$<COMPILE_LANGUAGE:CXX>:$<$<PLATFORM_ID:Windows>:<Windows.h$<ANGLE-R>>>
+)
+
+target_link_libraries(Tavern glfw)
+
+# Copy the Tavern dll into the Sandbox project folder
+add_custom_command(TARGET Tavern 
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy 
+    $<TARGET_FILE:Tavern> 
+    ${OUTPUT_DIRECTORY}/Sandbox
 )

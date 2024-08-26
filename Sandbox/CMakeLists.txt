@@ -25,9 +25,9 @@ endif()
 target_link_libraries(Sandbox Tavern)
 
 # Copy the Tavern dll into the Sandbox project folder
-add_custom_command(TARGET Sandbox 
-    POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy 
-    $<TARGET_FILE:Tavern> 
-    ${OUTPUT_DIRECTORY}/Sandbox
-)
+#add_custom_command(TARGET Sandbox 
+#    POST_BUILD
+#    COMMAND ${CMAKE_COMMAND} -E copy 
+#    $<TARGET_FILE:Tavern> 
+#    ${OUTPUT_DIRECTORY}/Sandbox
+#)

@@ -1,3 +1,6 @@
 [submodule "spdlog"]
 	path = Tavern/vendor/spdlog
 	url = git@github.com:gabime/spdlog.git
+[submodule "Tavern/vendor/GLFW"]
+	path = Tavern/vendor/GLFW
+	url = git@github.com:glfw/glfw.git
