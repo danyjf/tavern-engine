@@ -15,6 +15,7 @@ add_library(Tavern SHARED ${SOURCES})
 
 target_include_directories(Tavern PRIVATE 
     ${CMAKE_SOURCE_DIR}/Tavern/vendor/spdlog/include
+    ${CMAKE_SOURCE_DIR}/Tavern/src
 )
 
 target_compile_definitions(Tavern PRIVATE
@@ -26,3 +27,19 @@ target_compile_definitions(Tavern PRIVATE
 if(WIN32)
     add_compile_definitions(TAVERN_PLATFORM_WINDOWS) 
 endif()
+
+target_precompile_headers(Tavern PRIVATE 
+	<iostream>
+	<memory>
+	<utility>
+	<algorithm>
+	<functional>
+
+	<string>
+	<sstream>
+	<vector>
+	<unordered_map>
+	<unordered_set>
+
+	$<$<PLATFORM_ID:Windows>:<Windows.h>>
+)
