@@ -56,7 +56,6 @@ target_link_libraries(Tavern glfw)
 # Copy the Tavern dll into the Sandbox project folder
 add_custom_command(TARGET Tavern 
     POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy 
-    $<TARGET_FILE:Tavern> 
-    ${OUTPUT_DIRECTORY}/Sandbox
+	COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_DIRECTORY}/Sandbox
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Tavern> ${OUTPUT_DIRECTORY}/Sandbox
 )
