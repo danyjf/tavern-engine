@@ -1,6 +1,10 @@
 #pragma once
 
+#include <memory>
+
 #include "Core.h"
+#include "Window.h"
+#include "Events/Event.h"
 
 namespace Tavern
 {
@@ -12,8 +16,16 @@ namespace Tavern
 
 		void Run();
 
+		void OnWindowCloseEvent(const std::shared_ptr<Event>& event);
+		void OnWindowResizeEvent(const std::shared_ptr<Event>& event);
+
 	private:
 		void Init();
+		void GameLoop();
+		void Shutdown();
+		
+		bool m_IsRunning = true;
+
+		std::unique_ptr<Window> m_Window;
 	};
 }
-

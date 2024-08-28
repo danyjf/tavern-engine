@@ -3,6 +3,8 @@
 
 #include "Engine.h"
 #include "Log.h"
+#include "Events/EventManager.h"
+#include "Events/ApplicationEvent.h"
 
 namespace Tavern
 {
@@ -17,35 +19,51 @@ namespace Tavern
 	void Engine::Run()
 	{
 		Init();
-
-		while (true);
+		GameLoop();
+		Shutdown();
 	}
 
 	void Engine::Init()
 	{
 		Tavern::Log::Init();
-		TAVERN_ENGINE_WARN("Initialized Engine Log!");
+		TAVERN_ENGINE_INFO("Initialized engine log");
 
-		// Create glfw window
-		glfwInit();
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-		// I think this is only needed for mac
-		//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+		EventManager::Get().AddListener(EventType::WindowClose, std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1));
+		EventManager::Get().AddListener(EventType::WindowResize, std::bind(&Engine::OnWindowResizeEvent, this, std::placeholders::_1));
 
-		GLFWwindow* window = glfwCreateWindow(800, 600, "Tavern Window", NULL, NULL);
-		if (window == NULL)
+		m_Window = std::unique_ptr<Window>(new Window());
+	}
+
+	void Engine::GameLoop()
+	{
+		while (m_IsRunning)
 		{
-			TAVERN_ENGINE_CRITICAL("Failed to create GLFW window");
-			glfwTerminate();
-		}
-		glfwMakeContextCurrent(window);
+			// Process events
+			EventManager::Get().ProcessEvents();
 
-		// Initialize glad
-		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-		{
-			TAVERN_ENGINE_CRITICAL("Failed to initialize GLAD");
+			// Update state
+
+			// Render
+			glfwPollEvents();
+			glfwSwapBuffers(m_Window->GetGLFWWindow());
 		}
+	}
+
+	void Engine::Shutdown()
+	{
+		glfwTerminate();
+	}
+
+	void Engine::OnWindowCloseEvent(const std::shared_ptr<Event>& event)
+	{
+		m_IsRunning = false;
+		TAVERN_ENGINE_TRACE("Window Close Event");
+	}
+
+	void Engine::OnWindowResizeEvent(const std::shared_ptr<Event>& event)
+	{
+		//WindowResizeEvent& windowResizeEvent = ()
+		std::shared_ptr<WindowResizeEvent> windowResizeEvent = std::dynamic_pointer_cast<WindowResizeEvent>(event);
+		TAVERN_ENGINE_TRACE("Window Resize Event: ({0}, {1})", windowResizeEvent->width, windowResizeEvent->height);
 	}
 }

@@ -1,10 +1,16 @@
 set(SOURCES
 	src/Tavern.h
 	src/Tavern/Core.h
-	src/Tavern/Engine.cpp
 	src/Tavern/Engine.h
-	src/Tavern/Log.cpp
+	src/Tavern/Engine.cpp
 	src/Tavern/Log.h
+	src/Tavern/Log.cpp
+	src/Tavern/Window.h
+	src/Tavern/Window.cpp
+	src/Tavern/Events/Event.h
+	src/Tavern/Events/ApplicationEvent.h
+	src/Tavern/Events/EventManager.h
+	src/Tavern/Events/EventManager.cpp
 
 	vendor/Glad/src/glad.c
 )
@@ -46,6 +52,7 @@ target_precompile_headers(Tavern PRIVATE
 	$<$<COMPILE_LANGUAGE:CXX>:<vector$<ANGLE-R>>
 	$<$<COMPILE_LANGUAGE:CXX>:<unordered_map$<ANGLE-R>>
 	$<$<COMPILE_LANGUAGE:CXX>:<unordered_set$<ANGLE-R>>
+	$<$<COMPILE_LANGUAGE:CXX>:<queue$<ANGLE-R>>
 
 	# Include only for windows
 	$<$<COMPILE_LANGUAGE:CXX>:$<$<PLATFORM_ID:Windows>:<Windows.h$<ANGLE-R>>>

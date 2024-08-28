@@ -9,8 +9,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Sandbox)
 add_executable(Sandbox ${SOURCES})
 
 target_include_directories(Sandbox PRIVATE 
-	${CMAKE_SOURCE_DIR}/Tavern/vendor/spdlog/include	
 	${CMAKE_SOURCE_DIR}/Tavern/src
+	${CMAKE_SOURCE_DIR}/Tavern/vendor/spdlog/include	
+    ${CMAKE_SOURCE_DIR}/Tavern/vendor/Glad/include
 )
 
 target_compile_definitions(Sandbox PRIVATE
