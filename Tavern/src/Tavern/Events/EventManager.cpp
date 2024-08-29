@@ -21,7 +21,6 @@ namespace Tavern
 			return;
 
 		m_Events.push(event);
-		//m_Events.push_back(event);
 	}
 
 	void EventManager::ProcessEvents()
@@ -40,7 +39,6 @@ namespace Tavern
 			}
 
 			m_Events.pop();
-			//m_Events.pop_front();
 		}
 	}
 }

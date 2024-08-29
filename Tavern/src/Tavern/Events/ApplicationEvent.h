@@ -14,8 +14,8 @@ namespace Tavern
 	class WindowResizeEvent : public Event
 	{
 	public:
-		int width;
-		int height;
+		int width = 0;
+		int height = 0;
 
 		const EventType GetEventType() const override { return EventType::WindowResize; };
 		const char* GetName() const override { return "WindowResize"; };
