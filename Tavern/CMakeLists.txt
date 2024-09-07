@@ -1,5 +1,8 @@
 set(SOURCES
-	src/Tavern.h
+    src/Tavern.h
+	vendor/Glad/src/glad.c
+)
+set(SOURCES_TAVERN
 	src/Tavern/Core.h
 	src/Tavern/Engine.h
 	src/Tavern/Engine.cpp
@@ -7,12 +10,12 @@ set(SOURCES
 	src/Tavern/Log.cpp
 	src/Tavern/Window.h
 	src/Tavern/Window.cpp
+)
+set(SOURCES_TAVERN_EVENTS
 	src/Tavern/Events/Event.h
 	src/Tavern/Events/ApplicationEvent.h
 	src/Tavern/Events/EventManager.h
 	src/Tavern/Events/EventManager.cpp
-
-	vendor/Glad/src/glad.c
 )
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)
@@ -21,7 +24,11 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)
 
 add_subdirectory(vendor/GLFW)
 
-add_library(Tavern SHARED ${SOURCES})
+add_library(Tavern SHARED ${SOURCES} ${SOURCES_TAVERN} ${SOURCES_TAVERN_EVENTS})
+
+source_group(src FILES ${SOURCES})
+source_group(src/Tavern FILES ${SOURCES_TAVERN})
+source_group(src/Tavern/Events FILES ${SOURCES_TAVERN_EVENTS})
 
 target_include_directories(Tavern PRIVATE 
     ${CMAKE_SOURCE_DIR}/Tavern/src

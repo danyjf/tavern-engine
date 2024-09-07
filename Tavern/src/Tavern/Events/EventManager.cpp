@@ -1,5 +1,4 @@
 #include "EventManager.h"
-#include "Tavern/Log.h"
 
 namespace Tavern
 {
