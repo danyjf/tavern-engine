@@ -28,7 +28,10 @@ namespace Tavern
 		void Shutdown();
 
 		GLFWwindow* GetGLFWWindow() const { return m_Window; }
-		const WindowSettings& GetWindowSettings() const { return m_WindowSettings; }
+		const WindowSettings& GetWindowSettings() const
+		{
+			return m_WindowSettings;
+		}
 
 	private:
 		GLFWwindow* m_Window;

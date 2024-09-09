@@ -17,7 +17,10 @@ namespace Tavern
 		int width = 0;
 		int height = 0;
 
-		const EventType GetEventType() const override { return EventType::WindowResize; };
+		const EventType GetEventType() const override
+		{
+			return EventType::WindowResize;
+		};
 		const char* GetName() const override { return "WindowResize"; };
 	};
 }

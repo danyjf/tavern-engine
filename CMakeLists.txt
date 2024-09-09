@@ -23,13 +23,6 @@ set(OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/$<CONFIG>-${CMAKE_SYSTEM_NAME}-x64)
 add_subdirectory(Tavern)
 add_subdirectory(Sandbox)
 
-# Create symlink to the compile_commands.json in the root directory
-add_custom_target(CompileCommandsLink ALL 
-    COMMAND ${CMAKE_COMMAND} -E create_symlink 
-    ${CMAKE_BINARY_DIR}/compile_commands.json 
-    ${CMAKE_SOURCE_DIR}
-)
-
 # Set the Sandbox project as the startup project on visual studio
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Sandbox)
 

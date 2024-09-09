@@ -10,6 +10,8 @@ set(SOURCES_TAVERN
 	src/Tavern/Log.cpp
 	src/Tavern/Window.h
 	src/Tavern/Window.cpp
+    src/Tavern/Entity.h
+    src/Tavern/Entity.cpp
 )
 set(SOURCES_TAVERN_EVENTS
 	src/Tavern/Events/Event.h

@@ -4,7 +4,8 @@ namespace Tavern
 {
 	enum EventType
 	{
-		WindowClose, WindowResize
+		WindowClose,
+		WindowResize
 	};
 
 	class Event

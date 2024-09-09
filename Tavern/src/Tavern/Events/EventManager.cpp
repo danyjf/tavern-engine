@@ -31,7 +31,6 @@ namespace Tavern
 			if (m_EventListeners.find(event->GetEventType()) == m_EventListeners.end())
 				continue;
 
-			
 			for (EventListenerDelegate& listener : m_EventListeners[event->GetEventType()])
 			{
 				listener(event);

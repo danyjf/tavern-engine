@@ -1,0 +1,72 @@
+UseTab: Always
+BasedOnStyle: GNU
+IndentWidth: 4
+TabWidth: 4
+ContinuationIndentWidth: 4
+ColumnLimit: 0
+
+# C language specifics
+Language: Cpp
+
+AccessModifierOffset: -4
+
+AlignAfterOpenBracket: Align
+
+AlignArrayOfStructures: Right
+
+AlignOperands: Align
+
+AllowShortFunctionsOnASingleLine: InlineOnly
+
+AlwaysBreakAfterDefinitionReturnType: None
+AlwaysBreakAfterReturnType: None
+
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterCaseLabel: true
+  AfterClass: true
+  AfterControlStatement: Always
+  AfterEnum: true
+  AfterFunction: true
+  AfterNamespace: true
+  AfterObjCDeclaration: true
+  AfterStruct: true
+  AfterUnion: true
+  AfterExternBlock: true
+  BeforeCatch: true
+  BeforeElse: true
+  BeforeLambdaBody: false
+  BeforeWhile: true
+  IndentBraces: false
+  SplitEmptyFunction: true
+  SplitEmptyRecord: true
+  SplitEmptyNamespace: true
+
+DerivePointerAlignment: false
+
+EmptyLineAfterAccessModifier: Never
+EmptyLineBeforeAccessModifier: Always
+
+FixNamespaceComments: false
+
+IndentAccessModifiers: false
+IndentCaseBlocks: false
+IndentCaseLabels: false
+IndentPPDirectives: BeforeHash
+
+NamespaceIndentation: All
+
+# Penalties
+# This decides what order things should be done if a line is too long
+PenaltyReturnTypeOnItsOwnLine: 100
+
+PointerAlignment: Left
+
+QualifierAlignment: Left
+
+ReferenceAlignment: Left
+
+SortIncludes: false
+
+SpaceBeforeParens: ControlStatements
+

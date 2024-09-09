@@ -27,13 +27,12 @@ namespace Tavern
 		// Process all events from the queue
 		// Returns true if successful.
 		void ProcessEvents();
-		
+
 	private:
 		// Contructor of singleton should be private
 		EventManager() {};
 
-		std::queue<std::shared_ptr<Event>> m_Events;
-		//std::list<Event> m_Events;
-		std::unordered_map<EventType, std::vector<EventListenerDelegate>> m_EventListeners;
+		std::queue<std::shared_ptr<Event> > m_Events;
+		std::unordered_map<EventType, std::vector<EventListenerDelegate> > m_EventListeners;
 	};
 }

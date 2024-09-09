@@ -1,15 +1,17 @@
-#include "Window.h"
-#include "Log.h"
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 #include "Core.h"
-#include "Events/EventManager.h"
 #include "Events/ApplicationEvent.h"
+#include "Events/EventManager.h"
+#include "Log.h"
+#include "Window.h"
 
 namespace Tavern
 {
 	Window::Window()
 	{
 	}
-
 	Window::~Window()
 	{
 	}
@@ -46,9 +48,8 @@ namespace Tavern
 		glViewport(0, 0, windowSettings.Width, windowSettings.Height);
 
 		// Set glfw callbacks
-		glfwSetFramebufferSizeCallback(m_Window, 
-			[](GLFWwindow* window, int width, int height)
-			{
+		glfwSetFramebufferSizeCallback(
+			m_Window, [](GLFWwindow* window, int width, int height) {
 				WindowSettings& windowSettings = *(WindowSettings*)glfwGetWindowUserPointer(window);
 				windowSettings.Width = width;
 				windowSettings.Height = height;
@@ -59,18 +60,14 @@ namespace Tavern
 				event->width = width;
 				event->height = height;
 				eventManager.QueueEvent(event);
-			}
-		);
+			});
 
-		glfwSetWindowCloseCallback(m_Window,
-			[](GLFWwindow* window)
-			{
-				EventManager& eventManager = EventManager::Get();
+		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
+			EventManager& eventManager = EventManager::Get();
 
-				std::shared_ptr<WindowCloseEvent> event = std::make_shared<WindowCloseEvent>();
-				eventManager.QueueEvent(event);
-			}
-		);
+			std::shared_ptr<WindowCloseEvent> event = std::make_shared<WindowCloseEvent>();
+			eventManager.QueueEvent(event);
+		});
 	}
 
 	void Window::Shutdown()

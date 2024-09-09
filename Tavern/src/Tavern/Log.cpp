@@ -18,4 +18,3 @@ namespace Tavern
 		s_ClientLogger->set_level(spdlog::level::level_enum::trace);
 	}
 }
-
