@@ -1,10 +1,12 @@
 #pragma once
 
 #include <memory>
+#include <vector>
 
 #include "Core.h"
 #include "Events/Event.h"
 #include "Window.h"
+#include "Entity.h"
 
 namespace Tavern
 {
@@ -14,18 +16,20 @@ namespace Tavern
 		Engine();
 		~Engine();
 
-		void Run();
+		void Init();
+		void GameLoop();
+		void Shutdown();
+
+		void AddEntity(Entity& entity);
 
 		void OnWindowCloseEvent(const std::shared_ptr<Event>& event);
 		void OnWindowResizeEvent(const std::shared_ptr<Event>& event);
 
 	private:
-		void Init();
-		void GameLoop();
-		void Shutdown();
-
 		bool m_IsRunning = true;
 
 		std::unique_ptr<Window> m_Window;
+
+		std::vector<Entity> m_Entities;
 	};
 }
