@@ -1,10 +1,11 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "Engine.h"
-#include "Events/ApplicationEvent.h"
-#include "Events/EventManager.h"
-#include "Log.h"
+#include "Tavern/Core/Engine.h"
+#include "Tavern/Events/ApplicationEvent.h"
+#include "Tavern/Events/EventManager.h"
+#include "Tavern/Core/Log.h"
+#include "Tavern/Renderer/RenderManager.h"
 
 namespace Tavern
 {
@@ -22,10 +23,16 @@ namespace Tavern
 		Tavern::Log::Init();
 		TAVERN_ENGINE_INFO("Initialized engine logger");
 
+		EventManager::Get().Init();
+		TAVERN_ENGINE_INFO("Initialized event manager");
 		EventManager::Get().AddListener(EventType::WindowClose, std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1));
 		EventManager::Get().AddListener(EventType::WindowResize, std::bind(&Engine::OnWindowResizeEvent, this, std::placeholders::_1));
 
 		m_Window->Init(WindowSettings("My Window", 800, 600));
+		TAVERN_ENGINE_INFO("Initialized window");
+
+		RenderManager::Get().Init();
+		TAVERN_ENGINE_INFO("Initialized render manager");
 	}
 
 	void Engine::GameLoop()
@@ -48,6 +55,7 @@ namespace Tavern
 
 	void Engine::Shutdown()
 	{
+		RenderManager::Get().Shutdown();
 	}
 
 	void Engine::OnWindowCloseEvent(const std::shared_ptr<Event>& event)

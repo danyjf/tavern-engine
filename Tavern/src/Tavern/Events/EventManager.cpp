@@ -8,6 +8,14 @@ namespace Tavern
 		return s_EventManager;
 	}
 
+	void EventManager::Init()
+	{
+	}
+
+	void EventManager::Shutdown()
+	{
+	}
+
 	void EventManager::AddListener(const EventType& type, EventListenerDelegate&& eventDelegate)
 	{
 		m_EventListeners[type].push_back(eventDelegate);

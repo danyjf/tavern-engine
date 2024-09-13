@@ -1,11 +1,11 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "Core.h"
-#include "Events/ApplicationEvent.h"
-#include "Events/EventManager.h"
-#include "Log.h"
-#include "Window.h"
+#include "Tavern/Core/Core.h"
+#include "Tavern/Events/ApplicationEvent.h"
+#include "Tavern/Events/EventManager.h"
+#include "Tavern/Core/Log.h"
+#include "Tavern/Window.h"
 
 namespace Tavern
 {

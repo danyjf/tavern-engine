@@ -3,10 +3,10 @@
 #include <memory>
 #include <vector>
 
-#include "Core.h"
-#include "Events/Event.h"
-#include "Window.h"
-#include "Entity.h"
+#include "Tavern/Core/Core.h"
+#include "Tavern/Events/Event.h"
+#include "Tavern/Window.h"
+#include "Tavern/Entity.h"
 
 namespace Tavern
 {

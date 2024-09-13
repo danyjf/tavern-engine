@@ -3,15 +3,19 @@ set(SOURCES
 	vendor/Glad/src/glad.c
 )
 set(SOURCES_TAVERN
-	src/Tavern/Core.h
-	src/Tavern/Engine.h
-	src/Tavern/Engine.cpp
-	src/Tavern/Log.h
-	src/Tavern/Log.cpp
+    src/Tavern/Core/Core.h
+    src/Tavern/Core/Engine.h
+    src/Tavern/Core/Engine.cpp
+    src/Tavern/Core/Log.h
+    src/Tavern/Core/Log.cpp
 	src/Tavern/Window.h
 	src/Tavern/Window.cpp
     src/Tavern/Entity.h
     src/Tavern/Entity.cpp
+    src/Tavern/Renderer/Shader.h
+    src/Tavern/Renderer/Shader.cpp
+    src/Tavern/Renderer/RenderManager.h
+    src/Tavern/Renderer/RenderManager.cpp
 )
 set(SOURCES_TAVERN_EVENTS
 	src/Tavern/Events/Event.h
@@ -49,19 +53,18 @@ if(WIN32)
 endif()
 
 target_precompile_headers(Tavern PRIVATE 
-	$<$<COMPILE_LANGUAGE:CXX>:<iostream$<ANGLE-R>>
+	$<$<COMPILE_LANGUAGE:CXX>:<algorithm$<ANGLE-R>>
+	$<$<COMPILE_LANGUAGE:CXX>:<fstream$<ANGLE-R>>
+	$<$<COMPILE_LANGUAGE:CXX>:<functional$<ANGLE-R>>
 	$<$<COMPILE_LANGUAGE:CXX>:<iostream$<ANGLE-R>>
 	$<$<COMPILE_LANGUAGE:CXX>:<memory$<ANGLE-R>>
-	$<$<COMPILE_LANGUAGE:CXX>:<utility$<ANGLE-R>>
-	$<$<COMPILE_LANGUAGE:CXX>:<algorithm$<ANGLE-R>>
-	$<$<COMPILE_LANGUAGE:CXX>:<functional$<ANGLE-R>>
-
-	$<$<COMPILE_LANGUAGE:CXX>:<string$<ANGLE-R>>
+	$<$<COMPILE_LANGUAGE:CXX>:<queue$<ANGLE-R>>
 	$<$<COMPILE_LANGUAGE:CXX>:<sstream$<ANGLE-R>>
-	$<$<COMPILE_LANGUAGE:CXX>:<vector$<ANGLE-R>>
+	$<$<COMPILE_LANGUAGE:CXX>:<string$<ANGLE-R>>
 	$<$<COMPILE_LANGUAGE:CXX>:<unordered_map$<ANGLE-R>>
 	$<$<COMPILE_LANGUAGE:CXX>:<unordered_set$<ANGLE-R>>
-	$<$<COMPILE_LANGUAGE:CXX>:<queue$<ANGLE-R>>
+	$<$<COMPILE_LANGUAGE:CXX>:<utility$<ANGLE-R>>
+	$<$<COMPILE_LANGUAGE:CXX>:<vector$<ANGLE-R>>
 
 	# Include only for windows
 	$<$<COMPILE_LANGUAGE:CXX>:$<$<PLATFORM_ID:Windows>:<Windows.h$<ANGLE-R>>>
@@ -74,4 +77,5 @@ add_custom_command(TARGET Tavern
     POST_BUILD
 	COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_DIRECTORY}/Sandbox
     COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Tavern> ${OUTPUT_DIRECTORY}/Sandbox
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/src/Tavern/Renderer/Shaders ${OUTPUT_DIRECTORY}/Sandbox/Shaders
 )

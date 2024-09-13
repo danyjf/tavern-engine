@@ -7,12 +7,13 @@ namespace Tavern
 	class EventManager
 	{
 	public:
-		// Singletons can not be clonable
 		EventManager(EventManager& copy) = delete;
-		// Singletons can not be assignable
 		void operator=(const EventManager& copy) = delete;
 
 		static EventManager& Get();
+
+		void Init();
+		void Shutdown();
 
 		using EventListenerDelegate = std::function<void(const std::shared_ptr<Event>&)>;
 
@@ -29,8 +30,8 @@ namespace Tavern
 		void ProcessEvents();
 
 	private:
-		// Contructor of singleton should be private
 		EventManager() {};
+		~EventManager() {};
 
 		std::queue<std::shared_ptr<Event> > m_Events;
 		std::unordered_map<EventType, std::vector<EventListenerDelegate> > m_EventListeners;
