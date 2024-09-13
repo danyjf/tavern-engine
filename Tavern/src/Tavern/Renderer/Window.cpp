@@ -2,10 +2,10 @@
 #include <GLFW/glfw3.h>
 
 #include "Tavern/Core/Core.h"
+#include "Tavern/Core/Log.h"
 #include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Events/EventManager.h"
-#include "Tavern/Core/Log.h"
-#include "Tavern/Window.h"
+#include "Tavern/Renderer/Window.h"
 
 namespace Tavern
 {

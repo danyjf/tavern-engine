@@ -2,7 +2,9 @@
 
 #include <memory>
 
-#include "Shader.h"
+#include "Tavern/Renderer/Shader.h"
+#include "Tavern/Renderer/Window.h"
+#include "Tavern/Events/Event.h"
 
 namespace Tavern
 {
@@ -14,15 +16,19 @@ namespace Tavern
 
 		static RenderManager& Get();
 
-		const std::shared_ptr<Shader> GetShader() const { return m_Shader; }
-
 		void Init();
 		void Shutdown();
+
+		Window* GetWindow() const { return m_Window.get(); }
+		Shader* GetShader() const { return m_Shader.get(); }
+
+		void OnWindowResizeEvent(const std::shared_ptr<Event>& event);
 
 	private:
 		RenderManager() {};
 		~RenderManager() {};
 
-		std::shared_ptr<Shader> m_Shader;
+		std::unique_ptr<Window> m_Window;
+		std::unique_ptr<Shader> m_Shader;
 	};
 }

@@ -5,7 +5,6 @@
 
 #include "Tavern/Core/Core.h"
 #include "Tavern/Events/Event.h"
-#include "Tavern/Window.h"
 #include "Tavern/Entity.h"
 
 namespace Tavern
@@ -23,12 +22,9 @@ namespace Tavern
 		void AddEntity(Entity& entity);
 
 		void OnWindowCloseEvent(const std::shared_ptr<Event>& event);
-		void OnWindowResizeEvent(const std::shared_ptr<Event>& event);
 
 	private:
 		bool m_IsRunning = true;
-
-		std::unique_ptr<Window> m_Window;
 
 		std::vector<Entity> m_Entities;
 	};

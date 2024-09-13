@@ -11,7 +11,7 @@ namespace Tavern
 {
 	Engine::Engine()
 	{
-		m_Window = std::unique_ptr<Window>(new Window());
+		// m_Window = std::unique_ptr<Window>(new Window());
 	}
 
 	Engine::~Engine()
@@ -25,14 +25,11 @@ namespace Tavern
 
 		EventManager::Get().Init();
 		TAVERN_ENGINE_INFO("Initialized event manager");
-		EventManager::Get().AddListener(EventType::WindowClose, std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1));
-		EventManager::Get().AddListener(EventType::WindowResize, std::bind(&Engine::OnWindowResizeEvent, this, std::placeholders::_1));
-
-		m_Window->Init(WindowSettings("My Window", 800, 600));
-		TAVERN_ENGINE_INFO("Initialized window");
 
 		RenderManager::Get().Init();
 		TAVERN_ENGINE_INFO("Initialized render manager");
+
+		EventManager::Get().AddListener(EventType::WindowClose, std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1));
 	}
 
 	void Engine::GameLoop()
@@ -49,27 +46,20 @@ namespace Tavern
 			}
 
 			glfwPollEvents();
-			glfwSwapBuffers(m_Window->GetGLFWWindow());
+			glfwSwapBuffers(RenderManager::Get().GetWindow()->GetGLFWWindow());
 		}
 	}
 
 	void Engine::Shutdown()
 	{
 		RenderManager::Get().Shutdown();
+		EventManager::Get().Shutdown();
 	}
 
 	void Engine::OnWindowCloseEvent(const std::shared_ptr<Event>& event)
 	{
 		m_IsRunning = false;
 		TAVERN_ENGINE_TRACE("Window Close Event");
-	}
-
-	void Engine::OnWindowResizeEvent(const std::shared_ptr<Event>& event)
-	{
-		std::shared_ptr<WindowResizeEvent> windowResizeEvent = std::dynamic_pointer_cast<WindowResizeEvent>(event);
-		glViewport(0, 0, windowResizeEvent->width, windowResizeEvent->height);
-
-		TAVERN_ENGINE_TRACE("Window Resize Event: ({0}, {1})", windowResizeEvent->width, windowResizeEvent->height);
 	}
 
 	void Engine::AddEntity(Entity& entity)

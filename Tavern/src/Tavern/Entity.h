@@ -14,7 +14,7 @@ namespace Tavern
 		virtual void Update();
 
 	private:
-		std::shared_ptr<Shader> m_Shader;
+		Shader* m_Shader;
 		unsigned int m_VAO;
 		unsigned int m_VBO;
 		unsigned int m_EBO;
