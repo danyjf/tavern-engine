@@ -60,7 +60,8 @@ namespace Tavern
 				event->width = width;
 				event->height = height;
 				eventManager.QueueEvent(event);
-			});
+			}
+		);
 
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
 			EventManager& eventManager = EventManager::Get();

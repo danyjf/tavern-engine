@@ -1,3 +1,6 @@
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 #include "Tavern/Renderer/RenderManager.h"
 #include "Tavern/Renderer/Window.h"
 #include "Tavern/Events/EventManager.h"
@@ -21,7 +24,10 @@ namespace Tavern
 
 		m_Shader = std::unique_ptr<Shader>(new Shader(
 			"./Shaders/Shader.vert",
-			"./Shaders/Shader.frag"));
+			"./Shaders/Shader.frag"
+		));
+
+		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	}
 
 	void RenderManager::Shutdown()

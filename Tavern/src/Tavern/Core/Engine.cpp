@@ -2,7 +2,6 @@
 #include <GLFW/glfw3.h>
 
 #include "Tavern/Core/Engine.h"
-#include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Events/EventManager.h"
 #include "Tavern/Core/Log.h"
 #include "Tavern/Renderer/RenderManager.h"
@@ -11,7 +10,6 @@ namespace Tavern
 {
 	Engine::Engine()
 	{
-		// m_Window = std::unique_ptr<Window>(new Window());
 	}
 
 	Engine::~Engine()
@@ -39,7 +37,8 @@ namespace Tavern
 			// Process events
 			EventManager::Get().ProcessEvents();
 
-			// Update state
+			// Render
+			glClear(GL_COLOR_BUFFER_BIT);
 			for (Entity& entity : m_Entities)
 			{
 				entity.Update();

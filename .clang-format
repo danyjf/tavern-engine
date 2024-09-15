@@ -10,10 +10,8 @@ Language: Cpp
 
 AccessModifierOffset: -4
 
-AlignAfterOpenBracket: Align
-
+AlignAfterOpenBracket: BlockIndent
 AlignArrayOfStructures: Right
-
 AlignOperands: Align
 
 AllowShortFunctionsOnASingleLine: InlineOnly
@@ -55,10 +53,6 @@ IndentCaseLabels: false
 IndentPPDirectives: BeforeHash
 
 NamespaceIndentation: All
-
-# Penalties
-# This decides what order things should be done if a line is too long
-PenaltyReturnTypeOnItsOwnLine: 100
 
 PointerAlignment: Left
 
