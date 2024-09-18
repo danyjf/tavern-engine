@@ -25,4 +25,8 @@ if(WIN32)
     add_compile_definitions(TAVERN_PLATFORM_WINDOWS) 
 endif()
 
-target_link_libraries(Sandbox Tavern)
+target_link_libraries(Sandbox PRIVATE
+    Tavern
+    glfw
+    glm::glm
+)

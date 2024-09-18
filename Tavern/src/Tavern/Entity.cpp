@@ -1,16 +1,23 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <stb_image.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "Tavern/Entity.h"
 #include "Tavern/Core/Log.h"
 #include "Tavern/Renderer/RenderManager.h"
+#include "glm/ext/matrix_transform.hpp"
+#include "glm/trigonometric.hpp"
 
 namespace Tavern
 {
 	Entity::Entity()
 	{
 		m_Shader = RenderManager::Get().GetShader();
+
+		glEnable(GL_DEPTH_TEST);
 
 		// Load texture 1
 		glGenTextures(1, &m_Texture1);
@@ -59,21 +66,57 @@ namespace Tavern
 
 		stbi_image_free(textureData);
 
-		m_Shader->Use();
-		m_Shader->SetInt("texture1", 0);
-		m_Shader->SetInt("texture2", 1);
-
 		// Create vertex buffer object
 		float vertices[] = {
-			// vertices       // colors         // texture coords
-			0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,	  // top right
-			0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,  // bottom right
-			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // bottom left
-			-0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f	  // top left
+			// vertices       // texture coords
+			0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+			0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
+			-0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+			-0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+
+			0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+			0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
+			-0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+			-0.5f, 0.5f, 0.5f, 0.0f, 1.0f,
+
+			-0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+			-0.5f, 0.5f, -0.5f, 1.0f, 0.0f,
+			-0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+			-0.5f, -0.5f, 0.5f, 0.0f, 1.0f,
+
+			0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+			0.5f, 0.5f, -0.5f, 1.0f, 0.0f,
+			0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+			0.5f, -0.5f, 0.5f, 0.0f, 1.0f,
+
+			-0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+			0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+			0.5f, 0.5f, -0.5f, 0.0f, 0.0f,
+			-0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+
+			-0.5f, -0.5f, 0.5f, 1.0f, 1.0f,
+			0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
+			0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+			-0.5f, -0.5f, -0.5f, 0.0f, 1.0f
 		};
 		unsigned int indices[] = {
 			0, 1, 3,
-			1, 2, 3
+			1, 2, 3,
+
+			4, 7, 5,
+			5, 7, 6,
+
+			8, 9, 10,
+			10, 11, 8,
+
+			12, 15, 14,
+			14, 13, 12,
+
+			16, 17, 18,
+			18, 19, 16,
+
+			20, 23, 22,
+			22, 21, 20
 		};
 
 		glGenVertexArrays(1, &m_VAO);
@@ -89,14 +132,11 @@ namespace Tavern
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 		// Link vertex attributes
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);
 
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 		glEnableVertexAttribArray(1);
-
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-		glEnableVertexAttribArray(2);
 
 		// note that this is allowed, the call to glVertexAttribPointer registered
 		// VBO as the vertex attribute's bound vertex buffer object so afterwards we
@@ -108,6 +148,10 @@ namespace Tavern
 		// call to glBindVertexArray anyways so we generally don't unbind VAOs (nor
 		// VBOs) when it's not directly necessary.
 		glBindVertexArray(0);
+
+		m_Shader->Use();
+		m_Shader->SetInt("texture1", 0);
+		m_Shader->SetInt("texture2", 1);
 
 		TAVERN_ENGINE_INFO("Entity Created");
 	}
@@ -121,13 +165,23 @@ namespace Tavern
 		// Render ----------------------------------
 		m_Shader->Use();
 
-		// Draw the triangle
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+		m_Shader->SetMat4("model", model);
+
+		glm::mat4 view = glm::mat4(1.0f);
+		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+		m_Shader->SetMat4("view", view);
+
+		glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+		m_Shader->SetMat4("projection", projection);
+
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, m_Texture1);
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, m_Texture2);
 
 		glBindVertexArray(m_VAO);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 	}
 }

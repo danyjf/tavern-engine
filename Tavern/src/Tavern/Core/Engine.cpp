@@ -38,7 +38,7 @@ namespace Tavern
 			EventManager::Get().ProcessEvents();
 
 			// Render
-			glClear(GL_COLOR_BUFFER_BIT);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			for (Entity& entity : m_Entities)
 			{
 				entity.Update();

@@ -34,6 +34,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)
 
 add_subdirectory(vendor/GLFW)
+add_subdirectory(vendor/glm)
 
 add_library(Tavern SHARED 
     ${SOURCES} 
@@ -84,7 +85,10 @@ target_precompile_headers(Tavern PRIVATE
 	$<$<COMPILE_LANGUAGE:CXX>:$<$<PLATFORM_ID:Windows>:<Windows.h$<ANGLE-R>>>
 )
 
-target_link_libraries(Tavern glfw)
+target_link_libraries(Tavern PRIVATE 
+    glfw
+    glm::glm
+)
 
 # Copy the Tavern dll into the Sandbox project folder
 add_custom_command(TARGET Tavern 
