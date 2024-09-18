@@ -1,6 +1,7 @@
 set(SOURCES
     src/Tavern.h
 	vendor/Glad/src/glad.c
+    vendor/stb/stb.cpp
 )
 set(SOURCES_TAVERN
     src/Tavern/Entity.h
@@ -52,6 +53,7 @@ target_include_directories(Tavern PRIVATE
     ${CMAKE_SOURCE_DIR}/Tavern/src
     ${CMAKE_SOURCE_DIR}/Tavern/vendor/spdlog/include
     ${CMAKE_SOURCE_DIR}/Tavern/vendor/Glad/include
+    ${CMAKE_SOURCE_DIR}/Tavern/vendor/stb/include
 )
 
 target_compile_definitions(Tavern PRIVATE

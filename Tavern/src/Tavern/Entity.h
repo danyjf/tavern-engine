@@ -15,6 +15,8 @@ namespace Tavern
 
 	private:
 		Shader* m_Shader;
+		unsigned int m_Texture1;
+		unsigned int m_Texture2;
 		unsigned int m_VAO;
 		unsigned int m_VBO;
 		unsigned int m_EBO;

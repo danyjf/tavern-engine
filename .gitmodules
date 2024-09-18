@@ -4,3 +4,6 @@
 [submodule "Tavern/vendor/GLFW"]
 	path = Tavern/vendor/GLFW
 	url = git@github.com:glfw/glfw.git
+[submodule "Tavern/vendor/glm"]
+	path = Tavern/vendor/glm
+	url = git@github.com:g-truc/glm.git
