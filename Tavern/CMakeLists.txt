@@ -27,6 +27,8 @@ set(SOURCES_TAVERN_RENDERER
     src/Tavern/Renderer/Shader.cpp
     src/Tavern/Renderer/RenderManager.h
     src/Tavern/Renderer/RenderManager.cpp
+    src/Tavern/Renderer/Texture.h
+    src/Tavern/Renderer/Texture.cpp
 )
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)

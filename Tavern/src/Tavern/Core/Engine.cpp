@@ -39,9 +39,9 @@ namespace Tavern
 
 			// Render
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			for (Entity& entity : m_Entities)
+			for (Entity* entity : m_Entities)
 			{
-				entity.Update();
+				entity->Update();
 			}
 
 			glfwPollEvents();
@@ -59,10 +59,5 @@ namespace Tavern
 	{
 		m_IsRunning = false;
 		TAVERN_ENGINE_TRACE("Window Close Event");
-	}
-
-	void Engine::AddEntity(Entity& entity)
-	{
-		m_Entities.push_back(entity);
 	}
 }

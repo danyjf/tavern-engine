@@ -19,13 +19,18 @@ namespace Tavern
 		void GameLoop();
 		void Shutdown();
 
-		void AddEntity(Entity& entity);
+		template <typename EntityClass>
+		Entity* CreateEntity()
+		{
+			m_Entities.push_back(new EntityClass());
+			return m_Entities.back();
+		}
 
 		void OnWindowCloseEvent(const std::shared_ptr<Event>& event);
 
 	private:
 		bool m_IsRunning = true;
 
-		std::vector<Entity> m_Entities;
+		std::vector<Entity*> m_Entities;
 	};
 }

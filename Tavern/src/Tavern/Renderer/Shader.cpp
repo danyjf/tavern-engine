@@ -85,6 +85,11 @@ namespace Tavern
 
 		glDeleteShader(vertex);
 		glDeleteShader(fragment);
+
+		// Setup textures
+		Use();
+		SetInt("texture1", 0);
+		SetInt("texture2", 1);
 	}
 
 	void Shader::Use()
