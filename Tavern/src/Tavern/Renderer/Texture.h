@@ -1,22 +1,24 @@
 #pragma once
 
+#include <glad/glad.h>
+
 #include "Tavern/Core/Core.h"
 
 namespace Tavern
 {
 	enum TextureWrapping
 	{
-		REPEAT,
-		MIRRORED_REPEAT,
-		CLAMP_TO_EDGE,
+		REPEAT = GL_REPEAT,
+		MIRRORED_REPEAT = GL_MIRRORED_REPEAT,
+		CLAMP_TO_EDGE = GL_CLAMP_TO_EDGE,
 		// TODO: Handle the clamp to border option
-		CLAMP_TO_BORDER
+		CLAMP_TO_BORDER = GL_CLAMP_TO_BORDER
 	};
 
 	enum TextureFiltering
 	{
-		NEAREST,
-		LINEAR
+		NEAREST = GL_NEAREST,
+		LINEAR = GL_LINEAR
 	};
 
 	struct TextureSettings

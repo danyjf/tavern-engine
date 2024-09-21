@@ -10,6 +10,7 @@
 #include "Tavern/Renderer/RenderManager.h"
 #include "Tavern/Renderer/Texture.h"
 #include "glm/ext/matrix_transform.hpp"
+#include "glm/fwd.hpp"
 #include "glm/trigonometric.hpp"
 
 namespace Tavern
@@ -102,12 +103,13 @@ namespace Tavern
 		// Render ----------------------------------
 		m_Shader->Use();
 
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-		m_Shader->SetMat4("model", model);
+		m_Shader->SetMat4("model", m_ModelMatrix);
 
-		glm::mat4 view = glm::mat4(1.0f);
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+		glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+		glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+		glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+		glm::mat4 view;
+		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 		m_Shader->SetMat4("view", view);
 
 		glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
@@ -116,14 +118,14 @@ namespace Tavern
 		for (int i = 0; i < m_Textures.size(); i++)
 		{
 			glActiveTexture(GL_TEXTURE0 + i);
-			m_Textures[i]->Use();
+			m_Textures[i].Use();
 		}
 
 		glBindVertexArray(m_VAO);
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 	}
 
-	void Entity::AddTexture(std::shared_ptr<Texture>& texture)
+	void Entity::AddTexture(const Texture& texture)
 	{
 		if (m_Textures.size() == 16)
 		{
@@ -132,5 +134,39 @@ namespace Tavern
 		}
 
 		m_Textures.push_back(texture);
+	}
+
+	void Entity::SetPosition(const glm::vec3& position)
+	{
+		m_Position = position;
+		ComputeModelMatrix();
+	}
+
+	void Entity::SetRotation(const glm::vec3& rotation)
+	{
+		m_Rotation = rotation;
+		ComputeModelMatrix();
+	}
+
+	void Entity::SetScale(const glm::vec3& scale)
+	{
+		m_Scale = scale;
+		ComputeModelMatrix();
+	}
+
+	void Entity::ComputeModelMatrix()
+	{
+		m_ModelMatrix = glm::mat4(1.0f);
+
+		// Apply translation
+		m_ModelMatrix = glm::translate(m_ModelMatrix, m_Position);
+
+		// Apply rotation ZXY
+		m_ModelMatrix = glm::rotate(m_ModelMatrix, glm::radians(m_Rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
+		m_ModelMatrix = glm::rotate(m_ModelMatrix, glm::radians(m_Rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+		m_ModelMatrix = glm::rotate(m_ModelMatrix, glm::radians(m_Rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+
+		// Apply scale
+		m_ModelMatrix = glm::scale(m_ModelMatrix, m_Scale);
 	}
 }
