@@ -4,14 +4,14 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/fwd.hpp>
+#include <glm/trigonometric.hpp>
 
 #include "Tavern/Entity.h"
 #include "Tavern/Core/Log.h"
 #include "Tavern/Renderer/RenderManager.h"
 #include "Tavern/Renderer/Texture.h"
-#include "glm/ext/matrix_transform.hpp"
-#include "glm/fwd.hpp"
-#include "glm/trigonometric.hpp"
 
 namespace Tavern
 {
@@ -105,15 +105,10 @@ namespace Tavern
 
 		m_Shader->SetMat4("model", m_ModelMatrix);
 
-		glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-		glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-		glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-		glm::mat4 view;
-		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-		m_Shader->SetMat4("view", view);
-
-		glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
-		m_Shader->SetMat4("projection", projection);
+		RenderManager::Get().GetCamera()->SetPosition(glm::vec3(0.0f, 0.0f, 3.0f));
+		RenderManager::Get().GetCamera()->SetRotation(glm::vec3(0.0f, -90.0f, 0.0f));
+		m_Shader->SetMat4("view", RenderManager::Get().GetCamera()->GetViewMatrix());
+		m_Shader->SetMat4("projection", RenderManager::Get().GetCamera()->GetProjectionMatrix());
 
 		for (int i = 0; i < m_Textures.size(); i++)
 		{

@@ -1,7 +1,9 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <memory>
 
 #include "Tavern/Renderer/RenderManager.h"
+#include "Tavern/Renderer/PerspectiveCamera.h"
 #include "Tavern/Renderer/Window.h"
 #include "Tavern/Events/EventManager.h"
 #include "Tavern/Events/ApplicationEvent.h"
@@ -17,15 +19,17 @@ namespace Tavern
 
 	void RenderManager::Init()
 	{
-		m_Window = std::unique_ptr<Window>(new Window());
+		m_Window = std::make_unique<Window>();
 		m_Window->Init(WindowSettings("My Window", 800, 600));
 
 		EventManager::Get().AddListener(EventType::WindowResize, std::bind(&RenderManager::OnWindowResizeEvent, this, std::placeholders::_1));
 
-		m_Shader = std::unique_ptr<Shader>(new Shader(
+		m_Shader = std::make_unique<Shader>(
 			"./Shaders/Shader.vert",
 			"./Shaders/Shader.frag"
-		));
+		);
+
+		m_Camera = std::make_unique<PerspectiveCamera>();
 
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glEnable(GL_DEPTH_TEST);
