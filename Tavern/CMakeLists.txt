@@ -29,8 +29,8 @@ set(SOURCES_TAVERN_RENDERER
     src/Tavern/Renderer/RenderManager.cpp
     src/Tavern/Renderer/Texture.h
     src/Tavern/Renderer/Texture.cpp
-    src/Tavern/Renderer/PerspectiveCamera.h
-    src/Tavern/Renderer/PerspectiveCamera.cpp
+    src/Tavern/Renderer/Camera.h
+    src/Tavern/Renderer/Camera.cpp
 )
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)

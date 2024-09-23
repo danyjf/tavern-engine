@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "Tavern/Renderer/RenderManager.h"
-#include "Tavern/Renderer/PerspectiveCamera.h"
+#include "Tavern/Renderer/Camera.h"
 #include "Tavern/Renderer/Window.h"
 #include "Tavern/Events/EventManager.h"
 #include "Tavern/Events/ApplicationEvent.h"
@@ -29,7 +29,7 @@ namespace Tavern
 			"./Shaders/Shader.frag"
 		);
 
-		m_Camera = std::make_unique<PerspectiveCamera>();
+		m_Camera = std::make_unique<Camera>();
 
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glEnable(GL_DEPTH_TEST);

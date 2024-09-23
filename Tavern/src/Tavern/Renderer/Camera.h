@@ -4,11 +4,11 @@
 
 namespace Tavern
 {
-	class PerspectiveCamera
+	class Camera
 	{
 	public:
-		PerspectiveCamera();
-		~PerspectiveCamera();
+		Camera();
+		~Camera();
 
 		const glm::mat4& GetViewMatrix() const;
 		const glm::mat4& GetProjectionMatrix() const;
@@ -18,6 +18,9 @@ namespace Tavern
 		void SetRotation(const glm::vec3& rotation);
 		void SetScale(const glm::vec3& scale);
 
+		void ComputeViewMatrix();
+		void ComputeProjectionMatrix();
+
 	private:
 		float m_FOV = 45.0f;
 		float m_ViewportWidth = 800.0f;
@@ -25,8 +28,8 @@ namespace Tavern
 		float m_NearClipPlane = 0.1f;
 		float m_FarClipPlane = 100.0f;
 
-		glm::vec3 m_Position = { 0.0f, 0.0f, 3.0f };
-		glm::vec3 m_Rotation = { 0.0f, -90.0f, 0.0f };
+		glm::vec3 m_Position = { 0.0f, 0.0f, 0.0f };
+		glm::vec3 m_Rotation = { 0.0f, 0.0f, 0.0f };
 		glm::vec3 m_Scale = { 1.0f, 1.0f, 1.0f };
 
 		glm::vec3 m_Front;
@@ -37,7 +40,5 @@ namespace Tavern
 		glm::mat4 m_ProjectionMatrix;
 
 		void CalculateDirectionVectors();
-		void ComputeViewMatrix();
-		void ComputeProjectionMatrix();
 	};
 }

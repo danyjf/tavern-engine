@@ -103,12 +103,11 @@ namespace Tavern
 		// Render ----------------------------------
 		m_Shader->Use();
 
-		m_Shader->SetMat4("model", m_ModelMatrix);
-
 		RenderManager::Get().GetCamera()->SetPosition(glm::vec3(0.0f, 0.0f, 3.0f));
 		RenderManager::Get().GetCamera()->SetRotation(glm::vec3(0.0f, -90.0f, 0.0f));
 		m_Shader->SetMat4("view", RenderManager::Get().GetCamera()->GetViewMatrix());
 		m_Shader->SetMat4("projection", RenderManager::Get().GetCamera()->GetProjectionMatrix());
+		m_Shader->SetMat4("model", m_ModelMatrix);
 
 		for (int i = 0; i < m_Textures.size(); i++)
 		{
