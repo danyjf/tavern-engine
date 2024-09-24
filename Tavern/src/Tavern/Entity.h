@@ -6,6 +6,7 @@
 #include "Tavern/Core/Core.h"
 #include "Tavern/Renderer/Shader.h"
 #include "Tavern/Renderer/Texture.h"
+#include "Tavern/Components/Transform.h"
 
 namespace Tavern
 {
@@ -15,12 +16,11 @@ namespace Tavern
 		Entity();
 		virtual ~Entity();
 
+		std::unique_ptr<Transform> m_Transform;
+
 		virtual void Update();
 
 		void AddTexture(const Texture& texture);
-		void SetPosition(const glm::vec3& position);
-		void SetRotation(const glm::vec3& rotation);
-		void SetScale(const glm::vec3& scale);
 
 	private:
 		Shader* m_Shader;
@@ -28,11 +28,5 @@ namespace Tavern
 		unsigned int m_VAO;
 		unsigned int m_VBO;
 		unsigned int m_EBO;
-		glm::mat4 m_ModelMatrix = glm::mat4(1.0f);
-		glm::vec3 m_Position = glm::vec3(0.0f);
-		glm::vec3 m_Rotation = glm::vec3(0.0f);
-		glm::vec3 m_Scale = glm::vec3(1.0f);
-
-		void ComputeModelMatrix();
 	};
 }

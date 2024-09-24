@@ -7,7 +7,13 @@ namespace Tavern
 	class Camera
 	{
 	public:
-		Camera();
+		Camera(
+			float FOV = 45.0f,
+			float viewportWidth = 800.0f,
+			float viewportHeight = 600.0f,
+			float nearClipPlane = 0.1f,
+			float farClipPlane = 100.0f
+		);
 		~Camera();
 
 		const glm::mat4& GetViewMatrix() const;

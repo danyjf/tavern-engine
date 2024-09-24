@@ -30,3 +30,10 @@ target_link_libraries(Sandbox PRIVATE
     glfw
     glm::glm
 )
+
+add_custom_target(CopyAssets ALL
+	COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_SOURCE_DIR}/Assets
+	COMMAND ${CMAKE_COMMAND} -E rm -rf ${OUTPUT_DIRECTORY}/Sandbox/Assets
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Assets ${OUTPUT_DIRECTORY}/Sandbox/Assets
+)
+add_dependencies(CopyAssets Sandbox)

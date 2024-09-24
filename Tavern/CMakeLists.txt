@@ -32,6 +32,10 @@ set(SOURCES_TAVERN_RENDERER
     src/Tavern/Renderer/Camera.h
     src/Tavern/Renderer/Camera.cpp
 )
+set(SOURCES_TAVERN_COMPONENTS
+    src/Tavern/Components/Transform.h
+    src/Tavern/Components/Transform.cpp
+)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)
@@ -46,6 +50,7 @@ add_library(Tavern SHARED
     ${SOURCES_TAVERN_CORE}
     ${SOURCES_TAVERN_EVENTS}
     ${SOURCES_TAVERN_RENDERER}
+    ${SOURCES_TAVERN_COMPONENTS}
 )
 
 source_group(src FILES ${SOURCES})
@@ -53,6 +58,7 @@ source_group(src/Tavern FILES ${SOURCES_TAVERN})
 source_group(src/Tavern/Core FILES ${SOURCES_TAVERN_CORE})
 source_group(src/Tavern/Events FILES ${SOURCES_TAVERN_EVENTS})
 source_group(src/Tavern/Renderer FILES ${SOURCES_TAVERN_RENDERER})
+source_group(src/Tavern/Components FILES ${SOURCES_TAVERN_COMPONENTS})
 
 target_include_directories(Tavern PRIVATE 
     ${CMAKE_SOURCE_DIR}/Tavern/src
@@ -94,10 +100,8 @@ target_link_libraries(Tavern PRIVATE
     glm::glm
 )
 
-# Copy the Tavern dll into the Sandbox project folder
-add_custom_command(TARGET Tavern 
-    POST_BUILD
-	COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_DIRECTORY}/Sandbox
+add_custom_target(CopyEngineFiles ALL
     COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Tavern> ${OUTPUT_DIRECTORY}/Sandbox
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/src/Tavern/Renderer/Shaders ${OUTPUT_DIRECTORY}/Sandbox/Shaders
 )
+add_dependencies(CopyEngineFiles Tavern Sandbox)

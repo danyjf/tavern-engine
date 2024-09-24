@@ -6,8 +6,8 @@ public:
 	MyEntity()
 	{
 		Tavern::TextureSettings textureSettings;
-		Tavern::Texture texture1(Tavern::TextureSettings(), "container.jpg");
-		Tavern::Texture texture2(Tavern::TextureSettings(), "awesomeface.jpg");
+		Tavern::Texture texture1(Tavern::TextureSettings(), "Assets/Images/container.jpg");
+		Tavern::Texture texture2(Tavern::TextureSettings(), "Assets/Images/awesomeface.jpg");
 		AddTexture(texture1);
 		AddTexture(texture2);
 	}
@@ -41,8 +41,8 @@ int main()
 	for (int i = 0; i < 10; i++)
 	{
 		Tavern::Entity* cube = TavernEngine->CreateEntity<MyEntity>();
-		cube->SetPosition(cubePositions[i]);
-		cube->SetRotation(glm::vec3(i * 10.0, i * 21.0, i * 13.0));
+		cube->m_Transform->SetPosition(cubePositions[i]);
+		cube->m_Transform->SetRotation(glm::vec3(i * 10.0, i * 21.0, i * 13.0));
 	}
 
 	TavernEngine->GameLoop();

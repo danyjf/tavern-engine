@@ -6,7 +6,12 @@
 
 namespace Tavern
 {
-	Camera::Camera()
+	Camera::Camera(float FOV, float viewportWidth, float viewportHeight, float nearClipPlane, float farClipPlane)
+		: m_FOV(FOV),
+		  m_ViewportWidth(viewportWidth),
+		  m_ViewportHeight(viewportHeight),
+		  m_NearClipPlane(nearClipPlane),
+		  m_FarClipPlane(farClipPlane)
 	{
 		ComputeViewMatrix();
 		ComputeProjectionMatrix();
