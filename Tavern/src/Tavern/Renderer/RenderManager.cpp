@@ -5,6 +5,8 @@
 #include "Tavern/Renderer/RenderManager.h"
 #include "Tavern/Renderer/Camera.h"
 #include "Tavern/Renderer/Window.h"
+#include "Tavern/Renderer/Shader.h"
+#include "Tavern/Events/Event.h"
 #include "Tavern/Events/EventManager.h"
 #include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Core/Log.h"

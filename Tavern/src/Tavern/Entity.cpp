@@ -9,11 +9,12 @@
 #include <glm/fwd.hpp>
 #include <glm/trigonometric.hpp>
 
-#include "Tavern/Entity.h"
 #include "Tavern/Core/Log.h"
 #include "Tavern/Renderer/RenderManager.h"
+#include "Tavern/Renderer/Shader.h"
 #include "Tavern/Renderer/Texture.h"
 #include "Tavern/Components/Transform.h"
+#include "Tavern/Entity.h"
 
 namespace Tavern
 {

@@ -3,12 +3,13 @@
 #include <memory>
 
 #include "Tavern/Renderer/Camera.h"
-#include "Tavern/Renderer/Shader.h"
 #include "Tavern/Renderer/Window.h"
-#include "Tavern/Events/Event.h"
 
 namespace Tavern
 {
+	class Shader;
+	class Event;
+
 	class RenderManager
 	{
 	public:

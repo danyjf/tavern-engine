@@ -7,10 +7,19 @@ namespace Tavern
 {
 	Transform::Transform()
 	{
+		m_ModelMatrix = glm::mat4(1.0f);
+		m_Position = glm::vec3(0.0f);
+		m_Rotation = glm::vec3(0.0f);
+		m_Scale = glm::vec3(1.0f);
 	}
 
 	Transform::~Transform()
 	{
+	}
+
+	const glm::vec3& Transform::GetPosition() const
+	{
+		return m_Position;
 	}
 
 	void Transform::SetPosition(const glm::vec3& position)
@@ -19,16 +28,31 @@ namespace Tavern
 		ComputeModelMatrix();
 	}
 
+	const glm::vec3& Transform::GetRotation() const
+	{
+		return m_Rotation;
+	}
+
 	void Transform::SetRotation(const glm::vec3& rotation)
 	{
 		m_Rotation = rotation;
 		ComputeModelMatrix();
 	}
 
+	const glm::vec3& Transform::GetScale() const
+	{
+		return m_Scale;
+	}
+
 	void Transform::SetScale(const glm::vec3& scale)
 	{
 		m_Scale = scale;
 		ComputeModelMatrix();
+	}
+
+	const glm::mat4& Transform::GetModelMatrix() const
+	{
+		return m_ModelMatrix;
 	}
 
 	void Transform::ComputeModelMatrix()

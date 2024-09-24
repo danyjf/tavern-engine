@@ -4,11 +4,12 @@
 #include <vector>
 
 #include "Tavern/Core/Core.h"
-#include "Tavern/Events/Event.h"
-#include "Tavern/Entity.h"
 
 namespace Tavern
 {
+	class Event;
+	class Entity;
+
 	class TAVERN_API Engine
 	{
 	public:

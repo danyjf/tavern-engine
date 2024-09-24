@@ -1,15 +1,17 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 #include <glm/glm.hpp>
 
 #include "Tavern/Core/Core.h"
-#include "Tavern/Renderer/Shader.h"
-#include "Tavern/Renderer/Texture.h"
-#include "Tavern/Components/Transform.h"
 
 namespace Tavern
 {
+	class Shader;
+	class Texture;
+	class Transform;
+
 	class TAVERN_API Entity
 	{
 	public:
