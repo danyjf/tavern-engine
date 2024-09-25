@@ -10,7 +10,7 @@ namespace Tavern
 {
 	class Shader;
 	class Texture;
-	class Transform;
+	class TransformComponent;
 
 	class TAVERN_API Entity
 	{
@@ -20,14 +20,14 @@ namespace Tavern
 
 		virtual void Update();
 
-		Transform* GetTransform() const;
+		TransformComponent* GetTransformComponent() const;
 		void AddTexture(const Texture& texture);
 
 		// TODO: Remove this
 		bool m_Render;
 
 	private:
-		std::unique_ptr<Transform> m_Transform;
+		std::unique_ptr<TransformComponent> m_Transform;
 		Shader* m_Shader;
 		std::vector<Texture> m_Textures;
 		unsigned int m_VAO;

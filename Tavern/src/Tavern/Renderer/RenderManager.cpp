@@ -9,7 +9,7 @@
 #include "Tavern/Events/EventManager.h"
 #include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Core/Log.h"
-#include "Tavern/Components/Camera.h"
+#include "Tavern/Components/CameraComponent.h"
 
 namespace Tavern
 {
@@ -49,12 +49,12 @@ namespace Tavern
 		return m_Shader.get();
 	}
 
-	Camera* RenderManager::GetActiveCamera() const
+	CameraComponent* RenderManager::GetActiveCamera() const
 	{
 		return m_Camera;
 	}
 
-	void RenderManager::SetActiveCamera(Camera* camera)
+	void RenderManager::SetActiveCamera(CameraComponent* camera)
 	{
 		m_Camera = camera;
 	}

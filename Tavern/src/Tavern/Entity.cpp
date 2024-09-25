@@ -13,7 +13,7 @@
 #include "Tavern/Renderer/RenderManager.h"
 #include "Tavern/Renderer/Shader.h"
 #include "Tavern/Renderer/Texture.h"
-#include "Tavern/Components/Transform.h"
+#include "Tavern/Components/TransformComponent.h"
 #include "Tavern/Entity.h"
 
 namespace Tavern
@@ -22,7 +22,7 @@ namespace Tavern
 	{
 		m_Render = true;
 		m_Shader = RenderManager::Get().GetShader();
-		m_Transform = std::make_unique<Transform>(this);
+		m_Transform = std::make_unique<TransformComponent>(this);
 
 		// Create vertex buffer object
 		float vertices[] = {
@@ -127,7 +127,7 @@ namespace Tavern
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 	}
 
-	Transform* Entity::GetTransform() const
+	TransformComponent* Entity::GetTransformComponent() const
 	{
 		return m_Transform.get();
 	}

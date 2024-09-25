@@ -2,12 +2,12 @@
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Tavern/Components/Camera.h"
+#include "Tavern/Components/CameraComponent.h"
 #include "Tavern/Entity.h"
 
 namespace Tavern
 {
-	Camera::Camera(Entity* owner, float FOV, float viewportWidth, float viewportHeight, float nearClipPlane, float farClipPlane)
+	CameraComponent::CameraComponent(Entity* owner, float FOV, float viewportWidth, float viewportHeight, float nearClipPlane, float farClipPlane)
 		: Component(owner),
 		  m_FOV(FOV),
 		  m_ViewportWidth(viewportWidth),
@@ -15,31 +15,31 @@ namespace Tavern
 		  m_NearClipPlane(nearClipPlane),
 		  m_FarClipPlane(farClipPlane)
 	{
-		m_OwnerTransform = GetOwner()->GetTransform();
+		m_OwnerTransform = GetOwner()->GetTransformComponent();
 		ComputeViewMatrix();
 		ComputeProjectionMatrix();
 	}
 
-	Camera::~Camera()
+	CameraComponent::~CameraComponent()
 	{
 	}
 
-	const glm::mat4& Camera::GetViewMatrix() const
+	const glm::mat4& CameraComponent::GetViewMatrix() const
 	{
 		return m_ViewMatrix;
 	}
 
-	const glm::mat4& Camera::GetProjectionMatrix() const
+	const glm::mat4& CameraComponent::GetProjectionMatrix() const
 	{
 		return m_ProjectionMatrix;
 	}
 
-	const glm::mat4 Camera::GetViewProjectionMatrix() const
+	const glm::mat4 CameraComponent::GetViewProjectionMatrix() const
 	{
 		return m_ProjectionMatrix * m_ViewMatrix;
 	}
 
-	void Camera::CalculateDirectionVectors()
+	void CameraComponent::CalculateDirectionVectors()
 	{
 		const glm::vec3& rotation = m_OwnerTransform->GetRotation();
 		m_Front.x = cos(glm::radians(rotation.y)) * cos(glm::radians(rotation.x));
@@ -50,13 +50,13 @@ namespace Tavern
 		m_Up = glm::normalize(glm::cross(m_Right, m_Front));
 	}
 
-	void Camera::ComputeViewMatrix()
+	void CameraComponent::ComputeViewMatrix()
 	{
 		CalculateDirectionVectors();
 		m_ViewMatrix = glm::lookAt(m_OwnerTransform->GetPosition(), m_OwnerTransform->GetPosition() + m_Front, m_Up);
 	}
 
-	void Camera::ComputeProjectionMatrix()
+	void CameraComponent::ComputeProjectionMatrix()
 	{
 		m_ProjectionMatrix = glm::perspective(
 			glm::radians(m_FOV),

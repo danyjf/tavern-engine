@@ -1,3 +1,4 @@
+#include "Tavern/Components/CameraComponent.h"
 #include <Tavern.h>
 #include <memory>
 
@@ -24,22 +25,22 @@ class Player : public Tavern::Entity
 public:
 	Player()
 	{
-		m_Camera = std::make_unique<Tavern::Camera>(this);
+		m_Camera = std::make_unique<Tavern::CameraComponent>(this);
 		Tavern::RenderManager::Get().SetActiveCamera(m_Camera.get());
 	}
 
-	std::unique_ptr<Tavern::Camera> m_Camera;
+	std::unique_ptr<Tavern::CameraComponent> m_Camera;
 };
 
 int main()
 {
-	Tavern::Engine* TavernEngine = new Tavern::Engine();
+	std::unique_ptr<Tavern::Engine> TavernEngine = std::make_unique<Tavern::Engine>();
 
 	TavernEngine->Init();
 
 	Tavern::Entity* player = TavernEngine->CreateEntity<Player>();
-	player->GetTransform()->SetPosition(glm::vec3(0.0f, 0.0f, 3.0f));
-	player->GetTransform()->SetRotation(glm::vec3(0.0f, -90.0f, 0.0f));
+	player->GetTransformComponent()->SetPosition(glm::vec3(0.0f, 0.0f, 3.0f));
+	player->GetTransformComponent()->SetRotation(glm::vec3(0.0f, -90.0f, 0.0f));
 	player->m_Render = false;
 
 	// Create startup game entities
@@ -59,8 +60,8 @@ int main()
 	for (int i = 0; i < 10; i++)
 	{
 		Tavern::Entity* cube = TavernEngine->CreateEntity<MyEntity>();
-		cube->GetTransform()->SetPosition(cubePositions[i]);
-		cube->GetTransform()->SetRotation(glm::vec3(i * 10.0, i * 21.0, i * 13.0));
+		cube->GetTransformComponent()->SetPosition(cubePositions[i]);
+		cube->GetTransformComponent()->SetRotation(glm::vec3(i * 10.0, i * 21.0, i * 13.0));
 	}
 
 	TavernEngine->GameLoop();

@@ -7,11 +7,11 @@
 
 namespace Tavern
 {
-	class TAVERN_API Transform : public Component
+	class TAVERN_API TransformComponent : public Component
 	{
 	public:
-		Transform(Entity* owner);
-		~Transform();
+		TransformComponent(Entity* owner);
+		~TransformComponent();
 
 		const glm::vec3& GetPosition() const;
 		void SetPosition(const glm::vec3& position);

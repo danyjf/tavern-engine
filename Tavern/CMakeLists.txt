@@ -33,10 +33,12 @@ set(SOURCES_TAVERN_RENDERER
 set(SOURCES_TAVERN_COMPONENTS
     src/Tavern/Components/Component.h
     src/Tavern/Components/Component.cpp
-    src/Tavern/Components/Camera.h
-    src/Tavern/Components/Camera.cpp
-    src/Tavern/Components/Transform.h
-    src/Tavern/Components/Transform.cpp
+    src/Tavern/Components/CameraComponent.h
+    src/Tavern/Components/CameraComponent.cpp
+    src/Tavern/Components/TransformComponent.h
+    src/Tavern/Components/TransformComponent.cpp
+    src/Tavern/Components/MeshComponent.h
+    src/Tavern/Components/MeshComponent.cpp
 )
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)
