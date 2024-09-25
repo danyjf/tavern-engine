@@ -2,12 +2,20 @@
 
 #include <glm/glm.hpp>
 
+#include "Tavern/Components/Component.h"
+#include "Tavern/Components/Transform.h"
+#include "Tavern/Core/Core.h"
+
 namespace Tavern
 {
-	class Camera
+	class Entity;
+
+	class TAVERN_API Camera : public Component
 	{
 	public:
+		Camera() = default;
 		Camera(
+			Entity* owner,
 			float FOV = 45.0f,
 			float viewportWidth = 800.0f,
 			float viewportHeight = 600.0f,
@@ -20,23 +28,17 @@ namespace Tavern
 		const glm::mat4& GetProjectionMatrix() const;
 		const glm::mat4 GetViewProjectionMatrix() const;
 
-		void SetPosition(const glm::vec3& position);
-		void SetRotation(const glm::vec3& rotation);
-		void SetScale(const glm::vec3& scale);
-
 		void ComputeViewMatrix();
 		void ComputeProjectionMatrix();
 
 	private:
-		float m_FOV = 45.0f;
-		float m_ViewportWidth = 800.0f;
-		float m_ViewportHeight = 600.0f;
-		float m_NearClipPlane = 0.1f;
-		float m_FarClipPlane = 100.0f;
+		Transform* m_OwnerTransform;
 
-		glm::vec3 m_Position = { 0.0f, 0.0f, 0.0f };
-		glm::vec3 m_Rotation = { 0.0f, 0.0f, 0.0f };
-		glm::vec3 m_Scale = { 1.0f, 1.0f, 1.0f };
+		float m_FOV;
+		float m_ViewportWidth;
+		float m_ViewportHeight;
+		float m_NearClipPlane;
+		float m_FarClipPlane;
 
 		glm::vec3 m_Front;
 		glm::vec3 m_Right;

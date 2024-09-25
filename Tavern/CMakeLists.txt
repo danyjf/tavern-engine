@@ -29,12 +29,12 @@ set(SOURCES_TAVERN_RENDERER
     src/Tavern/Renderer/RenderManager.cpp
     src/Tavern/Renderer/Texture.h
     src/Tavern/Renderer/Texture.cpp
-    src/Tavern/Renderer/Camera.h
-    src/Tavern/Renderer/Camera.cpp
 )
 set(SOURCES_TAVERN_COMPONENTS
     src/Tavern/Components/Component.h
     src/Tavern/Components/Component.cpp
+    src/Tavern/Components/Camera.h
+    src/Tavern/Components/Camera.cpp
     src/Tavern/Components/Transform.h
     src/Tavern/Components/Transform.cpp
 )

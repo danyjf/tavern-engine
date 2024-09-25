@@ -3,13 +3,13 @@
 #include <memory>
 
 #include "Tavern/Renderer/RenderManager.h"
-#include "Tavern/Renderer/Camera.h"
 #include "Tavern/Renderer/Window.h"
 #include "Tavern/Renderer/Shader.h"
 #include "Tavern/Events/Event.h"
 #include "Tavern/Events/EventManager.h"
 #include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Core/Log.h"
+#include "Tavern/Components/Camera.h"
 
 namespace Tavern
 {
@@ -31,14 +31,32 @@ namespace Tavern
 			"./Shaders/Shader.frag"
 		);
 
-		m_Camera = std::make_unique<Camera>();
-
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glEnable(GL_DEPTH_TEST);
 	}
 
 	void RenderManager::Shutdown()
 	{
+	}
+
+	Window* RenderManager::GetWindow() const
+	{
+		return m_Window.get();
+	}
+
+	Shader* RenderManager::GetShader() const
+	{
+		return m_Shader.get();
+	}
+
+	Camera* RenderManager::GetActiveCamera() const
+	{
+		return m_Camera;
+	}
+
+	void RenderManager::SetActiveCamera(Camera* camera)
+	{
+		m_Camera = camera;
 	}
 
 	void RenderManager::OnWindowResizeEvent(const std::shared_ptr<Event>& event)

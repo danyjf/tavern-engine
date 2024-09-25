@@ -3,8 +3,9 @@
 
 namespace Tavern
 {
-	Component::Component()
+	Component::Component(Entity* owner)
 	{
+		m_Owner = owner;
 	}
 
 	Component::~Component()

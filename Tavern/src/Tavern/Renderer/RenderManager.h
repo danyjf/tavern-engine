@@ -2,15 +2,16 @@
 
 #include <memory>
 
-#include "Tavern/Renderer/Camera.h"
+#include "Tavern/Components/Camera.h"
+#include "Tavern/Core/Core.h"
 #include "Tavern/Renderer/Window.h"
+#include "Tavern/Renderer/Shader.h"
 
 namespace Tavern
 {
-	class Shader;
 	class Event;
 
-	class RenderManager
+	class TAVERN_API RenderManager
 	{
 	public:
 		RenderManager(RenderManager& copy) = delete;
@@ -21,9 +22,10 @@ namespace Tavern
 		void Init();
 		void Shutdown();
 
-		Window* GetWindow() const { return m_Window.get(); }
-		Shader* GetShader() const { return m_Shader.get(); }
-		Camera* GetCamera() const { return m_Camera.get(); }
+		Window* GetWindow() const;
+		Shader* GetShader() const;
+		Camera* GetActiveCamera() const;
+		void SetActiveCamera(Camera* camera);
 
 		void OnWindowResizeEvent(const std::shared_ptr<Event>& event);
 
@@ -33,6 +35,6 @@ namespace Tavern
 
 		std::unique_ptr<Window> m_Window;
 		std::unique_ptr<Shader> m_Shader;
-		std::unique_ptr<Camera> m_Camera;
+		Camera* m_Camera;
 	};
 }

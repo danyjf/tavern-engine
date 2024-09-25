@@ -20,8 +20,9 @@ namespace Tavern
 {
 	Entity::Entity()
 	{
+		m_Render = true;
 		m_Shader = RenderManager::Get().GetShader();
-		m_Transform = std::make_unique<Transform>();
+		m_Transform = std::make_unique<Transform>(this);
 
 		// Create vertex buffer object
 		float vertices[] = {
@@ -104,13 +105,16 @@ namespace Tavern
 
 	void Entity::Update()
 	{
+		if (!m_Render)
+		{
+			return;
+		}
+
 		// Render ----------------------------------
 		m_Shader->Use();
 
-		RenderManager::Get().GetCamera()->SetPosition(glm::vec3(0.0f, 0.0f, 3.0f));
-		RenderManager::Get().GetCamera()->SetRotation(glm::vec3(0.0f, -90.0f, 0.0f));
-		m_Shader->SetMat4("view", RenderManager::Get().GetCamera()->GetViewMatrix());
-		m_Shader->SetMat4("projection", RenderManager::Get().GetCamera()->GetProjectionMatrix());
+		m_Shader->SetMat4("view", RenderManager::Get().GetActiveCamera()->GetViewMatrix());
+		m_Shader->SetMat4("projection", RenderManager::Get().GetActiveCamera()->GetProjectionMatrix());
 		m_Shader->SetMat4("model", m_Transform->GetModelMatrix());
 
 		for (int i = 0; i < m_Textures.size(); i++)
@@ -121,6 +125,11 @@ namespace Tavern
 
 		glBindVertexArray(m_VAO);
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+	}
+
+	Transform* Entity::GetTransform() const
+	{
+		return m_Transform.get();
 	}
 
 	void Entity::AddTexture(const Texture& texture)
