@@ -10,4 +10,8 @@
 #include "Tavern/Components/CameraComponent.h"
 #include "Tavern/Components/TransformComponent.h"
 #include "Tavern/Components/MeshComponent.h"
+#include "Tavern/Events/EventManager.h"
+#include "Tavern/Events/Event.h"
+#include "Tavern/Events/KeyEvent.h"
+#include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Entity.h"

@@ -78,8 +78,8 @@ namespace Tavern
 	void RenderManager::OnWindowResizeEvent(const std::shared_ptr<Event>& event)
 	{
 		std::shared_ptr<WindowResizeEvent> windowResizeEvent = std::dynamic_pointer_cast<WindowResizeEvent>(event);
-		glViewport(0, 0, windowResizeEvent->width, windowResizeEvent->height);
+		glViewport(0, 0, windowResizeEvent->GetWidth(), windowResizeEvent->GetHeight());
 
-		TAVERN_ENGINE_TRACE("Window Resize Event: ({0}, {1})", windowResizeEvent->width, windowResizeEvent->height);
+		TAVERN_ENGINE_TRACE("Window Resize Event: ({0}, {1})", windowResizeEvent->GetWidth(), windowResizeEvent->GetHeight());
 	}
 }

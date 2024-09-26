@@ -7,6 +7,7 @@ ColumnLimit: 0
 
 # C language specifics
 Language: Cpp
+Standard: Cpp11
 
 AccessModifierOffset: -4
 
@@ -49,7 +50,7 @@ FixNamespaceComments: false
 
 IndentAccessModifiers: false
 IndentCaseBlocks: false
-IndentCaseLabels: false
+IndentCaseLabels: true
 IndentPPDirectives: BeforeHash
 
 NamespaceIndentation: All
@@ -61,6 +62,7 @@ QualifierAlignment: Left
 ReferenceAlignment: Left
 
 SortIncludes: false
+SpacesInAngles: Never
 
 SpaceBeforeParens: ControlStatements
 

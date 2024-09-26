@@ -1,4 +1,7 @@
+#include "Tavern/Core/Log.h"
+#include "Tavern/Events/KeyEvent.h"
 #include <Tavern.h>
+#include <functional>
 #include <memory>
 
 class MyEntity : public Tavern::Entity
@@ -33,6 +36,61 @@ public:
 
 		GetTransformComponent()->SetPosition(glm::vec3(0.0f, 0.0f, 3.0f));
 		GetTransformComponent()->SetRotation(glm::vec3(0.0f, -90.0f, 0.0f));
+
+		Tavern::EventManager::Get().AddListener(Tavern::EventType::KeyPressed, std::bind(&Player::OnKeyPressed, this, std::placeholders::_1));
+	}
+
+	void Update() override
+	{
+	}
+
+	void OnKeyPressed(const std::shared_ptr<Tavern::Event>& event)
+	{
+		std::shared_ptr<Tavern::KeyPressedEvent> keyPressedEvent = std::dynamic_pointer_cast<Tavern::KeyPressedEvent>(event);
+
+		switch (keyPressedEvent->GetKey())
+		{
+			case Tavern::Key::W:
+			{
+				TAVERN_INFO("KeyPressed(W)");
+				break;
+			}
+			case Tavern::Key::A:
+			{
+				TAVERN_INFO("KeyPressed(A)");
+				break;
+			}
+			case Tavern::Key::S:
+			{
+				TAVERN_INFO("KeyPressed(S)");
+				break;
+			}
+			case Tavern::Key::D:
+			{
+				TAVERN_INFO("KeyPressed(D)");
+				break;
+			}
+			case Tavern::Key::UpArrow:
+			{
+				TAVERN_INFO("KeyPressed(UpArrow)");
+				break;
+			}
+			case Tavern::Key::LeftArrow:
+			{
+				TAVERN_INFO("KeyPressed(LeftArrow)");
+				break;
+			}
+			case Tavern::Key::DownArrow:
+			{
+				TAVERN_INFO("KeyPressed(DownArrow)");
+				break;
+			}
+			case Tavern::Key::RightArrow:
+			{
+				TAVERN_INFO("KeyPressed(RightArrow)");
+				break;
+			}
+		}
 	}
 
 	std::unique_ptr<Tavern::CameraComponent> m_Camera;

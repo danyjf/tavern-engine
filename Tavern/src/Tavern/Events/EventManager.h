@@ -1,10 +1,13 @@
 #pragma once
 
-#include "Event.h"
+#include <queue>
+
+#include "Tavern/Core/Core.h"
+#include "Tavern/Events/Event.h"
 
 namespace Tavern
 {
-	class EventManager
+	class TAVERN_API EventManager
 	{
 	public:
 		EventManager(EventManager& copy) = delete;
@@ -33,7 +36,7 @@ namespace Tavern
 		EventManager() {};
 		~EventManager() {};
 
-		std::queue<std::shared_ptr<Event> > m_Events;
-		std::unordered_map<EventType, std::vector<EventListenerDelegate> > m_EventListeners;
+		std::queue<std::shared_ptr<Event>> m_Events;
+		std::unordered_map<EventType, std::vector<EventListenerDelegate>> m_EventListeners;
 	};
 }

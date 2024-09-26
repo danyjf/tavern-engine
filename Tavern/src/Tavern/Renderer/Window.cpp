@@ -1,10 +1,12 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <memory>
 
 #include "Tavern/Core/Core.h"
 #include "Tavern/Core/Log.h"
 #include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Events/EventManager.h"
+#include "Tavern/Events/KeyEvent.h"
 #include "Tavern/Renderer/Window.h"
 
 namespace Tavern
@@ -54,20 +56,38 @@ namespace Tavern
 				windowSettings.Width = width;
 				windowSettings.Height = height;
 
-				EventManager& eventManager = EventManager::Get();
-
-				std::shared_ptr<WindowResizeEvent> event = std::make_shared<WindowResizeEvent>();
-				event->width = width;
-				event->height = height;
-				eventManager.QueueEvent(event);
+				std::shared_ptr<WindowResizeEvent> event = std::make_shared<WindowResizeEvent>(width, height);
+				EventManager::Get().QueueEvent(event);
 			}
 		);
 
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
-			EventManager& eventManager = EventManager::Get();
-
 			std::shared_ptr<WindowCloseEvent> event = std::make_shared<WindowCloseEvent>();
-			eventManager.QueueEvent(event);
+			EventManager::Get().QueueEvent(event);
+		});
+
+		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
+			switch (action)
+			{
+				case GLFW_PRESS:
+				{
+					std::shared_ptr<KeyPressedEvent> event = std::make_shared<KeyPressedEvent>(static_cast<Key>(key), false);
+					EventManager::Get().QueueEvent(event);
+					break;
+				}
+				case GLFW_RELEASE:
+				{
+					std::shared_ptr<KeyReleasedEvent> event = std::make_shared<KeyReleasedEvent>(static_cast<Key>(key));
+					EventManager::Get().QueueEvent(event);
+					break;
+				}
+				case GLFW_REPEAT:
+				{
+					std::shared_ptr<KeyPressedEvent> event = std::make_shared<KeyPressedEvent>(static_cast<Key>(key), true);
+					EventManager::Get().QueueEvent(event);
+					break;
+				}
+			}
 		});
 	}
 
