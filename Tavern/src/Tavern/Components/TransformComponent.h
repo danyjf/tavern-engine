@@ -10,8 +10,9 @@ namespace Tavern
 	class TAVERN_API TransformComponent : public Component
 	{
 	public:
+		TransformComponent() = default;
 		TransformComponent(Entity* owner);
-		~TransformComponent();
+		~TransformComponent() = default;
 
 		const glm::vec3& GetPosition() const;
 		void SetPosition(const glm::vec3& position);

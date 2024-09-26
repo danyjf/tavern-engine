@@ -9,4 +9,5 @@
 #include "Tavern/Components/Component.h"
 #include "Tavern/Components/CameraComponent.h"
 #include "Tavern/Components/TransformComponent.h"
+#include "Tavern/Components/MeshComponent.h"
 #include "Tavern/Entity.h"

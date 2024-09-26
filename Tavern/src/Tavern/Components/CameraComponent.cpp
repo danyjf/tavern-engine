@@ -20,10 +20,6 @@ namespace Tavern
 		ComputeProjectionMatrix();
 	}
 
-	CameraComponent::~CameraComponent()
-	{
-	}
-
 	const glm::mat4& CameraComponent::GetViewMatrix() const
 	{
 		return m_ViewMatrix;

@@ -1,4 +1,3 @@
-#include "Tavern/Components/CameraComponent.h"
 #include <Tavern.h>
 #include <memory>
 
@@ -7,17 +6,21 @@ class MyEntity : public Tavern::Entity
 public:
 	MyEntity()
 	{
-		Tavern::TextureSettings textureSettings;
+		m_Mesh = std::make_unique<Tavern::MeshComponent>(this);
+
 		Tavern::Texture texture1(Tavern::TextureSettings(), "Assets/Images/container.jpg");
 		Tavern::Texture texture2(Tavern::TextureSettings(), "Assets/Images/awesomeface.jpg");
-		AddTexture(texture1);
-		AddTexture(texture2);
+
+		m_Mesh->AddTexture(texture1);
+		m_Mesh->AddTexture(texture2);
 	}
 
 	void Update() override
 	{
 		Tavern::Entity::Update();
 	}
+
+	std::unique_ptr<Tavern::MeshComponent> m_Mesh;
 };
 
 class Player : public Tavern::Entity
@@ -27,6 +30,9 @@ public:
 	{
 		m_Camera = std::make_unique<Tavern::CameraComponent>(this);
 		Tavern::RenderManager::Get().SetActiveCamera(m_Camera.get());
+
+		GetTransformComponent()->SetPosition(glm::vec3(0.0f, 0.0f, 3.0f));
+		GetTransformComponent()->SetRotation(glm::vec3(0.0f, -90.0f, 0.0f));
 	}
 
 	std::unique_ptr<Tavern::CameraComponent> m_Camera;
@@ -38,10 +44,7 @@ int main()
 
 	TavernEngine->Init();
 
-	Tavern::Entity* player = TavernEngine->CreateEntity<Player>();
-	player->GetTransformComponent()->SetPosition(glm::vec3(0.0f, 0.0f, 3.0f));
-	player->GetTransformComponent()->SetRotation(glm::vec3(0.0f, -90.0f, 0.0f));
-	player->m_Render = false;
+	TavernEngine->CreateEntity<Player>();
 
 	// Create startup game entities
 	glm::vec3 cubePositions[] = {

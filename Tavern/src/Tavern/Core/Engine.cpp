@@ -39,13 +39,14 @@ namespace Tavern
 			// Process events
 			EventManager::Get().ProcessEvents();
 
-			// Render
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			RenderManager::Get().GetActiveCamera()->ComputeViewMatrix();
+			// Update State
 			for (Entity* entity : m_Entities)
 			{
 				entity->Update();
 			}
+
+			// Render
+			RenderManager::Get().Render();
 
 			glfwPollEvents();
 			glfwSwapBuffers(RenderManager::Get().GetWindow()->GetGLFWWindow());

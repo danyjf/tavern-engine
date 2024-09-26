@@ -10,10 +10,6 @@ namespace Tavern
 	{
 	}
 
-	TransformComponent::~TransformComponent()
-	{
-	}
-
 	const glm::vec3& TransformComponent::GetPosition() const
 	{
 		return m_Position;

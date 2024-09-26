@@ -8,10 +8,6 @@ namespace Tavern
 		m_Owner = owner;
 	}
 
-	Component::~Component()
-	{
-	}
-
 	Entity* Component::GetOwner() const
 	{
 		return m_Owner;

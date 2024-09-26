@@ -59,6 +59,22 @@ namespace Tavern
 		m_Camera = camera;
 	}
 
+	void RenderManager::AddMeshComponent(MeshComponent* meshComponent)
+	{
+		m_MeshComponents.push_back(meshComponent);
+	}
+
+	void RenderManager::Render()
+	{
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		GetActiveCamera()->ComputeViewMatrix();
+
+		for (MeshComponent* meshComponent : m_MeshComponents)
+		{
+			meshComponent->Render();
+		}
+	}
+
 	void RenderManager::OnWindowResizeEvent(const std::shared_ptr<Event>& event)
 	{
 		std::shared_ptr<WindowResizeEvent> windowResizeEvent = std::dynamic_pointer_cast<WindowResizeEvent>(event);

@@ -9,7 +9,7 @@ namespace Tavern
 	public:
 		Component() = default;
 		Component(Entity* owner);
-		~Component();
+		~Component() = default;
 
 		Entity* GetOwner() const;
 

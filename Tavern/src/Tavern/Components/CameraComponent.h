@@ -22,7 +22,7 @@ namespace Tavern
 			float nearClipPlane = 0.1f,
 			float farClipPlane = 100.0f
 		);
-		~CameraComponent();
+		~CameraComponent() = default;
 
 		const glm::mat4& GetViewMatrix() const;
 		const glm::mat4& GetProjectionMatrix() const;
