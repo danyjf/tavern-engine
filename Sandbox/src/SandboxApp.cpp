@@ -1,5 +1,3 @@
-#include "Tavern/Core/Log.h"
-#include "Tavern/Events/KeyEvent.h"
 #include <Tavern.h>
 #include <functional>
 #include <memory>
@@ -30,6 +28,7 @@ class Player : public Tavern::Entity
 {
 public:
 	Player()
+		: m_Speed(2.5f), m_Direction(0.0f), m_LastMousePosition(0.0f), m_CameraSensitivity(0.05f)
 	{
 		m_Camera = std::make_unique<Tavern::CameraComponent>(this);
 		Tavern::RenderManager::Get().SetActiveCamera(m_Camera.get());
@@ -38,62 +37,131 @@ public:
 		GetTransformComponent()->SetRotation(glm::vec3(0.0f, -90.0f, 0.0f));
 
 		Tavern::EventManager::Get().AddListener(Tavern::EventType::KeyPressed, std::bind(&Player::OnKeyPressed, this, std::placeholders::_1));
+		Tavern::EventManager::Get().AddListener(Tavern::EventType::KeyReleased, std::bind(&Player::OnKeyReleased, this, std::placeholders::_1));
+		Tavern::EventManager::Get().AddListener(Tavern::EventType::MouseMoved, std::bind(&Player::OnMouseMoved, this, std::placeholders::_1));
 	}
 
 	void Update() override
 	{
+		glm::vec3 translation = GetTransformComponent()->GetFrontDirection() * m_Direction.y;
+		translation += GetTransformComponent()->GetRightDirection() * m_Direction.x;
+
+		if (glm::length(translation) != 0)
+		{
+			translation = glm::normalize(translation);
+			GetTransformComponent()->SetPosition(GetTransformComponent()->GetPosition() + translation * m_Speed * Tavern::Time::GetDeltaTime());
+		}
 	}
 
 	void OnKeyPressed(const std::shared_ptr<Tavern::Event>& event)
 	{
 		std::shared_ptr<Tavern::KeyPressedEvent> keyPressedEvent = std::dynamic_pointer_cast<Tavern::KeyPressedEvent>(event);
 
+		if (keyPressedEvent->IsRepeat())
+		{
+			return;
+		}
+
 		switch (keyPressedEvent->GetKey())
 		{
+			case Tavern::Key::UpArrow:
 			case Tavern::Key::W:
 			{
-				TAVERN_INFO("KeyPressed(W)");
-				break;
-			}
-			case Tavern::Key::A:
-			{
-				TAVERN_INFO("KeyPressed(A)");
-				break;
-			}
-			case Tavern::Key::S:
-			{
-				TAVERN_INFO("KeyPressed(S)");
-				break;
-			}
-			case Tavern::Key::D:
-			{
-				TAVERN_INFO("KeyPressed(D)");
-				break;
-			}
-			case Tavern::Key::UpArrow:
-			{
-				TAVERN_INFO("KeyPressed(UpArrow)");
-				break;
-			}
-			case Tavern::Key::LeftArrow:
-			{
-				TAVERN_INFO("KeyPressed(LeftArrow)");
+				m_Direction.y += 1.0f;
 				break;
 			}
 			case Tavern::Key::DownArrow:
+			case Tavern::Key::S:
 			{
-				TAVERN_INFO("KeyPressed(DownArrow)");
+				m_Direction.y -= 1.0f;
+				break;
+			}
+			case Tavern::Key::LeftArrow:
+			case Tavern::Key::A:
+			{
+				m_Direction.x -= 1.0f;
 				break;
 			}
 			case Tavern::Key::RightArrow:
+			case Tavern::Key::D:
 			{
-				TAVERN_INFO("KeyPressed(RightArrow)");
+				m_Direction.x += 1.0f;
 				break;
+			}
+			default:
+			{
+				return;
 			}
 		}
 	}
 
+	void OnKeyReleased(const std::shared_ptr<Tavern::Event>& event)
+	{
+		std::shared_ptr<Tavern::KeyReleasedEvent> keyReleasedEvent = std::dynamic_pointer_cast<Tavern::KeyReleasedEvent>(event);
+
+		switch (keyReleasedEvent->GetKey())
+		{
+			case Tavern::Key::UpArrow:
+			case Tavern::Key::W:
+			{
+				m_Direction.y -= 1.0f;
+				break;
+			}
+			case Tavern::Key::DownArrow:
+			case Tavern::Key::S:
+			{
+				m_Direction.y += 1.0f;
+				break;
+			}
+			case Tavern::Key::LeftArrow:
+			case Tavern::Key::A:
+			{
+				m_Direction.x += 1.0f;
+				break;
+			}
+			case Tavern::Key::RightArrow:
+			case Tavern::Key::D:
+			{
+				m_Direction.x -= 1.0f;
+				break;
+			}
+			default:
+			{
+				return;
+			}
+		}
+	}
+
+	void OnMouseMoved(const std::shared_ptr<Tavern::Event>& event)
+	{
+		std::shared_ptr<Tavern::MouseMovedEvent> mouseMovedEvent = std::dynamic_pointer_cast<Tavern::MouseMovedEvent>(event);
+		glm::vec2 mouseOffset(
+			mouseMovedEvent->GetX() - m_LastMousePosition.x,
+			mouseMovedEvent->GetY() - m_LastMousePosition.y
+		);
+		mouseOffset *= m_CameraSensitivity;
+
+		m_LastMousePosition.x = mouseMovedEvent->GetX();
+		m_LastMousePosition.y = mouseMovedEvent->GetY();
+
+		const glm::vec3& rotation = GetTransformComponent()->GetRotation();
+		GetTransformComponent()->SetRotation(rotation + glm::vec3(-mouseOffset.y, mouseOffset.x, 0.0f));
+
+		if (rotation.x > 89.0f)
+		{
+			GetTransformComponent()->SetRotation(glm::vec3(89.0f, rotation.y, rotation.z));
+		}
+		if (rotation.x < -89.0f)
+		{
+			GetTransformComponent()->SetRotation(glm::vec3(-89.0f, rotation.y, rotation.z));
+		}
+	}
+
 	std::unique_ptr<Tavern::CameraComponent> m_Camera;
+	float m_Speed;
+	glm::vec2 m_Direction;
+	glm::vec2 m_LastMousePosition;
+	float m_CameraSensitivity;
 };
 
 int main()

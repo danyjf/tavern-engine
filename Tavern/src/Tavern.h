@@ -4,6 +4,7 @@
 
 #include "Tavern/Core/Engine.h"
 #include "Tavern/Core/Log.h"
+#include "Tavern/Core/Time.h"
 #include "Tavern/Renderer/Texture.h"
 #include "Tavern/Renderer/RenderManager.h"
 #include "Tavern/Components/Component.h"
@@ -13,5 +14,6 @@
 #include "Tavern/Events/EventManager.h"
 #include "Tavern/Events/Event.h"
 #include "Tavern/Events/KeyEvent.h"
+#include "Tavern/Events/MouseEvent.h"
 #include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Entity.h"

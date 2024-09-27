@@ -7,7 +7,11 @@ namespace Tavern
 		WindowClose,
 		WindowResize,
 		KeyPressed,
-		KeyReleased
+		KeyReleased,
+		MouseButtonPressed,
+		MouseButtonReleased,
+		MouseMoved,
+		MouseScrolled
 	};
 
 	class Event

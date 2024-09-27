@@ -7,6 +7,7 @@
 #include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Events/EventManager.h"
 #include "Tavern/Events/KeyEvent.h"
+#include "Tavern/Events/MouseEvent.h"
 #include "Tavern/Renderer/Window.h"
 
 namespace Tavern
@@ -89,6 +90,32 @@ namespace Tavern
 				}
 			}
 		});
+
+		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods) {
+			switch (action)
+			{
+				case GLFW_PRESS:
+				{
+					std::shared_ptr<MouseButtonPressedEvent> event = std::make_shared<MouseButtonPressedEvent>(static_cast<Mouse>(button));
+					EventManager::Get().QueueEvent(event);
+					break;
+				}
+				case GLFW_RELEASE:
+				{
+					std::shared_ptr<MouseButtonReleasedEvent> event = std::make_shared<MouseButtonReleasedEvent>(static_cast<Mouse>(button));
+					EventManager::Get().QueueEvent(event);
+					break;
+				}
+			}
+		});
+
+		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xpos, double ypos) {
+			std::shared_ptr<MouseMovedEvent> event = std::make_shared<MouseMovedEvent>(xpos, ypos);
+			EventManager::Get().QueueEvent(event);
+		});
+
+		// TODO: Change this, i am just setting the input mode to hide and capture the mouse
+		glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	}
 
 	void Window::Shutdown()

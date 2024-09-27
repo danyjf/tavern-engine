@@ -8,6 +8,7 @@ namespace Tavern
 	TransformComponent::TransformComponent(Entity* owner)
 		: Component(owner), m_ModelMatrix(1.0f), m_Position(0.0f), m_Rotation(0.0f), m_Scale(1.0f)
 	{
+		CalculateDirectionVectors();
 	}
 
 	const glm::vec3& TransformComponent::GetPosition() const
@@ -29,6 +30,7 @@ namespace Tavern
 	void TransformComponent::SetRotation(const glm::vec3& rotation)
 	{
 		m_Rotation = rotation;
+		CalculateDirectionVectors();
 		ComputeModelMatrix();
 	}
 
@@ -41,6 +43,21 @@ namespace Tavern
 	{
 		m_Scale = scale;
 		ComputeModelMatrix();
+	}
+
+	const glm::vec3& TransformComponent::GetFrontDirection() const
+	{
+		return m_Front;
+	}
+
+	const glm::vec3& TransformComponent::GetRightDirection() const
+	{
+		return m_Right;
+	}
+
+	const glm::vec3& TransformComponent::GetUpDirection() const
+	{
+		return m_Up;
 	}
 
 	const glm::mat4& TransformComponent::GetModelMatrix() const
@@ -62,5 +79,16 @@ namespace Tavern
 
 		// Apply scale
 		m_ModelMatrix = glm::scale(m_ModelMatrix, m_Scale);
+	}
+
+	void TransformComponent::CalculateDirectionVectors()
+	{
+		const glm::vec3& rotation = GetRotation();
+		m_Front.x = cos(glm::radians(rotation.y)) * cos(glm::radians(rotation.x));
+		m_Front.y = sin(glm::radians(rotation.x));
+		m_Front.z = sin(glm::radians(rotation.y)) * cos(glm::radians(rotation.x));
+		m_Front = glm::normalize(m_Front);
+		m_Right = glm::normalize(glm::cross(m_Front, glm::vec3(0.0f, 1.0f, 0.0f)));
+		m_Up = glm::normalize(glm::cross(m_Right, m_Front));
 	}
 }

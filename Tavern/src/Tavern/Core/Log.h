@@ -9,6 +9,8 @@ namespace Tavern
 	class TAVERN_API Log
 	{
 	public:
+		Log() = delete;
+
 		static void Init();
 
 		inline static std::shared_ptr<spdlog::logger>& GetEngineLogger() { return s_EngineLogger; }

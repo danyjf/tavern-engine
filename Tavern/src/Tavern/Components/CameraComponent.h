@@ -40,13 +40,13 @@ namespace Tavern
 		float m_NearClipPlane;
 		float m_FarClipPlane;
 
-		glm::vec3 m_Front;
-		glm::vec3 m_Right;
-		glm::vec3 m_Up;
+		// glm::vec3 m_Front;
+		// glm::vec3 m_Right;
+		// glm::vec3 m_Up;
 
 		glm::mat4 m_ViewMatrix;
 		glm::mat4 m_ProjectionMatrix;
 
-		void CalculateDirectionVectors();
+		// void CalculateDirectionVectors();
 	};
 }

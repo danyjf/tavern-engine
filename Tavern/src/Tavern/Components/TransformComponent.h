@@ -23,14 +23,24 @@ namespace Tavern
 		const glm::vec3& GetScale() const;
 		void SetScale(const glm::vec3& scale);
 
+		const glm::vec3& GetFrontDirection() const;
+		const glm::vec3& GetRightDirection() const;
+		const glm::vec3& GetUpDirection() const;
+
 		const glm::mat4& GetModelMatrix() const;
 
 	private:
 		glm::mat4 m_ModelMatrix;
+
 		glm::vec3 m_Position;
 		glm::vec3 m_Rotation;
 		glm::vec3 m_Scale;
 
+		glm::vec3 m_Front;
+		glm::vec3 m_Right;
+		glm::vec3 m_Up;
+
 		void ComputeModelMatrix();
+		void CalculateDirectionVectors();
 	};
 }

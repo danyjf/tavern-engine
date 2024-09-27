@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Tavern/Events/Event.h"
-#include "Tavern/Core/Keycode.h"
+#include "Tavern/Core/KeyCodes.h"
 
 namespace Tavern
 {

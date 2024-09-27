@@ -3,6 +3,7 @@
 
 #include "Tavern/Core/Engine.h"
 #include "Tavern/Core/Log.h"
+#include "Tavern/Core/Time.h"
 #include "Tavern/Entity.h"
 #include "Tavern/Events/EventManager.h"
 #include "Tavern/Events/Event.h"
@@ -36,6 +37,8 @@ namespace Tavern
 	{
 		while (m_IsRunning)
 		{
+			Time::UpdateTime();
+
 			// Process events
 			EventManager::Get().ProcessEvents();
 

@@ -13,7 +13,10 @@ set(SOURCES_TAVERN_CORE
     src/Tavern/Core/Engine.cpp
     src/Tavern/Core/Log.h
     src/Tavern/Core/Log.cpp
-    src/Tavern/Core/Keycode.h
+    src/Tavern/Core/KeyCodes.h
+    src/Tavern/Core/MouseCodes.h
+    src/Tavern/Core/Time.h
+    src/Tavern/Core/Time.cpp
 )
 set(SOURCES_TAVERN_EVENTS
 	src/Tavern/Events/Event.h
