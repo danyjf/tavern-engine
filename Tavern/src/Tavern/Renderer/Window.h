@@ -4,6 +4,9 @@
 #include <GLFW/glfw3.h>
 #include <string>
 
+#include "Tavern/Core/Core.h"
+#include "Tavern/Renderer/Cursor.h"
+
 namespace Tavern
 {
 	struct WindowSettings
@@ -18,7 +21,7 @@ namespace Tavern
 		}
 	};
 
-	class Window
+	class TAVERN_API Window
 	{
 	public:
 		Window();
@@ -29,9 +32,11 @@ namespace Tavern
 
 		GLFWwindow* GetGLFWWindow() const { return m_Window; }
 		const WindowSettings& GetWindowSettings() const { return m_WindowSettings; }
+		Cursor& GetCursor() { return m_Cursor; }
 
 	private:
 		GLFWwindow* m_Window;
 		WindowSettings m_WindowSettings;
+		Cursor m_Cursor;
 	};
 }

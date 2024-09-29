@@ -24,6 +24,8 @@ namespace Tavern
 		);
 		~CameraComponent() = default;
 
+		void SetFOV(float FOV);
+
 		const glm::mat4& GetViewMatrix() const;
 		const glm::mat4& GetProjectionMatrix() const;
 		const glm::mat4 GetViewProjectionMatrix() const;
@@ -40,13 +42,7 @@ namespace Tavern
 		float m_NearClipPlane;
 		float m_FarClipPlane;
 
-		// glm::vec3 m_Front;
-		// glm::vec3 m_Right;
-		// glm::vec3 m_Up;
-
 		glm::mat4 m_ViewMatrix;
 		glm::mat4 m_ProjectionMatrix;
-
-		// void CalculateDirectionVectors();
 	};
 }

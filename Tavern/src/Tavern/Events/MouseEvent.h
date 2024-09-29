@@ -51,4 +51,21 @@ namespace Tavern
 		float m_MouseX;
 		float m_MouseY;
 	};
+
+	class MouseScrolledEvent : public Event
+	{
+	public:
+		MouseScrolledEvent(float xOffset, float yOffset)
+			: m_XOffset(xOffset), m_YOffset(yOffset) {}
+
+		const float GetXOffset() const { return m_XOffset; }
+		const float GetYOffset() const { return m_YOffset; }
+
+		const EventType GetEventType() const override { return EventType::MouseScrolled; }
+		const char* GetName() const override { return "MouseScrolled"; }
+
+	private:
+		float m_XOffset;
+		float m_YOffset;
+	};
 }

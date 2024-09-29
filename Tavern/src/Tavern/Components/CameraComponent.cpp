@@ -20,6 +20,12 @@ namespace Tavern
 		ComputeProjectionMatrix();
 	}
 
+	void CameraComponent::SetFOV(float FOV)
+	{
+		m_FOV = FOV;
+		ComputeProjectionMatrix();
+	}
+
 	const glm::mat4& CameraComponent::GetViewMatrix() const
 	{
 		return m_ViewMatrix;
@@ -35,20 +41,8 @@ namespace Tavern
 		return m_ProjectionMatrix * m_ViewMatrix;
 	}
 
-	// void CameraComponent::CalculateDirectionVectors()
-	// {
-	// 	const glm::vec3& rotation = m_OwnerTransform->GetRotation();
-	// 	m_Front.x = cos(glm::radians(rotation.y)) * cos(glm::radians(rotation.x));
-	// 	m_Front.y = sin(glm::radians(rotation.x));
-	// 	m_Front.z = sin(glm::radians(rotation.y)) * cos(glm::radians(rotation.x));
-	// 	m_Front = glm::normalize(m_Front);
-	// 	m_Right = glm::normalize(glm::cross(m_Front, glm::vec3(0.0f, 1.0f, 0.0f)));
-	// 	m_Up = glm::normalize(glm::cross(m_Right, m_Front));
-	// }
-
 	void CameraComponent::ComputeViewMatrix()
 	{
-		// CalculateDirectionVectors();
 		m_ViewMatrix = glm::lookAt(m_OwnerTransform->GetPosition(), m_OwnerTransform->GetPosition() + m_OwnerTransform->GetFrontDirection(), m_OwnerTransform->GetUpDirection());
 	}
 

@@ -1,4 +1,6 @@
+#include "Tavern/Renderer/RenderManager.h"
 #include <Tavern.h>
+#include <algorithm>
 #include <functional>
 #include <memory>
 
@@ -28,7 +30,8 @@ class Player : public Tavern::Entity
 {
 public:
 	Player()
-		: m_Speed(2.5f), m_Direction(0.0f), m_LastMousePosition(0.0f), m_CameraSensitivity(0.05f)
+		: m_Speed(2.5f), m_Direction(0.0f), m_LastMousePosition(0.0f),
+		  m_CameraSensitivity(0.05f), m_Zoom(45.0f)
 	{
 		m_Camera = std::make_unique<Tavern::CameraComponent>(this);
 		Tavern::RenderManager::Get().SetActiveCamera(m_Camera.get());
@@ -39,6 +42,7 @@ public:
 		Tavern::EventManager::Get().AddListener(Tavern::EventType::KeyPressed, std::bind(&Player::OnKeyPressed, this, std::placeholders::_1));
 		Tavern::EventManager::Get().AddListener(Tavern::EventType::KeyReleased, std::bind(&Player::OnKeyReleased, this, std::placeholders::_1));
 		Tavern::EventManager::Get().AddListener(Tavern::EventType::MouseMoved, std::bind(&Player::OnMouseMoved, this, std::placeholders::_1));
+		Tavern::EventManager::Get().AddListener(Tavern::EventType::MouseScrolled, std::bind(&Player::OnMouseScrolled, this, std::placeholders::_1));
 	}
 
 	void Update() override
@@ -87,6 +91,11 @@ public:
 			{
 				m_Direction.x += 1.0f;
 				break;
+			}
+			case Tavern::Key::Escape:
+			{
+				Tavern::RenderManager::Get().GetWindow()->GetCursor().SetIsLocked(false);
+				Tavern::RenderManager::Get().GetWindow()->GetCursor().SetIsVisible(true);
 			}
 			default:
 			{
@@ -157,11 +166,22 @@ public:
 		}
 	}
 
+	void OnMouseScrolled(const std::shared_ptr<Tavern::Event>& event)
+	{
+		std::shared_ptr<Tavern::MouseScrolledEvent> mouseScrolledEvent = std::dynamic_pointer_cast<Tavern::MouseScrolledEvent>(event);
+
+		m_Zoom -= mouseScrolledEvent->GetYOffset();
+		m_Zoom = std::clamp(m_Zoom, 1.0f, 45.0f);
+
+		m_Camera->SetFOV(m_Zoom);
+	}
+
 	std::unique_ptr<Tavern::CameraComponent> m_Camera;
 	float m_Speed;
 	glm::vec2 m_Direction;
 	glm::vec2 m_LastMousePosition;
 	float m_CameraSensitivity;
+	float m_Zoom;
 };
 
 int main()

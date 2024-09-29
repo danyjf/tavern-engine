@@ -8,6 +8,7 @@
 #include "Tavern/Events/EventManager.h"
 #include "Tavern/Events/KeyEvent.h"
 #include "Tavern/Events/MouseEvent.h"
+#include "Tavern/Renderer/Cursor.h"
 #include "Tavern/Renderer/Window.h"
 
 namespace Tavern
@@ -15,6 +16,7 @@ namespace Tavern
 	Window::Window()
 	{
 	}
+
 	Window::~Window()
 	{
 	}
@@ -114,8 +116,13 @@ namespace Tavern
 			EventManager::Get().QueueEvent(event);
 		});
 
-		// TODO: Change this, i am just setting the input mode to hide and capture the mouse
-		glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xoffset, double yoffset) {
+			std::shared_ptr<MouseScrolledEvent> event = std::make_shared<MouseScrolledEvent>(xoffset, yoffset);
+			EventManager::Get().QueueEvent(event);
+		});
+
+		// Create cursor
+		m_Cursor = Cursor(this, false, true);
 	}
 
 	void Window::Shutdown()
