@@ -34,7 +34,7 @@ public:
 		  m_CameraSensitivity(0.05f), m_Zoom(45.0f)
 	{
 		m_Camera = std::make_unique<Tavern::CameraComponent>(this);
-		Tavern::RenderManager::Get().SetActiveCamera(m_Camera.get());
+		Tavern::gRenderManager.SetActiveCamera(m_Camera.get());
 
 		GetTransformComponent()->SetPosition(glm::vec3(0.0f, 0.0f, 3.0f));
 		GetTransformComponent()->SetRotation(glm::vec3(0.0f, -90.0f, 0.0f));
@@ -94,8 +94,8 @@ public:
 			}
 			case Tavern::Key::Escape:
 			{
-				Tavern::RenderManager::Get().GetWindow()->GetCursor().SetIsLocked(false);
-				Tavern::RenderManager::Get().GetWindow()->GetCursor().SetIsVisible(true);
+				Tavern::gRenderManager.GetWindow()->GetCursor().SetIsLocked(false);
+				Tavern::gRenderManager.GetWindow()->GetCursor().SetIsVisible(true);
 			}
 			default:
 			{
@@ -190,9 +190,9 @@ int main()
 
 	TavernEngine->Init();
 
+	// Create startup game entities
 	TavernEngine->CreateEntity<Player>();
 
-	// Create startup game entities
 	glm::vec3 cubePositions[] = {
 		glm::vec3(0.0f, 0.0f, 0.0f),
 		glm::vec3(2.0f, 5.0f, -15.0f),

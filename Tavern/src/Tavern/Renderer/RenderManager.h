@@ -15,10 +15,10 @@ namespace Tavern
 	class TAVERN_API RenderManager
 	{
 	public:
+		RenderManager() {};
+		~RenderManager() {};
 		RenderManager(RenderManager& copy) = delete;
 		void operator=(const RenderManager& copy) = delete;
-
-		static RenderManager& Get();
 
 		void Init();
 		void Shutdown();
@@ -34,12 +34,11 @@ namespace Tavern
 		void OnWindowResizeEvent(const std::shared_ptr<Event>& event);
 
 	private:
-		RenderManager() {};
-		~RenderManager() {};
-
 		std::unique_ptr<Window> m_Window;
 		std::unique_ptr<Shader> m_Shader;
 		CameraComponent* m_Camera;
 		std::vector<MeshComponent*> m_MeshComponents;
 	};
+
+	extern TAVERN_API RenderManager gRenderManager;
 }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include "Tavern/Components/Component.h"
 #include "Tavern/Renderer/Texture.h"
 #include "Tavern/Core/Core.h"

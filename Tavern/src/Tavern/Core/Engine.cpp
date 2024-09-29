@@ -27,7 +27,7 @@ namespace Tavern
 		EventManager::Get().Init();
 		TAVERN_ENGINE_INFO("Initialized event manager");
 
-		RenderManager::Get().Init();
+		gRenderManager.Init();
 		TAVERN_ENGINE_INFO("Initialized render manager");
 
 		EventManager::Get().AddListener(EventType::WindowClose, std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1));
@@ -49,16 +49,16 @@ namespace Tavern
 			}
 
 			// Render
-			RenderManager::Get().Render();
+			gRenderManager.Render();
 
 			glfwPollEvents();
-			glfwSwapBuffers(RenderManager::Get().GetWindow()->GetGLFWWindow());
+			glfwSwapBuffers(gRenderManager.GetWindow()->GetGLFWWindow());
 		}
 	}
 
 	void Engine::Shutdown()
 	{
-		RenderManager::Get().Shutdown();
+		gRenderManager.Shutdown();
 		EventManager::Get().Shutdown();
 	}
 

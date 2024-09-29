@@ -24,15 +24,15 @@ namespace Tavern
 	class TAVERN_API Window
 	{
 	public:
-		Window();
-		~Window();
+		Window() = default;
+		~Window() = default;
 
 		void Init(const WindowSettings& windowSettings = WindowSettings());
 		void Shutdown();
 
-		GLFWwindow* GetGLFWWindow() const { return m_Window; }
-		const WindowSettings& GetWindowSettings() const { return m_WindowSettings; }
-		Cursor& GetCursor() { return m_Cursor; }
+		GLFWwindow* GetGLFWWindow() const;
+		const WindowSettings& GetWindowSettings() const;
+		Cursor& GetCursor();
 
 	private:
 		GLFWwindow* m_Window;

@@ -13,14 +13,6 @@
 
 namespace Tavern
 {
-	Window::Window()
-	{
-	}
-
-	Window::~Window()
-	{
-	}
-
 	void Window::Init(const WindowSettings& windowSettings)
 	{
 		m_WindowSettings = windowSettings;
@@ -129,5 +121,20 @@ namespace Tavern
 	{
 		glfwDestroyWindow(m_Window);
 		glfwTerminate();
+	}
+
+	GLFWwindow* Window::GetGLFWWindow() const
+	{
+		return m_Window;
+	}
+
+	const WindowSettings& Window::GetWindowSettings() const
+	{
+		return m_WindowSettings;
+	}
+
+	Cursor& Window::GetCursor()
+	{
+		return m_Cursor;
 	}
 }

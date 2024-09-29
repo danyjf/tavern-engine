@@ -13,11 +13,7 @@
 
 namespace Tavern
 {
-	RenderManager& RenderManager::Get()
-	{
-		static RenderManager s_RenderManager;
-		return s_RenderManager;
-	}
+	RenderManager gRenderManager;
 
 	void RenderManager::Init()
 	{
