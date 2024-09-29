@@ -24,13 +24,13 @@ namespace Tavern
 		Tavern::Log::Init();
 		TAVERN_ENGINE_INFO("Initialized engine logger");
 
-		EventManager::Get().Init();
+		gEventManager.Init();
 		TAVERN_ENGINE_INFO("Initialized event manager");
 
 		gRenderManager.Init();
 		TAVERN_ENGINE_INFO("Initialized render manager");
 
-		EventManager::Get().AddListener(EventType::WindowClose, std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1));
+		gEventManager.AddListener(EventType::WindowClose, std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1));
 	}
 
 	void Engine::GameLoop()
@@ -40,7 +40,7 @@ namespace Tavern
 			Time::UpdateTime();
 
 			// Process events
-			EventManager::Get().ProcessEvents();
+			gEventManager.DispatchEvents();
 
 			// Update State
 			for (Entity* entity : m_Entities)
@@ -59,7 +59,7 @@ namespace Tavern
 	void Engine::Shutdown()
 	{
 		gRenderManager.Shutdown();
-		EventManager::Get().Shutdown();
+		gEventManager.Shutdown();
 	}
 
 	void Engine::OnWindowCloseEvent(const std::shared_ptr<Event>& event)

@@ -10,10 +10,10 @@ namespace Tavern
 	class TAVERN_API EventManager
 	{
 	public:
+		EventManager() {};
+		~EventManager() {};
 		EventManager(EventManager& copy) = delete;
 		void operator=(const EventManager& copy) = delete;
-
-		static EventManager& Get();
 
 		void Init();
 		void Shutdown();
@@ -30,13 +30,12 @@ namespace Tavern
 
 		// Process all events from the queue
 		// Returns true if successful.
-		void ProcessEvents();
+		void DispatchEvents();
 
 	private:
-		EventManager() {};
-		~EventManager() {};
-
 		std::queue<std::shared_ptr<Event>> m_Events;
 		std::unordered_map<EventType, std::vector<EventListenerDelegate>> m_EventListeners;
 	};
+
+	extern TAVERN_API EventManager gEventManager;
 }

@@ -2,11 +2,7 @@
 
 namespace Tavern
 {
-	EventManager& EventManager::Get()
-	{
-		static EventManager s_EventManager;
-		return s_EventManager;
-	}
+	EventManager gEventManager;
 
 	void EventManager::Init()
 	{
@@ -30,7 +26,7 @@ namespace Tavern
 		m_Events.push(event);
 	}
 
-	void EventManager::ProcessEvents()
+	void EventManager::DispatchEvents()
 	{
 		while (!m_Events.empty())
 		{

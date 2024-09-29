@@ -20,7 +20,7 @@ namespace Tavern
 		m_Window = std::make_unique<Window>();
 		m_Window->Init(WindowSettings("My Window", 800, 600));
 
-		EventManager::Get().AddListener(EventType::WindowResize, std::bind(&RenderManager::OnWindowResizeEvent, this, std::placeholders::_1));
+		gEventManager.AddListener(EventType::WindowResize, std::bind(&RenderManager::OnWindowResizeEvent, this, std::placeholders::_1));
 
 		m_Shader = std::make_unique<Shader>(
 			"./Shaders/Shader.vert",

@@ -52,13 +52,13 @@ namespace Tavern
 				windowSettings.Height = height;
 
 				std::shared_ptr<WindowResizeEvent> event = std::make_shared<WindowResizeEvent>(width, height);
-				EventManager::Get().QueueEvent(event);
+				gEventManager.QueueEvent(event);
 			}
 		);
 
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
 			std::shared_ptr<WindowCloseEvent> event = std::make_shared<WindowCloseEvent>();
-			EventManager::Get().QueueEvent(event);
+			gEventManager.QueueEvent(event);
 		});
 
 		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
@@ -67,19 +67,19 @@ namespace Tavern
 				case GLFW_PRESS:
 				{
 					std::shared_ptr<KeyPressedEvent> event = std::make_shared<KeyPressedEvent>(static_cast<Key>(key), false);
-					EventManager::Get().QueueEvent(event);
+					gEventManager.QueueEvent(event);
 					break;
 				}
 				case GLFW_RELEASE:
 				{
 					std::shared_ptr<KeyReleasedEvent> event = std::make_shared<KeyReleasedEvent>(static_cast<Key>(key));
-					EventManager::Get().QueueEvent(event);
+					gEventManager.QueueEvent(event);
 					break;
 				}
 				case GLFW_REPEAT:
 				{
 					std::shared_ptr<KeyPressedEvent> event = std::make_shared<KeyPressedEvent>(static_cast<Key>(key), true);
-					EventManager::Get().QueueEvent(event);
+					gEventManager.QueueEvent(event);
 					break;
 				}
 			}
@@ -91,13 +91,13 @@ namespace Tavern
 				case GLFW_PRESS:
 				{
 					std::shared_ptr<MouseButtonPressedEvent> event = std::make_shared<MouseButtonPressedEvent>(static_cast<Mouse>(button));
-					EventManager::Get().QueueEvent(event);
+					gEventManager.QueueEvent(event);
 					break;
 				}
 				case GLFW_RELEASE:
 				{
 					std::shared_ptr<MouseButtonReleasedEvent> event = std::make_shared<MouseButtonReleasedEvent>(static_cast<Mouse>(button));
-					EventManager::Get().QueueEvent(event);
+					gEventManager.QueueEvent(event);
 					break;
 				}
 			}
@@ -105,12 +105,12 @@ namespace Tavern
 
 		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xpos, double ypos) {
 			std::shared_ptr<MouseMovedEvent> event = std::make_shared<MouseMovedEvent>(xpos, ypos);
-			EventManager::Get().QueueEvent(event);
+			gEventManager.QueueEvent(event);
 		});
 
 		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xoffset, double yoffset) {
 			std::shared_ptr<MouseScrolledEvent> event = std::make_shared<MouseScrolledEvent>(xoffset, yoffset);
-			EventManager::Get().QueueEvent(event);
+			gEventManager.QueueEvent(event);
 		});
 
 		// Create cursor

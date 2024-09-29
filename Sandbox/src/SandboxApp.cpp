@@ -1,4 +1,3 @@
-#include "Tavern/Renderer/RenderManager.h"
 #include <Tavern.h>
 #include <algorithm>
 #include <functional>
@@ -39,10 +38,10 @@ public:
 		GetTransformComponent()->SetPosition(glm::vec3(0.0f, 0.0f, 3.0f));
 		GetTransformComponent()->SetRotation(glm::vec3(0.0f, -90.0f, 0.0f));
 
-		Tavern::EventManager::Get().AddListener(Tavern::EventType::KeyPressed, std::bind(&Player::OnKeyPressed, this, std::placeholders::_1));
-		Tavern::EventManager::Get().AddListener(Tavern::EventType::KeyReleased, std::bind(&Player::OnKeyReleased, this, std::placeholders::_1));
-		Tavern::EventManager::Get().AddListener(Tavern::EventType::MouseMoved, std::bind(&Player::OnMouseMoved, this, std::placeholders::_1));
-		Tavern::EventManager::Get().AddListener(Tavern::EventType::MouseScrolled, std::bind(&Player::OnMouseScrolled, this, std::placeholders::_1));
+		Tavern::gEventManager.AddListener(Tavern::EventType::KeyPressed, std::bind(&Player::OnKeyPressed, this, std::placeholders::_1));
+		Tavern::gEventManager.AddListener(Tavern::EventType::KeyReleased, std::bind(&Player::OnKeyReleased, this, std::placeholders::_1));
+		Tavern::gEventManager.AddListener(Tavern::EventType::MouseMoved, std::bind(&Player::OnMouseMoved, this, std::placeholders::_1));
+		Tavern::gEventManager.AddListener(Tavern::EventType::MouseScrolled, std::bind(&Player::OnMouseScrolled, this, std::placeholders::_1));
 	}
 
 	void Update() override
