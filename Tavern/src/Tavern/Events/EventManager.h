@@ -10,8 +10,8 @@ namespace Tavern
 	class TAVERN_API EventManager
 	{
 	public:
-		EventManager() {};
-		~EventManager() {};
+		EventManager();
+		~EventManager();
 		EventManager(EventManager& copy) = delete;
 		void operator=(const EventManager& copy) = delete;
 

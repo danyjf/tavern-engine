@@ -15,8 +15,8 @@ namespace Tavern
 	class TAVERN_API RenderManager
 	{
 	public:
-		RenderManager() {};
-		~RenderManager() {};
+		RenderManager();
+		~RenderManager();
 		RenderManager(RenderManager& copy) = delete;
 		void operator=(const RenderManager& copy) = delete;
 

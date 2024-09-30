@@ -13,8 +13,6 @@ set(SOURCES_TAVERN_CORE
     src/Tavern/Core/Engine.cpp
     src/Tavern/Core/Log.h
     src/Tavern/Core/Log.cpp
-    src/Tavern/Core/KeyCodes.h
-    src/Tavern/Core/MouseCodes.h
     src/Tavern/Core/Time.h
     src/Tavern/Core/Time.cpp
 )
@@ -24,6 +22,12 @@ set(SOURCES_TAVERN_EVENTS
 	src/Tavern/Events/KeyEvent.h
 	src/Tavern/Events/EventManager.h
 	src/Tavern/Events/EventManager.cpp
+)
+set(SOURCES_TAVERN_INPUT
+    src/Tavern/Input/InputManager.h
+    src/Tavern/Input/InputManager.cpp
+    src/Tavern/Input/KeyCodes.h
+    src/Tavern/Input/MouseCodes.h
 )
 set(SOURCES_TAVERN_RENDERER
     src/Tavern/Renderer/Window.h
@@ -60,6 +64,7 @@ add_library(Tavern SHARED
     ${SOURCES_TAVERN} 
     ${SOURCES_TAVERN_CORE}
     ${SOURCES_TAVERN_EVENTS}
+    ${SOURCES_TAVERN_INPUT}
     ${SOURCES_TAVERN_RENDERER}
     ${SOURCES_TAVERN_COMPONENTS}
 )
@@ -68,6 +73,7 @@ source_group(src FILES ${SOURCES})
 source_group(src/Tavern FILES ${SOURCES_TAVERN})
 source_group(src/Tavern/Core FILES ${SOURCES_TAVERN_CORE})
 source_group(src/Tavern/Events FILES ${SOURCES_TAVERN_EVENTS})
+source_group(src/Tavern/Input FILES ${SOURCES_TAVERN_INPUT})
 source_group(src/Tavern/Renderer FILES ${SOURCES_TAVERN_RENDERER})
 source_group(src/Tavern/Components FILES ${SOURCES_TAVERN_COMPONENTS})
 

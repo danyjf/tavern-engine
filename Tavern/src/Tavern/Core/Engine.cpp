@@ -7,6 +7,7 @@
 #include "Tavern/Entity.h"
 #include "Tavern/Events/EventManager.h"
 #include "Tavern/Events/Event.h"
+#include "Tavern/Input/InputManager.h"
 #include "Tavern/Renderer/RenderManager.h"
 
 namespace Tavern
@@ -29,6 +30,9 @@ namespace Tavern
 
 		gRenderManager.Init();
 		TAVERN_ENGINE_INFO("Initialized render manager");
+
+		gInputManager.Init();
+		TAVERN_ENGINE_INFO("Initialized input manager");
 
 		gEventManager.AddListener(EventType::WindowClose, std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1));
 	}
@@ -58,6 +62,7 @@ namespace Tavern
 
 	void Engine::Shutdown()
 	{
+		gInputManager.Shutdown();
 		gRenderManager.Shutdown();
 		gEventManager.Shutdown();
 	}

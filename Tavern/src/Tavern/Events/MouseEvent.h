@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Tavern/Events/Event.h"
-#include "Tavern/Core/MouseCodes.h"
+#include "Tavern/Input/MouseCodes.h"
 
 namespace Tavern
 {

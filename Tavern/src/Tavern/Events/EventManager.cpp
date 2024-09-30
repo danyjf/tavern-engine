@@ -4,6 +4,14 @@ namespace Tavern
 {
 	EventManager gEventManager;
 
+	EventManager::EventManager()
+	{
+	}
+
+	EventManager::~EventManager()
+	{
+	}
+
 	void EventManager::Init()
 	{
 	}

@@ -1,3 +1,4 @@
+#include "Tavern/Input/InputManager.h"
 #include <Tavern.h>
 #include <algorithm>
 #include <functional>
@@ -29,7 +30,7 @@ class Player : public Tavern::Entity
 {
 public:
 	Player()
-		: m_Speed(2.5f), m_Direction(0.0f), m_LastMousePosition(0.0f),
+		: m_Speed(2.5f), m_LastMousePosition(0.0f),
 		  m_CameraSensitivity(0.05f), m_Zoom(45.0f)
 	{
 		m_Camera = std::make_unique<Tavern::CameraComponent>(this);
@@ -39,15 +40,33 @@ public:
 		GetTransformComponent()->SetRotation(glm::vec3(0.0f, -90.0f, 0.0f));
 
 		Tavern::gEventManager.AddListener(Tavern::EventType::KeyPressed, std::bind(&Player::OnKeyPressed, this, std::placeholders::_1));
-		Tavern::gEventManager.AddListener(Tavern::EventType::KeyReleased, std::bind(&Player::OnKeyReleased, this, std::placeholders::_1));
 		Tavern::gEventManager.AddListener(Tavern::EventType::MouseMoved, std::bind(&Player::OnMouseMoved, this, std::placeholders::_1));
 		Tavern::gEventManager.AddListener(Tavern::EventType::MouseScrolled, std::bind(&Player::OnMouseScrolled, this, std::placeholders::_1));
 	}
 
 	void Update() override
 	{
-		glm::vec3 translation = GetTransformComponent()->GetFrontDirection() * m_Direction.y;
-		translation += GetTransformComponent()->GetRightDirection() * m_Direction.x;
+		glm::vec2 direction(0.0f);
+
+		if (Tavern::gInputManager.IsKeyPressed(Tavern::Key::W))
+		{
+			direction.y += 1.0f;
+		}
+		if (Tavern::gInputManager.IsKeyPressed(Tavern::Key::S))
+		{
+			direction.y -= 1.0f;
+		}
+		if (Tavern::gInputManager.IsKeyPressed(Tavern::Key::A))
+		{
+			direction.x -= 1.0f;
+		}
+		if (Tavern::gInputManager.IsKeyPressed(Tavern::Key::D))
+		{
+			direction.x += 1.0f;
+		}
+
+		glm::vec3 translation = GetTransformComponent()->GetFrontDirection() * direction.y;
+		translation += GetTransformComponent()->GetRightDirection() * direction.x;
 
 		if (glm::length(translation) != 0)
 		{
@@ -67,71 +86,10 @@ public:
 
 		switch (keyPressedEvent->GetKey())
 		{
-			case Tavern::Key::UpArrow:
-			case Tavern::Key::W:
-			{
-				m_Direction.y += 1.0f;
-				break;
-			}
-			case Tavern::Key::DownArrow:
-			case Tavern::Key::S:
-			{
-				m_Direction.y -= 1.0f;
-				break;
-			}
-			case Tavern::Key::LeftArrow:
-			case Tavern::Key::A:
-			{
-				m_Direction.x -= 1.0f;
-				break;
-			}
-			case Tavern::Key::RightArrow:
-			case Tavern::Key::D:
-			{
-				m_Direction.x += 1.0f;
-				break;
-			}
 			case Tavern::Key::Escape:
 			{
 				Tavern::gRenderManager.GetWindow()->GetCursor().SetIsLocked(false);
 				Tavern::gRenderManager.GetWindow()->GetCursor().SetIsVisible(true);
-			}
-			default:
-			{
-				return;
-			}
-		}
-	}
-
-	void OnKeyReleased(const std::shared_ptr<Tavern::Event>& event)
-	{
-		std::shared_ptr<Tavern::KeyReleasedEvent> keyReleasedEvent = std::dynamic_pointer_cast<Tavern::KeyReleasedEvent>(event);
-
-		switch (keyReleasedEvent->GetKey())
-		{
-			case Tavern::Key::UpArrow:
-			case Tavern::Key::W:
-			{
-				m_Direction.y -= 1.0f;
-				break;
-			}
-			case Tavern::Key::DownArrow:
-			case Tavern::Key::S:
-			{
-				m_Direction.y += 1.0f;
-				break;
-			}
-			case Tavern::Key::LeftArrow:
-			case Tavern::Key::A:
-			{
-				m_Direction.x += 1.0f;
-				break;
-			}
-			case Tavern::Key::RightArrow:
-			case Tavern::Key::D:
-			{
-				m_Direction.x -= 1.0f;
-				break;
 			}
 			default:
 			{
@@ -177,7 +135,6 @@ public:
 
 	std::unique_ptr<Tavern::CameraComponent> m_Camera;
 	float m_Speed;
-	glm::vec2 m_Direction;
 	glm::vec2 m_LastMousePosition;
 	float m_CameraSensitivity;
 	float m_Zoom;

@@ -15,6 +15,14 @@ namespace Tavern
 {
 	RenderManager gRenderManager;
 
+	RenderManager::RenderManager()
+	{
+	}
+
+	RenderManager::~RenderManager()
+	{
+	}
+
 	void RenderManager::Init()
 	{
 		m_Window = std::make_unique<Window>();
