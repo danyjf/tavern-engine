@@ -4,10 +4,7 @@
 
 namespace Tavern
 {
-	std::shared_ptr<spdlog::logger> Log::s_EngineLogger;
-	std::shared_ptr<spdlog::logger> Log::s_ClientLogger;
-
-	void Log::Init()
+	Log::Log()
 	{
 		spdlog::set_pattern("%^[%T] %n: %v%$");
 
@@ -16,5 +13,11 @@ namespace Tavern
 
 		s_ClientLogger = spdlog::stdout_color_mt("APP");
 		s_ClientLogger->set_level(spdlog::level::level_enum::trace);
+	}
+
+	Log& Log::Get()
+	{
+		static Log log;
+		return log;
 	}
 }

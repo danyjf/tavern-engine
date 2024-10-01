@@ -11,11 +11,11 @@ namespace Tavern
 	MeshComponent::MeshComponent(Engine* engine, Entity* owner)
 		: Component(engine, owner)
 	{
-		m_Shader = GetEngine()->GetRenderManager()->GetShader();
+		m_Shader = GetEngine()->GetRenderManager().GetShader();
 		m_IsVisible = true;
 
 		// TODO: I'm adding mesh components to be rendered but never removing them
-		GetEngine()->GetRenderManager()->AddMeshComponent(this);
+		GetEngine()->GetRenderManager().AddMeshComponent(this);
 
 		// Create vertex buffer object
 		float vertices[] = {
@@ -99,8 +99,8 @@ namespace Tavern
 
 		m_Shader->Use();
 
-		m_Shader->SetMat4("view", GetEngine()->GetRenderManager()->GetActiveCamera()->GetViewMatrix());
-		m_Shader->SetMat4("projection", GetEngine()->GetRenderManager()->GetActiveCamera()->GetProjectionMatrix());
+		m_Shader->SetMat4("view", GetEngine()->GetRenderManager().GetActiveCamera()->GetViewMatrix());
+		m_Shader->SetMat4("projection", GetEngine()->GetRenderManager().GetActiveCamera()->GetProjectionMatrix());
 		m_Shader->SetMat4("model", GetOwner()->GetTransformComponent()->GetModelMatrix());
 
 		for (int i = 0; i < m_Textures.size(); i++)

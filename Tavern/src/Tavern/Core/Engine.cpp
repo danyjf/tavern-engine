@@ -14,24 +14,18 @@
 namespace Tavern
 {
 	Engine::Engine()
+		: m_EventManager(),
+		  m_RenderManager(m_EventManager),
+		  m_InputManager(m_RenderManager)
 	{
-		Tavern::Log::Init();
-		TAVERN_ENGINE_INFO("Initialized engine logger");
+		m_EventManager.AddListener(EventType::WindowClose, std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1));
 
-		m_EventManager = std::make_unique<EventManager>();
-		TAVERN_ENGINE_INFO("Initialized event manager");
-
-		m_RenderManager = std::make_unique<RenderManager>(m_EventManager.get());
-		TAVERN_ENGINE_INFO("Initialized render manager");
-
-		m_InputManager = std::make_unique<InputManager>(m_RenderManager.get());
-		TAVERN_ENGINE_INFO("Initialized input manager");
-
-		m_EventManager->AddListener(EventType::WindowClose, std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1));
+		TAVERN_ENGINE_INFO("Engine initialized");
 	}
 
 	Engine::~Engine()
 	{
+		TAVERN_ENGINE_INFO("Engine destroyed");
 	}
 
 	void Engine::Run()
@@ -41,7 +35,7 @@ namespace Tavern
 			Time::UpdateTime();
 
 			// Process events
-			m_EventManager->DispatchEvents();
+			m_EventManager.DispatchEvents();
 
 			// Update State
 			for (Entity* entity : m_Entities)
@@ -50,26 +44,26 @@ namespace Tavern
 			}
 
 			// Render
-			m_RenderManager->Render();
+			m_RenderManager.Render();
 
 			glfwPollEvents();
-			glfwSwapBuffers(m_RenderManager->GetWindow()->GetGLFWWindow());
+			glfwSwapBuffers(m_RenderManager.GetWindow()->GetGLFWWindow());
 		}
 	}
 
-	EventManager* Engine::GetEventManager()
+	EventManager& Engine::GetEventManager()
 	{
-		return m_EventManager.get();
+		return m_EventManager;
 	}
 
-	RenderManager* Engine::GetRenderManager()
+	RenderManager& Engine::GetRenderManager()
 	{
-		return m_RenderManager.get();
+		return m_RenderManager;
 	}
 
-	InputManager* Engine::GetInputManager()
+	InputManager& Engine::GetInputManager()
 	{
-		return m_InputManager.get();
+		return m_InputManager;
 	}
 
 	void Engine::OnWindowCloseEvent(const std::shared_ptr<Event>& event)

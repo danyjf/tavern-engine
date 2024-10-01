@@ -3,18 +3,22 @@
 #include <glm/glm.hpp>
 
 #include "Tavern/Input/InputManager.h"
+#include "Tavern/Core/Log.h"
 #include "Tavern/Renderer/RenderManager.h"
 
 namespace Tavern
 {
-	InputManager::InputManager(RenderManager* renderManager)
+	InputManager::InputManager(RenderManager& renderManager)
 		: m_RenderManager(renderManager)
 	{
-		m_Window = m_RenderManager->GetWindow();
+		m_Window = m_RenderManager.GetWindow();
+
+		TAVERN_ENGINE_INFO("InputManager initialized");
 	}
 
 	InputManager::~InputManager()
 	{
+		TAVERN_ENGINE_INFO("InputManager destoyed");
 	}
 
 	bool InputManager::IsKeyPressed(const Key key)

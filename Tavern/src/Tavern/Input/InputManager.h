@@ -14,7 +14,7 @@ namespace Tavern
 	class TAVERN_API InputManager
 	{
 	public:
-		InputManager(RenderManager* renderManager);
+		InputManager(RenderManager& renderManager);
 		~InputManager();
 		InputManager(InputManager& copy) = delete;
 		void operator=(const InputManager& copy) = delete;
@@ -25,7 +25,7 @@ namespace Tavern
 		glm::vec2 GetMousePosition();
 
 	private:
-		RenderManager* m_RenderManager;
+		RenderManager& m_RenderManager;
 		Window* m_Window;
 	};
 }

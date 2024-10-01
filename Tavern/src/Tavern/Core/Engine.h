@@ -4,14 +4,14 @@
 #include <vector>
 
 #include "Tavern/Core/Core.h"
+#include "Tavern/Events/EventManager.h"
+#include "Tavern/Renderer/RenderManager.h"
+#include "Tavern/Input/InputManager.h"
 
 namespace Tavern
 {
 	class Event;
 	class Entity;
-	class EventManager;
-	class RenderManager;
-	class InputManager;
 
 	class TAVERN_API Engine
 	{
@@ -28,16 +28,16 @@ namespace Tavern
 			return m_Entities.back();
 		}
 
-		EventManager* GetEventManager();
-		RenderManager* GetRenderManager();
-		InputManager* GetInputManager();
+		EventManager& GetEventManager();
+		RenderManager& GetRenderManager();
+		InputManager& GetInputManager();
 
 		void OnWindowCloseEvent(const std::shared_ptr<Event>& event);
 
 	private:
-		std::unique_ptr<EventManager> m_EventManager;
-		std::unique_ptr<RenderManager> m_RenderManager;
-		std::unique_ptr<InputManager> m_InputManager;
+		EventManager m_EventManager;
+		RenderManager m_RenderManager;
+		InputManager m_InputManager;
 
 		bool m_IsRunning = true;
 

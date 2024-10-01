@@ -1,13 +1,16 @@
 #include "Tavern/Events/EventManager.h"
+#include "Tavern/Core/Log.h"
 
 namespace Tavern
 {
 	EventManager::EventManager()
 	{
+		TAVERN_ENGINE_INFO("EventManager initialized");
 	}
 
 	EventManager::~EventManager()
 	{
+		TAVERN_ENGINE_INFO("EventManager destroyed");
 	}
 
 	void EventManager::AddListener(const EventType& type, EventListenerDelegate&& eventDelegate)

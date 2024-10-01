@@ -27,7 +27,7 @@ namespace Tavern
 	class TAVERN_API Window
 	{
 	public:
-		Window(EventManager* eventManager, const WindowSettings& windowSettings = WindowSettings());
+		Window(EventManager& eventManager, const WindowSettings& windowSettings = WindowSettings());
 		~Window();
 
 		GLFWwindow* GetGLFWWindow() const;
@@ -37,7 +37,7 @@ namespace Tavern
 		void OnWindowResizeEvent(const std::shared_ptr<Event>& event);
 
 	private:
-		EventManager* m_EventManager;
+		EventManager& m_EventManager;
 		GLFWwindow* m_Window;
 		WindowSettings m_WindowSettings;
 		Cursor m_Cursor;

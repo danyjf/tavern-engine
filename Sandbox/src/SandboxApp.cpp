@@ -35,33 +35,33 @@ public:
 		  m_CameraSensitivity(0.05f), m_Zoom(45.0f)
 	{
 		m_Camera = std::make_unique<Tavern::CameraComponent>(GetEngine(), this);
-		GetEngine()->GetRenderManager()->SetActiveCamera(m_Camera.get());
+		GetEngine()->GetRenderManager().SetActiveCamera(m_Camera.get());
 
 		GetTransformComponent()->SetPosition(glm::vec3(0.0f, 0.0f, 3.0f));
 		GetTransformComponent()->SetRotation(glm::vec3(0.0f, -90.0f, 0.0f));
 
-		GetEngine()->GetEventManager()->AddListener(Tavern::EventType::KeyPressed, std::bind(&Player::OnKeyPressed, this, std::placeholders::_1));
-		GetEngine()->GetEventManager()->AddListener(Tavern::EventType::MouseMoved, std::bind(&Player::OnMouseMoved, this, std::placeholders::_1));
-		GetEngine()->GetEventManager()->AddListener(Tavern::EventType::MouseScrolled, std::bind(&Player::OnMouseScrolled, this, std::placeholders::_1));
+		GetEngine()->GetEventManager().AddListener(Tavern::EventType::KeyPressed, std::bind(&Player::OnKeyPressed, this, std::placeholders::_1));
+		GetEngine()->GetEventManager().AddListener(Tavern::EventType::MouseMoved, std::bind(&Player::OnMouseMoved, this, std::placeholders::_1));
+		GetEngine()->GetEventManager().AddListener(Tavern::EventType::MouseScrolled, std::bind(&Player::OnMouseScrolled, this, std::placeholders::_1));
 	}
 
 	void Update() override
 	{
 		glm::vec2 direction(0.0f);
 
-		if (GetEngine()->GetInputManager()->IsKeyPressed(Tavern::Key::W))
+		if (GetEngine()->GetInputManager().IsKeyPressed(Tavern::Key::W))
 		{
 			direction.y += 1.0f;
 		}
-		if (GetEngine()->GetInputManager()->IsKeyPressed(Tavern::Key::S))
+		if (GetEngine()->GetInputManager().IsKeyPressed(Tavern::Key::S))
 		{
 			direction.y -= 1.0f;
 		}
-		if (GetEngine()->GetInputManager()->IsKeyPressed(Tavern::Key::A))
+		if (GetEngine()->GetInputManager().IsKeyPressed(Tavern::Key::A))
 		{
 			direction.x -= 1.0f;
 		}
-		if (GetEngine()->GetInputManager()->IsKeyPressed(Tavern::Key::D))
+		if (GetEngine()->GetInputManager().IsKeyPressed(Tavern::Key::D))
 		{
 			direction.x += 1.0f;
 		}
@@ -89,8 +89,8 @@ public:
 		{
 			case Tavern::Key::Escape:
 			{
-				GetEngine()->GetRenderManager()->GetWindow()->GetCursor().SetIsLocked(false);
-				GetEngine()->GetRenderManager()->GetWindow()->GetCursor().SetIsVisible(true);
+				GetEngine()->GetRenderManager().GetWindow()->GetCursor().SetIsLocked(false);
+				GetEngine()->GetRenderManager().GetWindow()->GetCursor().SetIsVisible(true);
 			}
 			default:
 			{
