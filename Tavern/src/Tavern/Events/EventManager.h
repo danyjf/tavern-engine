@@ -15,9 +15,6 @@ namespace Tavern
 		EventManager(EventManager& copy) = delete;
 		void operator=(const EventManager& copy) = delete;
 
-		void Init();
-		void Shutdown();
-
 		using EventListenerDelegate = std::function<void(const std::shared_ptr<Event>&)>;
 
 		// Register a delegate function to be called when the event type is triggered.
@@ -36,6 +33,4 @@ namespace Tavern
 		std::queue<std::shared_ptr<Event>> m_Events;
 		std::unordered_map<EventType, std::vector<EventListenerDelegate>> m_EventListeners;
 	};
-
-	extern TAVERN_API EventManager gEventManager;
 }

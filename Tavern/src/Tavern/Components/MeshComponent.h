@@ -10,12 +10,13 @@ namespace Tavern
 {
 	class Entity;
 	class Shader;
+	class Engine;
 
 	class TAVERN_API MeshComponent : public Component
 	{
 	public:
 		MeshComponent() = default;
-		MeshComponent(Entity* owner);
+		MeshComponent(Engine* engine, Entity* owner);
 		~MeshComponent() = default;
 
 		void Render();

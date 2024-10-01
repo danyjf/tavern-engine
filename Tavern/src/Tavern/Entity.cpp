@@ -5,9 +5,10 @@
 
 namespace Tavern
 {
-	Entity::Entity()
+	Entity::Entity(Engine* engine)
+		: m_Engine(engine)
 	{
-		m_Transform = std::make_unique<TransformComponent>(this);
+		m_Transform = std::make_unique<TransformComponent>(m_Engine, this);
 	}
 
 	Entity::~Entity()
@@ -16,6 +17,11 @@ namespace Tavern
 
 	void Entity::Update()
 	{
+	}
+
+	Engine* Entity::GetEngine() const
+	{
+		return m_Engine;
 	}
 
 	TransformComponent* Entity::GetTransformComponent() const

@@ -13,10 +13,10 @@
 
 namespace Tavern
 {
-	void Window::Init(const WindowSettings& windowSettings)
+	Window::Window(EventManager* eventManager, const WindowSettings& windowSettings)
+		: m_EventManager(eventManager),
+		  m_WindowSettings(windowSettings)
 	{
-		m_WindowSettings = windowSettings;
-
 		// Initialize glfw
 		TAVERN_ENGINE_INFO("Initializing GLFW");
 		int glfwSuccess = glfwInit();
@@ -34,8 +34,7 @@ namespace Tavern
 			glfwTerminate();
 		}
 		glfwMakeContextCurrent(m_Window);
-
-		glfwSetWindowUserPointer(m_Window, &m_WindowSettings);
+		glfwSetWindowUserPointer(m_Window, m_EventManager);
 
 		// Initialize glad
 		TAVERN_ENGINE_INFO("Initializing GLAD");
@@ -47,80 +46,82 @@ namespace Tavern
 		// Set glfw callbacks
 		glfwSetFramebufferSizeCallback(
 			m_Window, [](GLFWwindow* window, int width, int height) {
-				WindowSettings& windowSettings = *(WindowSettings*)glfwGetWindowUserPointer(window);
-				windowSettings.Width = width;
-				windowSettings.Height = height;
-
+				EventManager* eventManager = (EventManager*)glfwGetWindowUserPointer(window);
 				std::shared_ptr<WindowResizeEvent> event = std::make_shared<WindowResizeEvent>(width, height);
-				gEventManager.QueueEvent(event);
+				eventManager->QueueEvent(event);
 			}
 		);
 
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
+			EventManager* eventManager = (EventManager*)glfwGetWindowUserPointer(window);
 			std::shared_ptr<WindowCloseEvent> event = std::make_shared<WindowCloseEvent>();
-			gEventManager.QueueEvent(event);
+			eventManager->QueueEvent(event);
 		});
 
 		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
+			EventManager* eventManager = (EventManager*)glfwGetWindowUserPointer(window);
 			switch (action)
 			{
 				case GLFW_PRESS:
 				{
 					std::shared_ptr<KeyPressedEvent> event = std::make_shared<KeyPressedEvent>(static_cast<Key>(key), false);
-					gEventManager.QueueEvent(event);
+					eventManager->QueueEvent(event);
 					break;
 				}
 				case GLFW_RELEASE:
 				{
 					std::shared_ptr<KeyReleasedEvent> event = std::make_shared<KeyReleasedEvent>(static_cast<Key>(key));
-					gEventManager.QueueEvent(event);
+					eventManager->QueueEvent(event);
 					break;
 				}
 				case GLFW_REPEAT:
 				{
 					std::shared_ptr<KeyPressedEvent> event = std::make_shared<KeyPressedEvent>(static_cast<Key>(key), true);
-					gEventManager.QueueEvent(event);
+					eventManager->QueueEvent(event);
 					break;
 				}
 			}
 		});
 
 		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods) {
+			EventManager* eventManager = (EventManager*)glfwGetWindowUserPointer(window);
 			switch (action)
 			{
 				case GLFW_PRESS:
 				{
 					std::shared_ptr<MouseButtonPressedEvent> event = std::make_shared<MouseButtonPressedEvent>(static_cast<Mouse>(button));
-					gEventManager.QueueEvent(event);
+					eventManager->QueueEvent(event);
 					break;
 				}
 				case GLFW_RELEASE:
 				{
 					std::shared_ptr<MouseButtonReleasedEvent> event = std::make_shared<MouseButtonReleasedEvent>(static_cast<Mouse>(button));
-					gEventManager.QueueEvent(event);
+					eventManager->QueueEvent(event);
 					break;
 				}
 			}
 		});
 
 		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xpos, double ypos) {
+			EventManager* eventManager = (EventManager*)glfwGetWindowUserPointer(window);
 			std::shared_ptr<MouseMovedEvent> event = std::make_shared<MouseMovedEvent>(xpos, ypos);
-			gEventManager.QueueEvent(event);
+			eventManager->QueueEvent(event);
 		});
 
 		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xoffset, double yoffset) {
+			EventManager* eventManager = (EventManager*)glfwGetWindowUserPointer(window);
 			std::shared_ptr<MouseScrolledEvent> event = std::make_shared<MouseScrolledEvent>(xoffset, yoffset);
-			gEventManager.QueueEvent(event);
+			eventManager->QueueEvent(event);
 		});
 
-		// Create cursor
+		m_EventManager->AddListener(EventType::WindowResize, std::bind(&Window::OnWindowResizeEvent, this, std::placeholders::_1));
+
 		m_Cursor = Cursor(this, false, true);
 	}
 
-	void Window::Shutdown()
+	Window::~Window()
 	{
 		glfwDestroyWindow(m_Window);
-		glfwTerminate();
 	}
 
 	GLFWwindow* Window::GetGLFWWindow() const
@@ -136,5 +137,12 @@ namespace Tavern
 	Cursor& Window::GetCursor()
 	{
 		return m_Cursor;
+	}
+
+	void Window::OnWindowResizeEvent(const std::shared_ptr<Event>& event)
+	{
+		std::shared_ptr<WindowResizeEvent> windowResizeEvent = std::dynamic_pointer_cast<WindowResizeEvent>(event);
+		m_WindowSettings.Width = windowResizeEvent->GetWidth();
+		m_WindowSettings.Height = windowResizeEvent->GetHeight();
 	}
 }

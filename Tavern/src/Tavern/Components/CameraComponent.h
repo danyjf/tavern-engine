@@ -9,12 +9,14 @@
 namespace Tavern
 {
 	class Entity;
+	class Engine;
 
 	class TAVERN_API CameraComponent : public Component
 	{
 	public:
 		CameraComponent() = default;
 		CameraComponent(
+			Engine* engine,
 			Entity* owner,
 			float FOV = 45.0f,
 			float viewportWidth = 800.0f,

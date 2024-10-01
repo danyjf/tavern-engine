@@ -3,9 +3,11 @@
 #include <string>
 #include <glm/glm.hpp>
 
+#include "Tavern/Core/Core.h"
+
 namespace Tavern
 {
-	class Shader
+	class TAVERN_API Shader
 	{
 	public:
 		Shader(const char* vertexPath, const char* fragmentPath);

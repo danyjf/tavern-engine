@@ -7,22 +7,13 @@
 
 namespace Tavern
 {
-	InputManager gInputManager;
-
-	InputManager::InputManager()
+	InputManager::InputManager(RenderManager* renderManager)
+		: m_RenderManager(renderManager)
 	{
+		m_Window = m_RenderManager->GetWindow();
 	}
 
 	InputManager::~InputManager()
-	{
-	}
-
-	void InputManager::Init()
-	{
-		m_Window = gRenderManager.GetWindow();
-	}
-
-	void InputManager::Shutdown()
 	{
 	}
 

@@ -9,16 +9,15 @@
 
 namespace Tavern
 {
+	class RenderManager;
+
 	class TAVERN_API InputManager
 	{
 	public:
-		InputManager();
+		InputManager(RenderManager* renderManager);
 		~InputManager();
 		InputManager(InputManager& copy) = delete;
 		void operator=(const InputManager& copy) = delete;
-
-		void Init();
-		void Shutdown();
 
 		bool IsKeyPressed(const Key key);
 		bool IsMouseButtonPressed(const Mouse button);
@@ -26,8 +25,7 @@ namespace Tavern
 		glm::vec2 GetMousePosition();
 
 	private:
+		RenderManager* m_RenderManager;
 		Window* m_Window;
 	};
-
-	extern TAVERN_API InputManager gInputManager;
 }

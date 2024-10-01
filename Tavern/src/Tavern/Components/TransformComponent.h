@@ -7,11 +7,13 @@
 
 namespace Tavern
 {
+	class Engine;
+
 	class TAVERN_API TransformComponent : public Component
 	{
 	public:
 		TransformComponent() = default;
-		TransformComponent(Entity* owner);
+		TransformComponent(Engine* engine, Entity* owner);
 		~TransformComponent() = default;
 
 		const glm::vec3& GetPosition() const;

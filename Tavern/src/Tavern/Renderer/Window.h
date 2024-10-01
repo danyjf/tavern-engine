@@ -9,6 +9,9 @@
 
 namespace Tavern
 {
+	class EventManager;
+	class Event;
+
 	struct WindowSettings
 	{
 		std::string Title;
@@ -24,17 +27,17 @@ namespace Tavern
 	class TAVERN_API Window
 	{
 	public:
-		Window() = default;
-		~Window() = default;
-
-		void Init(const WindowSettings& windowSettings = WindowSettings());
-		void Shutdown();
+		Window(EventManager* eventManager, const WindowSettings& windowSettings = WindowSettings());
+		~Window();
 
 		GLFWwindow* GetGLFWWindow() const;
 		const WindowSettings& GetWindowSettings() const;
 		Cursor& GetCursor();
 
+		void OnWindowResizeEvent(const std::shared_ptr<Event>& event);
+
 	private:
+		EventManager* m_EventManager;
 		GLFWwindow* m_Window;
 		WindowSettings m_WindowSettings;
 		Cursor m_Cursor;

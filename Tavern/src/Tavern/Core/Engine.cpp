@@ -1,5 +1,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <memory>
 
 #include "Tavern/Core/Engine.h"
 #include "Tavern/Core/Log.h"
@@ -14,37 +15,33 @@ namespace Tavern
 {
 	Engine::Engine()
 	{
+		Tavern::Log::Init();
+		TAVERN_ENGINE_INFO("Initialized engine logger");
+
+		m_EventManager = std::make_unique<EventManager>();
+		TAVERN_ENGINE_INFO("Initialized event manager");
+
+		m_RenderManager = std::make_unique<RenderManager>(m_EventManager.get());
+		TAVERN_ENGINE_INFO("Initialized render manager");
+
+		m_InputManager = std::make_unique<InputManager>(m_RenderManager.get());
+		TAVERN_ENGINE_INFO("Initialized input manager");
+
+		m_EventManager->AddListener(EventType::WindowClose, std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1));
 	}
 
 	Engine::~Engine()
 	{
 	}
 
-	void Engine::Init()
-	{
-		Tavern::Log::Init();
-		TAVERN_ENGINE_INFO("Initialized engine logger");
-
-		gEventManager.Init();
-		TAVERN_ENGINE_INFO("Initialized event manager");
-
-		gRenderManager.Init();
-		TAVERN_ENGINE_INFO("Initialized render manager");
-
-		gInputManager.Init();
-		TAVERN_ENGINE_INFO("Initialized input manager");
-
-		gEventManager.AddListener(EventType::WindowClose, std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1));
-	}
-
-	void Engine::GameLoop()
+	void Engine::Run()
 	{
 		while (m_IsRunning)
 		{
 			Time::UpdateTime();
 
 			// Process events
-			gEventManager.DispatchEvents();
+			m_EventManager->DispatchEvents();
 
 			// Update State
 			for (Entity* entity : m_Entities)
@@ -53,18 +50,26 @@ namespace Tavern
 			}
 
 			// Render
-			gRenderManager.Render();
+			m_RenderManager->Render();
 
 			glfwPollEvents();
-			glfwSwapBuffers(gRenderManager.GetWindow()->GetGLFWWindow());
+			glfwSwapBuffers(m_RenderManager->GetWindow()->GetGLFWWindow());
 		}
 	}
 
-	void Engine::Shutdown()
+	EventManager* Engine::GetEventManager()
 	{
-		gInputManager.Shutdown();
-		gRenderManager.Shutdown();
-		gEventManager.Shutdown();
+		return m_EventManager.get();
+	}
+
+	RenderManager* Engine::GetRenderManager()
+	{
+		return m_RenderManager.get();
+	}
+
+	InputManager* Engine::GetInputManager()
+	{
+		return m_InputManager.get();
 	}
 
 	void Engine::OnWindowCloseEvent(const std::shared_ptr<Event>& event)

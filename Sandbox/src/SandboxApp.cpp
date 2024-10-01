@@ -1,4 +1,4 @@
-#include "Tavern/Input/InputManager.h"
+#include "Tavern/Core/Log.h"
 #include <Tavern.h>
 #include <algorithm>
 #include <functional>
@@ -7,9 +7,10 @@
 class MyEntity : public Tavern::Entity
 {
 public:
-	MyEntity()
+	MyEntity(Tavern::Engine* engine)
+		: Tavern::Entity(engine)
 	{
-		m_Mesh = std::make_unique<Tavern::MeshComponent>(this);
+		m_Mesh = std::make_unique<Tavern::MeshComponent>(GetEngine(), this);
 
 		Tavern::Texture texture1(Tavern::TextureSettings(), "Assets/Images/container.jpg");
 		Tavern::Texture texture2(Tavern::TextureSettings(), "Assets/Images/awesomeface.jpg");
@@ -29,38 +30,38 @@ public:
 class Player : public Tavern::Entity
 {
 public:
-	Player()
-		: m_Speed(2.5f), m_LastMousePosition(0.0f),
+	Player(Tavern::Engine* engine)
+		: Tavern::Entity(engine), m_Speed(2.5f), m_LastMousePosition(0.0f),
 		  m_CameraSensitivity(0.05f), m_Zoom(45.0f)
 	{
-		m_Camera = std::make_unique<Tavern::CameraComponent>(this);
-		Tavern::gRenderManager.SetActiveCamera(m_Camera.get());
+		m_Camera = std::make_unique<Tavern::CameraComponent>(GetEngine(), this);
+		GetEngine()->GetRenderManager()->SetActiveCamera(m_Camera.get());
 
 		GetTransformComponent()->SetPosition(glm::vec3(0.0f, 0.0f, 3.0f));
 		GetTransformComponent()->SetRotation(glm::vec3(0.0f, -90.0f, 0.0f));
 
-		Tavern::gEventManager.AddListener(Tavern::EventType::KeyPressed, std::bind(&Player::OnKeyPressed, this, std::placeholders::_1));
-		Tavern::gEventManager.AddListener(Tavern::EventType::MouseMoved, std::bind(&Player::OnMouseMoved, this, std::placeholders::_1));
-		Tavern::gEventManager.AddListener(Tavern::EventType::MouseScrolled, std::bind(&Player::OnMouseScrolled, this, std::placeholders::_1));
+		GetEngine()->GetEventManager()->AddListener(Tavern::EventType::KeyPressed, std::bind(&Player::OnKeyPressed, this, std::placeholders::_1));
+		GetEngine()->GetEventManager()->AddListener(Tavern::EventType::MouseMoved, std::bind(&Player::OnMouseMoved, this, std::placeholders::_1));
+		GetEngine()->GetEventManager()->AddListener(Tavern::EventType::MouseScrolled, std::bind(&Player::OnMouseScrolled, this, std::placeholders::_1));
 	}
 
 	void Update() override
 	{
 		glm::vec2 direction(0.0f);
 
-		if (Tavern::gInputManager.IsKeyPressed(Tavern::Key::W))
+		if (GetEngine()->GetInputManager()->IsKeyPressed(Tavern::Key::W))
 		{
 			direction.y += 1.0f;
 		}
-		if (Tavern::gInputManager.IsKeyPressed(Tavern::Key::S))
+		if (GetEngine()->GetInputManager()->IsKeyPressed(Tavern::Key::S))
 		{
 			direction.y -= 1.0f;
 		}
-		if (Tavern::gInputManager.IsKeyPressed(Tavern::Key::A))
+		if (GetEngine()->GetInputManager()->IsKeyPressed(Tavern::Key::A))
 		{
 			direction.x -= 1.0f;
 		}
-		if (Tavern::gInputManager.IsKeyPressed(Tavern::Key::D))
+		if (GetEngine()->GetInputManager()->IsKeyPressed(Tavern::Key::D))
 		{
 			direction.x += 1.0f;
 		}
@@ -88,8 +89,8 @@ public:
 		{
 			case Tavern::Key::Escape:
 			{
-				Tavern::gRenderManager.GetWindow()->GetCursor().SetIsLocked(false);
-				Tavern::gRenderManager.GetWindow()->GetCursor().SetIsVisible(true);
+				GetEngine()->GetRenderManager()->GetWindow()->GetCursor().SetIsLocked(false);
+				GetEngine()->GetRenderManager()->GetWindow()->GetCursor().SetIsVisible(true);
 			}
 			default:
 			{
@@ -142,12 +143,10 @@ public:
 
 int main()
 {
-	std::unique_ptr<Tavern::Engine> TavernEngine = std::make_unique<Tavern::Engine>();
-
-	TavernEngine->Init();
+	Tavern::Engine TavernEngine;
 
 	// Create startup game entities
-	TavernEngine->CreateEntity<Player>();
+	TavernEngine.CreateEntity<Player>();
 
 	glm::vec3 cubePositions[] = {
 		glm::vec3(0.0f, 0.0f, 0.0f),
@@ -164,14 +163,12 @@ int main()
 
 	for (int i = 0; i < 10; i++)
 	{
-		Tavern::Entity* cube = TavernEngine->CreateEntity<MyEntity>();
+		Tavern::Entity* cube = TavernEngine.CreateEntity<MyEntity>();
 		cube->GetTransformComponent()->SetPosition(cubePositions[i]);
 		cube->GetTransformComponent()->SetRotation(glm::vec3(i * 10.0, i * 21.0, i * 13.0));
 	}
 
-	TavernEngine->GameLoop();
-
-	TavernEngine->Shutdown();
+	TavernEngine.Run();
 
 	return 0;
 }

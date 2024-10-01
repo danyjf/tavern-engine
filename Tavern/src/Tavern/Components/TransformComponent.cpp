@@ -2,11 +2,12 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "Tavern/Components/TransformComponent.h"
+#include "Tavern/Core/Engine.h"
 
 namespace Tavern
 {
-	TransformComponent::TransformComponent(Entity* owner)
-		: Component(owner), m_ModelMatrix(1.0f), m_Position(0.0f), m_Rotation(0.0f), m_Scale(1.0f)
+	TransformComponent::TransformComponent(Engine* engine, Entity* owner)
+		: Component(engine, owner), m_ModelMatrix(1.0f), m_Position(0.0f), m_Rotation(0.0f), m_Scale(1.0f)
 	{
 		CalculateDirectionVectors();
 	}
