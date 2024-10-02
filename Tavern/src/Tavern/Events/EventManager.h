@@ -21,6 +21,10 @@ namespace Tavern
 		// Returns true if successful.
 		void AddListener(const EventType& type, EventListenerDelegate&& eventDelegate);
 
+		// TODO: Add a way to remove callbacks
+
+		// TODO: Add a way to trigger an event ignoring the queue
+
 		// Add an event to the end of the queue
 		// Returns true if successful.
 		void QueueEvent(const std::shared_ptr<Event>& event);

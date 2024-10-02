@@ -13,6 +13,9 @@
 
 namespace Tavern
 {
+	// TODO: Create UUIDs for the entities and components
+	// TODO: Create a resource manager
+
 	Engine::Engine()
 		: m_EventManager(),
 		  m_RenderManager(m_EventManager),
