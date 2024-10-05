@@ -6,6 +6,7 @@
 #include "Tavern/Core/Log.h"
 #include "Tavern/Core/Time.h"
 #include "Tavern/Entity.h"
+#include "Tavern/Events/EventListener.h"
 #include "Tavern/Events/EventManager.h"
 #include "Tavern/Events/Event.h"
 #include "Tavern/Input/InputManager.h"
@@ -21,7 +22,7 @@ namespace Tavern
 		  m_RenderManager(m_EventManager),
 		  m_InputManager(m_RenderManager)
 	{
-		m_EventManager.AddListener(EventType::WindowClose, std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1));
+		m_EventManager.AddListener(EventType::WindowClose, new EventListener(std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1)));
 
 		TAVERN_ENGINE_INFO("Engine initialized");
 	}

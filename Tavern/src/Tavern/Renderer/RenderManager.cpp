@@ -8,6 +8,7 @@
 #include "Tavern/Events/Event.h"
 #include "Tavern/Events/EventManager.h"
 #include "Tavern/Events/ApplicationEvent.h"
+#include "Tavern/Events/EventListener.h"
 #include "Tavern/Core/Log.h"
 #include "Tavern/Components/CameraComponent.h"
 
@@ -18,7 +19,7 @@ namespace Tavern
 	{
 		m_Window = std::make_unique<Window>(m_EventManager, WindowSettings("My Window", 800, 600));
 
-		m_EventManager.AddListener(EventType::WindowResize, std::bind(&RenderManager::OnWindowResizeEvent, this, std::placeholders::_1));
+		m_EventManager.AddListener(EventType::WindowResize, new EventListener(std::bind(&RenderManager::OnWindowResizeEvent, this, std::placeholders::_1)));
 
 		m_Shader = std::make_unique<Shader>(
 			"./Shaders/Shader.vert",

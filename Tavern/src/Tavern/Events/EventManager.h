@@ -7,6 +7,8 @@
 
 namespace Tavern
 {
+	class EventListener;
+
 	class TAVERN_API EventManager
 	{
 	public:
@@ -15,26 +17,22 @@ namespace Tavern
 		EventManager(EventManager& copy) = delete;
 		void operator=(const EventManager& copy) = delete;
 
-		using EventListenerDelegate = std::function<void(const std::shared_ptr<Event>&)>;
-
 		// Register a delegate function to be called when the event type is triggered.
-		// Returns true if successful.
-		void AddListener(const EventType& type, EventListenerDelegate&& eventDelegate);
+		void AddListener(const EventType& type, EventListener* eventListener);
 
 		// TODO: Add a way to remove callbacks
+		void RemoveListener(const EventType& type, EventListener* eventListener);
 
 		// TODO: Add a way to trigger an event ignoring the queue
 
 		// Add an event to the end of the queue
-		// Returns true if successful.
 		void QueueEvent(const std::shared_ptr<Event>& event);
 
 		// Process all events from the queue
-		// Returns true if successful.
 		void DispatchEvents();
 
 	private:
 		std::queue<std::shared_ptr<Event>> m_Events;
-		std::unordered_map<EventType, std::vector<EventListenerDelegate>> m_EventListeners;
+		std::unordered_map<EventType, std::vector<EventListener*>> m_EventListeners;
 	};
 }

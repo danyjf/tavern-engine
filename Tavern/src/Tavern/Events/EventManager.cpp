@@ -1,5 +1,6 @@
 #include "Tavern/Events/EventManager.h"
 #include "Tavern/Core/Log.h"
+#include "Tavern/Events/EventListener.h"
 
 namespace Tavern
 {
@@ -13,9 +14,13 @@ namespace Tavern
 		TAVERN_ENGINE_INFO("EventManager destroyed");
 	}
 
-	void EventManager::AddListener(const EventType& type, EventListenerDelegate&& eventDelegate)
+	void EventManager::AddListener(const EventType& type, EventListener* eventListener)
 	{
-		m_EventListeners[type].push_back(eventDelegate);
+		m_EventListeners[type].push_back(eventListener);
+	}
+
+	void EventManager::RemoveListener(const EventType& type, EventListener* eventListener)
+	{
 	}
 
 	void EventManager::QueueEvent(const std::shared_ptr<Event>& event)
@@ -36,9 +41,9 @@ namespace Tavern
 			if (m_EventListeners.find(event->GetEventType()) == m_EventListeners.end())
 				continue;
 
-			for (EventListenerDelegate& listener : m_EventListeners[event->GetEventType()])
+			for (EventListener* eventListener : m_EventListeners[event->GetEventType()])
 			{
-				listener(event);
+				eventListener->GetCallbackFunction()(event);
 			}
 
 			m_Events.pop();

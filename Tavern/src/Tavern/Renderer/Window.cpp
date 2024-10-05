@@ -6,6 +6,7 @@
 #include "Tavern/Core/Log.h"
 #include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Events/EventManager.h"
+#include "Tavern/Events/EventListener.h"
 #include "Tavern/Events/KeyEvent.h"
 #include "Tavern/Events/MouseEvent.h"
 #include "Tavern/Renderer/Cursor.h"
@@ -114,7 +115,7 @@ namespace Tavern
 			eventManager.QueueEvent(event);
 		});
 
-		m_EventManager.AddListener(EventType::WindowResize, std::bind(&Window::OnWindowResizeEvent, this, std::placeholders::_1));
+		m_EventManager.AddListener(EventType::WindowResize, new EventListener(std::bind(&Window::OnWindowResizeEvent, this, std::placeholders::_1)));
 
 		m_Cursor = Cursor(this, false, true);
 	}

@@ -1,4 +1,5 @@
 #include "Tavern/Core/Log.h"
+#include "Tavern/Events/EventListener.h"
 #include <Tavern.h>
 #include <algorithm>
 #include <functional>
@@ -40,9 +41,9 @@ public:
 		GetTransformComponent()->SetPosition(glm::vec3(0.0f, 0.0f, 3.0f));
 		GetTransformComponent()->SetRotation(glm::vec3(0.0f, -90.0f, 0.0f));
 
-		GetEngine()->GetEventManager().AddListener(Tavern::EventType::KeyPressed, std::bind(&Player::OnKeyPressed, this, std::placeholders::_1));
-		GetEngine()->GetEventManager().AddListener(Tavern::EventType::MouseMoved, std::bind(&Player::OnMouseMoved, this, std::placeholders::_1));
-		GetEngine()->GetEventManager().AddListener(Tavern::EventType::MouseScrolled, std::bind(&Player::OnMouseScrolled, this, std::placeholders::_1));
+		GetEngine()->GetEventManager().AddListener(Tavern::EventType::KeyPressed, new Tavern::EventListener(std::bind(&Player::OnKeyPressed, this, std::placeholders::_1)));
+		GetEngine()->GetEventManager().AddListener(Tavern::EventType::MouseMoved, new Tavern::EventListener(std::bind(&Player::OnMouseMoved, this, std::placeholders::_1)));
+		GetEngine()->GetEventManager().AddListener(Tavern::EventType::MouseScrolled, new Tavern::EventListener(std::bind(&Player::OnMouseScrolled, this, std::placeholders::_1)));
 	}
 
 	void Update() override
