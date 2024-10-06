@@ -33,7 +33,10 @@ class Player : public Tavern::Entity
 public:
 	Player(Tavern::Engine* engine)
 		: Tavern::Entity(engine), m_Speed(2.5f), m_LastMousePosition(0.0f),
-		  m_CameraSensitivity(0.05f), m_Zoom(45.0f)
+		  m_CameraSensitivity(0.05f), m_Zoom(45.0f),
+		  m_KeyPressed(std::bind(&Player::OnKeyPressed, this, std::placeholders::_1)),
+		  m_MouseMoved(std::bind(&Player::OnMouseMoved, this, std::placeholders::_1)),
+		  m_MouseScrolled(std::bind(&Player::OnMouseScrolled, this, std::placeholders::_1))
 	{
 		m_Camera = std::make_unique<Tavern::CameraComponent>(GetEngine(), this);
 		GetEngine()->GetRenderManager().SetActiveCamera(m_Camera.get());
@@ -41,9 +44,16 @@ public:
 		GetTransformComponent()->SetPosition(glm::vec3(0.0f, 0.0f, 3.0f));
 		GetTransformComponent()->SetRotation(glm::vec3(0.0f, -90.0f, 0.0f));
 
-		GetEngine()->GetEventManager().AddListener(Tavern::EventType::KeyPressed, new Tavern::EventListener(std::bind(&Player::OnKeyPressed, this, std::placeholders::_1)));
-		GetEngine()->GetEventManager().AddListener(Tavern::EventType::MouseMoved, new Tavern::EventListener(std::bind(&Player::OnMouseMoved, this, std::placeholders::_1)));
-		GetEngine()->GetEventManager().AddListener(Tavern::EventType::MouseScrolled, new Tavern::EventListener(std::bind(&Player::OnMouseScrolled, this, std::placeholders::_1)));
+		GetEngine()->GetEventManager().AddListener(Tavern::EventType::KeyPressed, m_KeyPressed);
+		GetEngine()->GetEventManager().AddListener(Tavern::EventType::MouseMoved, m_MouseMoved);
+		GetEngine()->GetEventManager().AddListener(Tavern::EventType::MouseScrolled, m_MouseScrolled);
+	}
+
+	~Player()
+	{
+		GetEngine()->GetEventManager().RemoveListener(Tavern::EventType::KeyPressed, m_KeyPressed);
+		GetEngine()->GetEventManager().RemoveListener(Tavern::EventType::MouseMoved, m_MouseMoved);
+		GetEngine()->GetEventManager().RemoveListener(Tavern::EventType::MouseScrolled, m_MouseScrolled);
 	}
 
 	void Update() override
@@ -140,6 +150,9 @@ public:
 	glm::vec2 m_LastMousePosition;
 	float m_CameraSensitivity;
 	float m_Zoom;
+	Tavern::EventListener m_KeyPressed;
+	Tavern::EventListener m_MouseMoved;
+	Tavern::EventListener m_MouseScrolled;
 };
 
 int main()

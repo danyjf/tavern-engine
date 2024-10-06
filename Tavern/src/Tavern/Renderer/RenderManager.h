@@ -33,6 +33,7 @@ namespace Tavern
 
 	private:
 		EventManager& m_EventManager;
+		EventListener m_WindowResizeListener;
 		std::unique_ptr<Window> m_Window;
 		std::unique_ptr<Shader> m_Shader;
 		CameraComponent* m_Camera;

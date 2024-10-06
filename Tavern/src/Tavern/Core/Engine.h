@@ -7,11 +7,11 @@
 #include "Tavern/Events/EventManager.h"
 #include "Tavern/Renderer/RenderManager.h"
 #include "Tavern/Input/InputManager.h"
+#include "Tavern/Entity.h"
 
 namespace Tavern
 {
 	class Event;
-	class Entity;
 
 	class TAVERN_API Engine
 	{
@@ -24,8 +24,8 @@ namespace Tavern
 		template <typename EntityClass>
 		Entity* CreateEntity()
 		{
-			m_Entities.push_back(new EntityClass(this));
-			return m_Entities.back();
+			m_Entities.push_back(std::make_unique<EntityClass>(this));
+			return m_Entities.back().get();
 		}
 
 		EventManager& GetEventManager();
@@ -36,11 +36,12 @@ namespace Tavern
 
 	private:
 		EventManager m_EventManager;
+		EventListener m_WindowCloseListener;
 		RenderManager m_RenderManager;
 		InputManager m_InputManager;
 
 		bool m_IsRunning = true;
 
-		std::vector<Entity*> m_Entities;
+		std::vector<std::unique_ptr<Entity>> m_Entities;
 	};
 }

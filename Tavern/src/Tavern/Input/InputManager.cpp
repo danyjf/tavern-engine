@@ -18,7 +18,7 @@ namespace Tavern
 
 	InputManager::~InputManager()
 	{
-		TAVERN_ENGINE_INFO("InputManager destoyed");
+		TAVERN_ENGINE_INFO("InputManager destroyed");
 	}
 
 	bool InputManager::IsKeyPressed(const Key key)

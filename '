@@ -28,7 +28,7 @@ namespace Tavern
 
 		std::vector<EventListener*>& listeners = m_EventListeners[type];
 
-		std::erase_if(listeners, [&eventListener](EventListener* storedListener) {
+		std::erase_if(listeners, [eventListener](EventListener* storedListener) {
 			return storedListener->GetID() == eventListener.GetID();
 		});
 	}

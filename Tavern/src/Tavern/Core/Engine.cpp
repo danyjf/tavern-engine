@@ -19,16 +19,17 @@ namespace Tavern
 
 	Engine::Engine()
 		: m_EventManager(),
+		  m_WindowCloseListener(std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1)),
 		  m_RenderManager(m_EventManager),
 		  m_InputManager(m_RenderManager)
 	{
-		m_EventManager.AddListener(EventType::WindowClose, new EventListener(std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1)));
-
+		m_EventManager.AddListener(EventType::WindowClose, m_WindowCloseListener);
 		TAVERN_ENGINE_INFO("Engine initialized");
 	}
 
 	Engine::~Engine()
 	{
+		m_EventManager.RemoveListener(EventType::WindowClose, m_WindowCloseListener);
 		TAVERN_ENGINE_INFO("Engine destroyed");
 	}
 
@@ -42,7 +43,7 @@ namespace Tavern
 			m_EventManager.DispatchEvents();
 
 			// Update State
-			for (Entity* entity : m_Entities)
+			for (std::unique_ptr<Entity>& entity : m_Entities)
 			{
 				entity->Update();
 			}

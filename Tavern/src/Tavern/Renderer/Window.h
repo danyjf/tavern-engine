@@ -3,9 +3,11 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <string>
+#include <memory>
 
 #include "Tavern/Core/Core.h"
 #include "Tavern/Renderer/Cursor.h"
+#include "Tavern/Events/EventListener.h"
 
 namespace Tavern
 {
@@ -41,5 +43,6 @@ namespace Tavern
 		GLFWwindow* m_Window;
 		WindowSettings m_WindowSettings;
 		Cursor m_Cursor;
+		EventListener m_WindowResizeListener;
 	};
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <queue>
+#include <unordered_map>
 
 #include "Tavern/Core/Core.h"
 #include "Tavern/Events/Event.h"
@@ -18,10 +19,10 @@ namespace Tavern
 		void operator=(const EventManager& copy) = delete;
 
 		// Register a delegate function to be called when the event type is triggered.
-		void AddListener(const EventType& type, EventListener* eventListener);
+		void AddListener(const EventType& type, EventListener& eventListener);
+		void AddListener(const EventType& type, EventListener&& eventListener) = delete;
 
-		// TODO: Add a way to remove callbacks
-		void RemoveListener(const EventType& type, EventListener* eventListener);
+		void RemoveListener(const EventType& type, EventListener& eventListener);
 
 		// TODO: Add a way to trigger an event ignoring the queue
 

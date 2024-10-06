@@ -16,6 +16,7 @@ namespace Tavern
 {
 	Window::Window(EventManager& eventManager, const WindowSettings& windowSettings)
 		: m_EventManager(eventManager),
+		  m_WindowResizeListener(std::bind(&Window::OnWindowResizeEvent, this, std::placeholders::_1)),
 		  m_WindowSettings(windowSettings)
 	{
 		// Initialize glfw
@@ -115,13 +116,14 @@ namespace Tavern
 			eventManager.QueueEvent(event);
 		});
 
-		m_EventManager.AddListener(EventType::WindowResize, new EventListener(std::bind(&Window::OnWindowResizeEvent, this, std::placeholders::_1)));
+		m_EventManager.AddListener(EventType::WindowResize, m_WindowResizeListener);
 
 		m_Cursor = Cursor(this, false, true);
 	}
 
 	Window::~Window()
 	{
+		m_EventManager.RemoveListener(EventType::WindowResize, m_WindowResizeListener);
 		glfwDestroyWindow(m_Window);
 	}
 

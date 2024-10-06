@@ -15,11 +15,12 @@
 namespace Tavern
 {
 	RenderManager::RenderManager(EventManager& eventManager)
-		: m_EventManager(eventManager)
+		: m_EventManager(eventManager),
+		  m_WindowResizeListener(std::bind(&RenderManager::OnWindowResizeEvent, this, std::placeholders::_1))
 	{
 		m_Window = std::make_unique<Window>(m_EventManager, WindowSettings("My Window", 800, 600));
 
-		m_EventManager.AddListener(EventType::WindowResize, new EventListener(std::bind(&RenderManager::OnWindowResizeEvent, this, std::placeholders::_1)));
+		m_EventManager.AddListener(EventType::WindowResize, m_WindowResizeListener);
 
 		m_Shader = std::make_unique<Shader>(
 			"./Shaders/Shader.vert",
@@ -35,6 +36,7 @@ namespace Tavern
 	RenderManager::~RenderManager()
 	{
 		glfwTerminate();
+		m_EventManager.RemoveListener(EventType::WindowResize, m_WindowResizeListener);
 		TAVERN_ENGINE_INFO("RenderManager destroyed");
 	}
 
