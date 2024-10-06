@@ -24,7 +24,8 @@ namespace Tavern
 
 		void RemoveListener(const EventType& type, EventListener& eventListener);
 
-		// TODO: Add a way to trigger an event ignoring the queue
+		// Immediately trigger an event ignoring the queue
+		void TriggerEvent(const std::shared_ptr<Event>& event);
 
 		// Add an event to the end of the queue
 		void QueueEvent(const std::shared_ptr<Event>& event);

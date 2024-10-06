@@ -33,6 +33,18 @@ namespace Tavern
 		});
 	}
 
+	void EventManager::TriggerEvent(const std::shared_ptr<Event>& event)
+	{
+		// Ignore events that have no observer yet
+		if (m_EventListeners.find(event->GetEventType()) == m_EventListeners.end())
+			return;
+
+		for (EventListener* eventListener : m_EventListeners[event->GetEventType()])
+		{
+			eventListener->GetCallbackFunction()(event);
+		}
+	}
+
 	void EventManager::QueueEvent(const std::shared_ptr<Event>& event)
 	{
 		// Ignore events that have no observer yet
