@@ -11,9 +11,9 @@ namespace Tavern
 		m_ID = s_Counter;
 	}
 
-	const CallbackFunction& EventListener::GetCallbackFunction() const
+	void EventListener::Call(const std::shared_ptr<Event>& event)
 	{
-		return m_CallbackFunction;
+		m_CallbackFunction(event);
 	}
 
 	const int EventListener::GetID() const

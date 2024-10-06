@@ -41,7 +41,7 @@ namespace Tavern
 
 		for (EventListener* eventListener : m_EventListeners[event->GetEventType()])
 		{
-			eventListener->GetCallbackFunction()(event);
+			eventListener->Call(event);
 		}
 	}
 
@@ -61,11 +61,14 @@ namespace Tavern
 			std::shared_ptr<Event>& event = m_Events.front();
 
 			if (m_EventListeners.find(event->GetEventType()) == m_EventListeners.end())
+			{
+				m_Events.pop();
 				continue;
+			}
 
 			for (EventListener* eventListener : m_EventListeners[event->GetEventType()])
 			{
-				eventListener->GetCallbackFunction()(event);
+				eventListener->Call(event);
 			}
 
 			m_Events.pop();

@@ -7,6 +7,7 @@
 
 namespace Tavern
 {
+	// TODO: Change events so that the type of the event in the callback is in a template
 	using CallbackFunction = std::function<void(const std::shared_ptr<Event>&)>;
 
 	// Class used to register event listeners to the EventManager.
@@ -17,7 +18,7 @@ namespace Tavern
 	public:
 		EventListener(CallbackFunction&& eventDelegate);
 
-		const CallbackFunction& GetCallbackFunction() const;
+		void Call(const std::shared_ptr<Event>&);
 		const int GetID() const;
 
 	private:
