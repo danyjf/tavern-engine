@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "Tavern/Core/Core.h"
+#include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Renderer/Cursor.h"
 #include "Tavern/Events/EventListener.h"
 
@@ -36,13 +37,13 @@ namespace Tavern
 		const WindowSettings& GetWindowSettings() const;
 		Cursor& GetCursor();
 
-		void OnWindowResizeEvent(const std::shared_ptr<Event>& event);
+		void OnWindowResizeEvent(const std::shared_ptr<WindowResizeEvent>& event);
 
 	private:
 		EventManager& m_EventManager;
 		GLFWwindow* m_Window;
 		WindowSettings m_WindowSettings;
 		Cursor m_Cursor;
-		EventListener m_WindowResizeListener;
+		EventListener<WindowResizeEvent> m_WindowResizeListener;
 	};
 }

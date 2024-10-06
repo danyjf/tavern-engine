@@ -1,30 +1,44 @@
 #pragma once
 
 #include <functional>
+#include <memory>
 
-#include "Tavern/Core/Core.h"
 #include "Tavern/Events/Event.h"
+#include "Tavern/Events/EventListenerInterface.h"
 
 namespace Tavern
 {
-	// TODO: Change events so that the type of the event in the callback is in a template
-	using CallbackFunction = std::function<void(const std::shared_ptr<Event>&)>;
+	template <typename T>
+	using CallbackFunction = std::function<void(const std::shared_ptr<T>&)>;
 
 	// Class used to register event listeners to the EventManager.
 	// Remember to always manually remove the event listener from the
 	// EventManager in the destructor of your class.
-	class TAVERN_API EventListener
+	template <typename T>
+	class EventListener : public EventListenerInterface
 	{
 	public:
-		EventListener(CallbackFunction&& eventDelegate);
+		EventListener(CallbackFunction<T>&& callbackFunction)
+			: m_CallbackFunction(callbackFunction)
+		{
+			s_Counter++;
+			m_ID = s_Counter;
+		}
 
-		void Call(const std::shared_ptr<Event>&);
-		const int GetID() const;
+		void Call(const std::shared_ptr<Event>& event)
+		{
+			m_CallbackFunction(std::dynamic_pointer_cast<T>(event));
+		}
+
+		const int GetID() const
+		{
+			return m_ID;
+		}
 
 	private:
-		CallbackFunction m_CallbackFunction;
+		CallbackFunction<T> m_CallbackFunction;
 		int m_ID;
 
-		static int s_Counter;
+		inline static int s_Counter = 0;
 	};
 }

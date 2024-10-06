@@ -50,7 +50,7 @@ namespace Tavern
 			m_Window, [](GLFWwindow* window, int width, int height) {
 				EventManager& eventManager = *(EventManager*)glfwGetWindowUserPointer(window);
 				std::shared_ptr<WindowResizeEvent> event = std::make_shared<WindowResizeEvent>(width, height);
-				eventManager.QueueEvent(event);
+				eventManager.TriggerEvent(event);
 			}
 		);
 
@@ -142,10 +142,9 @@ namespace Tavern
 		return m_Cursor;
 	}
 
-	void Window::OnWindowResizeEvent(const std::shared_ptr<Event>& event)
+	void Window::OnWindowResizeEvent(const std::shared_ptr<WindowResizeEvent>& event)
 	{
-		std::shared_ptr<WindowResizeEvent> windowResizeEvent = std::dynamic_pointer_cast<WindowResizeEvent>(event);
-		m_WindowSettings.Width = windowResizeEvent->GetWidth();
-		m_WindowSettings.Height = windowResizeEvent->GetHeight();
+		m_WindowSettings.Width = event->GetWidth();
+		m_WindowSettings.Height = event->GetHeight();
 	}
 }

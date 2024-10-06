@@ -6,6 +6,7 @@
 #include "Tavern/Core/Log.h"
 #include "Tavern/Core/Time.h"
 #include "Tavern/Entity.h"
+#include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Events/EventListener.h"
 #include "Tavern/Events/EventManager.h"
 #include "Tavern/Events/Event.h"
@@ -71,7 +72,7 @@ namespace Tavern
 		return m_InputManager;
 	}
 
-	void Engine::OnWindowCloseEvent(const std::shared_ptr<Event>& event)
+	void Engine::OnWindowCloseEvent(const std::shared_ptr<WindowCloseEvent>& event)
 	{
 		m_IsRunning = false;
 		TAVERN_ENGINE_TRACE("Window Close Event");

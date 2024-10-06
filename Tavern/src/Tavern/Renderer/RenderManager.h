@@ -5,6 +5,7 @@
 #include "Tavern/Components/CameraComponent.h"
 #include "Tavern/Components/MeshComponent.h"
 #include "Tavern/Core/Core.h"
+#include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Renderer/Window.h"
 #include "Tavern/Renderer/Shader.h"
 
@@ -29,11 +30,11 @@ namespace Tavern
 
 		void Render();
 
-		void OnWindowResizeEvent(const std::shared_ptr<Event>& event);
+		void OnWindowResizeEvent(const std::shared_ptr<WindowResizeEvent>& event);
 
 	private:
 		EventManager& m_EventManager;
-		EventListener m_WindowResizeListener;
+		EventListener<WindowResizeEvent> m_WindowResizeListener;
 		std::unique_ptr<Window> m_Window;
 		std::unique_ptr<Shader> m_Shader;
 		CameraComponent* m_Camera;

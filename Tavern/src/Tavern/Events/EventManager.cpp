@@ -1,6 +1,6 @@
 #include "Tavern/Events/EventManager.h"
 #include "Tavern/Core/Log.h"
-#include "Tavern/Events/EventListener.h"
+#include "Tavern/Events/EventListenerInterface.h"
 #include <vector>
 
 namespace Tavern
@@ -15,20 +15,20 @@ namespace Tavern
 		TAVERN_ENGINE_INFO("EventManager destroyed");
 	}
 
-	void EventManager::AddListener(const EventType& type, EventListener& eventListener)
+	void EventManager::AddListener(const EventType& type, EventListenerInterface& eventListener)
 	{
 		m_EventListeners[type].push_back(&eventListener);
 	}
 
-	void EventManager::RemoveListener(const EventType& type, EventListener& eventListener)
+	void EventManager::RemoveListener(const EventType& type, EventListenerInterface& eventListener)
 	{
 		// Ignore if the event doesn't exist
 		if (m_EventListeners.find(type) == m_EventListeners.end())
 			return;
 
-		std::vector<EventListener*>& listeners = m_EventListeners[type];
+		std::vector<EventListenerInterface*>& listeners = m_EventListeners[type];
 
-		std::erase_if(listeners, [&eventListener](EventListener* storedListener) {
+		std::erase_if(listeners, [&eventListener](EventListenerInterface* storedListener) {
 			return storedListener->GetID() == eventListener.GetID();
 		});
 	}
@@ -39,7 +39,7 @@ namespace Tavern
 		if (m_EventListeners.find(event->GetEventType()) == m_EventListeners.end())
 			return;
 
-		for (EventListener* eventListener : m_EventListeners[event->GetEventType()])
+		for (EventListenerInterface* eventListener : m_EventListeners[event->GetEventType()])
 		{
 			eventListener->Call(event);
 		}
@@ -66,7 +66,7 @@ namespace Tavern
 				continue;
 			}
 
-			for (EventListener* eventListener : m_EventListeners[event->GetEventType()])
+			for (EventListenerInterface* eventListener : m_EventListeners[event->GetEventType()])
 			{
 				eventListener->Call(event);
 			}

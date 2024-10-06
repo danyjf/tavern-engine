@@ -1,5 +1,6 @@
 #include "Tavern/Core/Log.h"
 #include "Tavern/Events/EventListener.h"
+#include "Tavern/Events/MouseEvent.h"
 #include <Tavern.h>
 #include <algorithm>
 #include <functional>
@@ -87,16 +88,14 @@ public:
 		}
 	}
 
-	void OnKeyPressed(const std::shared_ptr<Tavern::Event>& event)
+	void OnKeyPressed(const std::shared_ptr<Tavern::KeyPressedEvent>& event)
 	{
-		std::shared_ptr<Tavern::KeyPressedEvent> keyPressedEvent = std::dynamic_pointer_cast<Tavern::KeyPressedEvent>(event);
-
-		if (keyPressedEvent->IsRepeat())
+		if (event->IsRepeat())
 		{
 			return;
 		}
 
-		switch (keyPressedEvent->GetKey())
+		switch (event->GetKey())
 		{
 			case Tavern::Key::Escape:
 			{
@@ -110,17 +109,16 @@ public:
 		}
 	}
 
-	void OnMouseMoved(const std::shared_ptr<Tavern::Event>& event)
+	void OnMouseMoved(const std::shared_ptr<Tavern::MouseMovedEvent>& event)
 	{
-		std::shared_ptr<Tavern::MouseMovedEvent> mouseMovedEvent = std::dynamic_pointer_cast<Tavern::MouseMovedEvent>(event);
 		glm::vec2 mouseOffset(
-			mouseMovedEvent->GetX() - m_LastMousePosition.x,
-			mouseMovedEvent->GetY() - m_LastMousePosition.y
+			event->GetX() - m_LastMousePosition.x,
+			event->GetY() - m_LastMousePosition.y
 		);
 		mouseOffset *= m_CameraSensitivity;
 
-		m_LastMousePosition.x = mouseMovedEvent->GetX();
-		m_LastMousePosition.y = mouseMovedEvent->GetY();
+		m_LastMousePosition.x = event->GetX();
+		m_LastMousePosition.y = event->GetY();
 
 		const glm::vec3& rotation = GetTransformComponent()->GetRotation();
 		GetTransformComponent()->SetRotation(rotation + glm::vec3(-mouseOffset.y, mouseOffset.x, 0.0f));
@@ -135,11 +133,9 @@ public:
 		}
 	}
 
-	void OnMouseScrolled(const std::shared_ptr<Tavern::Event>& event)
+	void OnMouseScrolled(const std::shared_ptr<Tavern::MouseScrolledEvent>& event)
 	{
-		std::shared_ptr<Tavern::MouseScrolledEvent> mouseScrolledEvent = std::dynamic_pointer_cast<Tavern::MouseScrolledEvent>(event);
-
-		m_Zoom -= mouseScrolledEvent->GetYOffset();
+		m_Zoom -= event->GetYOffset();
 		m_Zoom = std::clamp(m_Zoom, 1.0f, 45.0f);
 
 		m_Camera->SetFOV(m_Zoom);
@@ -150,9 +146,9 @@ public:
 	glm::vec2 m_LastMousePosition;
 	float m_CameraSensitivity;
 	float m_Zoom;
-	Tavern::EventListener m_KeyPressed;
-	Tavern::EventListener m_MouseMoved;
-	Tavern::EventListener m_MouseScrolled;
+	Tavern::EventListener<Tavern::KeyPressedEvent> m_KeyPressed;
+	Tavern::EventListener<Tavern::MouseMovedEvent> m_MouseMoved;
+	Tavern::EventListener<Tavern::MouseScrolledEvent> m_MouseScrolled;
 };
 
 int main()

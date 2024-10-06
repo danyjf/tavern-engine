@@ -19,4 +19,6 @@
 #include "Tavern/Events/KeyEvent.h"
 #include "Tavern/Events/MouseEvent.h"
 #include "Tavern/Events/ApplicationEvent.h"
+#include "Tavern/Events/EventListenerInterface.h"
+#include "Tavern/Events/EventListener.h"
 #include "Tavern/Entity.h"

@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "Tavern/Core/Core.h"
+#include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Events/EventManager.h"
 #include "Tavern/Renderer/RenderManager.h"
 #include "Tavern/Input/InputManager.h"
@@ -32,11 +33,11 @@ namespace Tavern
 		RenderManager& GetRenderManager();
 		InputManager& GetInputManager();
 
-		void OnWindowCloseEvent(const std::shared_ptr<Event>& event);
+		void OnWindowCloseEvent(const std::shared_ptr<WindowCloseEvent>& event);
 
 	private:
 		EventManager m_EventManager;
-		EventListener m_WindowCloseListener;
+		EventListener<WindowCloseEvent> m_WindowCloseListener;
 		RenderManager m_RenderManager;
 		InputManager m_InputManager;
 

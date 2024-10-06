@@ -5,10 +5,11 @@
 
 #include "Tavern/Core/Core.h"
 #include "Tavern/Events/Event.h"
+#include "Tavern/Events/EventListenerInterface.h"
 
 namespace Tavern
 {
-	class EventListener;
+	class EventListenerInterface;
 
 	class TAVERN_API EventManager
 	{
@@ -19,10 +20,10 @@ namespace Tavern
 		void operator=(const EventManager& copy) = delete;
 
 		// Register a delegate function to be called when the event type is triggered.
-		void AddListener(const EventType& type, EventListener& eventListener);
-		void AddListener(const EventType& type, EventListener&& eventListener) = delete;
+		void AddListener(const EventType& type, EventListenerInterface& eventListener);
+		void AddListener(const EventType& type, EventListenerInterface&& eventListener) = delete;
 
-		void RemoveListener(const EventType& type, EventListener& eventListener);
+		void RemoveListener(const EventType& type, EventListenerInterface& eventListener);
 
 		// Immediately trigger an event ignoring the queue
 		void TriggerEvent(const std::shared_ptr<Event>& event);
@@ -35,6 +36,6 @@ namespace Tavern
 
 	private:
 		std::queue<std::shared_ptr<Event>> m_Events;
-		std::unordered_map<EventType, std::vector<EventListener*>> m_EventListeners;
+		std::unordered_map<EventType, std::vector<EventListenerInterface*>> m_EventListeners;
 	};
 }
