@@ -20,7 +20,7 @@ namespace Tavern
 		RenderManager(EventManager& eventManager);
 		~RenderManager();
 		RenderManager(RenderManager& copy) = delete;
-		void operator=(const RenderManager& copy) = delete;
+		RenderManager& operator=(const RenderManager& copy) = delete;
 
 		Window* GetWindow() const;
 		Shader* GetShader() const;

@@ -24,7 +24,6 @@ namespace Tavern
 			float nearClipPlane = 0.1f,
 			float farClipPlane = 100.0f
 		);
-		~CameraComponent() = default;
 
 		void SetFOV(float FOV);
 

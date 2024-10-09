@@ -17,7 +17,6 @@ namespace Tavern
 	public:
 		MeshComponent() = default;
 		MeshComponent(Engine* engine, Entity* owner);
-		~MeshComponent() = default;
 
 		void Render();
 		void AddTexture(const Texture& texture);

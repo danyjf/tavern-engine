@@ -17,7 +17,7 @@ namespace Tavern
 		EventManager();
 		~EventManager();
 		EventManager(EventManager& copy) = delete;
-		void operator=(const EventManager& copy) = delete;
+		EventManager& operator=(const EventManager& copy) = delete;
 
 		// Register a delegate function to be called when the event type is triggered.
 		void AddListener(const EventType& type, EventListenerInterface& eventListener);

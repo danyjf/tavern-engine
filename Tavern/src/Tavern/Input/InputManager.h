@@ -17,7 +17,7 @@ namespace Tavern
 		InputManager(RenderManager& renderManager);
 		~InputManager();
 		InputManager(InputManager& copy) = delete;
-		void operator=(const InputManager& copy) = delete;
+		InputManager& operator=(const InputManager& copy) = delete;
 
 		bool IsKeyPressed(const Key key);
 		bool IsMouseButtonPressed(const Mouse button);
