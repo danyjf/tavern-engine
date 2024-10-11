@@ -1,5 +1,3 @@
-#include <memory>
-
 #include "Tavern/Components/TransformComponent.h"
 #include "Tavern/Entity.h"
 
@@ -8,7 +6,7 @@ namespace Tavern
 	Entity::Entity(Engine* engine)
 		: m_Engine(engine)
 	{
-		m_Transform = std::make_unique<TransformComponent>(m_Engine, this);
+		m_Transform = CreateComponent<TransformComponent>();
 	}
 
 	void Entity::Update()
@@ -22,6 +20,6 @@ namespace Tavern
 
 	TransformComponent* Entity::GetTransformComponent() const
 	{
-		return m_Transform.get();
+		return m_Transform;
 	}
 }

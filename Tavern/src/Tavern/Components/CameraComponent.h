@@ -14,15 +14,7 @@ namespace Tavern
 	class TAVERN_API CameraComponent : public BaseComponent
 	{
 	public:
-		CameraComponent(
-			Engine* engine,
-			Entity* owner,
-			float FOV = 45.0f,
-			float viewportWidth = 800.0f,
-			float viewportHeight = 600.0f,
-			float nearClipPlane = 0.1f,
-			float farClipPlane = 100.0f
-		);
+		CameraComponent(Engine* engine, Entity* owner);
 
 		void SetFOV(float FOV);
 

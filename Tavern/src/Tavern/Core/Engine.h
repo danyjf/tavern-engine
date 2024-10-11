@@ -23,10 +23,11 @@ namespace Tavern
 		void Run();
 
 		template <typename EntityClass>
-		Entity* CreateEntity()
+		EntityClass* CreateEntity()
 		{
-			m_Entities.push_back(std::make_unique<EntityClass>(this));
-			return m_Entities.back().get();
+			EntityClass* entity = new EntityClass(this);
+			m_Entities.push_back(std::unique_ptr<EntityClass>(entity));
+			return entity;
 		}
 
 		EventManager& GetEventManager();

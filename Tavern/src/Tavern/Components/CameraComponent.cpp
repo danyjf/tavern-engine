@@ -8,13 +8,8 @@
 
 namespace Tavern
 {
-	CameraComponent::CameraComponent(Engine* engine, Entity* owner, float FOV, float viewportWidth, float viewportHeight, float nearClipPlane, float farClipPlane)
+	CameraComponent::CameraComponent(Engine* engine, Entity* owner)
 		: BaseComponent(engine, owner),
-		  m_FOV(FOV),
-		  m_ViewportWidth(viewportWidth),
-		  m_ViewportHeight(viewportHeight),
-		  m_NearClipPlane(nearClipPlane),
-		  m_FarClipPlane(farClipPlane),
 		  m_OwnerTransform(GetOwner()->GetTransformComponent())
 	{
 		ComputeViewMatrix();

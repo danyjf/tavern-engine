@@ -1,4 +1,3 @@
-#include "Tavern/Core/Log.h"
 #include "Tavern/Events/EventListener.h"
 #include "Tavern/Events/MouseEvent.h"
 #include <Tavern.h>
@@ -12,7 +11,7 @@ public:
 	MyEntity(Tavern::Engine* engine)
 		: Tavern::Entity(engine)
 	{
-		m_Mesh = std::make_unique<Tavern::MeshRenderComponent>(GetEngine(), this);
+		m_Mesh = CreateComponent<Tavern::MeshRenderComponent>();
 
 		Tavern::Texture texture1(Tavern::TextureSettings(), "Assets/Images/container.jpg");
 		Tavern::Texture texture2(Tavern::TextureSettings(), "Assets/Images/awesomeface.jpg");
@@ -26,7 +25,7 @@ public:
 		Tavern::Entity::Update();
 	}
 
-	std::unique_ptr<Tavern::MeshRenderComponent> m_Mesh;
+	Tavern::MeshRenderComponent* m_Mesh;
 };
 
 class Player : public Tavern::Entity
@@ -39,8 +38,8 @@ public:
 		  m_MouseMoved(std::bind(&Player::OnMouseMoved, this, std::placeholders::_1)),
 		  m_MouseScrolled(std::bind(&Player::OnMouseScrolled, this, std::placeholders::_1))
 	{
-		m_Camera = std::make_unique<Tavern::CameraComponent>(GetEngine(), this);
-		GetEngine()->GetRenderManager().SetActiveCamera(m_Camera.get());
+		m_Camera = CreateComponent<Tavern::CameraComponent>();
+		GetEngine()->GetRenderManager().SetActiveCamera(m_Camera);
 
 		GetTransformComponent()->SetPosition(glm::vec3(0.0f, 0.0f, 3.0f));
 		GetTransformComponent()->SetRotation(glm::vec3(0.0f, -90.0f, 0.0f));
@@ -141,7 +140,7 @@ public:
 		m_Camera->SetFOV(m_Zoom);
 	}
 
-	std::unique_ptr<Tavern::CameraComponent> m_Camera;
+	Tavern::CameraComponent* m_Camera;
 	float m_Speed;
 	glm::vec2 m_LastMousePosition;
 	float m_CameraSensitivity;
