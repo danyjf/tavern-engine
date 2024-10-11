@@ -26,6 +26,6 @@ namespace Tavern
 
 	private:
 		RenderManager& m_RenderManager;
-		Window* m_Window;
+		Window* m_Window = nullptr;
 	};
 }

@@ -15,14 +15,13 @@
 
 namespace Tavern
 {
-	// TODO: Create UUIDs for the entities and components
 	// TODO: Create a resource manager
 
 	Engine::Engine()
 		: m_EventManager(),
-		  m_WindowCloseListener(std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1)),
 		  m_RenderManager(m_EventManager),
-		  m_InputManager(m_RenderManager)
+		  m_InputManager(m_RenderManager),
+		  m_WindowCloseListener(std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1))
 	{
 		m_EventManager.AddListener(EventType::WindowClose, m_WindowCloseListener);
 		TAVERN_ENGINE_INFO("Engine initialized");

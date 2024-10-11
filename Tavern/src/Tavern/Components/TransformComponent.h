@@ -30,15 +30,15 @@ namespace Tavern
 		const glm::mat4& GetModelMatrix() const;
 
 	private:
-		glm::mat4 m_ModelMatrix;
+		glm::mat4 m_ModelMatrix = glm::mat4(1.0f);
 
-		glm::vec3 m_Position;
-		glm::vec3 m_Rotation;
-		glm::vec3 m_Scale;
+		glm::vec3 m_Position = glm::vec3(0.0f);
+		glm::vec3 m_Rotation = glm::vec3(0.0f);
+		glm::vec3 m_Scale = glm::vec3(1.0f);
 
-		glm::vec3 m_Front;
-		glm::vec3 m_Right;
-		glm::vec3 m_Up;
+		glm::vec3 m_Front = glm::vec3(0.0f);
+		glm::vec3 m_Right = glm::vec3(0.0f);
+		glm::vec3 m_Up = glm::vec3(0.0f);
 
 		void ComputeModelMatrix();
 		void CalculateDirectionVectors();

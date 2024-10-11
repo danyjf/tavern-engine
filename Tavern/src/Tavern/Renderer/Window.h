@@ -41,7 +41,7 @@ namespace Tavern
 
 	private:
 		EventManager& m_EventManager;
-		GLFWwindow* m_Window;
+		GLFWwindow* m_Window = nullptr;
 		WindowSettings m_WindowSettings;
 		Cursor m_Cursor;
 		EventListener<WindowResizeEvent> m_WindowResizeListener;

@@ -16,7 +16,7 @@ namespace Tavern
 		Engine* GetEngine() const;
 
 	private:
-		Engine* m_Engine;
-		Entity* m_Owner;
+		Engine* m_Engine = nullptr;
+		Entity* m_Owner = nullptr;
 	};
 }

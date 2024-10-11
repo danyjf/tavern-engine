@@ -34,15 +34,15 @@ namespace Tavern
 		void ComputeProjectionMatrix();
 
 	private:
-		TransformComponent* m_OwnerTransform;
+		TransformComponent* m_OwnerTransform = nullptr;
 
-		float m_FOV;
-		float m_ViewportWidth;
-		float m_ViewportHeight;
-		float m_NearClipPlane;
-		float m_FarClipPlane;
+		float m_FOV = 45.0f;
+		float m_ViewportWidth = 800.0f;
+		float m_ViewportHeight = 600.0f;
+		float m_NearClipPlane = 0.1f;
+		float m_FarClipPlane = 100.0f;
 
-		glm::mat4 m_ViewMatrix;
-		glm::mat4 m_ProjectionMatrix;
+		glm::mat4 m_ViewMatrix = glm::mat4(1.0f);
+		glm::mat4 m_ProjectionMatrix = glm::mat4(1.0f);
 	};
 }

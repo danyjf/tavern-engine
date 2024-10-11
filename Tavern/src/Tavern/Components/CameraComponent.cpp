@@ -14,9 +14,9 @@ namespace Tavern
 		  m_ViewportWidth(viewportWidth),
 		  m_ViewportHeight(viewportHeight),
 		  m_NearClipPlane(nearClipPlane),
-		  m_FarClipPlane(farClipPlane)
+		  m_FarClipPlane(farClipPlane),
+		  m_OwnerTransform(GetOwner()->GetTransformComponent())
 	{
-		m_OwnerTransform = GetOwner()->GetTransformComponent();
 		ComputeViewMatrix();
 		ComputeProjectionMatrix();
 	}

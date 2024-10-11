@@ -7,6 +7,12 @@ namespace Tavern
 	BaseRenderComponent::BaseRenderComponent(Engine* engine, Entity* owner)
 		: BaseComponent(engine, owner)
 	{
+		GetEngine()->GetRenderManager().AddRenderComponent(this);
+	}
+
+	BaseRenderComponent::~BaseRenderComponent()
+	{
+		GetEngine()->GetRenderManager().RemoveRenderComponent(this);
 	}
 
 	bool BaseRenderComponent::IsVisible() const

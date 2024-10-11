@@ -15,7 +15,7 @@ namespace Tavern
 	{
 	public:
 		Entity(Engine* engine);
-		virtual ~Entity();
+		virtual ~Entity() = default;
 
 		virtual void Update();
 
@@ -23,7 +23,7 @@ namespace Tavern
 		TransformComponent* GetTransformComponent() const;
 
 	private:
-		Engine* m_Engine;
+		Engine* m_Engine = nullptr;
 		std::unique_ptr<TransformComponent> m_Transform;
 	};
 }

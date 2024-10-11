@@ -1,9 +1,10 @@
 #pragma once
 
 #include <memory>
+#include <unordered_set>
 
 #include "Tavern/Components/CameraComponent.h"
-#include "Tavern/Components/MeshRenderComponent.h"
+#include "Tavern/Components/BaseRenderComponent.h"
 #include "Tavern/Core/Core.h"
 #include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Renderer/Window.h"
@@ -26,7 +27,8 @@ namespace Tavern
 		Shader* GetShader() const;
 		CameraComponent* GetActiveCamera() const;
 		void SetActiveCamera(CameraComponent* camera);
-		void AddMeshComponent(MeshRenderComponent* meshComponent);
+		void AddRenderComponent(BaseRenderComponent* renderComponent);
+		void RemoveRenderComponent(BaseRenderComponent* renderComponent);
 
 		void Render();
 
@@ -37,7 +39,7 @@ namespace Tavern
 		EventListener<WindowResizeEvent> m_WindowResizeListener;
 		std::unique_ptr<Window> m_Window;
 		std::unique_ptr<Shader> m_Shader;
-		CameraComponent* m_Camera;
-		std::vector<MeshRenderComponent*> m_MeshComponents;
+		CameraComponent* m_Camera = nullptr;
+		std::unordered_set<BaseRenderComponent*> m_RenderComponents;
 	};
 }

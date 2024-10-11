@@ -36,13 +36,13 @@ namespace Tavern
 		void OnWindowCloseEvent(const std::shared_ptr<WindowCloseEvent>& event);
 
 	private:
-		EventManager m_EventManager;
+		EventManager m_EventManager = EventManager();
+		RenderManager m_RenderManager = RenderManager(m_EventManager);
+		InputManager m_InputManager = InputManager(m_RenderManager);
 		EventListener<WindowCloseEvent> m_WindowCloseListener;
-		RenderManager m_RenderManager;
-		InputManager m_InputManager;
 
 		bool m_IsRunning = true;
 
-		std::vector<std::unique_ptr<Entity>> m_Entities;
+		std::vector<std::unique_ptr<Entity>> m_Entities = {};
 	};
 }

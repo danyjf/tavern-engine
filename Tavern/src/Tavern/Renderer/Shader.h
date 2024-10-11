@@ -23,6 +23,6 @@ namespace Tavern
 
 	private:
 		// The program id
-		unsigned int ID;
+		unsigned int ID = 0;
 	};
 }

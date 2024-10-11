@@ -19,9 +19,9 @@ namespace Tavern
 		void SetIsLocked(bool isLocked);
 
 	private:
-		Window* m_Window;
-		bool m_IsVisible;
-		bool m_IsLocked;
+		Window* m_Window = nullptr;
+		bool m_IsVisible = false;
+		bool m_IsLocked = true;
 
 		void UpdateCursorState();
 	};

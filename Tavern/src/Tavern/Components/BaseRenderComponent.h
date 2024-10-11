@@ -12,6 +12,7 @@ namespace Tavern
 	{
 	public:
 		BaseRenderComponent(Engine* engine, Entity* owner);
+		virtual ~BaseRenderComponent();
 
 		virtual void Render() = 0;
 
@@ -19,6 +20,6 @@ namespace Tavern
 		void SetIsVisible(bool isVisible);
 
 	protected:
-		bool m_IsVisible;
+		bool m_IsVisible = true;
 	};
 }

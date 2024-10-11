@@ -16,15 +16,16 @@ namespace Tavern
 	{
 	public:
 		MeshRenderComponent(Engine* engine, Entity* owner);
+		virtual ~MeshRenderComponent() = default;
 
 		void Render() override;
 		void AddTexture(const Texture& texture);
 
 	private:
-		Shader* m_Shader;
-		std::vector<Texture> m_Textures;
-		unsigned int m_VAO;
-		unsigned int m_VBO;
-		unsigned int m_EBO;
+		Shader* m_Shader = nullptr;
+		std::vector<Texture> m_Textures = {};
+		unsigned int m_VAO = 0;
+		unsigned int m_VBO = 0;
+		unsigned int m_EBO = 0;
 	};
 }

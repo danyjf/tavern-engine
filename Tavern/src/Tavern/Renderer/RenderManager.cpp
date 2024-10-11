@@ -60,9 +60,14 @@ namespace Tavern
 		m_Camera = camera;
 	}
 
-	void RenderManager::AddMeshComponent(MeshRenderComponent* meshComponent)
+	void RenderManager::AddRenderComponent(BaseRenderComponent* renderComponent)
 	{
-		m_MeshComponents.push_back(meshComponent);
+		m_RenderComponents.insert(renderComponent);
+	}
+
+	void RenderManager::RemoveRenderComponent(BaseRenderComponent* renderComponent)
+	{
+		m_RenderComponents.erase(renderComponent);
 	}
 
 	void RenderManager::Render()
@@ -70,9 +75,9 @@ namespace Tavern
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		GetActiveCamera()->ComputeViewMatrix();
 
-		for (MeshRenderComponent* meshComponent : m_MeshComponents)
+		for (BaseRenderComponent* renderComponent : m_RenderComponents)
 		{
-			meshComponent->Render();
+			renderComponent->Render();
 		}
 	}
 

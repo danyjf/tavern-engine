@@ -9,14 +9,9 @@
 namespace Tavern
 {
 	MeshRenderComponent::MeshRenderComponent(Engine* engine, Entity* owner)
-		: BaseRenderComponent(engine, owner)
+		: BaseRenderComponent(engine, owner),
+		  m_Shader(GetEngine()->GetRenderManager().GetShader())
 	{
-		m_Shader = GetEngine()->GetRenderManager().GetShader();
-		m_IsVisible = true;
-
-		// TODO: I'm adding mesh components to be rendered but never removing them
-		GetEngine()->GetRenderManager().AddMeshComponent(this);
-
 		// Create vertex buffer object
 		float vertices[] = {
 			// vertices       // texture coords

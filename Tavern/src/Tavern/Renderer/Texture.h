@@ -38,6 +38,6 @@ namespace Tavern
 		void Use();
 
 	private:
-		unsigned int m_Texture;
+		unsigned int m_Texture = 0;
 	};
 }

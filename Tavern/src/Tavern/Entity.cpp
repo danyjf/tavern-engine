@@ -11,10 +11,6 @@ namespace Tavern
 		m_Transform = std::make_unique<TransformComponent>(m_Engine, this);
 	}
 
-	Entity::~Entity()
-	{
-	}
-
 	void Entity::Update()
 	{
 	}

@@ -37,7 +37,7 @@ namespace Tavern
 
 	private:
 		CallbackFunction<T> m_CallbackFunction;
-		unsigned long m_ID;
+		unsigned long m_ID = 0;
 
 		inline static unsigned long s_Counter = 0;
 	};
