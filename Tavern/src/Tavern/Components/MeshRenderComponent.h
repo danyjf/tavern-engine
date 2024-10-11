@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "Tavern/Components/Component.h"
+#include "Tavern/Components/BaseRenderComponent.h"
 #include "Tavern/Renderer/Texture.h"
 #include "Tavern/Core/Core.h"
 
@@ -12,20 +12,15 @@ namespace Tavern
 	class Shader;
 	class Engine;
 
-	class TAVERN_API MeshComponent : public Component
+	class TAVERN_API MeshRenderComponent : public BaseRenderComponent
 	{
 	public:
-		MeshComponent() = default;
-		MeshComponent(Engine* engine, Entity* owner);
+		MeshRenderComponent(Engine* engine, Entity* owner);
 
-		void Render();
+		void Render() override;
 		void AddTexture(const Texture& texture);
 
-		bool IsVisible() const;
-		void SetIsVisible(bool isVisible);
-
 	private:
-		bool m_IsVisible;
 		Shader* m_Shader;
 		std::vector<Texture> m_Textures;
 		unsigned int m_VAO;

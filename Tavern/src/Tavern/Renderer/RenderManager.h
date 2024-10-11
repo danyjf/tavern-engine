@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "Tavern/Components/CameraComponent.h"
-#include "Tavern/Components/MeshComponent.h"
+#include "Tavern/Components/MeshRenderComponent.h"
 #include "Tavern/Core/Core.h"
 #include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Renderer/Window.h"
@@ -26,7 +26,7 @@ namespace Tavern
 		Shader* GetShader() const;
 		CameraComponent* GetActiveCamera() const;
 		void SetActiveCamera(CameraComponent* camera);
-		void AddMeshComponent(MeshComponent* meshComponent);
+		void AddMeshComponent(MeshRenderComponent* meshComponent);
 
 		void Render();
 
@@ -38,6 +38,6 @@ namespace Tavern
 		std::unique_ptr<Window> m_Window;
 		std::unique_ptr<Shader> m_Shader;
 		CameraComponent* m_Camera;
-		std::vector<MeshComponent*> m_MeshComponents;
+		std::vector<MeshRenderComponent*> m_MeshComponents;
 	};
 }

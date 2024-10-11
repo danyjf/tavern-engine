@@ -12,7 +12,7 @@ public:
 	MyEntity(Tavern::Engine* engine)
 		: Tavern::Entity(engine)
 	{
-		m_Mesh = std::make_unique<Tavern::MeshComponent>(GetEngine(), this);
+		m_Mesh = std::make_unique<Tavern::MeshRenderComponent>(GetEngine(), this);
 
 		Tavern::Texture texture1(Tavern::TextureSettings(), "Assets/Images/container.jpg");
 		Tavern::Texture texture2(Tavern::TextureSettings(), "Assets/Images/awesomeface.jpg");
@@ -26,7 +26,7 @@ public:
 		Tavern::Entity::Update();
 	}
 
-	std::unique_ptr<Tavern::MeshComponent> m_Mesh;
+	std::unique_ptr<Tavern::MeshRenderComponent> m_Mesh;
 };
 
 class Player : public Tavern::Entity

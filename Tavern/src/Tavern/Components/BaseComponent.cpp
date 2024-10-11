@@ -1,4 +1,4 @@
-#include "Tavern/Components/Component.h"
+#include "Tavern/Components/BaseComponent.h"
 #include "Tavern/Entity.h"
 #include "Tavern/Core/Engine.h"
 

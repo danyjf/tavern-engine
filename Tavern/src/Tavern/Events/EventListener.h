@@ -25,20 +25,20 @@ namespace Tavern
 			m_ID = s_Counter;
 		}
 
-		void Call(const std::shared_ptr<Event>& event)
+		void Call(const std::shared_ptr<Event>& event) override
 		{
 			m_CallbackFunction(std::dynamic_pointer_cast<T>(event));
 		}
 
-		const int GetID() const
+		const unsigned long GetID() const override
 		{
 			return m_ID;
 		}
 
 	private:
 		CallbackFunction<T> m_CallbackFunction;
-		int m_ID;
+		unsigned long m_ID;
 
-		inline static int s_Counter = 0;
+		inline static unsigned long s_Counter = 0;
 	};
 }

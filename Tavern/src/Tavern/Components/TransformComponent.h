@@ -3,16 +3,15 @@
 #include <glm/glm.hpp>
 
 #include "Tavern/Core/Core.h"
-#include "Tavern/Components/Component.h"
+#include "Tavern/Components/BaseComponent.h"
 
 namespace Tavern
 {
 	class Engine;
 
-	class TAVERN_API TransformComponent : public Component
+	class TAVERN_API TransformComponent : public BaseComponent
 	{
 	public:
-		TransformComponent() = default;
 		TransformComponent(Engine* engine, Entity* owner);
 
 		const glm::vec3& GetPosition() const;

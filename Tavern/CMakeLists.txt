@@ -44,14 +44,16 @@ set(SOURCES_TAVERN_RENDERER
     src/Tavern/Renderer/Cursor.cpp
 )
 set(SOURCES_TAVERN_COMPONENTS
-    src/Tavern/Components/Component.h
-    src/Tavern/Components/Component.cpp
+    src/Tavern/Components/BaseComponent.h
+    src/Tavern/Components/BaseComponent.cpp
     src/Tavern/Components/CameraComponent.h
     src/Tavern/Components/CameraComponent.cpp
     src/Tavern/Components/TransformComponent.h
     src/Tavern/Components/TransformComponent.cpp
-    src/Tavern/Components/MeshComponent.h
-    src/Tavern/Components/MeshComponent.cpp
+    src/Tavern/Components/BaseRenderComponent.h
+    src/Tavern/Components/BaseRenderComponent.cpp
+    src/Tavern/Components/MeshRenderComponent.h
+    src/Tavern/Components/MeshRenderComponent.cpp
 )
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)

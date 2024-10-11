@@ -9,7 +9,7 @@
 namespace Tavern
 {
 	CameraComponent::CameraComponent(Engine* engine, Entity* owner, float FOV, float viewportWidth, float viewportHeight, float nearClipPlane, float farClipPlane)
-		: Component(engine, owner),
+		: BaseComponent(engine, owner),
 		  m_FOV(FOV),
 		  m_ViewportWidth(viewportWidth),
 		  m_ViewportHeight(viewportHeight),

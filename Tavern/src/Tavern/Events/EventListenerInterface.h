@@ -10,6 +10,6 @@ namespace Tavern
 	{
 	public:
 		virtual void Call(const std::shared_ptr<Event>&) = 0;
-		virtual const int GetID() const = 0;
+		virtual const unsigned long GetID() const = 0;
 	};
 }

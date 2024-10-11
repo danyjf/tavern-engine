@@ -1,4 +1,4 @@
-#include "Tavern/Components/MeshComponent.h"
+#include "Tavern/Components/MeshRenderComponent.h"
 #include "Tavern/Renderer/RenderManager.h"
 #include "Tavern/Renderer/Shader.h"
 #include "Tavern/Renderer/Texture.h"
@@ -8,8 +8,8 @@
 
 namespace Tavern
 {
-	MeshComponent::MeshComponent(Engine* engine, Entity* owner)
-		: Component(engine, owner)
+	MeshRenderComponent::MeshRenderComponent(Engine* engine, Entity* owner)
+		: BaseRenderComponent(engine, owner)
 	{
 		m_Shader = GetEngine()->GetRenderManager().GetShader();
 		m_IsVisible = true;
@@ -90,7 +90,7 @@ namespace Tavern
 		glEnableVertexAttribArray(1);
 	}
 
-	void MeshComponent::Render()
+	void MeshRenderComponent::Render()
 	{
 		if (!m_IsVisible)
 		{
@@ -113,7 +113,7 @@ namespace Tavern
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 	}
 
-	void MeshComponent::AddTexture(const Texture& texture)
+	void MeshRenderComponent::AddTexture(const Texture& texture)
 	{
 		if (m_Textures.size() == 16)
 		{
@@ -122,15 +122,5 @@ namespace Tavern
 		}
 
 		m_Textures.push_back(texture);
-	}
-
-	bool MeshComponent::IsVisible() const
-	{
-		return m_IsVisible;
-	}
-
-	void MeshComponent::SetIsVisible(bool isVisible)
-	{
-		m_IsVisible = isVisible;
 	}
 }
