@@ -6,7 +6,7 @@ namespace Tavern
 	Entity::Entity(Engine* engine)
 		: m_Engine(engine)
 	{
-		m_Transform = CreateComponent<TransformComponent>();
+		m_Transform = CreateComponentOfType<TransformComponent>();
 	}
 
 	void Entity::Update()

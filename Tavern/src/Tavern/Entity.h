@@ -24,8 +24,11 @@ namespace Tavern
 
 		virtual void Update();
 
+		Engine* GetEngine() const;
+		TransformComponent* GetTransformComponent() const;
+
 		template <typename ComponentClass>
-		ComponentClass* CreateComponent()
+		ComponentClass* CreateComponentOfType()
 		{
 			std::type_index typeIndex(typeid(ComponentClass));
 
@@ -41,9 +44,34 @@ namespace Tavern
 
 			return static_cast<ComponentClass*>(m_Components[typeIndex].back().get());
 		}
+		template <typename ComponentClass>
+		ComponentClass* GetComponentOfType()
+		{
+			std::type_index typeIndex(typeid(ComponentClass));
+			if (m_Components.contains(typeIndex) && !m_Components[typeIndex].empty())
+			{
+				return static_cast<ComponentClass*>(m_Components[typeIndex][0].get());
+			}
+			return nullptr;
+		}
+		template <typename ComponentClass>
+		std::vector<ComponentClass*> GetComponentsOfType()
+		{
+			std::type_index typeIndex(typeid(ComponentClass));
+			std::vector<ComponentClass*> components;
 
-		Engine* GetEngine() const;
-		TransformComponent* GetTransformComponent() const;
+			if (!m_Components.contains(typeIndex))
+			{
+				return components;
+			}
+
+			for (std::unique_ptr<BaseComponent>& component : m_Components[typeIndex])
+			{
+				components.push_back(static_cast<ComponentClass*>(component.get()));
+			}
+
+			return components;
+		}
 
 	private:
 		Engine* m_Engine = nullptr;

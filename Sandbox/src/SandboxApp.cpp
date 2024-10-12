@@ -11,7 +11,7 @@ public:
 	MyEntity(Tavern::Engine* engine)
 		: Tavern::Entity(engine)
 	{
-		m_Mesh = CreateComponent<Tavern::MeshRenderComponent>();
+		m_Mesh = CreateComponentOfType<Tavern::MeshRenderComponent>();
 
 		Tavern::Texture texture1(Tavern::TextureSettings(), "Assets/Images/container.jpg");
 		Tavern::Texture texture2(Tavern::TextureSettings(), "Assets/Images/awesomeface.jpg");
@@ -38,7 +38,7 @@ public:
 		  m_MouseMoved(std::bind(&Player::OnMouseMoved, this, std::placeholders::_1)),
 		  m_MouseScrolled(std::bind(&Player::OnMouseScrolled, this, std::placeholders::_1))
 	{
-		m_Camera = CreateComponent<Tavern::CameraComponent>();
+		m_Camera = CreateComponentOfType<Tavern::CameraComponent>();
 		GetEngine()->GetRenderManager().SetActiveCamera(m_Camera);
 
 		GetTransformComponent()->SetPosition(glm::vec3(0.0f, 0.0f, 3.0f));
