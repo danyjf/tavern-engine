@@ -11,6 +11,7 @@ namespace Tavern
 	{
 	public:
 		BaseComponent(Engine* engine, Entity* owner);
+		virtual ~BaseComponent() = default;
 
 		Entity* GetOwner() const;
 		Engine* GetEngine() const;

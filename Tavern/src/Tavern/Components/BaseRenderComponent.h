@@ -12,7 +12,7 @@ namespace Tavern
 	{
 	public:
 		BaseRenderComponent(Engine* engine, Entity* owner);
-		virtual ~BaseRenderComponent();
+		virtual ~BaseRenderComponent() override;
 
 		virtual void Render() = 0;
 

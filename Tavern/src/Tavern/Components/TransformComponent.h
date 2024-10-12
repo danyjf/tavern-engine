@@ -13,6 +13,7 @@ namespace Tavern
 	{
 	public:
 		TransformComponent(Engine* engine, Entity* owner);
+		virtual ~TransformComponent() = default;
 
 		const glm::vec3& GetPosition() const;
 		void SetPosition(const glm::vec3& position);

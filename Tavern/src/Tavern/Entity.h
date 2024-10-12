@@ -27,20 +27,19 @@ namespace Tavern
 		template <typename ComponentClass>
 		ComponentClass* CreateComponent()
 		{
-			ComponentClass* component = new ComponentClass(GetEngine(), this);
 			std::type_index typeIndex(typeid(ComponentClass));
 
 			if (m_Components.contains(typeIndex))
 			{
-				m_Components[typeIndex].emplace_back(std::unique_ptr<ComponentClass>(component));
+				m_Components[typeIndex].push_back(std::make_unique<ComponentClass>(GetEngine(), this));
 			}
 			else
 			{
 				m_Components.emplace(typeIndex, std::vector<std::unique_ptr<BaseComponent>>());
-				m_Components[typeIndex].emplace_back(std::unique_ptr<ComponentClass>(component));
+				m_Components[typeIndex].push_back(std::make_unique<ComponentClass>(GetEngine(), this));
 			}
 
-			return component;
+			return static_cast<ComponentClass*>(m_Components[typeIndex].back().get());
 		}
 
 		Engine* GetEngine() const;
