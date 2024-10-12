@@ -25,7 +25,7 @@ namespace Tavern
 		virtual void Update();
 
 		Engine* GetEngine() const;
-		TransformComponent* GetTransformComponent() const;
+		TransformComponent* GetTransform() const;
 
 		template <typename ComponentClass>
 		ComponentClass* CreateComponentOfType()

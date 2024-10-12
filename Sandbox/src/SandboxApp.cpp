@@ -41,8 +41,8 @@ public:
 		m_Camera = CreateComponentOfType<Tavern::CameraComponent>();
 		GetEngine()->GetRenderManager().SetActiveCamera(m_Camera);
 
-		GetTransformComponent()->SetPosition(glm::vec3(0.0f, 0.0f, 3.0f));
-		GetTransformComponent()->SetRotation(glm::vec3(0.0f, -90.0f, 0.0f));
+		GetTransform()->SetPosition(glm::vec3(0.0f, 0.0f, 3.0f));
+		GetTransform()->SetRotation(glm::vec3(0.0f, -90.0f, 0.0f));
 
 		GetEngine()->GetEventManager().AddListener(Tavern::EventType::KeyPressed, m_KeyPressed);
 		GetEngine()->GetEventManager().AddListener(Tavern::EventType::MouseMoved, m_MouseMoved);
@@ -77,13 +77,13 @@ public:
 			direction.x += 1.0f;
 		}
 
-		glm::vec3 translation = GetTransformComponent()->GetFrontDirection() * direction.y;
-		translation += GetTransformComponent()->GetRightDirection() * direction.x;
+		glm::vec3 translation = GetTransform()->GetFrontDirection() * direction.y;
+		translation += GetTransform()->GetRightDirection() * direction.x;
 
 		if (glm::length(translation) != 0)
 		{
 			translation = glm::normalize(translation);
-			GetTransformComponent()->SetPosition(GetTransformComponent()->GetPosition() + translation * m_Speed * Tavern::Time::GetDeltaTime());
+			GetTransform()->SetPosition(GetTransform()->GetPosition() + translation * m_Speed * Tavern::Time::GetDeltaTime());
 		}
 	}
 
@@ -119,16 +119,16 @@ public:
 		m_LastMousePosition.x = event->GetX();
 		m_LastMousePosition.y = event->GetY();
 
-		const glm::vec3& rotation = GetTransformComponent()->GetRotation();
-		GetTransformComponent()->SetRotation(rotation + glm::vec3(-mouseOffset.y, mouseOffset.x, 0.0f));
+		const glm::vec3& rotation = GetTransform()->GetRotation();
+		GetTransform()->SetRotation(rotation + glm::vec3(-mouseOffset.y, mouseOffset.x, 0.0f));
 
 		if (rotation.x > 89.0f)
 		{
-			GetTransformComponent()->SetRotation(glm::vec3(89.0f, rotation.y, rotation.z));
+			GetTransform()->SetRotation(glm::vec3(89.0f, rotation.y, rotation.z));
 		}
 		if (rotation.x < -89.0f)
 		{
-			GetTransformComponent()->SetRotation(glm::vec3(-89.0f, rotation.y, rotation.z));
+			GetTransform()->SetRotation(glm::vec3(-89.0f, rotation.y, rotation.z));
 		}
 	}
 
@@ -173,8 +173,8 @@ int main()
 	for (int i = 0; i < 10; i++)
 	{
 		Tavern::Entity* cube = TavernEngine.CreateEntity<MyEntity>();
-		cube->GetTransformComponent()->SetPosition(cubePositions[i]);
-		cube->GetTransformComponent()->SetRotation(glm::vec3(i * 10.0, i * 21.0, i * 13.0));
+		cube->GetTransform()->SetPosition(cubePositions[i]);
+		cube->GetTransform()->SetRotation(glm::vec3(i * 10.0, i * 21.0, i * 13.0));
 	}
 
 	TavernEngine.Run();

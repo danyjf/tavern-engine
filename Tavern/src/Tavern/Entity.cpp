@@ -18,7 +18,7 @@ namespace Tavern
 		return m_Engine;
 	}
 
-	TransformComponent* Entity::GetTransformComponent() const
+	TransformComponent* Entity::GetTransform() const
 	{
 		return m_Transform;
 	}

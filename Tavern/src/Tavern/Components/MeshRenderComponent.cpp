@@ -96,7 +96,7 @@ namespace Tavern
 
 		m_Shader->SetMat4("view", GetEngine()->GetRenderManager().GetActiveCamera()->GetViewMatrix());
 		m_Shader->SetMat4("projection", GetEngine()->GetRenderManager().GetActiveCamera()->GetProjectionMatrix());
-		m_Shader->SetMat4("model", GetOwner()->GetTransformComponent()->GetModelMatrix());
+		m_Shader->SetMat4("model", GetOwner()->GetTransform()->GetModelMatrix());
 
 		for (int i = 0; i < m_Textures.size(); i++)
 		{

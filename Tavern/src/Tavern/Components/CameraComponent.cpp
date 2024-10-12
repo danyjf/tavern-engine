@@ -10,7 +10,7 @@ namespace Tavern
 {
 	CameraComponent::CameraComponent(Engine* engine, Entity* owner)
 		: BaseComponent(engine, owner),
-		  m_OwnerTransform(GetOwner()->GetTransformComponent())
+		  m_OwnerTransform(GetOwner()->GetTransform())
 	{
 		ComputeViewMatrix();
 		ComputeProjectionMatrix();
