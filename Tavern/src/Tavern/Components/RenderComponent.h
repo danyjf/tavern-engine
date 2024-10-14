@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Tavern/Components/BaseComponent.h"
+#include "Tavern/Components/Component.h"
 #include "Tavern/Core/Core.h"
 
 namespace Tavern
@@ -8,11 +8,11 @@ namespace Tavern
 	class Engine;
 	class Entity;
 
-	class TAVERN_API BaseRenderComponent : public BaseComponent
+	class TAVERN_API RenderComponent : public Component
 	{
 	public:
-		BaseRenderComponent(Engine* engine, Entity* owner);
-		virtual ~BaseRenderComponent() override;
+		RenderComponent(Engine* engine, Entity* owner);
+		virtual ~RenderComponent() override;
 
 		virtual void Render() = 0;
 

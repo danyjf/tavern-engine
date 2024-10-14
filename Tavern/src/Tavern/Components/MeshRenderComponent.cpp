@@ -9,7 +9,7 @@
 namespace Tavern
 {
 	MeshRenderComponent::MeshRenderComponent(Engine* engine, Entity* owner)
-		: BaseRenderComponent(engine, owner),
+		: RenderComponent(engine, owner),
 		  m_Shader(GetEngine()->GetRenderManager().GetShader())
 	{
 		// Create vertex buffer object

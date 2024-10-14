@@ -7,7 +7,7 @@
 #include "Tavern/Core/Time.h"
 #include "Tavern/Renderer/Texture.h"
 #include "Tavern/Renderer/RenderManager.h"
-#include "Tavern/Components/BaseComponent.h"
+#include "Tavern/Components/Component.h"
 #include "Tavern/Components/CameraComponent.h"
 #include "Tavern/Components/TransformComponent.h"
 #include "Tavern/Components/MeshRenderComponent.h"

@@ -7,7 +7,7 @@
 namespace Tavern
 {
 	TransformComponent::TransformComponent(Engine* engine, Entity* owner)
-		: BaseComponent(engine, owner),
+		: Component(engine, owner),
 		  m_ModelMatrix(1.0f),
 		  m_Position(0.0f),
 		  m_Rotation(0.0f),

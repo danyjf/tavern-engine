@@ -12,7 +12,7 @@ namespace Tavern
 	class Shader;
 	class Texture;
 	class TransformComponent;
-	class BaseComponent;
+	class Component;
 
 	class TAVERN_API Entity
 	{
@@ -38,7 +38,7 @@ namespace Tavern
 			}
 			else
 			{
-				m_Components.emplace(typeIndex, std::vector<std::unique_ptr<BaseComponent>>());
+				m_Components.emplace(typeIndex, std::vector<std::unique_ptr<Component>>());
 				m_Components[typeIndex].push_back(std::make_unique<ComponentClass>(GetEngine(), this));
 			}
 
@@ -65,7 +65,7 @@ namespace Tavern
 				return components;
 			}
 
-			for (std::unique_ptr<BaseComponent>& component : m_Components[typeIndex])
+			for (std::unique_ptr<Component>& component : m_Components[typeIndex])
 			{
 				components.push_back(static_cast<ComponentClass*>(component.get()));
 			}
@@ -77,6 +77,6 @@ namespace Tavern
 		Engine* m_Engine = nullptr;
 		TransformComponent* m_Transform;
 
-		std::unordered_map<std::type_index, std::vector<std::unique_ptr<BaseComponent>>> m_Components;
+		std::unordered_map<std::type_index, std::vector<std::unique_ptr<Component>>> m_Components;
 	};
 }

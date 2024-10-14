@@ -4,7 +4,7 @@
 #include <unordered_set>
 
 #include "Tavern/Components/CameraComponent.h"
-#include "Tavern/Components/BaseRenderComponent.h"
+#include "Tavern/Components/RenderComponent.h"
 #include "Tavern/Core/Core.h"
 #include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Renderer/Window.h"
@@ -27,8 +27,8 @@ namespace Tavern
 		Shader* GetShader() const;
 		CameraComponent* GetActiveCamera() const;
 		void SetActiveCamera(CameraComponent* camera);
-		void AddRenderComponent(BaseRenderComponent* renderComponent);
-		void RemoveRenderComponent(BaseRenderComponent* renderComponent);
+		void AddRenderComponent(RenderComponent* renderComponent);
+		void RemoveRenderComponent(RenderComponent* renderComponent);
 
 		void Render();
 
@@ -40,6 +40,6 @@ namespace Tavern
 		std::unique_ptr<Window> m_Window;
 		std::unique_ptr<Shader> m_Shader;
 		CameraComponent* m_Camera = nullptr;
-		std::unordered_set<BaseRenderComponent*> m_RenderComponents;
+		std::unordered_set<RenderComponent*> m_RenderComponents;
 	};
 }

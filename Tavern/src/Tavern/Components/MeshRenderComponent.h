@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "Tavern/Components/BaseRenderComponent.h"
+#include "Tavern/Components/RenderComponent.h"
 #include "Tavern/Renderer/Texture.h"
 #include "Tavern/Core/Core.h"
 
@@ -12,7 +12,7 @@ namespace Tavern
 	class Shader;
 	class Engine;
 
-	class TAVERN_API MeshRenderComponent : public BaseRenderComponent
+	class TAVERN_API MeshRenderComponent : public RenderComponent
 	{
 	public:
 		MeshRenderComponent(Engine* engine, Entity* owner);

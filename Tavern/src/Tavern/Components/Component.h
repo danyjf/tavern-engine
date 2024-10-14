@@ -7,11 +7,11 @@ namespace Tavern
 	class Entity;
 	class Engine;
 
-	class TAVERN_API BaseComponent
+	class TAVERN_API Component
 	{
 	public:
-		BaseComponent(Engine* engine, Entity* owner);
-		virtual ~BaseComponent() = default;
+		Component(Engine* engine, Entity* owner);
+		virtual ~Component() = default;
 
 		Entity* GetOwner() const;
 		Engine* GetEngine() const;

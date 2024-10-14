@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-#include "Tavern/Components/BaseComponent.h"
+#include "Tavern/Components/Component.h"
 #include "Tavern/Components/TransformComponent.h"
 #include "Tavern/Core/Core.h"
 
@@ -11,7 +11,7 @@ namespace Tavern
 	class Entity;
 	class Engine;
 
-	class TAVERN_API CameraComponent : public BaseComponent
+	class TAVERN_API CameraComponent : public Component
 	{
 	public:
 		CameraComponent(Engine* engine, Entity* owner);

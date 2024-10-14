@@ -3,13 +3,13 @@
 #include <glm/glm.hpp>
 
 #include "Tavern/Core/Core.h"
-#include "Tavern/Components/BaseComponent.h"
+#include "Tavern/Components/Component.h"
 
 namespace Tavern
 {
 	class Engine;
 
-	class TAVERN_API TransformComponent : public BaseComponent
+	class TAVERN_API TransformComponent : public Component
 	{
 	public:
 		TransformComponent(Engine* engine, Entity* owner);
