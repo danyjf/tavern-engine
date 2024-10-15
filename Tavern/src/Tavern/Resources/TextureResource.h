@@ -3,6 +3,7 @@
 #include <glad/glad.h>
 
 #include "Tavern/Core/Core.h"
+#include "Tavern/Resources/Resource.h"
 
 namespace Tavern
 {
@@ -29,11 +30,11 @@ namespace Tavern
 		TextureFiltering textureFilteringMagnifying = TextureFiltering::LINEAR;
 	};
 
-	class TAVERN_API Texture
+	class TAVERN_API TextureResource : Resource
 	{
 	public:
-		Texture(const TextureSettings& textureSettings, const char* texturePath);
-		~Texture();
+		TextureResource(ResourceManager& resourceManager, const char* texturePath, const TextureSettings& textureSettings);
+		virtual ~TextureResource() override = default;
 
 		void Use();
 

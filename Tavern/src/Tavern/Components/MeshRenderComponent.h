@@ -1,9 +1,10 @@
 #pragma once
 
+#include <memory>
 #include <vector>
 
 #include "Tavern/Components/RenderComponent.h"
-#include "Tavern/Renderer/Texture.h"
+#include "Tavern/Resources/TextureResource.h"
 #include "Tavern/Core/Core.h"
 
 namespace Tavern
@@ -19,11 +20,11 @@ namespace Tavern
 		virtual ~MeshRenderComponent() = default;
 
 		void Render() override;
-		void AddTexture(const Texture& texture);
+		void AddTexture(const std::shared_ptr<TextureResource>& texture);
 
 	private:
 		Shader* m_Shader = nullptr;
-		std::vector<Texture> m_Textures = {};
+		std::vector<std::shared_ptr<TextureResource>> m_Textures = {};
 		unsigned int m_VAO = 0;
 		unsigned int m_VBO = 0;
 		unsigned int m_EBO = 0;

@@ -1,7 +1,7 @@
 #include "Tavern/Components/MeshRenderComponent.h"
 #include "Tavern/Renderer/RenderManager.h"
 #include "Tavern/Renderer/Shader.h"
-#include "Tavern/Renderer/Texture.h"
+#include "Tavern/Resources/TextureResource.h"
 #include "Tavern/Core/Log.h"
 #include "Tavern/Core/Engine.h"
 #include "Tavern/Entity.h"
@@ -101,14 +101,14 @@ namespace Tavern
 		for (int i = 0; i < m_Textures.size(); i++)
 		{
 			glActiveTexture(GL_TEXTURE0 + i);
-			m_Textures[i].Use();
+			m_Textures[i]->Use();
 		}
 
 		glBindVertexArray(m_VAO);
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 	}
 
-	void MeshRenderComponent::AddTexture(const Texture& texture)
+	void MeshRenderComponent::AddTexture(const std::shared_ptr<TextureResource>& texture)
 	{
 		if (m_Textures.size() == 16)
 		{

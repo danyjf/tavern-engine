@@ -10,7 +10,7 @@
 namespace Tavern
 {
 	class Shader;
-	class Texture;
+	class TextureResource;
 	class TransformComponent;
 	class Component;
 

@@ -19,6 +19,7 @@ namespace Tavern
 
 	Engine::Engine()
 		: m_EventManager(),
+		  m_ResourceManager(),
 		  m_RenderManager(m_EventManager),
 		  m_InputManager(m_RenderManager),
 		  m_WindowCloseListener(std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1))
@@ -59,6 +60,11 @@ namespace Tavern
 	EventManager& Engine::GetEventManager()
 	{
 		return m_EventManager;
+	}
+
+	ResourceManager& Engine::GetResourceManager()
+	{
+		return m_ResourceManager;
 	}
 
 	RenderManager& Engine::GetRenderManager()

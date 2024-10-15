@@ -1,12 +1,14 @@
 #include <glad/glad.h>
 #include <stb_image.h>
 
-#include "Tavern/Renderer/Texture.h"
+#include "Tavern/Resources/TextureResource.h"
+#include "Tavern/Resources/ResourceManager.h"
 #include "Tavern/Core/Log.h"
 
 namespace Tavern
 {
-	Texture::Texture(const TextureSettings& textureSettings, const char* texturePath)
+	TextureResource::TextureResource(ResourceManager& resourceManager, const char* texturePath, const TextureSettings& textureSettings)
+		: Resource(resourceManager, texturePath)
 	{
 		glGenTextures(1, &m_Texture);
 		glBindTexture(GL_TEXTURE_2D, m_Texture);
@@ -32,11 +34,7 @@ namespace Tavern
 		stbi_image_free(textureData);
 	}
 
-	Texture::~Texture()
-	{
-	}
-
-	void Texture::Use()
+	void TextureResource::Use()
 	{
 		glBindTexture(GL_TEXTURE_2D, m_Texture);
 	}

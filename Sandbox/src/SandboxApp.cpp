@@ -13,8 +13,8 @@ public:
 	{
 		m_Mesh = CreateComponentOfType<Tavern::MeshRenderComponent>();
 
-		Tavern::Texture texture1(Tavern::TextureSettings(), "Assets/Images/container.jpg");
-		Tavern::Texture texture2(Tavern::TextureSettings(), "Assets/Images/awesomeface.jpg");
+		std::shared_ptr<Tavern::TextureResource> texture1 = std::make_shared<Tavern::TextureResource>(GetEngine()->GetResourceManager(), "Assets/Images/container.jpg", Tavern::TextureSettings());
+		std::shared_ptr<Tavern::TextureResource> texture2 = std::make_shared<Tavern::TextureResource>(GetEngine()->GetResourceManager(), "Assets/Images/awesomeface.jpg", Tavern::TextureSettings());
 
 		m_Mesh->AddTexture(texture1);
 		m_Mesh->AddTexture(texture2);

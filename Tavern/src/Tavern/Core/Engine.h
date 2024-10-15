@@ -9,6 +9,7 @@
 #include "Tavern/Renderer/RenderManager.h"
 #include "Tavern/Input/InputManager.h"
 #include "Tavern/Entity.h"
+#include "Tavern/Resources/ResourceManager.h"
 
 namespace Tavern
 {
@@ -30,6 +31,7 @@ namespace Tavern
 		}
 
 		EventManager& GetEventManager();
+		ResourceManager& GetResourceManager();
 		RenderManager& GetRenderManager();
 		InputManager& GetInputManager();
 
@@ -37,6 +39,7 @@ namespace Tavern
 
 	private:
 		EventManager m_EventManager = EventManager();
+		ResourceManager m_ResourceManager = ResourceManager();
 		RenderManager m_RenderManager = RenderManager(m_EventManager);
 		InputManager m_InputManager = InputManager(m_RenderManager);
 		EventListener<WindowCloseEvent> m_WindowCloseListener;
