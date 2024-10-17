@@ -24,6 +24,7 @@ namespace Tavern
 
 		virtual void Update();
 
+		const unsigned long GetID() const;
 		Engine* GetEngine() const;
 		TransformComponent* GetTransform() const;
 
@@ -74,9 +75,11 @@ namespace Tavern
 		}
 
 	private:
+		unsigned long m_ID = 0;
 		Engine* m_Engine = nullptr;
 		TransformComponent* m_Transform;
-
 		std::unordered_map<std::type_index, std::vector<std::unique_ptr<Component>>> m_Components;
+
+		static inline unsigned long s_Counter = 0;
 	};
 }

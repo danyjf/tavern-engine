@@ -44,9 +44,9 @@ namespace Tavern
 			m_EventManager.DispatchEvents();
 
 			// Update State
-			for (std::unique_ptr<Entity>& entity : m_Entities)
+			for (auto it = m_Entities.begin(); it != m_Entities.end(); it++)
 			{
-				entity->Update();
+				(*it).second->Update();
 			}
 
 			// Render
@@ -59,14 +59,12 @@ namespace Tavern
 
 	void Engine::DestroyEntity(Entity* entity)
 	{
-		for (auto it = m_Entities.begin(); it != m_Entities.end(); it++)
+		if (!m_Entities.contains(entity->GetID()))
 		{
-			if ((*it).get() == entity)
-			{
-				m_Entities.erase(it);
-				break;
-			}
+			TAVERN_ENGINE_WARN("Tried to destroy entity, but entity does not exist");
+			return;
 		}
+		m_Entities.erase(entity->GetID());
 	}
 
 	EventManager& Engine::GetEventManager()
@@ -92,6 +90,5 @@ namespace Tavern
 	void Engine::OnWindowCloseEvent(const std::shared_ptr<WindowCloseEvent>& event)
 	{
 		m_IsRunning = false;
-		TAVERN_ENGINE_TRACE("Window Close Event");
 	}
 }

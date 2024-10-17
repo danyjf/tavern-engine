@@ -1,7 +1,6 @@
 #pragma once
 
 #include <memory>
-#include <vector>
 
 #include "Tavern/Core/Core.h"
 #include "Tavern/Events/ApplicationEvent.h"
@@ -26,8 +25,10 @@ namespace Tavern
 		template <typename EntityClass>
 		EntityClass* CreateEntity()
 		{
-			m_Entities.push_back(std::make_unique<EntityClass>(this));
-			return static_cast<EntityClass*>(m_Entities.back().get());
+			std::unique_ptr<EntityClass> entity = std::make_unique<EntityClass>(this);
+			EntityClass* pEntity = entity.get();
+			m_Entities.emplace(entity->GetID(), std::move(entity));
+			return pEntity;
 		}
 		void DestroyEntity(Entity* entity);
 
@@ -47,6 +48,6 @@ namespace Tavern
 
 		bool m_IsRunning = true;
 
-		std::vector<std::unique_ptr<Entity>> m_Entities = {};
+		std::unordered_map<unsigned long, std::unique_ptr<Entity>> m_Entities = {};
 	};
 }

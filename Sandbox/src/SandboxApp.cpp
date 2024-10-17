@@ -149,9 +149,15 @@ public:
 
 	void OnMouseButtonPressed(const std::shared_ptr<Tavern::MouseButtonPressedEvent>& event)
 	{
+		if (m_Cubes.empty())
+		{
+			return;
+		}
+
 		MyEntity* cube = m_Cubes.back();
 		m_Cubes.pop_back();
 
+		TAVERN_INFO("Destroyed Cube Entity ID: {}", cube->GetID());
 		GetEngine()->DestroyEntity(cube);
 	}
 
