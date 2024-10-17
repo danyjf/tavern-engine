@@ -1,7 +1,11 @@
 #pragma once
 
+#include <memory>
+#include <unordered_map>
+
 #include "Tavern/Core/Core.h"
 #include "Tavern/Resources/Resource.h"
+#include "Tavern/Resources/TextureResource.h"
 
 namespace Tavern
 {
@@ -13,23 +17,23 @@ namespace Tavern
 		ResourceManager(ResourceManager& copy) = delete;
 		ResourceManager& operator=(const ResourceManager& copy) = delete;
 
-		template <typename ResourceClass>
-		std::shared_ptr<ResourceClass> Load(const std::string& path)
+		std::shared_ptr<TextureResource> LoadTexture(const std::string& path, const TextureSettings& textureSettings = TextureSettings());
+
+		template <typename T>
+		std::shared_ptr<T> GetResource(const std::string& path)
 		{
 			if (m_Resources.contains(path))
 			{
-				return m_Resources[path];
+				return std::dynamic_pointer_cast<T>(m_Resources[path].lock());
 			}
 
-			std::shared_ptr<ResourceClass> resource = std::make_shared<ResourceClass>(path);
-			m_Resources.emplace(path, resource);
-
-			return resource;
+			TAVERN_ENGINE_WARN("Tried to get resource not currently loaded: {}", path);
+			return nullptr;
 		}
 
 		void ResourceHasBeenFreed(const std::string& path);
 
 	private:
-		std::unordered_map<std::string, std::shared_ptr<Resource>> m_Resources;
+		std::unordered_map<std::string, std::weak_ptr<Resource>> m_Resources;
 	};
 }

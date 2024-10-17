@@ -57,6 +57,18 @@ namespace Tavern
 		}
 	}
 
+	void Engine::DestroyEntity(Entity* entity)
+	{
+		for (auto it = m_Entities.begin(); it != m_Entities.end(); it++)
+		{
+			if ((*it).get() == entity)
+			{
+				m_Entities.erase(it);
+				break;
+			}
+		}
+	}
+
 	EventManager& Engine::GetEventManager()
 	{
 		return m_EventManager;

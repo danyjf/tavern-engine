@@ -29,6 +29,7 @@ namespace Tavern
 			m_Entities.push_back(std::make_unique<EntityClass>(this));
 			return static_cast<EntityClass*>(m_Entities.back().get());
 		}
+		void DestroyEntity(Entity* entity);
 
 		EventManager& GetEventManager();
 		ResourceManager& GetResourceManager();

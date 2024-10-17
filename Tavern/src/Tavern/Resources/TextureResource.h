@@ -30,15 +30,16 @@ namespace Tavern
 		TextureFiltering textureFilteringMagnifying = TextureFiltering::LINEAR;
 	};
 
-	class TAVERN_API TextureResource : Resource
+	class TAVERN_API TextureResource : public Resource
 	{
 	public:
-		TextureResource(ResourceManager& resourceManager, const char* texturePath, const TextureSettings& textureSettings);
+		TextureResource(ResourceManager& resourceManager, const std::string& path, const TextureSettings& textureSettings);
 		virtual ~TextureResource() override = default;
 
 		void Use();
 
 	private:
 		unsigned int m_Texture = 0;
+		TextureSettings m_TextureSettings = TextureSettings();
 	};
 }
