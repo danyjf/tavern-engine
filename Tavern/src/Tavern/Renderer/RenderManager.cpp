@@ -4,7 +4,8 @@
 
 #include "Tavern/Renderer/RenderManager.h"
 #include "Tavern/Renderer/Window.h"
-#include "Tavern/Renderer/Shader.h"
+#include "Tavern/Resources/ResourceManager.h"
+#include "Tavern/Resources/ShaderResource.h"
 #include "Tavern/Events/Event.h"
 #include "Tavern/Events/EventManager.h"
 #include "Tavern/Events/ApplicationEvent.h"
@@ -14,18 +15,13 @@
 
 namespace Tavern
 {
-	RenderManager::RenderManager(EventManager& eventManager)
+	RenderManager::RenderManager(EventManager& eventManager, ResourceManager& resourceManager)
 		: m_EventManager(eventManager),
 		  m_WindowResizeListener(std::bind(&RenderManager::OnWindowResizeEvent, this, std::placeholders::_1))
 	{
 		m_Window = std::make_unique<Window>(m_EventManager, WindowSettings("My Window", 800, 600));
 
 		m_EventManager.AddListener(EventType::WindowResize, m_WindowResizeListener);
-
-		m_Shader = std::make_unique<Shader>(
-			"./Shaders/Shader.vert",
-			"./Shaders/Shader.frag"
-		);
 
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glEnable(GL_DEPTH_TEST);
@@ -43,11 +39,6 @@ namespace Tavern
 	Window* RenderManager::GetWindow() const
 	{
 		return m_Window.get();
-	}
-
-	Shader* RenderManager::GetShader() const
-	{
-		return m_Shader.get();
 	}
 
 	CameraComponent* RenderManager::GetActiveCamera() const

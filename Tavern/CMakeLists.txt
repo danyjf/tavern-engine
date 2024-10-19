@@ -48,8 +48,6 @@ set(SOURCES_TAVERN_RENDERER
     src/Tavern/Renderer/RenderManager.cpp
     src/Tavern/Renderer/Window.h
 	src/Tavern/Renderer/Window.cpp
-    src/Tavern/Renderer/Shader.h
-    src/Tavern/Renderer/Shader.cpp
     src/Tavern/Renderer/Cursor.h
     src/Tavern/Renderer/Cursor.cpp
 )
@@ -58,6 +56,8 @@ set(SOURCES_TAVERN_RESOURCES
     src/Tavern/Resources/ResourceManager.cpp
     src/Tavern/Resources/Resource.h
     src/Tavern/Resources/Resource.cpp
+    src/Tavern/Resources/ShaderResource.h
+    src/Tavern/Resources/ShaderResource.cpp
     src/Tavern/Resources/TextureResource.h
     src/Tavern/Resources/TextureResource.cpp
 )

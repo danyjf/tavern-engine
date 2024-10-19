@@ -10,7 +10,7 @@
 namespace Tavern
 {
 	class Entity;
-	class Shader;
+	class ShaderResource;
 	class Engine;
 
 	class TAVERN_API MeshRenderComponent : public RenderComponent
@@ -23,7 +23,7 @@ namespace Tavern
 		void AddTexture(const std::shared_ptr<TextureResource>& texture);
 
 	private:
-		Shader* m_Shader = nullptr;
+		std::shared_ptr<ShaderResource> m_Shader = nullptr;
 		std::vector<std::shared_ptr<TextureResource>> m_Textures = {};
 		unsigned int m_VAO = 0;
 		unsigned int m_VBO = 0;

@@ -15,12 +15,10 @@
 
 namespace Tavern
 {
-	// TODO: Create a resource manager
-
 	Engine::Engine()
 		: m_EventManager(),
 		  m_ResourceManager(),
-		  m_RenderManager(m_EventManager),
+		  m_RenderManager(m_EventManager, m_ResourceManager),
 		  m_InputManager(m_RenderManager),
 		  m_WindowCloseListener(std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1))
 	{

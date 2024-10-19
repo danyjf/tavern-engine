@@ -42,7 +42,7 @@ namespace Tavern
 	private:
 		EventManager m_EventManager = EventManager();
 		ResourceManager m_ResourceManager = ResourceManager();
-		RenderManager m_RenderManager = RenderManager(m_EventManager);
+		RenderManager m_RenderManager = RenderManager(m_EventManager, m_ResourceManager);
 		InputManager m_InputManager = InputManager(m_RenderManager);
 		EventListener<WindowCloseEvent> m_WindowCloseListener;
 

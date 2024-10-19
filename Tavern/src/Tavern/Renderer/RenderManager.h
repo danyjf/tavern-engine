@@ -8,7 +8,7 @@
 #include "Tavern/Core/Core.h"
 #include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Renderer/Window.h"
-#include "Tavern/Renderer/Shader.h"
+#include "Tavern/Resources/ResourceManager.h"
 
 namespace Tavern
 {
@@ -18,13 +18,12 @@ namespace Tavern
 	class TAVERN_API RenderManager
 	{
 	public:
-		RenderManager(EventManager& eventManager);
+		RenderManager(EventManager& eventManager, ResourceManager& resourceManager);
 		~RenderManager();
 		RenderManager(RenderManager& copy) = delete;
 		RenderManager& operator=(const RenderManager& copy) = delete;
 
 		Window* GetWindow() const;
-		Shader* GetShader() const;
 		CameraComponent* GetActiveCamera() const;
 		void SetActiveCamera(CameraComponent* camera);
 		void AddRenderComponent(RenderComponent* renderComponent);
@@ -38,7 +37,6 @@ namespace Tavern
 		EventManager& m_EventManager;
 		EventListener<WindowResizeEvent> m_WindowResizeListener;
 		std::unique_ptr<Window> m_Window;
-		std::unique_ptr<Shader> m_Shader;
 		CameraComponent* m_Camera = nullptr;
 		std::unordered_set<RenderComponent*> m_RenderComponents;
 	};

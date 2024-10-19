@@ -3,12 +3,13 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Tavern/Renderer/Shader.h"
+#include "Tavern/Resources/ShaderResource.h"
 #include "Tavern/Core/Log.h"
 
 namespace Tavern
 {
-	Shader::Shader(const char* vertexPath, const char* fragmentPath)
+	ShaderResource::ShaderResource(ResourceManager& resourceManager, const std::string& vertexPath, const std::string& fragmentPath)
+		: Resource(resourceManager, vertexPath + ":" + fragmentPath)
 	{
 		// Read the shader code from the file paths
 		std::string vertexCode;
@@ -92,27 +93,27 @@ namespace Tavern
 		SetInt("texture2", 1);
 	}
 
-	void Shader::Use()
+	void ShaderResource::Use()
 	{
 		glUseProgram(ID);
 	}
 
-	void Shader::SetBool(const std::string& name, bool value) const
+	void ShaderResource::SetBool(const std::string& name, bool value) const
 	{
 		glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
 	}
 
-	void Shader::SetInt(const std::string& name, int value) const
+	void ShaderResource::SetInt(const std::string& name, int value) const
 	{
 		glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
 	}
 
-	void Shader::SetFloat(const std::string& name, float value) const
+	void ShaderResource::SetFloat(const std::string& name, float value) const
 	{
 		glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 	}
 
-	void Shader::SetMat4(const std::string& name, const glm::mat4& value) const
+	void ShaderResource::SetMat4(const std::string& name, const glm::mat4& value) const
 	{
 		glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
 	}

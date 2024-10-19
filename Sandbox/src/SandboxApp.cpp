@@ -14,9 +14,6 @@ public:
 	{
 		m_Mesh = CreateComponentOfType<Tavern::MeshRenderComponent>();
 
-		// std::shared_ptr<Tavern::TextureResource> texture1 = std::make_shared<Tavern::TextureResource>(GetEngine()->GetResourceManager(), "Assets/Images/container.jpg");
-		// std::shared_ptr<Tavern::TextureResource> texture2 = std::make_shared<Tavern::TextureResource>(GetEngine()->GetResourceManager(), "Assets/Images/awesomeface.jpg");
-
 		std::shared_ptr<Tavern::TextureResource> texture1 = GetEngine()->GetResourceManager().LoadTexture("Assets/Images/container.jpg");
 		std::shared_ptr<Tavern::TextureResource> texture2 = GetEngine()->GetResourceManager().LoadTexture("Assets/Images/awesomeface.jpg");
 
