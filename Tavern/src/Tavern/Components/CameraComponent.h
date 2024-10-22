@@ -14,7 +14,7 @@ namespace Tavern
 	class TAVERN_API CameraComponent : public Component
 	{
 	public:
-		CameraComponent(Engine* engine, Entity* owner);
+		CameraComponent(Engine& engine, Entity* owner);
 		virtual ~CameraComponent() override = default;
 
 		void SetFOV(float FOV);

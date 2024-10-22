@@ -4,13 +4,13 @@
 #include "Tavern/Resources/TextureResource.h"
 #include "Tavern/Core/Log.h"
 #include "Tavern/Core/Engine.h"
-#include "Tavern/Entity.h"
+#include "Tavern/Scene/Entity.h"
 
 namespace Tavern
 {
-	MeshRenderComponent::MeshRenderComponent(Engine* engine, Entity* owner)
+	MeshRenderComponent::MeshRenderComponent(Engine& engine, Entity* owner)
 		: RenderComponent(engine, owner),
-		  m_Shader(GetEngine()->GetResourceManager().LoadShader("Shaders/Shader.vert", "Shaders/Shader.frag"))
+		  m_Shader(GetEngine().GetResourceManager().LoadShader("Shaders/Shader.vert", "Shaders/Shader.frag"))
 	{
 		// Create vertex buffer object
 		float vertices[] = {
@@ -94,8 +94,8 @@ namespace Tavern
 
 		m_Shader->Use();
 
-		m_Shader->SetMat4("view", GetEngine()->GetRenderManager().GetActiveCamera()->GetViewMatrix());
-		m_Shader->SetMat4("projection", GetEngine()->GetRenderManager().GetActiveCamera()->GetProjectionMatrix());
+		m_Shader->SetMat4("view", GetEngine().GetRenderManager().GetActiveCamera()->GetViewMatrix());
+		m_Shader->SetMat4("projection", GetEngine().GetRenderManager().GetActiveCamera()->GetProjectionMatrix());
 		m_Shader->SetMat4("model", GetOwner()->GetTransform()->GetModelMatrix());
 
 		for (int i = 0; i < m_Textures.size(); i++)

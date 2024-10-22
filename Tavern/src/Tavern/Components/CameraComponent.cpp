@@ -4,11 +4,11 @@
 
 #include "Tavern/Components/CameraComponent.h"
 #include "Tavern/Core/Engine.h"
-#include "Tavern/Entity.h"
+#include "Tavern/Scene/Entity.h"
 
 namespace Tavern
 {
-	CameraComponent::CameraComponent(Engine* engine, Entity* owner)
+	CameraComponent::CameraComponent(Engine& engine, Entity* owner)
 		: Component(engine, owner),
 		  m_OwnerTransform(GetOwner()->GetTransform())
 	{

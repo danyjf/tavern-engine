@@ -1,10 +1,10 @@
 #include "Tavern/Components/Component.h"
-#include "Tavern/Entity.h"
+#include "Tavern/Scene/Entity.h"
 #include "Tavern/Core/Engine.h"
 
 namespace Tavern
 {
-	Component::Component(Engine* engine, Entity* owner)
+	Component::Component(Engine& engine, Entity* owner)
 		: m_Engine(engine), m_Owner(owner)
 	{
 	}
@@ -14,7 +14,7 @@ namespace Tavern
 		return m_Owner;
 	}
 
-	Engine* Component::GetEngine() const
+	Engine& Component::GetEngine() const
 	{
 		return m_Engine;
 	}

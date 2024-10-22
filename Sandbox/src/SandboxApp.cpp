@@ -9,16 +9,12 @@
 class MyEntity : public Tavern::Entity
 {
 public:
-	MyEntity(Tavern::Engine* engine)
+	MyEntity(Tavern::Engine& engine)
 		: Tavern::Entity(engine)
 	{
 		m_Mesh = CreateComponentOfType<Tavern::MeshRenderComponent>();
-
-		std::shared_ptr<Tavern::TextureResource> texture1 = GetEngine()->GetResourceManager().LoadTexture("Assets/Images/container.jpg");
-		std::shared_ptr<Tavern::TextureResource> texture2 = GetEngine()->GetResourceManager().LoadTexture("Assets/Images/awesomeface.jpg");
-
-		m_Mesh->AddTexture(texture1);
-		m_Mesh->AddTexture(texture2);
+		m_Mesh->AddTexture(GetEngine().GetResourceManager().LoadTexture("Assets/Images/container.jpg"));
+		m_Mesh->AddTexture(GetEngine().GetResourceManager().LoadTexture("Assets/Images/awesomeface.jpg"));
 	}
 
 	void Update() override
@@ -32,7 +28,7 @@ public:
 class Player : public Tavern::Entity
 {
 public:
-	Player(Tavern::Engine* engine)
+	Player(Tavern::Engine& engine)
 		: Tavern::Entity(engine), m_Speed(2.5f), m_LastMousePosition(0.0f),
 		  m_CameraSensitivity(0.05f), m_Zoom(45.0f),
 		  m_KeyPressed(std::bind(&Player::OnKeyPressed, this, std::placeholders::_1)),
@@ -41,42 +37,42 @@ public:
 		  m_MouseButtonPressed(std::bind(&Player::OnMouseButtonPressed, this, std::placeholders::_1))
 	{
 		m_Camera = CreateComponentOfType<Tavern::CameraComponent>();
-		GetEngine()->GetRenderManager().SetActiveCamera(m_Camera);
+		GetEngine().GetRenderManager().SetActiveCamera(m_Camera);
 
 		GetTransform()->SetPosition(glm::vec3(0.0f, 0.0f, 3.0f));
 		GetTransform()->SetRotation(glm::vec3(0.0f, -90.0f, 0.0f));
 
-		GetEngine()->GetEventManager().AddListener(Tavern::EventType::KeyPressed, m_KeyPressed);
-		GetEngine()->GetEventManager().AddListener(Tavern::EventType::MouseMoved, m_MouseMoved);
-		GetEngine()->GetEventManager().AddListener(Tavern::EventType::MouseScrolled, m_MouseScrolled);
-		GetEngine()->GetEventManager().AddListener(Tavern::EventType::MouseButtonPressed, m_MouseButtonPressed);
+		GetEngine().GetEventManager().AddListener(Tavern::EventType::KeyPressed, m_KeyPressed);
+		GetEngine().GetEventManager().AddListener(Tavern::EventType::MouseMoved, m_MouseMoved);
+		GetEngine().GetEventManager().AddListener(Tavern::EventType::MouseScrolled, m_MouseScrolled);
+		GetEngine().GetEventManager().AddListener(Tavern::EventType::MouseButtonPressed, m_MouseButtonPressed);
 	}
 
 	~Player()
 	{
-		GetEngine()->GetEventManager().RemoveListener(Tavern::EventType::KeyPressed, m_KeyPressed);
-		GetEngine()->GetEventManager().RemoveListener(Tavern::EventType::MouseMoved, m_MouseMoved);
-		GetEngine()->GetEventManager().RemoveListener(Tavern::EventType::MouseScrolled, m_MouseScrolled);
-		GetEngine()->GetEventManager().RemoveListener(Tavern::EventType::MouseButtonPressed, m_MouseButtonPressed);
+		GetEngine().GetEventManager().RemoveListener(Tavern::EventType::KeyPressed, m_KeyPressed);
+		GetEngine().GetEventManager().RemoveListener(Tavern::EventType::MouseMoved, m_MouseMoved);
+		GetEngine().GetEventManager().RemoveListener(Tavern::EventType::MouseScrolled, m_MouseScrolled);
+		GetEngine().GetEventManager().RemoveListener(Tavern::EventType::MouseButtonPressed, m_MouseButtonPressed);
 	}
 
 	void Update() override
 	{
 		glm::vec2 direction(0.0f);
 
-		if (GetEngine()->GetInputManager().IsKeyPressed(Tavern::Key::W))
+		if (GetEngine().GetInputManager().IsKeyPressed(Tavern::Key::W))
 		{
 			direction.y += 1.0f;
 		}
-		if (GetEngine()->GetInputManager().IsKeyPressed(Tavern::Key::S))
+		if (GetEngine().GetInputManager().IsKeyPressed(Tavern::Key::S))
 		{
 			direction.y -= 1.0f;
 		}
-		if (GetEngine()->GetInputManager().IsKeyPressed(Tavern::Key::A))
+		if (GetEngine().GetInputManager().IsKeyPressed(Tavern::Key::A))
 		{
 			direction.x -= 1.0f;
 		}
-		if (GetEngine()->GetInputManager().IsKeyPressed(Tavern::Key::D))
+		if (GetEngine().GetInputManager().IsKeyPressed(Tavern::Key::D))
 		{
 			direction.x += 1.0f;
 		}
@@ -102,8 +98,8 @@ public:
 		{
 			case Tavern::Key::Escape:
 			{
-				GetEngine()->GetRenderManager().GetWindow()->GetCursor().SetIsLocked(false);
-				GetEngine()->GetRenderManager().GetWindow()->GetCursor().SetIsVisible(true);
+				GetEngine().GetRenderManager().GetWindow()->GetCursor().SetIsLocked(false);
+				GetEngine().GetRenderManager().GetWindow()->GetCursor().SetIsVisible(true);
 			}
 			default:
 			{
@@ -155,7 +151,7 @@ public:
 		m_Cubes.pop_back();
 
 		TAVERN_INFO("Destroyed Cube Entity ID: {}", cube->GetID());
-		GetEngine()->DestroyEntity(cube);
+		GetEngine().GetScene().DestroyEntity(cube);
 	}
 
 	Tavern::CameraComponent* m_Camera;
@@ -175,7 +171,7 @@ int main()
 	Tavern::Engine TavernEngine;
 
 	// Create startup game entities
-	Player* player = TavernEngine.CreateEntity<Player>();
+	Player* player = TavernEngine.GetScene().CreateEntity<Player>();
 
 	glm::vec3 cubePositions[] = {
 		glm::vec3(0.0f, 0.0f, 0.0f),
@@ -192,7 +188,7 @@ int main()
 
 	for (int i = 0; i < 10; i++)
 	{
-		MyEntity* cube = TavernEngine.CreateEntity<MyEntity>();
+		MyEntity* cube = TavernEngine.GetScene().CreateEntity<MyEntity>();
 		cube->GetTransform()->SetPosition(cubePositions[i]);
 		cube->GetTransform()->SetRotation(glm::vec3(i * 10.0, i * 21.0, i * 13.0));
 		player->m_Cubes.push_back(cube);

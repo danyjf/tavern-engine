@@ -21,4 +21,4 @@
 #include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Events/EventListenerInterface.h"
 #include "Tavern/Events/EventListener.h"
-#include "Tavern/Entity.h"
+#include "Tavern/Scene/Entity.h"

@@ -5,7 +5,7 @@
 #include "Tavern/Core/Engine.h"
 #include "Tavern/Core/Log.h"
 #include "Tavern/Core/Time.h"
-#include "Tavern/Entity.h"
+#include "Tavern/Scene/Scene.h"
 #include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Events/EventListener.h"
 #include "Tavern/Events/EventManager.h"
@@ -20,6 +20,7 @@ namespace Tavern
 		  m_ResourceManager(),
 		  m_RenderManager(m_EventManager, m_ResourceManager),
 		  m_InputManager(m_RenderManager),
+		  m_Scene(*this),
 		  m_WindowCloseListener(std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1))
 	{
 		m_EventManager.AddListener(EventType::WindowClose, m_WindowCloseListener);
@@ -42,10 +43,7 @@ namespace Tavern
 			m_EventManager.DispatchEvents();
 
 			// Update State
-			for (auto it = m_Entities.begin(); it != m_Entities.end(); it++)
-			{
-				(*it).second->Update();
-			}
+			m_Scene.Update();
 
 			// Render
 			m_RenderManager.Render();
@@ -53,16 +51,6 @@ namespace Tavern
 			glfwPollEvents();
 			glfwSwapBuffers(m_RenderManager.GetWindow()->GetGLFWWindow());
 		}
-	}
-
-	void Engine::DestroyEntity(Entity* entity)
-	{
-		if (!m_Entities.contains(entity->GetID()))
-		{
-			TAVERN_ENGINE_WARN("Tried to destroy entity, but entity does not exist");
-			return;
-		}
-		m_Entities.erase(entity->GetID());
 	}
 
 	EventManager& Engine::GetEventManager()
@@ -83,6 +71,11 @@ namespace Tavern
 	InputManager& Engine::GetInputManager()
 	{
 		return m_InputManager;
+	}
+
+	Scene& Engine::GetScene()
+	{
+		return m_Scene;
 	}
 
 	void Engine::OnWindowCloseEvent(const std::shared_ptr<WindowCloseEvent>& event)

@@ -11,7 +11,7 @@ namespace Tavern
 	class TAVERN_API RenderComponent : public Component
 	{
 	public:
-		RenderComponent(Engine* engine, Entity* owner);
+		RenderComponent(Engine& engine, Entity* owner);
 		virtual ~RenderComponent() override;
 
 		virtual void Render() = 0;

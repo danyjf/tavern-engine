@@ -10,14 +10,14 @@ namespace Tavern
 	class TAVERN_API Component
 	{
 	public:
-		Component(Engine* engine, Entity* owner);
+		Component(Engine& engine, Entity* owner);
 		virtual ~Component() = default;
 
+		Engine& GetEngine() const;
 		Entity* GetOwner() const;
-		Engine* GetEngine() const;
 
 	private:
-		Engine* m_Engine = nullptr;
+		Engine& m_Engine;
 		Entity* m_Owner = nullptr;
 	};
 }

@@ -5,7 +5,7 @@
 #include <typeindex>
 
 #include "Tavern/Core/Core.h"
-#include "Tavern/Core/Engine.h"
+// #include "Tavern/Core/Engine.h"
 
 namespace Tavern
 {
@@ -13,11 +13,12 @@ namespace Tavern
 	class TextureResource;
 	class TransformComponent;
 	class Component;
+	class Engine;
 
 	class TAVERN_API Entity
 	{
 	public:
-		Entity(Engine* engine);
+		Entity(Engine& engine);
 		virtual ~Entity() = default;
 		Entity(Entity& copy) = delete;
 		Entity& operator=(const Entity& copy) = delete;
@@ -25,7 +26,7 @@ namespace Tavern
 		virtual void Update();
 
 		const unsigned long GetID() const;
-		Engine* GetEngine() const;
+		Engine& GetEngine() const;
 		TransformComponent* GetTransform() const;
 
 		template <typename ComponentClass>
@@ -76,7 +77,7 @@ namespace Tavern
 
 	private:
 		unsigned long m_ID = 0;
-		Engine* m_Engine = nullptr;
+		Engine& m_Engine;
 		TransformComponent* m_Transform;
 		std::unordered_map<std::type_index, std::vector<std::unique_ptr<Component>>> m_Components;
 

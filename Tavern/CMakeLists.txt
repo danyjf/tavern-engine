@@ -4,8 +4,6 @@ set(SOURCES
     vendor/stb/stb.cpp
 )
 set(SOURCES_TAVERN
-    src/Tavern/Entity.h
-    src/Tavern/Entity.cpp
 )
 set(SOURCES_TAVERN_COMPONENTS
     src/Tavern/Components/Component.h
@@ -61,6 +59,12 @@ set(SOURCES_TAVERN_RESOURCES
     src/Tavern/Resources/TextureResource.h
     src/Tavern/Resources/TextureResource.cpp
 )
+set(SOURCES_TAVERN_SCENE
+    src/Tavern/Scene/Scene.h
+    src/Tavern/Scene/Scene.cpp
+    src/Tavern/Scene/Entity.h
+    src/Tavern/Scene/Entity.cpp
+)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)
@@ -78,6 +82,7 @@ add_library(Tavern SHARED
     ${SOURCES_TAVERN_INPUT}
     ${SOURCES_TAVERN_RENDERER}
     ${SOURCES_TAVERN_RESOURCES}
+    ${SOURCES_TAVERN_SCENE}
 )
 
 source_group(src FILES ${SOURCES})
@@ -88,6 +93,7 @@ source_group(src/Tavern/Events FILES ${SOURCES_TAVERN_EVENTS})
 source_group(src/Tavern/Input FILES ${SOURCES_TAVERN_INPUT})
 source_group(src/Tavern/Renderer FILES ${SOURCES_TAVERN_RENDERER})
 source_group(src/Tavern/Resources FILES ${SOURCES_TAVERN_RESOURCES})
+source_group(src/Tavern/Scene FILES ${SOURCES_TAVERN_SCENE})
 
 target_include_directories(Tavern PRIVATE 
     ${CMAKE_SOURCE_DIR}/Tavern/src
