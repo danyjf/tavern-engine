@@ -6,6 +6,7 @@
 #include <typeindex>
 
 #include "Tavern/Core/Core.h"
+#include "Tavern/Scene/Scene.h"
 
 namespace Tavern
 {
@@ -17,6 +18,8 @@ namespace Tavern
 
 	class TAVERN_API Entity
 	{
+	friend class Scene;
+
 	public:
 		Entity(Engine& engine);
 		virtual ~Entity();
@@ -31,7 +34,7 @@ namespace Tavern
 		TransformComponent* GetTransform() const;
 		Entity* GetParent() const;
 		void SetParent(Entity* parent);
-		std::unordered_map<unsigned long, Entity*>& GetChildren() const;
+		std::unordered_map<unsigned long, Entity*>& GetChildren();
 
 		template <typename ComponentClass>
 		ComponentClass* CreateComponentOfType()

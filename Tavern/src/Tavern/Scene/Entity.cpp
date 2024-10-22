@@ -12,17 +12,6 @@ namespace Tavern
 
 	Entity::~Entity()
 	{
-		// TODO: Fix this, i am iterating over the children but removing 
-		// elements from the list of children at the same time
-		//if (m_Parent)
-		//{
-		//	m_Parent->m_Children.erase(m_ID);
-		//}
-
-		//for (std::pair<unsigned long, Entity*> pair : m_Children)
-		//{
-		//	GetEngine().GetScene().DestroyEntity(pair.second);
-		//}
 	}
 
 	void Entity::Update()
@@ -61,5 +50,10 @@ namespace Tavern
 		parent->m_Children[m_ID] = this;
 
 		m_Parent = parent;
+	}
+
+	std::unordered_map<unsigned long, Entity*>& Entity::GetChildren()
+	{
+		return m_Children;
 	}
 }

@@ -30,6 +30,16 @@ namespace Tavern
 			return;
 		}
 
+		if (entity->m_Parent)
+		{
+			entity->m_Parent->m_Children.erase(entity->GetID());
+		}
+
+		for (auto pair : entity->m_Children)
+		{
+			m_Entities.erase(pair.first);
+		}
+
 		m_Entities.erase(entity->GetID());
 	}
 
