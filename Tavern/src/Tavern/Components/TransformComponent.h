@@ -9,6 +9,8 @@ namespace Tavern
 {
 	class Engine;
 
+	// TODO: Add function for setting the local and global position, rotation, scale
+	// Currently there's only local
 	class TAVERN_API TransformComponent : public Component
 	{
 	public:

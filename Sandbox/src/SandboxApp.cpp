@@ -86,19 +86,23 @@ public:
 			GetTransform()->SetPosition(GetTransform()->GetPosition() + translation * m_Speed * Tavern::Time::GetDeltaTime());
 		}
 
-		const glm::vec3& cube1Rotation = m_Cubes[0]->GetTransform()->GetRotation();
-		m_Cubes[0]->GetTransform()->SetRotation({ 
-			cube1Rotation.x, 
-			cube1Rotation.y, 
-			cube1Rotation.z + 90.0f * Tavern::Time::GetDeltaTime()
-		});
+		// FIX: right here the cube ptrs become null
+		if (m_Cubes.size() >= 2)
+		{
+			const glm::vec3& cube1Rotation = m_Cubes[0]->GetTransform()->GetRotation();
+			m_Cubes[0]->GetTransform()->SetRotation({ 
+				cube1Rotation.x, 
+				cube1Rotation.y, 
+				cube1Rotation.z + 90.0f * Tavern::Time::GetDeltaTime()
+			});
 
-		const glm::vec3& cube2Rotation = m_Cubes[1]->GetTransform()->GetRotation();
-		m_Cubes[1]->GetTransform()->SetRotation({ 
-			cube2Rotation.x + 90.0f * Tavern::Time::GetDeltaTime(), 
-			cube2Rotation.y, 
-			cube2Rotation.z
-		});
+			const glm::vec3& cube2Rotation = m_Cubes[1]->GetTransform()->GetRotation();
+			m_Cubes[1]->GetTransform()->SetRotation({ 
+				cube2Rotation.x + 90.0f * Tavern::Time::GetDeltaTime(), 
+				cube2Rotation.y, 
+				cube2Rotation.z
+			});
+		}
 	}
 
 	void OnKeyPressed(const std::shared_ptr<Tavern::KeyPressedEvent>& event)
