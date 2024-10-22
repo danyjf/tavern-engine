@@ -35,7 +35,7 @@ namespace Tavern
 			entity->m_Parent->m_Children.erase(entity->GetID());
 		}
 
-		for (auto pair : entity->m_Children)
+		for (auto& pair : entity->m_Children)
 		{
 			m_Entities.erase(pair.first);
 		}

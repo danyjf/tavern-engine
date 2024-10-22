@@ -28,9 +28,11 @@ namespace Tavern
 		const glm::vec3& GetRightDirection() const;
 		const glm::vec3& GetUpDirection() const;
 
+		const glm::mat4& GetLocalModelMatrix() const;
 		const glm::mat4& GetModelMatrix() const;
 
 	private:
+		glm::mat4 m_LocalModelMatrix = glm::mat4(1.0f);
 		glm::mat4 m_ModelMatrix = glm::mat4(1.0f);
 
 		glm::vec3 m_Position = glm::vec3(0.0f);
@@ -41,6 +43,7 @@ namespace Tavern
 		glm::vec3 m_Right = glm::vec3(0.0f);
 		glm::vec3 m_Up = glm::vec3(0.0f);
 
+		void ComputeLocalModelMatrix();
 		void ComputeModelMatrix();
 		void CalculateDirectionVectors();
 	};

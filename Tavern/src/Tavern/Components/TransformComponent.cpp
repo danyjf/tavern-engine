@@ -3,16 +3,19 @@
 
 #include "Tavern/Components/TransformComponent.h"
 #include "Tavern/Core/Engine.h"
+#include "Tavern/Scene/Entity.h"
 
 namespace Tavern
 {
 	TransformComponent::TransformComponent(Engine& engine, Entity* owner)
 		: Component(engine, owner),
+		  m_LocalModelMatrix(1.0f),
 		  m_ModelMatrix(1.0f),
 		  m_Position(0.0f),
 		  m_Rotation(0.0f),
 		  m_Scale(1.0f)
 	{
+		ComputeLocalModelMatrix();
 		ComputeModelMatrix();
 		CalculateDirectionVectors();
 	}
@@ -25,6 +28,7 @@ namespace Tavern
 	void TransformComponent::SetPosition(const glm::vec3& position)
 	{
 		m_Position = position;
+		ComputeLocalModelMatrix();
 		ComputeModelMatrix();
 	}
 
@@ -37,6 +41,7 @@ namespace Tavern
 	{
 		m_Rotation = rotation;
 		CalculateDirectionVectors();
+		ComputeLocalModelMatrix();
 		ComputeModelMatrix();
 	}
 
@@ -48,6 +53,7 @@ namespace Tavern
 	void TransformComponent::SetScale(const glm::vec3& scale)
 	{
 		m_Scale = scale;
+		ComputeLocalModelMatrix();
 		ComputeModelMatrix();
 	}
 
@@ -66,25 +72,47 @@ namespace Tavern
 		return m_Up;
 	}
 
+	const glm::mat4& TransformComponent::GetLocalModelMatrix() const
+	{
+		return m_LocalModelMatrix;
+	}
+
 	const glm::mat4& TransformComponent::GetModelMatrix() const
 	{
 		return m_ModelMatrix;
 	}
 
-	void TransformComponent::ComputeModelMatrix()
+	void TransformComponent::ComputeLocalModelMatrix()
 	{
-		m_ModelMatrix = glm::mat4(1.0f);
+		m_LocalModelMatrix = glm::mat4(1.0f);
 
 		// Apply translation
-		m_ModelMatrix = glm::translate(m_ModelMatrix, m_Position);
+		m_LocalModelMatrix = glm::translate(m_LocalModelMatrix, m_Position);
 
 		// Apply rotation ZXY
-		m_ModelMatrix = glm::rotate(m_ModelMatrix, glm::radians(m_Rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
-		m_ModelMatrix = glm::rotate(m_ModelMatrix, glm::radians(m_Rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
-		m_ModelMatrix = glm::rotate(m_ModelMatrix, glm::radians(m_Rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+		m_LocalModelMatrix = glm::rotate(m_LocalModelMatrix, glm::radians(m_Rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
+		m_LocalModelMatrix = glm::rotate(m_LocalModelMatrix, glm::radians(m_Rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+		m_LocalModelMatrix = glm::rotate(m_LocalModelMatrix, glm::radians(m_Rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
 
 		// Apply scale
-		m_ModelMatrix = glm::scale(m_ModelMatrix, m_Scale);
+		m_LocalModelMatrix = glm::scale(m_LocalModelMatrix, m_Scale);
+	}
+
+	void TransformComponent::ComputeModelMatrix()
+	{
+		if (GetOwner()->GetParent())
+		{
+			m_ModelMatrix = GetOwner()->GetParent()->GetTransform()->GetModelMatrix() * m_LocalModelMatrix;
+		}
+		else
+		{
+			m_ModelMatrix = m_LocalModelMatrix;
+		}
+
+		for (auto& pair : GetOwner()->GetChildren())
+		{
+			pair.second->GetTransform()->ComputeModelMatrix();
+		}
 	}
 
 	void TransformComponent::CalculateDirectionVectors()

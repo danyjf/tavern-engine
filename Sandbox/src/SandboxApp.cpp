@@ -85,6 +85,20 @@ public:
 			translation = glm::normalize(translation);
 			GetTransform()->SetPosition(GetTransform()->GetPosition() + translation * m_Speed * Tavern::Time::GetDeltaTime());
 		}
+
+		const glm::vec3& cube1Rotation = m_Cubes[0]->GetTransform()->GetRotation();
+		m_Cubes[0]->GetTransform()->SetRotation({ 
+			cube1Rotation.x, 
+			cube1Rotation.y, 
+			cube1Rotation.z + 90.0f * Tavern::Time::GetDeltaTime()
+		});
+
+		const glm::vec3& cube2Rotation = m_Cubes[1]->GetTransform()->GetRotation();
+		m_Cubes[1]->GetTransform()->SetRotation({ 
+			cube2Rotation.x + 90.0f * Tavern::Time::GetDeltaTime(), 
+			cube2Rotation.y, 
+			cube2Rotation.z
+		});
 	}
 
 	void OnKeyPressed(const std::shared_ptr<Tavern::KeyPressedEvent>& event)
@@ -175,8 +189,8 @@ int main()
 
 	glm::vec3 cubePositions[] = {
 		glm::vec3(0.0f, 0.0f, 0.0f),
-		glm::vec3(2.0f, 5.0f, -15.0f),
-		glm::vec3(-1.5f, -2.2f, -2.2f),
+		glm::vec3(3.0f, 0.0f, 0.0f),
+		glm::vec3(0.0f, 2.0f, 0.0f),
 		glm::vec3(-3.8f, -2.0f, -12.3f),
 		glm::vec3(2.4f, -0.4f, -3.5f),
 		glm::vec3(-1.7f, 3.0f, -7.5f),
@@ -186,7 +200,19 @@ int main()
 		glm::vec3(-1.3f, 1.0f, -1.5f)
 	};
 
-	for (int i = 0; i < 10; i++)
+	MyEntity* cube1 = TavernEngine.GetScene().CreateEntity<MyEntity>();
+	cube1->GetTransform()->SetPosition(cubePositions[0]);
+	player->m_Cubes.push_back(cube1);
+
+	MyEntity* cube2 = TavernEngine.GetScene().CreateEntity<MyEntity>(cube1);
+	cube2->GetTransform()->SetPosition(cubePositions[1]);
+	player->m_Cubes.push_back(cube2);
+
+	MyEntity* cube3 = TavernEngine.GetScene().CreateEntity<MyEntity>(cube2);
+	cube3->GetTransform()->SetPosition(cubePositions[2]);
+	player->m_Cubes.push_back(cube3);
+
+	for (int i = 3; i < 10; i++)
 	{
 		MyEntity* cube = TavernEngine.GetScene().CreateEntity<MyEntity>();
 		cube->GetTransform()->SetPosition(cubePositions[i]);
