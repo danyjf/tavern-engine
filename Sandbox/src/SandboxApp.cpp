@@ -13,8 +13,8 @@ public:
 		: Tavern::Entity(engine)
 	{
 		m_Mesh = CreateComponentOfType<Tavern::MeshRenderComponent>();
-		m_Mesh->AddTexture(GetEngine().GetResourceManager().LoadTexture("Assets/Images/container.jpg"));
-		m_Mesh->AddTexture(GetEngine().GetResourceManager().LoadTexture("Assets/Images/awesomeface.jpg"));
+		m_Mesh->AddTexture(GetEngine().GetResourceManager().LoadTexture("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Images/container.jpg"));
+		m_Mesh->AddTexture(GetEngine().GetResourceManager().LoadTexture("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Images/awesomeface.jpg"));
 	}
 
 	void Update() override

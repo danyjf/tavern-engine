@@ -15,12 +15,23 @@ namespace Tavern
 		Scene(Scene& copy) = delete;
 		Scene& operator=(const Scene& copy) = delete;
 
+		Entity* GetRoot() const;
+
 		template <typename EntityClass>
-		EntityClass* CreateEntity()
+		EntityClass* CreateEntity(Entity* parent = nullptr)
 		{
+			if (parent == nullptr)
+			{
+				parent = GetRoot();
+			}
+
 			std::unique_ptr<EntityClass> entity = std::make_unique<EntityClass>(m_Engine);
+			entity->SetParent(parent);
+
 			EntityClass* pEntity = entity.get();
+
 			m_Entities.emplace(entity->GetID(), std::move(entity));
+
 			return pEntity;
 		}
 		void DestroyEntity(Entity* entity);
@@ -29,6 +40,7 @@ namespace Tavern
 
 	private:
 		std::unordered_map<unsigned long, std::unique_ptr<Entity>> m_Entities = {};
+		std::unique_ptr<Entity> m_RootEntity;
 		Engine& m_Engine;
 	};
 }

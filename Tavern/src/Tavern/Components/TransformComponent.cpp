@@ -13,6 +13,7 @@ namespace Tavern
 		  m_Rotation(0.0f),
 		  m_Scale(1.0f)
 	{
+		ComputeModelMatrix();
 		CalculateDirectionVectors();
 	}
 

@@ -10,7 +10,10 @@ namespace Tavern
 {
 	MeshRenderComponent::MeshRenderComponent(Engine& engine, Entity* owner)
 		: RenderComponent(engine, owner),
-		  m_Shader(GetEngine().GetResourceManager().LoadShader("Shaders/Shader.vert", "Shaders/Shader.frag"))
+		  m_Shader(GetEngine().GetResourceManager().LoadShader(
+			  "C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Shaders/Shader.vert", 
+			  "C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Shaders/Shader.frag"
+		  ))
 	{
 		// Create vertex buffer object
 		float vertices[] = {

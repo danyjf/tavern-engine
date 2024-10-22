@@ -1,11 +1,11 @@
 #pragma once
 
 #include <memory>
+#include <unordered_map>
 #include <vector>
 #include <typeindex>
 
 #include "Tavern/Core/Core.h"
-// #include "Tavern/Core/Engine.h"
 
 namespace Tavern
 {
@@ -19,7 +19,8 @@ namespace Tavern
 	{
 	public:
 		Entity(Engine& engine);
-		virtual ~Entity() = default;
+		virtual ~Entity();
+
 		Entity(Entity& copy) = delete;
 		Entity& operator=(const Entity& copy) = delete;
 
@@ -28,6 +29,9 @@ namespace Tavern
 		const unsigned long GetID() const;
 		Engine& GetEngine() const;
 		TransformComponent* GetTransform() const;
+		Entity* GetParent() const;
+		void SetParent(Entity* parent);
+		std::unordered_map<unsigned long, Entity*>& GetChildren() const;
 
 		template <typename ComponentClass>
 		ComponentClass* CreateComponentOfType()
@@ -74,6 +78,10 @@ namespace Tavern
 
 			return components;
 		}
+
+	protected:
+		std::unordered_map<unsigned long, Entity*> m_Children;
+		Entity* m_Parent = nullptr;
 
 	private:
 		unsigned long m_ID = 0;

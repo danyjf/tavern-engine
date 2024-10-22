@@ -6,7 +6,8 @@
 namespace Tavern
 {
 	Scene::Scene(Engine& engine)
-		: m_Engine(engine)
+		: m_Engine(engine),
+		  m_RootEntity(std::make_unique<Entity>(engine))
 	{
 		TAVERN_ENGINE_INFO("Scene created");
 	}
@@ -16,6 +17,11 @@ namespace Tavern
 		TAVERN_ENGINE_INFO("Scene destroyed");
 	}
 
+	Entity* Scene::GetRoot() const
+	{
+		return m_RootEntity.get();
+	}
+
 	void Scene::DestroyEntity(Entity* entity)
 	{
 		if (!m_Entities.contains(entity->GetID()))
@@ -23,6 +29,7 @@ namespace Tavern
 			TAVERN_ENGINE_WARN("Tried to destroy entity, but entity does not exist");
 			return;
 		}
+
 		m_Entities.erase(entity->GetID());
 	}
 
