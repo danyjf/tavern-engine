@@ -13,5 +13,6 @@ namespace Tavern
 		float currentFrameTime = glfwGetTime();
 		m_DeltaTime = currentFrameTime - m_LastFrameTime;
 		m_LastFrameTime = currentFrameTime;
+		m_ElapsedTime += m_DeltaTime;
 	}
 }

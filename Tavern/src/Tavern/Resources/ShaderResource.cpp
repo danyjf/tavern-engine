@@ -117,4 +117,9 @@ namespace Tavern
 	{
 		glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
 	}
+
+	void ShaderResource::SetVec3(const std::string& name, const glm::vec3& value) const
+	{
+		glUniform3f(glGetUniformLocation(ID, name.c_str()), value.x, value.y, value.z);
+	}
 }

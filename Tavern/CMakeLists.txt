@@ -14,8 +14,10 @@ set(SOURCES_TAVERN_COMPONENTS
     src/Tavern/Components/TransformComponent.cpp
     src/Tavern/Components/RenderComponent.h
     src/Tavern/Components/RenderComponent.cpp
-    src/Tavern/Components/MeshRenderComponent.h
-    src/Tavern/Components/MeshRenderComponent.cpp
+    src/Tavern/Components/MeshComponent.h
+    src/Tavern/Components/MeshComponent.cpp
+    src/Tavern/Components/PointLightComponent.h
+    src/Tavern/Components/PointLightComponent.cpp
 )
 set(SOURCES_TAVERN_CORE
     src/Tavern/Core/Core.h
@@ -125,6 +127,8 @@ target_precompile_headers(Tavern PRIVATE
 	$<$<COMPILE_LANGUAGE:CXX>:<unordered_set$<ANGLE-R>>
 	$<$<COMPILE_LANGUAGE:CXX>:<utility$<ANGLE-R>>
 	$<$<COMPILE_LANGUAGE:CXX>:<vector$<ANGLE-R>>
+    $<$<COMPILE_LANGUAGE:CXX>:<glm/glm.hpp$<ANGLE-R>>
+    $<$<COMPILE_LANGUAGE:CXX>:<glm/gtc/matrix_transform.hpp$<ANGLE-R>>
 
 	# Include only for windows
 	$<$<COMPILE_LANGUAGE:CXX>:$<$<PLATFORM_ID:Windows>:<Windows.h$<ANGLE-R>>>

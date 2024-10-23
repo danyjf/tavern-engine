@@ -1,10 +1,13 @@
-#include "Tavern/Core/Log.h"
-#include "Tavern/Events/EventListener.h"
-#include "Tavern/Events/MouseEvent.h"
 #include <Tavern.h>
 #include <algorithm>
 #include <functional>
 #include <memory>
+
+#include "Tavern/Components/PointLightComponent.h"
+#include "Tavern/Core/Log.h"
+#include "Tavern/Core/Time.h"
+#include "Tavern/Events/EventListener.h"
+#include "Tavern/Events/MouseEvent.h"
 
 class MyEntity : public Tavern::Entity
 {
@@ -12,9 +15,8 @@ public:
 	MyEntity(Tavern::Engine& engine)
 		: Tavern::Entity(engine)
 	{
-		m_Mesh = CreateComponentOfType<Tavern::MeshRenderComponent>();
+		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>();
 		m_Mesh->AddTexture(GetEngine().GetResourceManager().LoadTexture("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Images/container.jpg"));
-		m_Mesh->AddTexture(GetEngine().GetResourceManager().LoadTexture("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Images/awesomeface.jpg"));
 	}
 
 	void Update() override
@@ -22,7 +24,41 @@ public:
 		Tavern::Entity::Update();
 	}
 
-	Tavern::MeshRenderComponent* m_Mesh;
+	Tavern::MeshComponent* m_Mesh;
+};
+
+class LightEntity : public Tavern::Entity
+{
+public:
+	LightEntity(Tavern::Engine& engine)
+		: Tavern::Entity(engine)
+	{
+		m_StartPosition = glm::vec3(0.0f, 1.0f, -3.0f);
+		GetTransform()->SetPosition(m_StartPosition);
+		GetTransform()->SetScale(glm::vec3(0.25f));
+
+		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>();
+		m_Mesh->SetColor(glm::vec3(1.0f));
+		m_Mesh->SetUnlit(true);
+
+		m_Light = CreateComponentOfType<Tavern::PointLightComponent>();
+		m_Light->SetColor(glm::vec3(1.0f));
+	}
+
+	void Update() override
+	{
+		Tavern::Entity::Update();
+
+		GetTransform()->SetPosition(glm::vec3(
+			m_StartPosition.x + sin(2.0f * Tavern::Time::GetElapsedTime()) / 2.0f * 3.0f,
+			m_StartPosition.y,
+			m_StartPosition.z + cos(Tavern::Time::GetElapsedTime()) * 3.0f
+		));
+	}
+
+	Tavern::MeshComponent* m_Mesh;
+	Tavern::PointLightComponent* m_Light;
+	glm::vec3 m_StartPosition;
 };
 
 class Player : public Tavern::Entity
@@ -58,6 +94,8 @@ public:
 
 	void Update() override
 	{
+		Tavern::Entity::Update();
+
 		glm::vec2 direction(0.0f);
 
 		if (GetEngine().GetInputManager().IsKeyPressed(Tavern::Key::W))
@@ -185,6 +223,8 @@ int main()
 
 	// Create startup game entities
 	Player* player = TavernEngine.GetScene().CreateEntity<Player>();
+
+	LightEntity* light = TavernEngine.GetScene().CreateEntity<LightEntity>();
 
 	glm::vec3 cubePositions[] = {
 		glm::vec3(0.0f, 0.0f, 0.0f),
