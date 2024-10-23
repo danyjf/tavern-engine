@@ -14,7 +14,6 @@ namespace Tavern
 {
 	class Event;
 
-	// TODO: Implement a scene graph
 	// TODO: Add lighting to the rendering
 	// TODO: Add UI
 	class TAVERN_API Engine

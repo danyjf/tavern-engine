@@ -39,7 +39,7 @@ namespace Tavern
 		void Update();
 
 	private:
-		// TODO: this is kinda weird, maybe change the ownership of the child entities 
+		// TODO: This is kinda weird, maybe change the ownership of the child entities
 		// into the parent entities themselves so that it is easier to destroy entities
 		std::unordered_map<unsigned long, std::unique_ptr<Entity>> m_Entities = {};
 		std::unique_ptr<Entity> m_RootEntity;
