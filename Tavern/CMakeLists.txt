@@ -135,8 +135,9 @@ target_link_libraries(Tavern PRIVATE
     glm::glm
 )
 
-add_custom_target(CopyEngineFiles ALL
+add_custom_command(TARGET Tavern
+	POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_DIRECTORY}/Sandbox
     COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Tavern> ${OUTPUT_DIRECTORY}/Sandbox
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/src/Tavern/Renderer/Shaders ${OUTPUT_DIRECTORY}/Sandbox/Shaders
 )
-add_dependencies(CopyEngineFiles Tavern Sandbox)
