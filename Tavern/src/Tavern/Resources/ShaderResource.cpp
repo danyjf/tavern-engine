@@ -89,8 +89,33 @@ namespace Tavern
 
 		// Setup textures
 		Use();
-		SetInt("texture1", 0);
-		SetInt("texture2", 1);
+		int count;
+		glGetProgramiv(ID, GL_ACTIVE_UNIFORMS, &count);
+		TAVERN_ENGINE_INFO("Active Uniforms: {}", count);
+
+		int uniformBufferOffset = 0;
+		for (int i = 0; i < count; i++)
+		{
+			char name[256];
+			int length;
+			int nElements;
+			GLenum type;
+			glGetActiveUniform(ID, (GLuint)i, sizeof(name), &length, &nElements, &type, name);
+
+			if (type == GL_SAMPLER_2D)
+			{
+				m_Samplers.emplace_back(name, length);
+				int samplerIndex = m_Samplers.size() - 1;
+				SetInt(m_Samplers.back(), samplerIndex);
+			}
+			else
+			{
+				m_Uniforms.emplace(std::string(name, length), std::pair<GLenum, int>{ type, uniformBufferOffset });
+				uniformBufferOffset += GetOpenGLTypeSize(type) * nElements;
+			}
+		}
+
+		m_UniformBufferSize = uniformBufferOffset;
 	}
 
 	void ShaderResource::Use()
@@ -121,5 +146,62 @@ namespace Tavern
 	void ShaderResource::SetVec3(const std::string& name, const glm::vec3& value) const
 	{
 		glUniform3f(glGetUniformLocation(ID, name.c_str()), value.x, value.y, value.z);
+	}
+
+	int ShaderResource::GetOpenGLTypeSize(GLenum type)
+	{
+		switch (type)
+		{
+			case GL_FLOAT:
+				return sizeof(GLfloat); // Single float
+			case GL_FLOAT_VEC2:
+				return 2 * sizeof(GLfloat); // vec2 (2 floats)
+			case GL_FLOAT_VEC3:
+				return 3 * sizeof(GLfloat); // vec3 (3 floats)
+			case GL_FLOAT_VEC4:
+				return 4 * sizeof(GLfloat); // vec4 (4 floats)
+			case GL_INT:
+				return sizeof(GLint); // Single int
+			case GL_INT_VEC2:
+				return 2 * sizeof(GLint); // ivec2 (2 ints)
+			case GL_INT_VEC3:
+				return 3 * sizeof(GLint); // ivec3 (3 ints)
+			case GL_INT_VEC4:
+				return 4 * sizeof(GLint); // ivec4 (4 ints)
+			case GL_BOOL:
+				return sizeof(GLboolean); // Single boolean
+			case GL_BOOL_VEC2:
+				return 2 * sizeof(GLboolean); // bvec2 (2 booleans)
+			case GL_BOOL_VEC3:
+				return 3 * sizeof(GLboolean); // bvec3 (3 booleans)
+			case GL_BOOL_VEC4:
+				return 4 * sizeof(GLboolean); // bvec4 (4 booleans)
+			case GL_FLOAT_MAT2:
+				return 4 * sizeof(GLfloat); // mat2 (2x2 floats)
+			case GL_FLOAT_MAT3:
+				return 9 * sizeof(GLfloat); // mat3 (3x3 floats)
+			case GL_FLOAT_MAT4:
+				return 16 * sizeof(GLfloat); // mat4 (4x4 floats)
+			case GL_FLOAT_MAT2x3:
+				return 6 * sizeof(GLfloat); // mat2x3 (2x3 floats)
+			case GL_FLOAT_MAT2x4:
+				return 8 * sizeof(GLfloat); // mat2x4 (2x4 floats)
+			case GL_FLOAT_MAT3x2:
+				return 6 * sizeof(GLfloat); // mat3x2 (3x2 floats)
+			case GL_FLOAT_MAT3x4:
+				return 12 * sizeof(GLfloat); // mat3x4 (3x4 floats)
+			case GL_FLOAT_MAT4x2:
+				return 8 * sizeof(GLfloat); // mat4x2 (4x2 floats)
+			case GL_FLOAT_MAT4x3:
+				return 12 * sizeof(GLfloat); // mat4x3 (4x3 floats)
+			case GL_SAMPLER_2D:
+				return sizeof(GLint); // sampler (typically an int for binding purposes)
+			case GL_SAMPLER_CUBE:
+				return sizeof(GLint); // sampler (typically an int for binding purposes)
+			// Add cases for other types as needed
+			default:
+				printf("Unknown OpenGL type: 0x%x\n", type);
+				return 0; // Unknown type
+		}
 	}
 }

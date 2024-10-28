@@ -18,7 +18,7 @@ namespace Tavern
 
 	class TAVERN_API Entity
 	{
-	friend class Scene;
+		friend class Scene;
 
 	public:
 		Entity(Engine& engine);
