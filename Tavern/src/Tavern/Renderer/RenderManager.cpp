@@ -10,7 +10,9 @@
 #include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Events/EventListener.h"
 #include "Tavern/Core/Log.h"
+#include "Tavern/Scene/Entity.h"
 #include "Tavern/Components/CameraComponent.h"
+#include "Tavern/Components/LightComponent.h"
 
 namespace Tavern
 {
@@ -53,11 +55,22 @@ namespace Tavern
 	void RenderManager::AddRenderComponent(RenderComponent* renderComponent)
 	{
 		m_RenderComponents.insert(renderComponent);
+		// m_RenderComponents[renderComponent->]
 	}
 
 	void RenderManager::RemoveRenderComponent(RenderComponent* renderComponent)
 	{
 		m_RenderComponents.erase(renderComponent);
+	}
+
+	void RenderManager::AddLightComponent(LightComponent* lightComponent)
+	{
+		m_LightComponents.insert(lightComponent);
+	}
+
+	void RenderManager::RemoveLightComponent(LightComponent* lightComponent)
+	{
+		m_LightComponents.erase(lightComponent);
 	}
 
 	void RenderManager::Render()
@@ -67,6 +80,14 @@ namespace Tavern
 
 		for (RenderComponent* renderComponent : m_RenderComponents)
 		{
+			renderComponent->GetShader()->Use();
+			LightComponent* lightComponent = *(m_LightComponents.begin());
+			renderComponent->GetShader()->SetVec3("lightColor", lightComponent->GetColor());
+			glm::vec3 worldLightPos = glm::vec3(
+				lightComponent->GetOwner()->GetParent()->GetTransform()->GetModelMatrix() * glm::vec4(lightComponent->GetOwner()->GetTransform()->GetPosition(), 1.0f)
+			);
+			renderComponent->GetShader()->SetVec3("lightPos", worldLightPos);
+
 			renderComponent->Render();
 		}
 	}

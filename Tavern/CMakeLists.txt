@@ -16,8 +16,8 @@ set(SOURCES_TAVERN_COMPONENTS
     src/Tavern/Components/RenderComponent.cpp
     src/Tavern/Components/MeshComponent.h
     src/Tavern/Components/MeshComponent.cpp
-    src/Tavern/Components/PointLightComponent.h
-    src/Tavern/Components/PointLightComponent.cpp
+    src/Tavern/Components/LightComponent.h
+    src/Tavern/Components/LightComponent.cpp
 )
 set(SOURCES_TAVERN_CORE
     src/Tavern/Core/Core.h

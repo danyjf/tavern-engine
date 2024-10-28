@@ -11,7 +11,7 @@
 #include "Tavern/Components/CameraComponent.h"
 #include "Tavern/Components/TransformComponent.h"
 #include "Tavern/Components/MeshComponent.h"
-#include "Tavern/Components/PointLightComponent.h"
+#include "Tavern/Components/LightComponent.h"
 #include "Tavern/Input/InputManager.h"
 #include "Tavern/Input/KeyCodes.h"
 #include "Tavern/Input/MouseCodes.h"

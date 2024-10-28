@@ -3,7 +3,7 @@
 #include <functional>
 #include <memory>
 
-#include "Tavern/Components/PointLightComponent.h"
+#include "Tavern/Components/LightComponent.h"
 #include "Tavern/Core/Log.h"
 #include "Tavern/Core/Time.h"
 #include "Tavern/Events/EventListener.h"
@@ -41,7 +41,7 @@ public:
 		m_Mesh->SetColor(glm::vec3(1.0f));
 		m_Mesh->SetUnlit(true);
 
-		m_Light = CreateComponentOfType<Tavern::PointLightComponent>();
+		m_Light = CreateComponentOfType<Tavern::LightComponent>();
 		m_Light->SetColor(glm::vec3(1.0f));
 	}
 
@@ -57,7 +57,7 @@ public:
 	}
 
 	Tavern::MeshComponent* m_Mesh;
-	Tavern::PointLightComponent* m_Light;
+	Tavern::LightComponent* m_Light;
 	glm::vec3 m_StartPosition;
 };
 

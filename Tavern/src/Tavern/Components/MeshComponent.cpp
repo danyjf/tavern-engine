@@ -10,11 +10,7 @@ namespace Tavern
 {
 	// TODO: Add a way to get the path to a file instead of putting the absolute path here
 	MeshComponent::MeshComponent(Engine& engine, Entity* owner)
-		: RenderComponent(engine, owner),
-		  m_Shader(GetEngine().GetResourceManager().LoadShader(
-			  "C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Shaders/Shader.vert",
-			  "C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Shaders/Shader.frag"
-		  ))
+		: RenderComponent(engine, owner)
 	{
 		// Create vertex buffer object
 		float vertices[] = {

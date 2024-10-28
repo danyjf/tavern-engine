@@ -14,6 +14,7 @@ namespace Tavern
 {
 	class Event;
 	class EventManager;
+	class LightComponent;
 
 	class TAVERN_API RenderManager
 	{
@@ -28,6 +29,8 @@ namespace Tavern
 		void SetActiveCamera(CameraComponent* camera);
 		void AddRenderComponent(RenderComponent* renderComponent);
 		void RemoveRenderComponent(RenderComponent* renderComponent);
+		void AddLightComponent(LightComponent* lightComponent);
+		void RemoveLightComponent(LightComponent* lightComponent);
 
 		void Render();
 
@@ -38,6 +41,10 @@ namespace Tavern
 		EventListener<WindowResizeEvent> m_WindowResizeListener;
 		std::unique_ptr<Window> m_Window;
 		CameraComponent* m_Camera = nullptr;
+
+		// Map associating material path with set of render components
+		// std::unordered_map<std::string, std::unordered_set<RenderComponent*>> m_RenderComponents;
 		std::unordered_set<RenderComponent*> m_RenderComponents;
+		std::unordered_set<LightComponent*> m_LightComponents;
 	};
 }

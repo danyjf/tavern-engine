@@ -28,7 +28,6 @@ namespace Tavern
 		void SetUnlit(bool isUnlit);
 
 	private:
-		std::shared_ptr<ShaderResource> m_Shader = nullptr;
 		std::vector<std::shared_ptr<TextureResource>> m_Textures = {};
 		glm::vec3 m_Color = glm::vec3(0.0f);
 		bool m_IsUnlit = false;
