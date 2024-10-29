@@ -115,8 +115,8 @@ public:
 			direction.x += 1.0f;
 		}
 
-		glm::vec3 translation = GetTransform()->GetFrontDirection() * direction.y;
-		translation += GetTransform()->GetRightDirection() * direction.x;
+		glm::vec3 translation = GetTransform()->GetLocalFrontDirection() * direction.y;
+		translation += GetTransform()->GetLocalRightDirection() * direction.x;
 
 		if (glm::length(translation) != 0)
 		{

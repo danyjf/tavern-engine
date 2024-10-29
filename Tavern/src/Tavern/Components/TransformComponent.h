@@ -35,6 +35,10 @@ namespace Tavern
 		const glm::vec3& GetScale();
 		void SetScale(const glm::vec3& scale);
 
+		const glm::vec3& GetLocalFrontDirection() const;
+		const glm::vec3& GetLocalRightDirection() const;
+		const glm::vec3& GetLocalUpDirection() const;
+
 		const glm::vec3& GetFrontDirection() const;
 		const glm::vec3& GetRightDirection() const;
 		const glm::vec3& GetUpDirection() const;
@@ -54,12 +58,17 @@ namespace Tavern
 		glm::vec3 m_EulerRotation = glm::vec3(0.0f);
 		glm::vec3 m_Scale = glm::vec3(1.0f);
 
+		glm::vec3 m_LocalFront = glm::vec3(0.0f);
+		glm::vec3 m_LocalRight = glm::vec3(0.0f);
+		glm::vec3 m_LocalUp = glm::vec3(0.0f);
+
 		glm::vec3 m_Front = glm::vec3(0.0f);
 		glm::vec3 m_Right = glm::vec3(0.0f);
 		glm::vec3 m_Up = glm::vec3(0.0f);
 
 		void ComputeLocalModelMatrix();
 		void ComputeModelMatrix();
-		void CalculateDirectionVectors();
+		void ComputeLocalDirectionVectors();
+		void ComputeDirectionVectors();
 	};
 }

@@ -17,7 +17,6 @@ namespace Tavern
 	{
 		ComputeLocalModelMatrix();
 		ComputeModelMatrix();
-		CalculateDirectionVectors();
 	}
 
 	const glm::vec3& TransformComponent::GetLocalPosition() const
@@ -42,7 +41,6 @@ namespace Tavern
 	{
 		m_LocalEulerRotation = localEulerRotation;
 
-		CalculateDirectionVectors();
 		ComputeLocalModelMatrix();
 		ComputeModelMatrix();
 	}
@@ -84,7 +82,6 @@ namespace Tavern
 		TransformComponent* parentTransform = GetOwner()->GetParent()->GetTransform();
 		m_LocalEulerRotation = eulerRotation - parentTransform->GetEulerRotation();
 
-		CalculateDirectionVectors();
 		ComputeLocalModelMatrix();
 		ComputeModelMatrix();
 	}
@@ -101,6 +98,21 @@ namespace Tavern
 
 		ComputeLocalModelMatrix();
 		ComputeModelMatrix();
+	}
+
+	const glm::vec3& TransformComponent::GetLocalFrontDirection() const
+	{
+		return m_LocalFront;
+	}
+
+	const glm::vec3& TransformComponent::GetLocalRightDirection() const
+	{
+		return m_LocalRight;
+	}
+
+	const glm::vec3& TransformComponent::GetLocalUpDirection() const
+	{
+		return m_LocalUp;
 	}
 
 	const glm::vec3& TransformComponent::GetFrontDirection() const
@@ -142,6 +154,8 @@ namespace Tavern
 
 		// Apply scale
 		m_LocalModelMatrix = glm::scale(m_LocalModelMatrix, m_LocalScale);
+
+		ComputeLocalDirectionVectors();
 	}
 
 	void TransformComponent::ComputeModelMatrix()
@@ -154,6 +168,8 @@ namespace Tavern
 			m_Position = m_LocalPosition + parentTransform->GetPosition();
 			m_EulerRotation = m_LocalEulerRotation + parentTransform->GetEulerRotation();
 			m_Scale = m_LocalScale * parentTransform->GetScale();
+
+			ComputeDirectionVectors();
 		}
 		else
 		{
@@ -162,6 +178,10 @@ namespace Tavern
 			m_Position = m_LocalPosition;
 			m_EulerRotation = m_LocalEulerRotation;
 			m_Scale = m_LocalScale;
+
+			m_Front = m_LocalFront;
+			m_Right = m_LocalRight;
+			m_Up = m_LocalUp;
 		}
 
 		for (auto& pair : GetOwner()->GetChildren())
@@ -171,9 +191,20 @@ namespace Tavern
 		}
 	}
 
-	void TransformComponent::CalculateDirectionVectors()
+	void TransformComponent::ComputeLocalDirectionVectors()
 	{
 		const glm::vec3& eulerRotation = GetLocalEulerRotation();
+		m_LocalFront.x = cos(glm::radians(eulerRotation.y)) * cos(glm::radians(eulerRotation.x));
+		m_LocalFront.y = sin(glm::radians(eulerRotation.x));
+		m_LocalFront.z = sin(glm::radians(eulerRotation.y)) * cos(glm::radians(eulerRotation.x));
+		m_LocalFront = glm::normalize(m_LocalFront);
+		m_LocalRight = glm::normalize(glm::cross(m_LocalFront, glm::vec3(0.0f, 1.0f, 0.0f)));
+		m_LocalUp = glm::normalize(glm::cross(m_LocalRight, m_LocalFront));
+	}
+
+	void TransformComponent::ComputeDirectionVectors()
+	{
+		const glm::vec3& eulerRotation = GetEulerRotation();
 		m_Front.x = cos(glm::radians(eulerRotation.y)) * cos(glm::radians(eulerRotation.x));
 		m_Front.y = sin(glm::radians(eulerRotation.x));
 		m_Front.z = sin(glm::radians(eulerRotation.y)) * cos(glm::radians(eulerRotation.x));
