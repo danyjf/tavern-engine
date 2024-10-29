@@ -91,7 +91,6 @@ namespace Tavern
 		Use();
 		int count;
 		glGetProgramiv(ID, GL_ACTIVE_UNIFORMS, &count);
-		TAVERN_ENGINE_INFO("Active Uniforms: {}", count);
 
 		int uniformBufferOffset = 0;
 		for (int i = 0; i < count; i++)

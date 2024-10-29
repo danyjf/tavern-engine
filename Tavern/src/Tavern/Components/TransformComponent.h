@@ -17,13 +17,22 @@ namespace Tavern
 		TransformComponent(Engine& engine, Entity* owner);
 		virtual ~TransformComponent() = default;
 
-		const glm::vec3& GetPosition() const;
+		const glm::vec3& GetLocalPosition() const;
+		void SetLocalPosition(const glm::vec3& localPosition);
+
+		const glm::vec3& GetLocalEulerRotation() const;
+		void SetLocalEulerRotation(const glm::vec3& localEulerRotation);
+
+		const glm::vec3& GetLocalScale() const;
+		void SetLocalScale(const glm::vec3& localScale);
+
+		const glm::vec3& GetPosition();
 		void SetPosition(const glm::vec3& position);
 
-		const glm::vec3& GetRotation() const;
-		void SetRotation(const glm::vec3& rotation);
+		const glm::vec3& GetEulerRotation();
+		void SetEulerRotation(const glm::vec3& eulerRotation);
 
-		const glm::vec3& GetScale() const;
+		const glm::vec3& GetScale();
 		void SetScale(const glm::vec3& scale);
 
 		const glm::vec3& GetFrontDirection() const;
@@ -37,8 +46,12 @@ namespace Tavern
 		glm::mat4 m_LocalModelMatrix = glm::mat4(1.0f);
 		glm::mat4 m_ModelMatrix = glm::mat4(1.0f);
 
+		glm::vec3 m_LocalPosition = glm::vec3(0.0f);
+		glm::vec3 m_LocalEulerRotation = glm::vec3(0.0f);
+		glm::vec3 m_LocalScale = glm::vec3(1.0f);
+
 		glm::vec3 m_Position = glm::vec3(0.0f);
-		glm::vec3 m_Rotation = glm::vec3(0.0f);
+		glm::vec3 m_EulerRotation = glm::vec3(0.0f);
 		glm::vec3 m_Scale = glm::vec3(1.0f);
 
 		glm::vec3 m_Front = glm::vec3(0.0f);

@@ -104,7 +104,7 @@ namespace Tavern
 		m_Shader->SetVec3("objectColor", m_Color);
 		m_Shader->SetInt("isUnlit", m_IsUnlit);
 
-		m_Shader->SetVec3("viewPos", GetEngine().GetRenderManager().GetActiveCamera()->GetOwner()->GetTransform()->GetPosition());
+		m_Shader->SetVec3("viewPos", GetEngine().GetRenderManager().GetActiveCamera()->GetOwner()->GetTransform()->GetLocalPosition());
 
 		if (m_Textures.size() == 0)
 		{

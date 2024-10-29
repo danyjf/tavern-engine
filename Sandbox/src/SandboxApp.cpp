@@ -34,8 +34,8 @@ public:
 		: Tavern::Entity(engine)
 	{
 		m_StartPosition = glm::vec3(0.0f, 1.0f, -3.0f);
-		GetTransform()->SetPosition(m_StartPosition);
-		GetTransform()->SetScale(glm::vec3(0.25f));
+		GetTransform()->SetLocalPosition(m_StartPosition);
+		GetTransform()->SetLocalScale(glm::vec3(0.25f));
 
 		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>();
 		m_Mesh->SetColor(glm::vec3(1.0f));
@@ -49,7 +49,7 @@ public:
 	{
 		Tavern::Entity::Update();
 
-		GetTransform()->SetPosition(glm::vec3(
+		GetTransform()->SetLocalPosition(glm::vec3(
 			m_StartPosition.x + sin(2.0f * Tavern::Time::GetElapsedTime()) / 2.0f * 3.0f,
 			m_StartPosition.y,
 			m_StartPosition.z + cos(Tavern::Time::GetElapsedTime()) * 3.0f
@@ -75,8 +75,8 @@ public:
 		m_Camera = CreateComponentOfType<Tavern::CameraComponent>();
 		GetEngine().GetRenderManager().SetActiveCamera(m_Camera);
 
-		GetTransform()->SetPosition(glm::vec3(0.0f, 0.0f, 3.0f));
-		GetTransform()->SetRotation(glm::vec3(0.0f, -90.0f, 0.0f));
+		GetTransform()->SetLocalPosition(glm::vec3(0.0f, 0.0f, 3.0f));
+		GetTransform()->SetLocalEulerRotation(glm::vec3(0.0f, -90.0f, 0.0f));
 
 		GetEngine().GetEventManager().AddListener(Tavern::EventType::KeyPressed, m_KeyPressed);
 		GetEngine().GetEventManager().AddListener(Tavern::EventType::MouseMoved, m_MouseMoved);
@@ -121,20 +121,20 @@ public:
 		if (glm::length(translation) != 0)
 		{
 			translation = glm::normalize(translation);
-			GetTransform()->SetPosition(GetTransform()->GetPosition() + translation * m_Speed * Tavern::Time::GetDeltaTime());
+			GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition() + translation * m_Speed * Tavern::Time::GetDeltaTime());
 		}
 
 		if (m_Cubes.size() >= 2)
 		{
-			const glm::vec3& cube1Rotation = m_Cubes[0]->GetTransform()->GetRotation();
-			m_Cubes[0]->GetTransform()->SetRotation({ cube1Rotation.x,
-													  cube1Rotation.y,
-													  cube1Rotation.z + 90.0f * Tavern::Time::GetDeltaTime() });
+			const glm::vec3& cube1Rotation = m_Cubes[0]->GetTransform()->GetLocalEulerRotation();
+			m_Cubes[0]->GetTransform()->SetLocalEulerRotation({ cube1Rotation.x,
+																cube1Rotation.y,
+																cube1Rotation.z + 90.0f * Tavern::Time::GetDeltaTime() });
 
-			const glm::vec3& cube2Rotation = m_Cubes[1]->GetTransform()->GetRotation();
-			m_Cubes[1]->GetTransform()->SetRotation({ cube2Rotation.x + 90.0f * Tavern::Time::GetDeltaTime(),
-													  cube2Rotation.y,
-													  cube2Rotation.z });
+			const glm::vec3& cube2Rotation = m_Cubes[1]->GetTransform()->GetLocalEulerRotation();
+			m_Cubes[1]->GetTransform()->SetLocalEulerRotation({ cube2Rotation.x + 90.0f * Tavern::Time::GetDeltaTime(),
+																cube2Rotation.y,
+																cube2Rotation.z });
 		}
 	}
 
@@ -170,16 +170,16 @@ public:
 		m_LastMousePosition.x = event->GetX();
 		m_LastMousePosition.y = event->GetY();
 
-		const glm::vec3& rotation = GetTransform()->GetRotation();
-		GetTransform()->SetRotation(rotation + glm::vec3(-mouseOffset.y, mouseOffset.x, 0.0f));
+		const glm::vec3& rotation = GetTransform()->GetLocalEulerRotation();
+		GetTransform()->SetLocalEulerRotation(rotation + glm::vec3(-mouseOffset.y, mouseOffset.x, 0.0f));
 
 		if (rotation.x > 89.0f)
 		{
-			GetTransform()->SetRotation(glm::vec3(89.0f, rotation.y, rotation.z));
+			GetTransform()->SetLocalEulerRotation(glm::vec3(89.0f, rotation.y, rotation.z));
 		}
 		if (rotation.x < -89.0f)
 		{
-			GetTransform()->SetRotation(glm::vec3(-89.0f, rotation.y, rotation.z));
+			GetTransform()->SetLocalEulerRotation(glm::vec3(-89.0f, rotation.y, rotation.z));
 		}
 	}
 
@@ -240,22 +240,22 @@ int main()
 	};
 
 	MyEntity* cube1 = TavernEngine.GetScene().CreateEntity<MyEntity>();
-	cube1->GetTransform()->SetPosition(cubePositions[0]);
+	cube1->GetTransform()->SetLocalPosition(cubePositions[0]);
 	player->m_Cubes.push_back(cube1);
 
 	MyEntity* cube2 = TavernEngine.GetScene().CreateEntity<MyEntity>(cube1);
-	cube2->GetTransform()->SetPosition(cubePositions[1]);
+	cube2->GetTransform()->SetLocalPosition(cubePositions[1]);
 	player->m_Cubes.push_back(cube2);
 
 	MyEntity* cube3 = TavernEngine.GetScene().CreateEntity<MyEntity>(cube2);
-	cube3->GetTransform()->SetPosition(cubePositions[2]);
+	cube3->GetTransform()->SetLocalPosition(cubePositions[2]);
 	player->m_Cubes.push_back(cube3);
 
 	for (int i = 3; i < 10; i++)
 	{
 		MyEntity* cube = TavernEngine.GetScene().CreateEntity<MyEntity>();
-		cube->GetTransform()->SetPosition(cubePositions[i]);
-		cube->GetTransform()->SetRotation(glm::vec3(i * 10.0, i * 21.0, i * 13.0));
+		cube->GetTransform()->SetLocalPosition(cubePositions[i]);
+		cube->GetTransform()->SetLocalEulerRotation(glm::vec3(i * 10.0, i * 21.0, i * 13.0));
 		player->m_Cubes.push_back(cube);
 	}
 

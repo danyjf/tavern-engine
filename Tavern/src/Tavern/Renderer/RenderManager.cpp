@@ -83,10 +83,11 @@ namespace Tavern
 			renderComponent->GetShader()->Use();
 			LightComponent* lightComponent = *(m_LightComponents.begin());
 			renderComponent->GetShader()->SetVec3("lightColor", lightComponent->GetColor());
-			glm::vec3 worldLightPos = glm::vec3(
-				lightComponent->GetOwner()->GetParent()->GetTransform()->GetModelMatrix() * glm::vec4(lightComponent->GetOwner()->GetTransform()->GetPosition(), 1.0f)
-			);
-			renderComponent->GetShader()->SetVec3("lightPos", worldLightPos);
+			// glm::vec3 worldLightPos = glm::vec3(
+			// 	lightComponent->GetOwner()->GetParent()->GetTransform()->GetModelMatrix() * glm::vec4(lightComponent->GetOwner()->GetTransform()->GetLocalPosition(), 1.0f)
+			// );
+			// renderComponent->GetShader()->SetVec3("lightPos", worldLightPos);
+			renderComponent->GetShader()->SetVec3("lightPos", lightComponent->GetOwner()->GetTransform()->GetPosition());
 
 			renderComponent->Render();
 		}

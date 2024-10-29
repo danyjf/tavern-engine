@@ -39,7 +39,7 @@ namespace Tavern
 
 	void CameraComponent::ComputeViewMatrix()
 	{
-		m_ViewMatrix = glm::lookAt(m_OwnerTransform->GetPosition(), m_OwnerTransform->GetPosition() + m_OwnerTransform->GetFrontDirection(), m_OwnerTransform->GetUpDirection());
+		m_ViewMatrix = glm::lookAt(m_OwnerTransform->GetLocalPosition(), m_OwnerTransform->GetLocalPosition() + m_OwnerTransform->GetFrontDirection(), m_OwnerTransform->GetUpDirection());
 	}
 
 	void CameraComponent::ComputeProjectionMatrix()
