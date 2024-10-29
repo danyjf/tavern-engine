@@ -7,6 +7,7 @@
 #include "Tavern/Resources/Resource.h"
 #include "Tavern/Resources/ShaderResource.h"
 #include "Tavern/Resources/TextureResource.h"
+#include "Tavern/Resources/MaterialResource.h"
 
 namespace Tavern
 {
@@ -20,6 +21,7 @@ namespace Tavern
 
 		std::shared_ptr<TextureResource> LoadTexture(const std::string& path, const TextureSettings& textureSettings = TextureSettings());
 		std::shared_ptr<ShaderResource> LoadShader(const std::string& vertexPath, const std::string& fragmentPath);
+		std::shared_ptr<MaterialResource> LoadMaterial(const std::string& path);
 
 		void ResourceHasBeenFreed(const std::string& path);
 

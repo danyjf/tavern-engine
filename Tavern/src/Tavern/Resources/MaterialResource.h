@@ -18,6 +18,8 @@ namespace Tavern
 		void SetMat4(const std::string& name, glm::mat4& value);
 		void SetVec3(const std::string& name, glm::vec3& value);
 
+		std::shared_ptr<ShaderResource> GetShader() { return m_Shader; }
+
 		void Use();
 
 	private:

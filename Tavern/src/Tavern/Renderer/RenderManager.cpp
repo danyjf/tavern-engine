@@ -80,10 +80,10 @@ namespace Tavern
 
 		for (RenderComponent* renderComponent : m_RenderComponents)
 		{
-			renderComponent->GetShader()->Use();
+			renderComponent->GetMaterial()->GetShader()->Use();
 			LightComponent* lightComponent = *(m_LightComponents.begin());
-			renderComponent->GetShader()->SetVec3("lightColor", lightComponent->GetColor());
-			renderComponent->GetShader()->SetVec3("lightPos", lightComponent->GetOwner()->GetTransform()->GetPosition());
+			renderComponent->GetMaterial()->GetShader()->SetVec3("lightColor", lightComponent->GetColor());
+			renderComponent->GetMaterial()->GetShader()->SetVec3("lightPos", lightComponent->GetOwner()->GetTransform()->GetPosition());
 
 			renderComponent->Render();
 		}

@@ -1,15 +1,12 @@
 #include "Tavern/Components/RenderComponent.h"
+#include "Tavern/Resources/MaterialResource.h"
 #include "Tavern/Scene/Entity.h"
 #include "Tavern/Core/Engine.h"
 
 namespace Tavern
 {
 	RenderComponent::RenderComponent(Engine& engine, Entity* owner)
-		: Component(engine, owner),
-		  m_Shader(GetEngine().GetResourceManager().LoadShader(
-			  "C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Shaders/Shader.vert",
-			  "C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Shaders/Shader.frag"
-		  ))
+		: Component(engine, owner)
 	{
 		GetEngine().GetRenderManager().AddRenderComponent(this);
 	}
@@ -27,5 +24,15 @@ namespace Tavern
 	void RenderComponent::SetIsVisible(bool isVisible)
 	{
 		m_IsVisible = isVisible;
+	}
+
+	std::shared_ptr<MaterialResource> RenderComponent::GetMaterial()
+	{
+		return m_Material;
+	}
+
+	void RenderComponent::SetMaterial(std::shared_ptr<MaterialResource> material)
+	{
+		m_Material = material;
 	}
 }

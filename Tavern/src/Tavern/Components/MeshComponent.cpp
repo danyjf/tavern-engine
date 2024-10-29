@@ -95,24 +95,24 @@ namespace Tavern
 			return;
 		}
 
-		m_Shader->Use();
+		m_Material->GetShader()->Use();
 
-		m_Shader->SetMat4("view", GetEngine().GetRenderManager().GetActiveCamera()->GetViewMatrix());
-		m_Shader->SetMat4("projection", GetEngine().GetRenderManager().GetActiveCamera()->GetProjectionMatrix());
-		m_Shader->SetMat4("model", GetOwner()->GetTransform()->GetModelMatrix());
+		m_Material->GetShader()->SetMat4("view", GetEngine().GetRenderManager().GetActiveCamera()->GetViewMatrix());
+		m_Material->GetShader()->SetMat4("projection", GetEngine().GetRenderManager().GetActiveCamera()->GetProjectionMatrix());
+		m_Material->GetShader()->SetMat4("model", GetOwner()->GetTransform()->GetModelMatrix());
 
-		m_Shader->SetVec3("objectColor", m_Color);
-		m_Shader->SetInt("isUnlit", m_IsUnlit);
+		m_Material->GetShader()->SetVec3("objectColor", m_Color);
+		m_Material->GetShader()->SetInt("isUnlit", m_IsUnlit);
 
-		m_Shader->SetVec3("viewPos", GetEngine().GetRenderManager().GetActiveCamera()->GetOwner()->GetTransform()->GetLocalPosition());
+		m_Material->GetShader()->SetVec3("viewPos", GetEngine().GetRenderManager().GetActiveCamera()->GetOwner()->GetTransform()->GetLocalPosition());
 
 		if (m_Textures.size() == 0)
 		{
-			m_Shader->SetInt("useTexture", 0);
+			m_Material->GetShader()->SetInt("useTexture", 0);
 		}
 		else
 		{
-			m_Shader->SetInt("useTexture", 1);
+			m_Material->GetShader()->SetInt("useTexture", 1);
 		}
 
 		for (int i = 0; i < m_Textures.size(); i++)

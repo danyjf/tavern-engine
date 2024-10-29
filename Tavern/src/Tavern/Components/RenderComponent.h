@@ -7,7 +7,7 @@ namespace Tavern
 {
 	class Engine;
 	class Entity;
-	class ShaderResource;
+	class MaterialResource;
 
 	class TAVERN_API RenderComponent : public Component
 	{
@@ -19,10 +19,11 @@ namespace Tavern
 
 		bool IsVisible() const;
 		void SetIsVisible(bool isVisible);
-		std::shared_ptr<ShaderResource> GetShader() { return m_Shader; }
+		std::shared_ptr<MaterialResource> GetMaterial();
+		void SetMaterial(std::shared_ptr<MaterialResource> material);
 
 	protected:
 		bool m_IsVisible = true;
-		std::shared_ptr<ShaderResource> m_Shader = nullptr;
+		std::shared_ptr<MaterialResource> m_Material = nullptr;
 	};
 }

@@ -43,6 +43,23 @@ namespace Tavern
 		return resource;
 	}
 
+	std::shared_ptr<MaterialResource> ResourceManager::LoadMaterial(const std::string& path)
+	{
+		if (m_Resources.contains(path))
+		{
+			return std::dynamic_pointer_cast<MaterialResource>(m_Resources[path].lock());
+		}
+
+		std::shared_ptr<ShaderResource> shader = LoadShader(
+			"C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Shaders/Shader.vert",
+			"C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Shaders/Shader.frag"
+		);
+		std::shared_ptr<MaterialResource> resource = std::make_shared<MaterialResource>(*this, path, shader);
+		m_Resources[path] = resource;
+
+		return resource;
+	}
+
 	void ResourceManager::ResourceHasBeenFreed(const std::string& path)
 	{
 		auto it = m_Resources.find(path);

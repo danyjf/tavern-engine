@@ -8,6 +8,7 @@
 #include "Tavern/Core/Time.h"
 #include "Tavern/Events/EventListener.h"
 #include "Tavern/Events/MouseEvent.h"
+#include "Tavern/Resources/MaterialResource.h"
 
 class MyEntity : public Tavern::Entity
 {
@@ -15,7 +16,10 @@ public:
 	MyEntity(Tavern::Engine& engine)
 		: Tavern::Entity(engine)
 	{
+		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("CubeMaterial");
+
 		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>();
+		m_Mesh->SetMaterial(material);
 		m_Mesh->AddTexture(GetEngine().GetResourceManager().LoadTexture("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Images/container.jpg"));
 	}
 
@@ -37,7 +41,9 @@ public:
 		GetTransform()->SetLocalPosition(m_StartPosition);
 		GetTransform()->SetLocalScale(glm::vec3(0.25f));
 
+		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("LightMaterial");
 		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>();
+		m_Mesh->SetMaterial(material);
 		m_Mesh->SetColor(glm::vec3(1.0f));
 		m_Mesh->SetUnlit(true);
 
