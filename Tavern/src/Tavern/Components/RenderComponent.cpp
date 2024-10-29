@@ -5,8 +5,8 @@
 
 namespace Tavern
 {
-	RenderComponent::RenderComponent(Engine& engine, Entity* owner)
-		: Component(engine, owner)
+	RenderComponent::RenderComponent(Engine& engine, Entity* owner, std::shared_ptr<MaterialResource> material)
+		: Component(engine, owner), m_Material(material)
 	{
 		GetEngine().GetRenderManager().AddRenderComponent(this);
 	}

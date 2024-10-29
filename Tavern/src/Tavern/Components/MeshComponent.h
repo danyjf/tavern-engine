@@ -17,7 +17,7 @@ namespace Tavern
 	class TAVERN_API MeshComponent : public RenderComponent
 	{
 	public:
-		MeshComponent(Engine& engine, Entity* owner);
+		MeshComponent(Engine& engine, Entity* owner, std::shared_ptr<MaterialResource> material);
 		virtual ~MeshComponent() = default;
 
 		void Render() override;

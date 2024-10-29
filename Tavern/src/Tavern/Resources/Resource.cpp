@@ -15,4 +15,9 @@ namespace Tavern
 		m_ResourceManager.ResourceHasBeenFreed(m_Path);
 		TAVERN_ENGINE_TRACE("Destroyed resource: {}", m_Path);
 	}
+
+	const std::string& Resource::GetPath() const
+	{
+		return m_Path;
+	}
 }

@@ -9,8 +9,8 @@
 namespace Tavern
 {
 	// TODO: Add a way to get the path to a file instead of putting the absolute path here
-	MeshComponent::MeshComponent(Engine& engine, Entity* owner)
-		: RenderComponent(engine, owner)
+	MeshComponent::MeshComponent(Engine& engine, Entity* owner, std::shared_ptr<MaterialResource> material)
+		: RenderComponent(engine, owner, material)
 	{
 		// Create vertex buffer object
 		float vertices[] = {

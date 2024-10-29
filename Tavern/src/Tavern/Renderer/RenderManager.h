@@ -43,8 +43,7 @@ namespace Tavern
 		CameraComponent* m_Camera = nullptr;
 
 		// Map associating material path with set of render components
-		// std::unordered_map<std::string, std::unordered_set<RenderComponent*>> m_RenderComponents;
-		std::unordered_set<RenderComponent*> m_RenderComponents;
+		std::unordered_map<MaterialResource*, std::unordered_set<RenderComponent*>> m_RenderComponents;
 		std::unordered_set<LightComponent*> m_LightComponents;
 	};
 }

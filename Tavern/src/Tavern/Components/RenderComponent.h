@@ -2,6 +2,7 @@
 
 #include "Tavern/Components/Component.h"
 #include "Tavern/Core/Core.h"
+#include <memory>
 
 namespace Tavern
 {
@@ -12,7 +13,7 @@ namespace Tavern
 	class TAVERN_API RenderComponent : public Component
 	{
 	public:
-		RenderComponent(Engine& engine, Entity* owner);
+		RenderComponent(Engine& engine, Entity* owner, std::shared_ptr<MaterialResource> material);
 		virtual ~RenderComponent() override;
 
 		virtual void Render() = 0;

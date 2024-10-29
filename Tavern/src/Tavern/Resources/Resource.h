@@ -14,6 +14,8 @@ namespace Tavern
 		Resource(ResourceManager& resourceManager, const std::string& path);
 		virtual ~Resource();
 
+		const std::string& GetPath() const;
+
 	private:
 		ResourceManager& m_ResourceManager;
 		std::string m_Path = "";

@@ -54,13 +54,25 @@ namespace Tavern
 
 	void RenderManager::AddRenderComponent(RenderComponent* renderComponent)
 	{
-		m_RenderComponents.insert(renderComponent);
-		// m_RenderComponents[renderComponent->]
+		MaterialResource* material = renderComponent->GetMaterial().get();
+		if (m_RenderComponents.contains(material))
+		{
+			m_RenderComponents[material].insert(renderComponent);
+		}
+		else
+		{
+			m_RenderComponents.emplace(material, std::unordered_set({ renderComponent }));
+		}
 	}
 
 	void RenderManager::RemoveRenderComponent(RenderComponent* renderComponent)
 	{
-		m_RenderComponents.erase(renderComponent);
+		MaterialResource* material = renderComponent->GetMaterial().get();
+		m_RenderComponents[material].erase(renderComponent);
+		if (m_RenderComponents[material].empty())
+		{
+			m_RenderComponents.erase(material);
+		}
 	}
 
 	void RenderManager::AddLightComponent(LightComponent* lightComponent)
@@ -78,14 +90,19 @@ namespace Tavern
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		GetActiveCamera()->ComputeViewMatrix();
 
-		for (RenderComponent* renderComponent : m_RenderComponents)
+		for (auto& pair : m_RenderComponents)
 		{
-			renderComponent->GetMaterial()->GetShader()->Use();
-			LightComponent* lightComponent = *(m_LightComponents.begin());
-			renderComponent->GetMaterial()->GetShader()->SetVec3("lightColor", lightComponent->GetColor());
-			renderComponent->GetMaterial()->GetShader()->SetVec3("lightPos", lightComponent->GetOwner()->GetTransform()->GetPosition());
+			MaterialResource* material = pair.first;
 
-			renderComponent->Render();
+			material->GetShader()->Use();
+			LightComponent* lightComponent = *(m_LightComponents.begin());
+			material->GetShader()->SetVec3("lightColor", lightComponent->GetColor());
+			material->GetShader()->SetVec3("lightPos", lightComponent->GetOwner()->GetTransform()->GetPosition());
+
+			for (RenderComponent* renderComponent : m_RenderComponents[material])
+			{
+				renderComponent->Render();
+			}
 		}
 	}
 

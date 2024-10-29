@@ -36,19 +36,19 @@ namespace Tavern
 		void SetParent(Entity* parent);
 		std::unordered_map<unsigned long, Entity*>& GetChildren();
 
-		template <typename ComponentClass>
-		ComponentClass* CreateComponentOfType()
+		template <typename ComponentClass, typename... Args>
+		ComponentClass* CreateComponentOfType(Args... args)
 		{
 			std::type_index typeIndex(typeid(ComponentClass));
 
 			if (m_Components.contains(typeIndex))
 			{
-				m_Components[typeIndex].push_back(std::make_unique<ComponentClass>(GetEngine(), this));
+				m_Components[typeIndex].push_back(std::make_unique<ComponentClass>(GetEngine(), this, args...));
 			}
 			else
 			{
 				m_Components.emplace(typeIndex, std::vector<std::unique_ptr<Component>>());
-				m_Components[typeIndex].push_back(std::make_unique<ComponentClass>(GetEngine(), this));
+				m_Components[typeIndex].push_back(std::make_unique<ComponentClass>(GetEngine(), this, args...));
 			}
 
 			return static_cast<ComponentClass*>(m_Components[typeIndex].back().get());
