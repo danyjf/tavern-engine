@@ -18,13 +18,13 @@ namespace Tavern
 
 	std::shared_ptr<TextureResource> ResourceManager::LoadTexture(const std::string& path, const TextureSettings& textureSettings)
 	{
-		if (m_Resources.contains(path))
+		if (m_TextureResources.contains(path))
 		{
-			return std::dynamic_pointer_cast<TextureResource>(m_Resources[path].lock());
+			return std::dynamic_pointer_cast<TextureResource>(m_TextureResources[path].lock());
 		}
 
 		std::shared_ptr<TextureResource> resource = std::make_shared<TextureResource>(*this, path, textureSettings);
-		m_Resources[path] = resource;
+		m_TextureResources[path] = resource;
 
 		return resource;
 	}
@@ -32,22 +32,22 @@ namespace Tavern
 	std::shared_ptr<ShaderResource> ResourceManager::LoadShader(const std::string& vertexPath, const std::string& fragmentPath)
 	{
 		std::string path = vertexPath + ":" + fragmentPath;
-		if (m_Resources.contains(path))
+		if (m_ShaderResources.contains(path))
 		{
-			return std::dynamic_pointer_cast<ShaderResource>(m_Resources[path].lock());
+			return std::dynamic_pointer_cast<ShaderResource>(m_ShaderResources[path].lock());
 		}
 
 		std::shared_ptr<ShaderResource> resource = std::make_shared<ShaderResource>(*this, vertexPath, fragmentPath);
-		m_Resources[path] = resource;
+		m_ShaderResources[path] = resource;
 
 		return resource;
 	}
 
 	std::shared_ptr<MaterialResource> ResourceManager::LoadMaterial(const std::string& path)
 	{
-		if (m_Resources.contains(path))
+		if (m_MaterialResources.contains(path))
 		{
-			return std::dynamic_pointer_cast<MaterialResource>(m_Resources[path].lock());
+			return std::dynamic_pointer_cast<MaterialResource>(m_MaterialResources[path].lock());
 		}
 
 		std::shared_ptr<ShaderResource> shader = LoadShader(
@@ -55,20 +55,34 @@ namespace Tavern
 			"C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Shaders/Shader.frag"
 		);
 		std::shared_ptr<MaterialResource> resource = std::make_shared<MaterialResource>(*this, path, shader);
-		m_Resources[path] = resource;
+		m_MaterialResources[path] = resource;
 
 		return resource;
 	}
 
 	void ResourceManager::ResourceHasBeenFreed(const std::string& path)
 	{
-		auto it = m_Resources.find(path);
-		if (it == m_Resources.end())
+		auto textureIt = m_TextureResources.find(path);
+		if (textureIt != m_TextureResources.end())
 		{
-			TAVERN_ENGINE_ERROR("Tried to free non existing resource: {}", path);
+			m_TextureResources.erase(textureIt);
 			return;
 		}
 
-		m_Resources.erase(it);
+		auto shaderIt = m_ShaderResources.find(path);
+		if (shaderIt != m_ShaderResources.end())
+		{
+			m_ShaderResources.erase(shaderIt);
+			return;
+		}
+
+		auto materialIt = m_MaterialResources.find(path);
+		if (materialIt != m_MaterialResources.end())
+		{
+			m_MaterialResources.erase(materialIt);
+			return;
+		}
+
+		TAVERN_ENGINE_ERROR("Tried to free non existing resource: {}", path);
 	}
 }

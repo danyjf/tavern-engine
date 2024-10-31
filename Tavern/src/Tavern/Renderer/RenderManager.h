@@ -15,6 +15,8 @@ namespace Tavern
 	class Event;
 	class EventManager;
 	class LightComponent;
+	class ShaderResource;
+	class MaterialResource;
 
 	class TAVERN_API RenderManager
 	{
@@ -42,7 +44,9 @@ namespace Tavern
 		std::unique_ptr<Window> m_Window;
 		CameraComponent* m_Camera = nullptr;
 
-		// Map associating material path with set of render components
+		// Map associating shader with set of materials
+		std::unordered_map<ShaderResource*, std::unordered_set<MaterialResource*>> m_Materials;
+		// Map associating material with set of render components
 		std::unordered_map<MaterialResource*, std::unordered_set<RenderComponent*>> m_RenderComponents;
 		std::unordered_set<LightComponent*> m_LightComponents;
 	};

@@ -10,6 +10,7 @@
 #include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Events/EventListener.h"
 #include "Tavern/Core/Log.h"
+#include "Tavern/Resources/ShaderResource.h"
 #include "Tavern/Scene/Entity.h"
 #include "Tavern/Components/CameraComponent.h"
 #include "Tavern/Components/LightComponent.h"
@@ -55,23 +56,27 @@ namespace Tavern
 	void RenderManager::AddRenderComponent(RenderComponent* renderComponent)
 	{
 		MaterialResource* material = renderComponent->GetMaterial().get();
-		if (m_RenderComponents.contains(material))
-		{
-			m_RenderComponents[material].insert(renderComponent);
-		}
-		else
-		{
-			m_RenderComponents.emplace(material, std::unordered_set({ renderComponent }));
-		}
+		m_RenderComponents[material].insert(renderComponent);
+
+		ShaderResource* shader = material->GetShader().get();
+		m_Materials[shader].insert(material);
 	}
 
 	void RenderManager::RemoveRenderComponent(RenderComponent* renderComponent)
 	{
 		MaterialResource* material = renderComponent->GetMaterial().get();
+		ShaderResource* shader = material->GetShader().get();
+
 		m_RenderComponents[material].erase(renderComponent);
 		if (m_RenderComponents[material].empty())
 		{
 			m_RenderComponents.erase(material);
+			m_Materials[shader].erase(material);
+		}
+
+		if (m_Materials[shader].empty())
+		{
+			m_Materials.erase(shader);
 		}
 	}
 
@@ -90,18 +95,47 @@ namespace Tavern
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		GetActiveCamera()->ComputeViewMatrix();
 
-		for (auto& pair : m_RenderComponents)
+		for (auto& pair : m_Materials)
 		{
-			MaterialResource* material = pair.first;
+			ShaderResource* shader = pair.first;
+			// Set shader uniforms
+			shader->Use();
+			shader->SetMat4("view", GetActiveCamera()->GetViewMatrix());
+			shader->SetMat4("projection", GetActiveCamera()->GetProjectionMatrix());
+			shader->SetVec3("viewPos", GetActiveCamera()->GetOwner()->GetTransform()->GetLocalPosition());
 
-			material->GetShader()->Use();
 			LightComponent* lightComponent = *(m_LightComponents.begin());
-			material->GetShader()->SetVec3("lightColor", lightComponent->GetColor());
-			material->GetShader()->SetVec3("lightPos", lightComponent->GetOwner()->GetTransform()->GetPosition());
+			shader->SetVec3("lightColor", lightComponent->GetColor());
+			shader->SetVec3("lightPos", lightComponent->GetOwner()->GetTransform()->GetPosition());
 
-			for (RenderComponent* renderComponent : m_RenderComponents[material])
+			for (MaterialResource* material : m_Materials[shader])
 			{
-				renderComponent->Render();
+				// Set material uniforms
+				shader->SetVec3("objectColor", material->GetColor());
+				shader->SetInt("isUnlit", material->IsUnlit());
+
+				if (material->GetTextures().size() == 0)
+				{
+					shader->SetInt("useTexture", 0);
+				}
+				else
+				{
+					shader->SetInt("useTexture", 1);
+				}
+
+				for (int i = 0; i < material->GetTextures().size(); i++)
+				{
+					glActiveTexture(GL_TEXTURE0 + i);
+					material->GetTextures()[i]->Use();
+				}
+
+				for (RenderComponent* renderComponent : m_RenderComponents[material])
+				{
+					// Set mesh uniforms
+					shader->SetMat4("model", renderComponent->GetOwner()->GetTransform()->GetModelMatrix());
+
+					renderComponent->Render();
+				}
 			}
 		}
 	}

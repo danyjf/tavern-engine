@@ -12,7 +12,7 @@ namespace Tavern
 	MaterialResource::MaterialResource(ResourceManager& resourceManager, const std::string& path, std::shared_ptr<ShaderResource> shader)
 		: Resource(resourceManager, path), m_Shader(shader)
 	{
-		m_UniformBuffer.resize(m_Shader->GetUniformBufferSize());
+		m_UniformBuffer.resize(m_Shader->GetMaterialUniformBufferSize());
 	}
 
 	void MaterialResource::SetBool(const std::string& name, bool value)
@@ -49,9 +49,9 @@ namespace Tavern
 
 	void MaterialResource::SetUniformInBuffer(const std::string& name, unsigned char* valueBegin, int valueSize)
 	{
-		if (m_Shader->GetUniforms().contains(name))
+		if (m_Shader->GetMaterialUniforms().contains(name))
 		{
-			int bufferOffset = m_Shader->GetUniforms().at(name).second;
+			int bufferOffset = m_Shader->GetMaterialUniforms().at(name).second;
 
 			std::copy(valueBegin, valueBegin + valueSize, m_UniformBuffer.begin() + bufferOffset);
 		}
@@ -61,9 +61,50 @@ namespace Tavern
 		}
 	}
 
+	void MaterialResource::AddTexture(const std::shared_ptr<TextureResource>& texture)
+	{
+		if (m_Textures.size() == 16)
+		{
+			TAVERN_ENGINE_ERROR("Failed to add texture. Maximum of 16 textures reached.");
+			return;
+		}
+
+		m_Textures.push_back(texture);
+	}
+
+	std::shared_ptr<ShaderResource> MaterialResource::GetShader()
+	{
+		return m_Shader;
+	}
+
+	const glm::vec3& MaterialResource::GetColor() const
+	{
+		return m_Color;
+	}
+
+	void MaterialResource::SetColor(const glm::vec3& color)
+	{
+		m_Color = color;
+	}
+
+	const bool MaterialResource::IsUnlit() const
+	{
+		return m_IsUnlit;
+	}
+
+	void MaterialResource::SetUnlit(bool isUnlit)
+	{
+		m_IsUnlit = isUnlit;
+	}
+
+	const std::vector<std::shared_ptr<TextureResource>>& MaterialResource::GetTextures()
+	{
+		return m_Textures;
+	}
+
 	void MaterialResource::Use()
 	{
-		for (auto pair : m_Shader->GetUniforms())
+		for (auto pair : m_Shader->GetMaterialUniforms())
 		{
 			GLenum type = pair.second.first;
 			const std::string& name = pair.first;

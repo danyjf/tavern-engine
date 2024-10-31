@@ -26,6 +26,8 @@ namespace Tavern
 		void ResourceHasBeenFreed(const std::string& path);
 
 	private:
-		std::unordered_map<std::string, std::weak_ptr<Resource>> m_Resources;
+		std::unordered_map<std::string, std::weak_ptr<TextureResource>> m_TextureResources;
+		std::unordered_map<std::string, std::weak_ptr<ShaderResource>> m_ShaderResources;
+		std::unordered_map<std::string, std::weak_ptr<MaterialResource>> m_MaterialResources;
 	};
 }

@@ -1,8 +1,6 @@
 #include "Tavern/Components/MeshComponent.h"
 #include "Tavern/Renderer/RenderManager.h"
 #include "Tavern/Resources/ShaderResource.h"
-#include "Tavern/Resources/TextureResource.h"
-#include "Tavern/Core/Log.h"
 #include "Tavern/Core/Engine.h"
 #include "Tavern/Scene/Entity.h"
 
@@ -97,62 +95,7 @@ namespace Tavern
 
 		m_Material->GetShader()->Use();
 
-		m_Material->GetShader()->SetMat4("view", GetEngine().GetRenderManager().GetActiveCamera()->GetViewMatrix());
-		m_Material->GetShader()->SetMat4("projection", GetEngine().GetRenderManager().GetActiveCamera()->GetProjectionMatrix());
-		m_Material->GetShader()->SetMat4("model", GetOwner()->GetTransform()->GetModelMatrix());
-
-		m_Material->GetShader()->SetVec3("objectColor", m_Color);
-		m_Material->GetShader()->SetInt("isUnlit", m_IsUnlit);
-
-		m_Material->GetShader()->SetVec3("viewPos", GetEngine().GetRenderManager().GetActiveCamera()->GetOwner()->GetTransform()->GetLocalPosition());
-
-		if (m_Textures.size() == 0)
-		{
-			m_Material->GetShader()->SetInt("useTexture", 0);
-		}
-		else
-		{
-			m_Material->GetShader()->SetInt("useTexture", 1);
-		}
-
-		for (int i = 0; i < m_Textures.size(); i++)
-		{
-			glActiveTexture(GL_TEXTURE0 + i);
-			m_Textures[i]->Use();
-		}
-
 		glBindVertexArray(m_VAO);
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
-	}
-
-	void MeshComponent::AddTexture(const std::shared_ptr<TextureResource>& texture)
-	{
-		if (m_Textures.size() == 16)
-		{
-			TAVERN_ENGINE_ERROR("Failed to add texture. Maximum of 16 textures reached.");
-			return;
-		}
-
-		m_Textures.push_back(texture);
-	}
-
-	const glm::vec3& MeshComponent::GetColor() const
-	{
-		return m_Color;
-	}
-
-	void MeshComponent::SetColor(const glm::vec3& color)
-	{
-		m_Color = color;
-	}
-
-	const bool MeshComponent::IsUnlit() const
-	{
-		return m_IsUnlit;
-	}
-
-	void MeshComponent::SetUnlit(bool isUnlit)
-	{
-		m_IsUnlit = isUnlit;
 	}
 }

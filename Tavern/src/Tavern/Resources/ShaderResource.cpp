@@ -87,7 +87,7 @@ namespace Tavern
 		glDeleteShader(vertex);
 		glDeleteShader(fragment);
 
-		// Setup textures
+		// Get data about uniform variables
 		Use();
 		int count;
 		glGetProgramiv(ID, GL_ACTIVE_UNIFORMS, &count);
@@ -100,21 +100,36 @@ namespace Tavern
 			int nElements;
 			GLenum type;
 			glGetActiveUniform(ID, (GLuint)i, sizeof(name), &length, &nElements, &type, name);
+			std::string stripedName(name, length);
 
+			// Catch the built in uniforms
+			if (stripedName == "model"
+				|| stripedName == "view"
+				|| stripedName == "projection"
+				|| stripedName == "isUnlit"
+				|| stripedName == "lightColor"
+				|| stripedName == "lightPos"
+				|| stripedName == "viewPos")
+			{
+				m_BuiltInUniforms.insert(stripedName);
+				continue;
+			}
+
+			// Catch the sampler uniforms
 			if (type == GL_SAMPLER_2D)
 			{
 				m_Samplers.emplace_back(name, length);
 				int samplerIndex = m_Samplers.size() - 1;
 				SetInt(m_Samplers.back(), samplerIndex);
+				continue;
 			}
-			else
-			{
-				m_Uniforms.emplace(std::string(name, length), std::pair<GLenum, int>{ type, uniformBufferOffset });
-				uniformBufferOffset += GetOpenGLTypeSize(type) * nElements;
-			}
-		}
 
-		m_UniformBufferSize = uniformBufferOffset;
+			// Catch the material uniforms
+			m_MaterialUniforms.emplace(stripedName, std::pair<GLenum, int>{ type, uniformBufferOffset });
+			uniformBufferOffset += GetOpenGLTypeSize(type) * nElements;
+			TAVERN_ENGINE_INFO("Uniform: {}", stripedName);
+		}
+		m_MaterialUniformBufferSize = uniformBufferOffset;
 	}
 
 	void ShaderResource::Use()

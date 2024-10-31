@@ -17,9 +17,9 @@ public:
 		: Tavern::Entity(engine)
 	{
 		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("CubeMaterial");
+		material->AddTexture(GetEngine().GetResourceManager().LoadTexture("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Images/container.jpg"));
 
 		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>(material);
-		m_Mesh->AddTexture(GetEngine().GetResourceManager().LoadTexture("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Images/container.jpg"));
 	}
 
 	void Update() override
@@ -41,10 +41,10 @@ public:
 		GetTransform()->SetLocalScale(glm::vec3(0.25f));
 
 		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("LightMaterial");
+		material->SetColor(glm::vec3(1.0f));
+		material->SetUnlit(true);
 		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>(material);
 		m_Mesh->SetMaterial(material);
-		m_Mesh->SetColor(glm::vec3(1.0f));
-		m_Mesh->SetUnlit(true);
 
 		m_Light = CreateComponentOfType<Tavern::LightComponent>();
 		m_Light->SetColor(glm::vec3(1.0f));
