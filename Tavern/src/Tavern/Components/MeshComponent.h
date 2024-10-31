@@ -9,7 +9,6 @@
 namespace Tavern
 {
 	class Entity;
-	class ShaderResource;
 	class Engine;
 
 	class TAVERN_API MeshComponent : public RenderComponent

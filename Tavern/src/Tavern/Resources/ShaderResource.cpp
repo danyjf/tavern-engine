@@ -106,7 +106,6 @@ namespace Tavern
 			if (stripedName == "model"
 				|| stripedName == "view"
 				|| stripedName == "projection"
-				|| stripedName == "isUnlit"
 				|| stripedName == "lightColor"
 				|| stripedName == "lightPos"
 				|| stripedName == "viewPos")

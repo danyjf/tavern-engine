@@ -1,6 +1,5 @@
 #include "Tavern/Components/MeshComponent.h"
 #include "Tavern/Renderer/RenderManager.h"
-#include "Tavern/Resources/ShaderResource.h"
 #include "Tavern/Core/Engine.h"
 #include "Tavern/Scene/Entity.h"
 
@@ -92,8 +91,6 @@ namespace Tavern
 		{
 			return;
 		}
-
-		m_Material->GetShader()->Use();
 
 		glBindVertexArray(m_VAO);
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);

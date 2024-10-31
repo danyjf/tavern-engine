@@ -111,8 +111,7 @@ namespace Tavern
 			for (MaterialResource* material : m_Materials[shader])
 			{
 				// Set material uniforms
-				shader->SetVec3("objectColor", material->GetColor());
-				shader->SetInt("isUnlit", material->IsUnlit());
+				material->Use();
 
 				if (material->GetTextures().size() == 0)
 				{

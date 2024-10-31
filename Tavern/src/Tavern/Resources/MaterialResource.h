@@ -23,10 +23,6 @@ namespace Tavern
 		void AddTexture(const std::shared_ptr<TextureResource>& texture);
 
 		std::shared_ptr<ShaderResource> GetShader();
-		const glm::vec3& GetColor() const;
-		void SetColor(const glm::vec3& color);
-		const bool IsUnlit() const;
-		void SetUnlit(bool isUnlit);
 		const std::vector<std::shared_ptr<TextureResource>>& GetTextures();
 
 		void Use();

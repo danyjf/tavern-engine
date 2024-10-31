@@ -13,6 +13,11 @@ namespace Tavern
 		: Resource(resourceManager, path), m_Shader(shader)
 	{
 		m_UniformBuffer.resize(m_Shader->GetMaterialUniformBufferSize());
+
+		for (auto& pair : m_Shader->GetMaterialUniforms())
+		{
+			TAVERN_ENGINE_TRACE("Material Uniform Name: {}", pair.first);
+		}
 	}
 
 	void MaterialResource::SetBool(const std::string& name, bool value)
@@ -75,26 +80,6 @@ namespace Tavern
 	std::shared_ptr<ShaderResource> MaterialResource::GetShader()
 	{
 		return m_Shader;
-	}
-
-	const glm::vec3& MaterialResource::GetColor() const
-	{
-		return m_Color;
-	}
-
-	void MaterialResource::SetColor(const glm::vec3& color)
-	{
-		m_Color = color;
-	}
-
-	const bool MaterialResource::IsUnlit() const
-	{
-		return m_IsUnlit;
-	}
-
-	void MaterialResource::SetUnlit(bool isUnlit)
-	{
-		m_IsUnlit = isUnlit;
 	}
 
 	const std::vector<std::shared_ptr<TextureResource>>& MaterialResource::GetTextures()
