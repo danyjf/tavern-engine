@@ -23,7 +23,6 @@ public:
 		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("CubeMaterial", shader);
 		glm::vec3 color = glm::vec3(1.0f);
 		material->SetVec3("objectColor", color);
-		material->SetInt("isUnlit", 0);
 		material->SetTexture("texture1", GetEngine().GetResourceManager().LoadTexture("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Images/container.jpg"));
 
 		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>(material);

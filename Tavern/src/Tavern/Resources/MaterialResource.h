@@ -8,6 +8,7 @@ namespace Tavern
 {
 	class TextureResource;
 
+	// TODO: Create a .material xml/json file to describe and load materials
 	class TAVERN_API MaterialResource : public Resource
 	{
 	public:
@@ -30,9 +31,6 @@ namespace Tavern
 		std::shared_ptr<ShaderResource> m_Shader;
 		std::vector<unsigned char> m_UniformBuffer;
 		std::unordered_map<std::string, std::shared_ptr<TextureResource>> m_Textures = {};
-
-		glm::vec3 m_Color = glm::vec3(1.0f);
-		int m_IsUnlit = false;
 
 		void SetUniformInBuffer(const std::string& name, unsigned char* valueBegin, int size);
 	};
