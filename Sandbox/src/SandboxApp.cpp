@@ -16,7 +16,11 @@ public:
 	MyEntity(Tavern::Engine& engine)
 		: Tavern::Entity(engine)
 	{
-		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("CubeMaterial");
+		std::shared_ptr<Tavern::ShaderResource> shader = GetEngine().GetResourceManager().LoadShader(
+			"C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Shaders/LitShader.vert",
+			"C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Shaders/LitShader.frag"
+		);
+		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("CubeMaterial", shader);
 		glm::vec3 color = glm::vec3(1.0f);
 		material->SetVec3("objectColor", color);
 		material->SetInt("isUnlit", 0);
@@ -43,10 +47,13 @@ public:
 		GetTransform()->SetLocalPosition(m_StartPosition);
 		GetTransform()->SetLocalScale(glm::vec3(0.25f));
 
-		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("LightMaterial");
+		std::shared_ptr<Tavern::ShaderResource> shader = GetEngine().GetResourceManager().LoadShader(
+			"C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Shaders/UnlitShader.vert",
+			"C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Shaders/UnlitShader.frag"
+		);
+		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("LightMaterial", shader);
 		glm::vec3 color = glm::vec3(1.0f);
 		material->SetVec3("objectColor", color);
-		material->SetInt("isUnlit", 1);
 		material->SetTexture("texture1", GetEngine().GetResourceManager().LoadTexture("C:/Dev/tavern-engine/Tavern/src/Tavern/Renderer/Textures/DefaultWhiteTexture.png"));
 
 		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>(material);

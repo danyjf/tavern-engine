@@ -6,8 +6,7 @@ in vec3 FragPos;
 in vec3 Normal;
 in vec2 TexCoord;
 
-uniform int isUnlit = 0;
-uniform vec3 objectColor = vec3(0.0, 0.0, 0.0);
+uniform vec3 objectColor = vec3(1.0, 1.0, 1.0);
 uniform sampler2D texture1;
 
 void main()

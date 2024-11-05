@@ -21,7 +21,7 @@ namespace Tavern
 
 		std::shared_ptr<TextureResource> LoadTexture(const std::string& path, const TextureSettings& textureSettings = TextureSettings());
 		std::shared_ptr<ShaderResource> LoadShader(const std::string& vertexPath, const std::string& fragmentPath);
-		std::shared_ptr<MaterialResource> LoadMaterial(const std::string& path);
+		std::shared_ptr<MaterialResource> LoadMaterial(const std::string& path, std::shared_ptr<ShaderResource> shader);
 
 		void ResourceHasBeenFreed(const std::string& path);
 

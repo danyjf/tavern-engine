@@ -43,17 +43,13 @@ namespace Tavern
 		return resource;
 	}
 
-	std::shared_ptr<MaterialResource> ResourceManager::LoadMaterial(const std::string& path)
+	std::shared_ptr<MaterialResource> ResourceManager::LoadMaterial(const std::string& path, std::shared_ptr<ShaderResource> shader)
 	{
 		if (m_MaterialResources.contains(path))
 		{
 			return std::dynamic_pointer_cast<MaterialResource>(m_MaterialResources[path].lock());
 		}
 
-		std::shared_ptr<ShaderResource> shader = LoadShader(
-			"C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Shaders/LitShader.vert",
-			"C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Shaders/LitShader.frag"
-		);
 		std::shared_ptr<MaterialResource> resource = std::make_shared<MaterialResource>(*this, path, shader);
 		m_MaterialResources[path] = resource;
 
