@@ -51,8 +51,8 @@ namespace Tavern
 		}
 
 		std::shared_ptr<ShaderResource> shader = LoadShader(
-			"C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Shaders/Shader.vert",
-			"C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Shaders/Shader.frag"
+			"C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Shaders/LitShader.vert",
+			"C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Shaders/LitShader.frag"
 		);
 		std::shared_ptr<MaterialResource> resource = std::make_shared<MaterialResource>(*this, path, shader);
 		m_MaterialResources[path] = resource;

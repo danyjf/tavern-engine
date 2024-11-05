@@ -20,7 +20,7 @@ public:
 		glm::vec3 color = glm::vec3(1.0f);
 		material->SetVec3("objectColor", color);
 		material->SetInt("isUnlit", 0);
-		material->AddTexture(GetEngine().GetResourceManager().LoadTexture("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Images/container.jpg"));
+		material->SetTexture("texture1", GetEngine().GetResourceManager().LoadTexture("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Images/container.jpg"));
 
 		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>(material);
 	}
@@ -47,8 +47,8 @@ public:
 		glm::vec3 color = glm::vec3(1.0f);
 		material->SetVec3("objectColor", color);
 		material->SetInt("isUnlit", 1);
-		// material->SetColor(glm::vec3(1.0f));
-		// material->SetUnlit(true);
+		material->SetTexture("texture1", GetEngine().GetResourceManager().LoadTexture("C:/Dev/tavern-engine/Tavern/src/Tavern/Renderer/Textures/DefaultWhiteTexture.png"));
+
 		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>(material);
 
 		m_Light = CreateComponentOfType<Tavern::LightComponent>();

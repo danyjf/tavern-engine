@@ -100,32 +100,38 @@ namespace Tavern
 			ShaderResource* shader = pair.first;
 			// Set shader uniforms
 			shader->Use();
-			shader->SetMat4("view", GetActiveCamera()->GetViewMatrix());
-			shader->SetMat4("projection", GetActiveCamera()->GetProjectionMatrix());
-			shader->SetVec3("viewPos", GetActiveCamera()->GetOwner()->GetTransform()->GetLocalPosition());
+			if (shader->GetBuiltInUniforms().contains("view"))
+			{
+				shader->SetMat4("view", GetActiveCamera()->GetViewMatrix());
+			}
+			if (shader->GetBuiltInUniforms().contains("projection"))
+			{
+				shader->SetMat4("projection", GetActiveCamera()->GetProjectionMatrix());
+			}
+			if (shader->GetBuiltInUniforms().contains("viewPos"))
+			{
+				shader->SetVec3("viewPos", GetActiveCamera()->GetOwner()->GetTransform()->GetLocalPosition());
+			}
 
 			LightComponent* lightComponent = *(m_LightComponents.begin());
-			shader->SetVec3("lightColor", lightComponent->GetColor());
-			shader->SetVec3("lightPos", lightComponent->GetOwner()->GetTransform()->GetPosition());
+			if (shader->GetBuiltInUniforms().contains("lightColor"))
+			{
+				shader->SetVec3("lightColor", lightComponent->GetColor());
+			}
+			if (shader->GetBuiltInUniforms().contains("lightPos"))
+			{
+				shader->SetVec3("lightPos", lightComponent->GetOwner()->GetTransform()->GetPosition());
+			}
 
 			for (MaterialResource* material : m_Materials[shader])
 			{
 				// Set material uniforms
 				material->Use();
 
-				if (material->GetTextures().size() == 0)
-				{
-					shader->SetInt("useTexture", 0);
-				}
-				else
-				{
-					shader->SetInt("useTexture", 1);
-				}
-
-				for (int i = 0; i < material->GetTextures().size(); i++)
+				for (int i = 0; i < shader->GetSamplers().size(); i++)
 				{
 					glActiveTexture(GL_TEXTURE0 + i);
-					material->GetTextures()[i]->Use();
+					material->GetTexture(shader->GetSamplers()[i])->Use();
 				}
 
 				for (RenderComponent* renderComponent : m_RenderComponents[material])

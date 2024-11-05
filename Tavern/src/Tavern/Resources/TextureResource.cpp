@@ -23,7 +23,21 @@ namespace Tavern
 		unsigned char* textureData = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
 		if (textureData)
 		{
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, textureData);
+			switch (nrChannels)
+			{
+				case 1:
+					glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, textureData);
+					break;
+				case 2:
+					glTexImage2D(GL_TEXTURE_2D, 0, GL_RG, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, textureData);
+					break;
+				case 3:
+					glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, textureData);
+					break;
+				case 4:
+					glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, textureData);
+					break;
+			}
 			glGenerateMipmap(GL_TEXTURE_2D);
 		}
 		else

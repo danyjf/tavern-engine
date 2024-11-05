@@ -13,11 +13,6 @@ namespace Tavern
 		: Resource(resourceManager, path), m_Shader(shader)
 	{
 		m_UniformBuffer.resize(m_Shader->GetMaterialUniformBufferSize());
-
-		for (auto& pair : m_Shader->GetMaterialUniforms())
-		{
-			TAVERN_ENGINE_TRACE("Material Uniform Name: {}", pair.first);
-		}
 	}
 
 	void MaterialResource::SetBool(const std::string& name, bool value)
@@ -66,15 +61,16 @@ namespace Tavern
 		}
 	}
 
-	void MaterialResource::AddTexture(const std::shared_ptr<TextureResource>& texture)
+	void MaterialResource::SetTexture(const std::string& name, const std::shared_ptr<TextureResource>& value)
 	{
-		if (m_Textures.size() == 16)
+		const std::vector<std::string>& samplers = m_Shader->GetSamplers();
+		if (std::find(samplers.begin(), samplers.end(), name) == samplers.end())
 		{
-			TAVERN_ENGINE_ERROR("Failed to add texture. Maximum of 16 textures reached.");
+			TAVERN_ENGINE_WARN("Tried to set the texture sampler {0}, but {0} does not exist in the shader", name);
 			return;
 		}
 
-		m_Textures.push_back(texture);
+		m_Textures.emplace(name, value);
 	}
 
 	std::shared_ptr<ShaderResource> MaterialResource::GetShader()
@@ -82,11 +78,22 @@ namespace Tavern
 		return m_Shader;
 	}
 
-	const std::vector<std::shared_ptr<TextureResource>>& MaterialResource::GetTextures()
+	const std::shared_ptr<TextureResource> MaterialResource::GetTexture(const std::string& name)
 	{
-		return m_Textures;
+		if (!m_Textures.contains(name))
+		{
+			TAVERN_ENGINE_WARN("Tried to get the texture sampler {0}, but {0} does not exist in the shader", name);
+			return nullptr;
+		}
+		return m_Textures.at(name);
 	}
 
+	// TODO: Should look into uniform buffers in OpenGL, I think that there is a way to send
+	// all uniforms at once into the GPU using a uniform buffer.
+	// Currently, I am sending one at a time, if I want to improve this, I could create my
+	// own uniform type classes like, IntShaderUniform, FloatShaderUniform, etc..., and then
+	// have a function like, SendToGPU(Shader* shader, uniform char* buffer), implemented in
+	// each uniform class to easily send them to the GPU.
 	void MaterialResource::Use()
 	{
 		for (auto pair : m_Shader->GetMaterialUniforms())

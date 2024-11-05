@@ -117,7 +117,7 @@ namespace Tavern
 			// Catch the sampler uniforms
 			if (type == GL_SAMPLER_2D)
 			{
-				m_Samplers.emplace_back(name, length);
+				m_Samplers.emplace_back(stripedName);
 				int samplerIndex = m_Samplers.size() - 1;
 				SetInt(m_Samplers.back(), samplerIndex);
 				continue;
@@ -126,7 +126,7 @@ namespace Tavern
 			// Catch the material uniforms
 			m_MaterialUniforms.emplace(stripedName, std::pair<GLenum, int>{ type, uniformBufferOffset });
 			uniformBufferOffset += GetOpenGLTypeSize(type) * nElements;
-			TAVERN_ENGINE_INFO("Uniform: {}", stripedName);
+			// TAVERN_ENGINE_INFO("Uniform: {}", stripedName);
 		}
 		m_MaterialUniformBufferSize = uniformBufferOffset;
 	}

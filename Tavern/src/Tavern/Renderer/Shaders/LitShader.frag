@@ -14,17 +14,13 @@ uniform vec3 viewPos;
 // ---------------------------------------------------------------------------------
 
 uniform int isUnlit = 0;
-uniform vec3 objectColor = vec3(0.0, 0.0, 0.0);
-uniform int useTexture = 1;
+uniform vec3 objectColor = vec3(1.0, 1.0, 1.0);
 uniform sampler2D texture1;
 
 void main()
 {
-    vec3 color = objectColor;
-    if (useTexture == 1) 
-    {
-        color = texture(texture1, TexCoord).rgb;
-    }
+    vec3 textureColor = texture(texture1, TexCoord).rgb;
+    vec3 color = objectColor * textureColor;
 
     if (isUnlit == 0) {
         // Calculate ambient light

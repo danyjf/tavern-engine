@@ -19,18 +19,17 @@ namespace Tavern
 		void SetFloat(const std::string& name, float value);
 		void SetMat4(const std::string& name, glm::mat4& value);
 		void SetVec3(const std::string& name, glm::vec3& value);
-
-		void AddTexture(const std::shared_ptr<TextureResource>& texture);
+		void SetTexture(const std::string& name, const std::shared_ptr<TextureResource>& value);
 
 		std::shared_ptr<ShaderResource> GetShader();
-		const std::vector<std::shared_ptr<TextureResource>>& GetTextures();
+		const std::shared_ptr<TextureResource> GetTexture(const std::string& name);
 
 		void Use();
 
 	private:
 		std::shared_ptr<ShaderResource> m_Shader;
 		std::vector<unsigned char> m_UniformBuffer;
-		std::vector<std::shared_ptr<TextureResource>> m_Textures = {};
+		std::unordered_map<std::string, std::shared_ptr<TextureResource>> m_Textures = {};
 
 		glm::vec3 m_Color = glm::vec3(1.0f);
 		int m_IsUnlit = false;
