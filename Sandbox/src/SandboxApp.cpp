@@ -17,13 +17,13 @@ public:
 		: Tavern::Entity(engine)
 	{
 		std::shared_ptr<Tavern::ShaderResource> shader = GetEngine().GetResourceManager().LoadShader(
-			"C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Shaders/LitShader.vert",
-			"C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Shaders/LitShader.frag"
+			"C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/BuiltInAssets/Shaders/LitShader.vert",
+			"C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/BuiltInAssets/Shaders/LitShader.frag"
 		);
 		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("CubeMaterial", shader);
 		glm::vec3 color = glm::vec3(1.0f);
 		material->SetVec3("objectColor", color);
-		material->SetTexture("texture1", GetEngine().GetResourceManager().LoadTexture("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Images/container.jpg"));
+		material->SetTexture("texture1", GetEngine().GetResourceManager().LoadTexture("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Textures/container.jpg"));
 
 		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>(material);
 	}
@@ -47,13 +47,13 @@ public:
 		GetTransform()->SetLocalScale(glm::vec3(0.25f));
 
 		std::shared_ptr<Tavern::ShaderResource> shader = GetEngine().GetResourceManager().LoadShader(
-			"C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Shaders/UnlitShader.vert",
-			"C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Shaders/UnlitShader.frag"
+			"C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/BuiltInAssets/Shaders/UnlitShader.vert",
+			"C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/BuiltInAssets/Shaders/UnlitShader.frag"
 		);
 		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("LightMaterial", shader);
 		glm::vec3 color = glm::vec3(1.0f);
 		material->SetVec3("objectColor", color);
-		material->SetTexture("texture1", GetEngine().GetResourceManager().LoadTexture("C:/Dev/tavern-engine/Tavern/src/Tavern/Renderer/Textures/DefaultWhiteTexture.png"));
+		material->SetTexture("texture1", GetEngine().GetResourceManager().LoadTexture("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/BuiltInAssets/Textures/DefaultWhiteTexture.png"));
 
 		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>(material);
 
