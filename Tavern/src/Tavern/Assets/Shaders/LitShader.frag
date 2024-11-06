@@ -13,13 +13,13 @@ uniform vec3 lightPos;
 uniform vec3 viewPos;
 // ---------------------------------------------------------------------------------
 
-uniform vec3 objectColor = vec3(1.0, 1.0, 1.0);
-uniform sampler2D texture1;
+uniform vec3 albedo = vec3(1.0, 1.0, 1.0);
+uniform sampler2D albedoMap;
 
 void main()
 {
-    vec3 textureColor = texture(texture1, TexCoord).rgb;
-    vec3 color = objectColor * textureColor;
+    vec3 textureColor = texture(albedoMap, TexCoord).rgb;
+    vec3 color = albedo * textureColor;
 
     // Calculate ambient light
     float ambientStrength = 0.1;

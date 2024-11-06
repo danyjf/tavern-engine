@@ -1,0 +1,11 @@
+{
+    "name": "Cube",
+    "vertexShader": "C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/BuiltInAssets/Shaders/LitShader.vert",
+    "fragmentShader": "C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/BuiltInAssets/Shaders/LitShader.frag",
+    "properties": {
+        "albedo": [1.0, 1.0, 1.0]
+    },
+    "textures": {
+        "albedoMap": "C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Textures/container.jpg"
+    }
+}

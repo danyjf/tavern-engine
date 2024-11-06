@@ -126,7 +126,6 @@ namespace Tavern
 			// Catch the material uniforms
 			m_MaterialUniforms.emplace(stripedName, std::pair<GLenum, int>{ type, uniformBufferOffset });
 			uniformBufferOffset += GetOpenGLTypeSize(type) * nElements;
-			// TAVERN_ENGINE_INFO("Uniform: {}", stripedName);
 		}
 		m_MaterialUniformBufferSize = uniformBufferOffset;
 	}

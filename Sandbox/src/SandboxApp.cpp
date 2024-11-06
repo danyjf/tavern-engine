@@ -22,8 +22,8 @@ public:
 		);
 		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("CubeMaterial", shader);
 		glm::vec3 color = glm::vec3(1.0f);
-		material->SetVec3("objectColor", color);
-		material->SetTexture("texture1", GetEngine().GetResourceManager().LoadTexture("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Textures/container.jpg"));
+		material->SetVec3("albedo", color);
+		material->SetTexture("albedoMap", GetEngine().GetResourceManager().LoadTexture("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Textures/container.jpg"));
 
 		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>(material);
 	}
@@ -52,8 +52,8 @@ public:
 		);
 		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("LightMaterial", shader);
 		glm::vec3 color = glm::vec3(1.0f);
-		material->SetVec3("objectColor", color);
-		material->SetTexture("texture1", GetEngine().GetResourceManager().LoadTexture("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/BuiltInAssets/Textures/DefaultWhiteTexture.png"));
+		material->SetVec3("albedo", color);
+		material->SetTexture("albedoMap", GetEngine().GetResourceManager().LoadTexture("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/BuiltInAssets/Textures/DefaultWhiteTexture.png"));
 
 		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>(material);
 
