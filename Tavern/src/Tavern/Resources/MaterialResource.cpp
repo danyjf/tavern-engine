@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <nlohmann/json.hpp>
 
 #include "Tavern/Resources/MaterialResource.h"
 #include "Tavern/Resources/ResourceManager.h"
@@ -18,6 +19,31 @@ namespace Tavern
 	MaterialResource::MaterialResource(ResourceManager& resourceManager, const std::string& path)
 		: Resource(resourceManager, path)
 	{
+		std::ifstream file(path);
+		nlohmann::json data = nlohmann::json::parse(file);
+
+		m_Name = data["name"];
+		m_Shader = resourceManager.LoadShader(data["vertexShader"], data["fragmentShader"]);
+		m_UniformBuffer.resize(m_Shader->GetMaterialUniformBufferSize());
+
+		for (const auto& pair : m_Shader->GetMaterialUniforms())
+		{
+			const std::string& uniform = pair.first;
+			std::string type = data["properties"][uniform]["type"];
+
+			if (type == "vec3")
+			{
+				std::array<float, 3> arr = data["properties"][uniform]["value"];
+				glm::vec3 value(arr[0], arr[1], arr[2]);
+				SetVec3(uniform, value);
+			}
+		}
+
+		for (const std::string& sampler : m_Shader->GetSamplers())
+		{
+			std::shared_ptr<TextureResource> texture = resourceManager.LoadTexture(data["textures"][sampler]);
+			SetTexture(sampler, texture);
+		}
 	}
 
 	void MaterialResource::SetBool(const std::string& name, bool value)
@@ -76,6 +102,11 @@ namespace Tavern
 		}
 
 		m_Textures.emplace(name, value);
+	}
+
+	const std::string MaterialResource::GetName() const
+	{
+		return m_Name;
 	}
 
 	std::shared_ptr<ShaderResource> MaterialResource::GetShader()

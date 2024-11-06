@@ -43,14 +43,14 @@ namespace Tavern
 		return resource;
 	}
 
-	std::shared_ptr<MaterialResource> ResourceManager::LoadMaterial(const std::string& path, std::shared_ptr<ShaderResource> shader)
+	std::shared_ptr<MaterialResource> ResourceManager::LoadMaterial(const std::string& path)
 	{
 		if (m_MaterialResources.contains(path))
 		{
 			return std::dynamic_pointer_cast<MaterialResource>(m_MaterialResources[path].lock());
 		}
 
-		std::shared_ptr<MaterialResource> resource = std::make_shared<MaterialResource>(*this, path, shader);
+		std::shared_ptr<MaterialResource> resource = std::make_shared<MaterialResource>(*this, path);
 		m_MaterialResources[path] = resource;
 
 		return resource;

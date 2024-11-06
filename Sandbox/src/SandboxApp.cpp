@@ -16,14 +16,7 @@ public:
 	MyEntity(Tavern::Engine& engine)
 		: Tavern::Entity(engine)
 	{
-		std::shared_ptr<Tavern::ShaderResource> shader = GetEngine().GetResourceManager().LoadShader(
-			"C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/BuiltInAssets/Shaders/LitShader.vert",
-			"C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/BuiltInAssets/Shaders/LitShader.frag"
-		);
-		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("CubeMaterial", shader);
-		glm::vec3 color = glm::vec3(1.0f);
-		material->SetVec3("albedo", color);
-		material->SetTexture("albedoMap", GetEngine().GetResourceManager().LoadTexture("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Textures/container.jpg"));
+		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Materials/Cube.material");
 
 		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>(material);
 	}
@@ -46,14 +39,7 @@ public:
 		GetTransform()->SetLocalPosition(m_StartPosition);
 		GetTransform()->SetLocalScale(glm::vec3(0.25f));
 
-		std::shared_ptr<Tavern::ShaderResource> shader = GetEngine().GetResourceManager().LoadShader(
-			"C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/BuiltInAssets/Shaders/UnlitShader.vert",
-			"C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/BuiltInAssets/Shaders/UnlitShader.frag"
-		);
-		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("LightMaterial", shader);
-		glm::vec3 color = glm::vec3(1.0f);
-		material->SetVec3("albedo", color);
-		material->SetTexture("albedoMap", GetEngine().GetResourceManager().LoadTexture("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/BuiltInAssets/Textures/DefaultWhiteTexture.png"));
+		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Materials/Light.material");
 
 		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>(material);
 

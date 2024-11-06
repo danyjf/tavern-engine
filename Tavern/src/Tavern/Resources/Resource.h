@@ -16,8 +16,10 @@ namespace Tavern
 
 		const std::string& GetPath() const;
 
-	private:
+	protected:
 		ResourceManager& m_ResourceManager;
+
+	private:
 		std::string m_Path = "";
 	};
 }

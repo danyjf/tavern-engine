@@ -8,7 +8,6 @@ namespace Tavern
 {
 	class TextureResource;
 
-	// TODO: Create a .material xml/json file to describe and load materials
 	class TAVERN_API MaterialResource : public Resource
 	{
 	public:
@@ -23,13 +22,15 @@ namespace Tavern
 		void SetVec3(const std::string& name, glm::vec3& value);
 		void SetTexture(const std::string& name, const std::shared_ptr<TextureResource>& value);
 
+		const std::string GetName() const;
 		std::shared_ptr<ShaderResource> GetShader();
 		const std::shared_ptr<TextureResource> GetTexture(const std::string& name);
 
 		void Use();
 
 	private:
-		std::shared_ptr<ShaderResource> m_Shader;
+		std::string m_Name;
+		std::shared_ptr<ShaderResource> m_Shader = nullptr;
 		std::vector<unsigned char> m_UniformBuffer;
 		std::unordered_map<std::string, std::shared_ptr<TextureResource>> m_Textures = {};
 
