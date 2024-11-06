@@ -15,8 +15,12 @@ namespace Tavern
 {
 	class Event;
 
-	// TODO: Add lighting to the rendering
+	// TODO: Add mesh loading
+	// TODO: Create editor interface
+	// TODO: Add multiple lights
+	// TODO: Add audio
 	// TODO: Add UI
+	// TODO: Add physics
 	class TAVERN_API Engine
 	{
 	public:
