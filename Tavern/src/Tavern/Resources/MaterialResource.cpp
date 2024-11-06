@@ -15,6 +15,11 @@ namespace Tavern
 		m_UniformBuffer.resize(m_Shader->GetMaterialUniformBufferSize());
 	}
 
+	MaterialResource::MaterialResource(ResourceManager& resourceManager, const std::string& path)
+		: Resource(resourceManager, path)
+	{
+	}
+
 	void MaterialResource::SetBool(const std::string& name, bool value)
 	{
 		unsigned char* valueBegin = reinterpret_cast<unsigned char*>(&value);

@@ -13,6 +13,7 @@ namespace Tavern
 	{
 	public:
 		MaterialResource(ResourceManager& resourceManager, const std::string& path, std::shared_ptr<ShaderResource> shader);
+		MaterialResource(ResourceManager& resourceManager, const std::string& path);
 		virtual ~MaterialResource() override = default;
 
 		void SetBool(const std::string& name, bool value);

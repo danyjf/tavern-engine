@@ -7,3 +7,6 @@
 [submodule "Tavern/vendor/glm"]
 	path = Tavern/vendor/glm
 	url = git@github.com:g-truc/glm.git
+[submodule "Tavern/vendor/nlohmann_json"]
+	path = Tavern/vendor/nlohmann_json
+	url = git@github.com:nlohmann/json.git

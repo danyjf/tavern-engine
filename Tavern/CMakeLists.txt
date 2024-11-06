@@ -70,12 +70,25 @@ set(SOURCES_TAVERN_SCENE
     src/Tavern/Scene/Entity.cpp
 )
 
+source_group(src FILES ${SOURCES})
+source_group(src/Tavern FILES ${SOURCES_TAVERN})
+source_group(src/Tavern/Components FILES ${SOURCES_TAVERN_COMPONENTS})
+source_group(src/Tavern/Core FILES ${SOURCES_TAVERN_CORE})
+source_group(src/Tavern/Events FILES ${SOURCES_TAVERN_EVENTS})
+source_group(src/Tavern/Input FILES ${SOURCES_TAVERN_INPUT})
+source_group(src/Tavern/Renderer FILES ${SOURCES_TAVERN_RENDERER})
+source_group(src/Tavern/Resources FILES ${SOURCES_TAVERN_RESOURCES})
+source_group(src/Tavern/Scene FILES ${SOURCES_TAVERN_SCENE})
+
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)
 
 add_subdirectory(vendor/GLFW)
 add_subdirectory(vendor/glm)
+
+set(JSON_BuildTests OFF CACHE INTERNAL "")
+add_subdirectory(vendor/nlohmann_json)
 
 add_library(Tavern SHARED 
     ${SOURCES} 
@@ -89,15 +102,11 @@ add_library(Tavern SHARED
     ${SOURCES_TAVERN_SCENE}
 )
 
-source_group(src FILES ${SOURCES})
-source_group(src/Tavern FILES ${SOURCES_TAVERN})
-source_group(src/Tavern/Components FILES ${SOURCES_TAVERN_COMPONENTS})
-source_group(src/Tavern/Core FILES ${SOURCES_TAVERN_CORE})
-source_group(src/Tavern/Events FILES ${SOURCES_TAVERN_EVENTS})
-source_group(src/Tavern/Input FILES ${SOURCES_TAVERN_INPUT})
-source_group(src/Tavern/Renderer FILES ${SOURCES_TAVERN_RENDERER})
-source_group(src/Tavern/Resources FILES ${SOURCES_TAVERN_RESOURCES})
-source_group(src/Tavern/Scene FILES ${SOURCES_TAVERN_SCENE})
+target_link_libraries(Tavern PRIVATE 
+    glfw
+    glm::glm
+    nlohmann_json::nlohmann_json
+)
 
 target_include_directories(Tavern PRIVATE 
     ${CMAKE_SOURCE_DIR}/Tavern/src
@@ -134,11 +143,6 @@ target_precompile_headers(Tavern PRIVATE
 
 	# Include only for windows
 	$<$<COMPILE_LANGUAGE:CXX>:$<$<PLATFORM_ID:Windows>:<Windows.h$<ANGLE-R>>>
-)
-
-target_link_libraries(Tavern PRIVATE 
-    glfw
-    glm::glm
 )
 
 add_custom_command(TARGET Tavern
