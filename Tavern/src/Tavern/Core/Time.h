@@ -4,19 +4,22 @@
 
 namespace Tavern
 {
-	class TAVERN_API Time
+	class TAVERN_API TimeManager
 	{
 	public:
-		Time() = delete;
+		TimeManager();
+		~TimeManager();
+		TimeManager(TimeManager& copy) = delete;
+		TimeManager& operator=(const TimeManager& copy) = delete;
 
-		inline static const float GetElapsedTime() { return m_ElapsedTime; }
-		inline static const float GetDeltaTime() { return m_DeltaTime; }
+		const float GetElapsedTime() { return m_ElapsedTime; }
+		const float GetDeltaTime() { return m_DeltaTime; }
 
-		static void UpdateTime();
+		void UpdateTime();
 
 	private:
-		static float m_ElapsedTime;
-		static float m_DeltaTime;
-		static float m_LastFrameTime;
+		float m_ElapsedTime = 0.0f;
+		float m_DeltaTime = 0.0f;
+		float m_LastFrameTime = 0.0f;
 	};
 }

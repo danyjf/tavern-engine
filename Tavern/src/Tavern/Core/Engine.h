@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "Tavern/Core/Core.h"
+#include "Tavern/Core/Time.h"
 #include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Events/EventManager.h"
 #include "Tavern/Renderer/RenderManager.h"
@@ -28,6 +29,7 @@ namespace Tavern
 		ResourceManager& GetResourceManager();
 		RenderManager& GetRenderManager();
 		InputManager& GetInputManager();
+		TimeManager& GetTimeManager();
 		Scene& GetScene();
 
 		void OnWindowCloseEvent(const std::shared_ptr<WindowCloseEvent>& event);
@@ -37,7 +39,8 @@ namespace Tavern
 		ResourceManager m_ResourceManager = ResourceManager();
 		RenderManager m_RenderManager = RenderManager(m_EventManager, m_ResourceManager);
 		InputManager m_InputManager = InputManager(m_RenderManager);
-		Scene m_Scene;
+		TimeManager m_TimeManager = TimeManager();
+		Scene m_Scene = Scene(*this);
 
 		EventListener<WindowCloseEvent> m_WindowCloseListener;
 

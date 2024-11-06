@@ -1,14 +1,21 @@
 #include <GLFW/glfw3.h>
 
 #include "Tavern/Core/Time.h"
+#include "Tavern/Core/Log.h"
 
 namespace Tavern
 {
-	float Time::m_ElapsedTime = 0.0f;
-	float Time::m_DeltaTime = 0.0f;
-	float Time::m_LastFrameTime = 0.0f;
+	TimeManager::TimeManager()
+	{
+		TAVERN_ENGINE_INFO("TimeManager initialized");
+	}
 
-	void Time::UpdateTime()
+	TimeManager::~TimeManager()
+	{
+		TAVERN_ENGINE_INFO("TimeManager destroyed");
+	}
+
+	void TimeManager::UpdateTime()
 	{
 		float currentFrameTime = glfwGetTime();
 		m_DeltaTime = currentFrameTime - m_LastFrameTime;

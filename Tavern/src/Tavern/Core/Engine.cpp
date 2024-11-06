@@ -20,6 +20,7 @@ namespace Tavern
 		  m_ResourceManager(),
 		  m_RenderManager(m_EventManager, m_ResourceManager),
 		  m_InputManager(m_RenderManager),
+		  m_TimeManager(),
 		  m_Scene(*this),
 		  m_WindowCloseListener(std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1))
 	{
@@ -37,7 +38,7 @@ namespace Tavern
 	{
 		while (m_IsRunning)
 		{
-			Time::UpdateTime();
+			m_TimeManager.UpdateTime();
 
 			// Process events
 			m_EventManager.DispatchEvents();
@@ -71,6 +72,11 @@ namespace Tavern
 	InputManager& Engine::GetInputManager()
 	{
 		return m_InputManager;
+	}
+
+	TimeManager& Engine::GetTimeManager()
+	{
+		return m_TimeManager;
 	}
 
 	Scene& Engine::GetScene()

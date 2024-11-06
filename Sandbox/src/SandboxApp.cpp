@@ -66,9 +66,9 @@ public:
 		Tavern::Entity::Update();
 
 		GetTransform()->SetLocalPosition(glm::vec3(
-			m_StartPosition.x + sin(2.0f * Tavern::Time::GetElapsedTime()) / 2.0f * 3.0f,
+			m_StartPosition.x + sin(2.0f * GetEngine().GetTimeManager().GetElapsedTime()) / 2.0f * 3.0f,
 			m_StartPosition.y,
-			m_StartPosition.z + cos(Tavern::Time::GetElapsedTime()) * 3.0f
+			m_StartPosition.z + cos(GetEngine().GetTimeManager().GetElapsedTime()) * 3.0f
 		));
 	}
 
@@ -137,7 +137,7 @@ public:
 		if (glm::length(translation) != 0)
 		{
 			translation = glm::normalize(translation);
-			GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition() + translation * m_Speed * Tavern::Time::GetDeltaTime());
+			GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition() + translation * m_Speed * GetEngine().GetTimeManager().GetDeltaTime());
 		}
 
 		if (m_Cubes.size() >= 2)
@@ -145,10 +145,10 @@ public:
 			const glm::vec3& cube1Rotation = m_Cubes[0]->GetTransform()->GetLocalEulerRotation();
 			m_Cubes[0]->GetTransform()->SetLocalEulerRotation({ cube1Rotation.x,
 																cube1Rotation.y,
-																cube1Rotation.z + 90.0f * Tavern::Time::GetDeltaTime() });
+																cube1Rotation.z + 90.0f * GetEngine().GetTimeManager().GetDeltaTime() });
 
 			const glm::vec3& cube2Rotation = m_Cubes[1]->GetTransform()->GetLocalEulerRotation();
-			m_Cubes[1]->GetTransform()->SetLocalEulerRotation({ cube2Rotation.x + 90.0f * Tavern::Time::GetDeltaTime(),
+			m_Cubes[1]->GetTransform()->SetLocalEulerRotation({ cube2Rotation.x + 90.0f * GetEngine().GetTimeManager().GetDeltaTime(),
 																cube2Rotation.y,
 																cube2Rotation.z });
 		}
