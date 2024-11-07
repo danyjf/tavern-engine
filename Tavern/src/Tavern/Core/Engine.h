@@ -17,6 +17,7 @@ namespace Tavern
 
 	// TODO: Add mesh loading
 	// TODO: Create editor interface
+	// TODO: Add PBR
 	// TODO: Add multiple lights
 	// TODO: Add audio
 	// TODO: Add UI

@@ -90,6 +90,9 @@ add_subdirectory(vendor/glm)
 set(JSON_BuildTests OFF CACHE INTERNAL "")
 add_subdirectory(vendor/nlohmann_json)
 
+set(ASSIMP_WARNINGS_AS_ERRORS OFF)
+add_subdirectory(vendor/assimp)
+
 add_library(Tavern SHARED 
     ${SOURCES} 
     ${SOURCES_TAVERN} 
@@ -106,6 +109,7 @@ target_link_libraries(Tavern PRIVATE
     glfw
     glm::glm
     nlohmann_json::nlohmann_json
+    assimp
 )
 
 target_include_directories(Tavern PRIVATE 

@@ -10,3 +10,6 @@
 [submodule "Tavern/vendor/nlohmann_json"]
 	path = Tavern/vendor/nlohmann_json
 	url = git@github.com:nlohmann/json.git
+[submodule "Tavern/vendor/assimp"]
+	path = Tavern/vendor/assimp
+	url = git@github.com:assimp/assimp.git
