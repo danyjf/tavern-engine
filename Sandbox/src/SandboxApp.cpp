@@ -5,7 +5,6 @@
 
 #include "Tavern/Components/LightComponent.h"
 #include "Tavern/Core/Log.h"
-#include "Tavern/Core/Time.h"
 #include "Tavern/Events/EventListener.h"
 #include "Tavern/Events/MouseEvent.h"
 #include "Tavern/Resources/MaterialResource.h"

@@ -29,6 +29,7 @@ target_link_libraries(Sandbox PRIVATE
     Tavern
     glfw
     glm::glm
+    assimp
 )
 
 add_custom_command(TARGET Sandbox

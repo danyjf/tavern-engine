@@ -62,6 +62,10 @@ set(SOURCES_TAVERN_RESOURCES
     src/Tavern/Resources/TextureResource.cpp
     src/Tavern/Resources/MaterialResource.h
     src/Tavern/Resources/MaterialResource.cpp
+    src/Tavern/Resources/MeshResource.h
+    src/Tavern/Resources/MeshResource.cpp
+    src/Tavern/Resources/ModelResource.h
+    src/Tavern/Resources/ModelResource.cpp
 )
 set(SOURCES_TAVERN_SCENE
     src/Tavern/Scene/Scene.h
