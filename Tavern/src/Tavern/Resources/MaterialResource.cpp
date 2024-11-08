@@ -10,12 +10,6 @@
 
 namespace Tavern
 {
-	MaterialResource::MaterialResource(ResourceManager& resourceManager, const std::string& path, std::shared_ptr<ShaderResource> shader)
-		: Resource(resourceManager, path), m_Shader(shader)
-	{
-		m_UniformBuffer.resize(m_Shader->GetMaterialUniformBufferSize());
-	}
-
 	MaterialResource::MaterialResource(ResourceManager& resourceManager, const std::string& path)
 		: Resource(resourceManager, path)
 	{

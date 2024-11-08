@@ -94,5 +94,10 @@ namespace Tavern
 
 		glBindVertexArray(m_VAO);
 		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+		glBindVertexArray(0);
+
+		// glBindVertexArray(m_Mesh->m_VAO);
+		// glDrawElements(GL_TRIANGLES, m_Indices.size(), GL_UNSIGNED_INT, 0);
+		// glBindVertexArray(0);
 	}
 }

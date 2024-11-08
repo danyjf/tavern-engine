@@ -11,7 +11,6 @@ namespace Tavern
 	class TAVERN_API MaterialResource : public Resource
 	{
 	public:
-		MaterialResource(ResourceManager& resourceManager, const std::string& path, std::shared_ptr<ShaderResource> shader);
 		MaterialResource(ResourceManager& resourceManager, const std::string& path);
 		virtual ~MaterialResource() override = default;
 
