@@ -8,6 +8,8 @@
 #include "Tavern/Resources/ShaderResource.h"
 #include "Tavern/Resources/TextureResource.h"
 #include "Tavern/Resources/MaterialResource.h"
+#include "Tavern/Resources/MeshResource.h"
+#include "Tavern/Resources/ModelResource.h"
 
 namespace Tavern
 {
@@ -22,6 +24,8 @@ namespace Tavern
 		std::shared_ptr<TextureResource> LoadTexture(const std::string& path, const TextureSettings& textureSettings = TextureSettings());
 		std::shared_ptr<ShaderResource> LoadShader(const std::string& vertexPath, const std::string& fragmentPath);
 		std::shared_ptr<MaterialResource> LoadMaterial(const std::string& path);
+		std::shared_ptr<MeshResource> LoadMesh(const std::string& path, std::vector<Vertex> vertices, std::vector<unsigned int> indices);
+		std::shared_ptr<ModelResource> LoadModel(const std::string& path);
 
 		void ResourceHasBeenFreed(const std::string& path);
 
@@ -29,5 +33,7 @@ namespace Tavern
 		std::unordered_map<std::string, std::weak_ptr<TextureResource>> m_TextureResources;
 		std::unordered_map<std::string, std::weak_ptr<ShaderResource>> m_ShaderResources;
 		std::unordered_map<std::string, std::weak_ptr<MaterialResource>> m_MaterialResources;
+		std::unordered_map<std::string, std::weak_ptr<MeshResource>> m_MeshResources;
+		std::unordered_map<std::string, std::weak_ptr<ModelResource>> m_ModelResources;
 	};
 }

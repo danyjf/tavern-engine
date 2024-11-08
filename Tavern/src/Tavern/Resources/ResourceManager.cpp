@@ -56,6 +56,22 @@ namespace Tavern
 		return resource;
 	}
 
+	std::shared_ptr<MeshResource> ResourceManager::LoadMesh(const std::string& path, std::vector<Vertex> vertices, std::vector<unsigned int> indices)
+	{
+		std::shared_ptr<MeshResource> resource = std::make_shared<MeshResource>(*this, path, vertices, indices);
+		m_MeshResources[path] = resource;
+
+		return resource;
+	}
+
+	std::shared_ptr<ModelResource> ResourceManager::LoadModel(const std::string& path)
+	{
+		std::shared_ptr<ModelResource> resource = std::make_shared<ModelResource>(*this, path);
+		m_ModelResources[path] = resource;
+
+		return resource;
+	}
+
 	void ResourceManager::ResourceHasBeenFreed(const std::string& path)
 	{
 		auto textureIt = m_TextureResources.find(path);

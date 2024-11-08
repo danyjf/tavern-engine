@@ -5,15 +5,8 @@
 
 namespace Tavern
 {
-	MeshResource::MeshResource(ResourceManager& resourceManager, const std::string& path)
-		: Resource(resourceManager, path)
-	{
-		// use assimp to load vertices and indices
-
-		SetupMesh();
-	}
-
-	void MeshResource::SetupMesh()
+	MeshResource::MeshResource(ResourceManager& resourceManager, const std::string& path, std::vector<Vertex> vertices, std::vector<unsigned int> indices)
+		: Resource(resourceManager, path), m_Vertices(vertices), m_Indices(indices)
 	{
 		glGenVertexArrays(1, &m_VAO);
 		glGenBuffers(1, &m_VBO);

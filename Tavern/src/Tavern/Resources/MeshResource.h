@@ -17,7 +17,7 @@ namespace Tavern
 	class TAVERN_API MeshResource : public Resource
 	{
 	public:
-		MeshResource(ResourceManager& resourceManager, const std::string& path);
+		MeshResource(ResourceManager& resourceManager, const std::string& path, std::vector<Vertex> vertices, std::vector<unsigned int> indices);
 		virtual ~MeshResource() override = default;
 
 	private:
@@ -27,7 +27,5 @@ namespace Tavern
 		unsigned int m_VAO;
 		unsigned int m_VBO;
 		unsigned int m_EBO;
-
-		void SetupMesh();
 	};
 }
