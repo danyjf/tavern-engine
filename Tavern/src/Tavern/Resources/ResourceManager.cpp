@@ -56,18 +56,15 @@ namespace Tavern
 		return resource;
 	}
 
-	std::shared_ptr<MeshResource> ResourceManager::LoadMesh(const std::string& path, std::vector<Vertex> vertices, std::vector<unsigned int> indices)
+	std::shared_ptr<MeshResource> ResourceManager::LoadMesh(const std::string& path)
 	{
-		std::shared_ptr<MeshResource> resource = std::make_shared<MeshResource>(*this, path, vertices, indices);
+		if (m_MeshResources.contains(path))
+		{
+			return std::dynamic_pointer_cast<MeshResource>(m_MeshResources[path].lock());
+		}
+
+		std::shared_ptr<MeshResource> resource = std::make_shared<MeshResource>(*this, path);
 		m_MeshResources[path] = resource;
-
-		return resource;
-	}
-
-	std::shared_ptr<ModelResource> ResourceManager::LoadModel(const std::string& path)
-	{
-		std::shared_ptr<ModelResource> resource = std::make_shared<ModelResource>(*this, path);
-		m_ModelResources[path] = resource;
 
 		return resource;
 	}
@@ -92,6 +89,13 @@ namespace Tavern
 		if (materialIt != m_MaterialResources.end())
 		{
 			m_MaterialResources.erase(materialIt);
+			return;
+		}
+
+		auto meshIt = m_MeshResources.find(path);
+		if (meshIt != m_MeshResources.end())
+		{
+			m_MeshResources.erase(meshIt);
 			return;
 		}
 

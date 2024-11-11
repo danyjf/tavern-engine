@@ -1,0 +1,14 @@
+{
+  "name": "Light",
+  "vertexShader": "C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/BuiltInAssets/Shaders/UnlitShader.vert",
+  "fragmentShader": "C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/BuiltInAssets/Shaders/UnlitShader.frag",
+  "properties": {
+    "albedo": {
+      "type": "vec3",
+      "value": [1.0, 1.0, 1.0]
+    }
+  },
+  "textures": {
+    "albedoMap": "C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/BuiltInAssets/Textures/DefaultWhiteTexture.png"
+  }
+}
