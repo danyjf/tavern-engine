@@ -1,5 +1,5 @@
 set(SOURCES
-	src/SandboxApp.cpp
+	src/main.cpp
 )
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Sandbox)
