@@ -31,6 +31,11 @@ namespace Tavern
 				glm::vec3 value(arr[0], arr[1], arr[2]);
 				SetVec3(uniform, value);
 			}
+			else if (type == "float")
+			{
+				float value = data["properties"][uniform]["value"];
+				SetFloat(uniform, value);
+			}
 		}
 
 		for (const std::string& sampler : m_Shader->GetSamplers())

@@ -3,12 +3,24 @@
   "vertexShader": "C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/BuiltInAssets/Shaders/LitShader.vert",
   "fragmentShader": "C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/BuiltInAssets/Shaders/LitShader.frag",
   "properties": {
+    "ambient": {
+      "type": "vec3",
+      "value": [0.1, 0.1, 0.1]
+    },
     "albedo": {
       "type": "vec3",
       "value": [1.0, 1.0, 1.0]
+    },
+    "specular": {
+      "type": "vec3",
+      "value": [0.5, 0.5, 0.5]
+    },
+    "shininess": {
+      "type": "float",
+      "value": 32.0
     }
   },
   "textures": {
-    "albedoMap": "C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Textures/container.jpg"
+    "albedoMap": "C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Textures/backpack/diffuse.jpg"
   }
 }

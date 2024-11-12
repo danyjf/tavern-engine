@@ -15,7 +15,7 @@ public:
 	Cube(Tavern::Engine& engine)
 		: Tavern::Entity(engine)
 	{
-		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Materials/Cube.material.json");
+		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Materials/Cube.material");
 		std::shared_ptr<Tavern::MeshResource> mesh = GetEngine().GetResourceManager().LoadMesh("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/BuiltInAssets/Meshes/Cube.obj");
 		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>(material);
 		m_Mesh->SetMesh(mesh);
@@ -39,7 +39,7 @@ public:
 		GetTransform()->SetLocalPosition(m_StartPosition);
 		GetTransform()->SetLocalScale(glm::vec3(0.25f));
 
-		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Materials/Light.material.json");
+		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Materials/Light.material");
 		std::shared_ptr<Tavern::MeshResource> mesh = GetEngine().GetResourceManager().LoadMesh("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/BuiltInAssets/Meshes/Cube.obj");
 		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>(material);
 		m_Mesh->SetMesh(mesh);
@@ -72,7 +72,7 @@ public:
 	{
 		GetTransform()->SetLocalPosition(glm::vec3(3.0f, 0.0f, 3.0f));
 
-		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Materials/Backpack.material.json");
+		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Materials/Backpack.material");
 		std::shared_ptr<Tavern::MeshResource> mesh = GetEngine().GetResourceManager().LoadMesh("C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Meshes/backpack.obj");
 		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>(material);
 		m_Mesh->SetMesh(mesh);

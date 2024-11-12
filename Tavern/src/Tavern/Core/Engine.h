@@ -15,10 +15,10 @@ namespace Tavern
 {
 	class Event;
 
-	// TODO: Add mesh loading
 	// TODO: Create editor interface
 	// TODO: Add PBR
 	// TODO: Add multiple lights
+	// TODO: Add different types of lights
 	// TODO: Add audio
 	// TODO: Add UI
 	// TODO: Add physics
