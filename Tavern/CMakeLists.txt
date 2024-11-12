@@ -151,9 +151,10 @@ target_precompile_headers(Tavern PRIVATE
 	$<$<COMPILE_LANGUAGE:CXX>:$<$<PLATFORM_ID:Windows>:<Windows.h$<ANGLE-R>>>
 )
 
-add_custom_command(TARGET Tavern
-	POST_BUILD
+add_custom_target(RunPostTavernBuild ALL
 	COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_DIRECTORY}/Sandbox
     COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Tavern> ${OUTPUT_DIRECTORY}/Sandbox
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/src/Tavern/Assets ${OUTPUT_DIRECTORY}/Sandbox/BuiltInAssets
 )
+
+add_dependencies(RunPostTavernBuild Tavern)

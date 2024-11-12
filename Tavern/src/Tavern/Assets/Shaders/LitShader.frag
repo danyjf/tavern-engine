@@ -22,15 +22,17 @@ uniform sampler2D albedoMap;
 
 void main()
 {
+    vec3 textureColor = texture(albedoMap, TexCoord).rgb;
+    vec3 color = albedo * textureColor;
+
     // Calculate ambient light
-    vec3 ambientColor = lightColor * ambient;
+    vec3 ambientColor = lightColor * ambient * color;
 
     // Calculate diffuse light
     vec3 norm = normalize(Normal);
     vec3 lightDir = normalize(lightPos - FragPos);
     float diff = max(dot(norm, lightDir), 0.0);
-    vec3 textureColor = texture(albedoMap, TexCoord).rgb;
-    vec3 diffuseColor = lightColor * diff * albedo * textureColor;
+    vec3 diffuseColor = lightColor * diff * color;
 
     // Calculate Specular light
     vec3 viewDir = normalize(viewPos - FragPos);

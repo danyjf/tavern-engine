@@ -32,9 +32,10 @@ target_link_libraries(Sandbox PRIVATE
     assimp
 )
 
-add_custom_command(TARGET Sandbox
-	POST_BUILD
+add_custom_target(RunPostSandboxBuild ALL
 	COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_SOURCE_DIR}/Assets
 	COMMAND ${CMAKE_COMMAND} -E rm -rf ${OUTPUT_DIRECTORY}/Sandbox/Assets
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Assets ${OUTPUT_DIRECTORY}/Sandbox/Assets
 )
+
+add_dependencies(RunPostSandboxBuild Sandbox)
