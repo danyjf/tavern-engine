@@ -1,13 +1,21 @@
-#include <Tavern.h>
+// #include <Tavern.h>
 #include <algorithm>
 #include <functional>
 #include <memory>
 
-#include "Tavern/Components/LightComponent.h"
 #include "Tavern/Core/Log.h"
+#include "Tavern/Core/Engine.h"
+#include "Tavern/Core/Time.h"
+#include "Tavern/Events/EventManager.h"
 #include "Tavern/Events/EventListener.h"
+#include "Tavern/Events/KeyEvent.h"
 #include "Tavern/Events/MouseEvent.h"
+#include "Tavern/Scene/Entity.h"
+#include "Tavern/Components/LightComponent.h"
+#include "Tavern/Components/MeshComponent.h"
+#include "Tavern/Components/CameraComponent.h"
 #include "Tavern/Resources/MaterialResource.h"
+#include "Tavern/Resources/MeshResource.h"
 
 class Cube : public Tavern::Entity
 {
