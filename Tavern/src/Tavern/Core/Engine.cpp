@@ -34,24 +34,28 @@ namespace Tavern
 		TAVERN_ENGINE_INFO("Engine destroyed");
 	}
 
-	void Engine::Run()
+	void Engine::Update()
 	{
-		while (m_IsRunning)
-		{
-			m_TimeManager.UpdateTime();
+		m_TimeManager.UpdateTime();
 
-			// Process events
-			m_EventManager.DispatchEvents();
+		// Process events
+		m_EventManager.DispatchEvents();
 
-			// Update State
-			m_Scene.Update();
+		// Update State
+		m_Scene.Update();
 
-			// Render
-			m_RenderManager.Render();
+		glfwPollEvents();
+	}
 
-			glfwPollEvents();
-			glfwSwapBuffers(m_RenderManager.GetWindow()->GetGLFWWindow());
-		}
+	void Engine::Render()
+	{
+		// Render
+		m_RenderManager.Render();
+	}
+
+	bool Engine::IsRunning()
+	{
+		return m_IsRunning;
 	}
 
 	EventManager& Engine::GetEventManager()

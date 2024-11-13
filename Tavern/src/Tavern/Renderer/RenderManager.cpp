@@ -143,6 +143,8 @@ namespace Tavern
 				}
 			}
 		}
+
+		glfwSwapBuffers(GetWindow()->GetGLFWWindow());
 	}
 
 	void RenderManager::OnWindowResizeEvent(const std::shared_ptr<WindowResizeEvent>& event)

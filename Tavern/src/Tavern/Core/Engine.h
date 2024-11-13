@@ -15,6 +15,7 @@ namespace Tavern
 {
 	class Event;
 
+	// TODO: Create layers so that I can have a game layer and an editor layer
 	// TODO: Create editor interface
 	// TODO: Add PBR
 	// TODO: Add multiple lights
@@ -28,7 +29,10 @@ namespace Tavern
 		Engine();
 		~Engine();
 
-		void Run();
+		void Update();
+		void Render();
+
+		bool IsRunning();
 
 		EventManager& GetEventManager();
 		ResourceManager& GetResourceManager();

@@ -287,7 +287,11 @@ int main()
 		player->m_Cubes.push_back(cube);
 	}
 
-	TavernEngine.Run();
+	while (TavernEngine.IsRunning())
+	{
+		TavernEngine.Update();
+		TavernEngine.Render();
+	}
 
 	return 0;
 }

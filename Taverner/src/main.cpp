@@ -3,9 +3,17 @@
 
 int main()
 {
+	TAVERN_INFO("Launched Taverner Project");
+
 	Tavern::Engine TavernEngine;
 
-	TAVERN_INFO("Launched Taverner Project");
+	while (TavernEngine.IsRunning())
+	{
+		TavernEngine.Update();
+		TavernEngine.Render();
+
+		// Render the editor
+	}
 
 	return 0;
 }

@@ -18,6 +18,7 @@ namespace Tavern
 	class ShaderResource;
 	class MaterialResource;
 
+	// TODO: Maybe create a RenderGraph data structure to better organize the render order
 	class TAVERN_API RenderManager
 	{
 	public:
