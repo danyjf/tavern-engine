@@ -13,7 +13,7 @@
 [submodule "Tavern/vendor/assimp"]
 	path = Tavern/vendor/assimp
 	url = git@github.com:assimp/assimp.git
-[submodule "Tavern/vendor/imgui"]
-	path = Tavern/vendor/imgui
+[submodule "Taverner/vendor/imgui"]
+	path = Taverner/vendor/imgui
 	url = git@github.com:ocornut/imgui.git
 	branch = docking
