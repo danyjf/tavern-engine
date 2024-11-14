@@ -1,19 +1,49 @@
 set(SOURCES
 	src/main.cpp
 )
+set(SOURCES_IMGUI
+    vendor/imgui/imconfig.h
+    vendor/imgui/imgui.cpp
+    vendor/imgui/imgui.h
+    vendor/imgui/imgui_demo.cpp
+    vendor/imgui/imgui_draw.cpp
+    vendor/imgui/imgui_internal.h
+    vendor/imgui/imgui_tables.cpp
+    vendor/imgui/imgui_widgets.cpp
+    vendor/imgui/imstb_rectpack.h
+    vendor/imgui/imstb_textedit.h
+    vendor/imgui/imstb_truetype.h
+
+    vendor/imgui/backends/imgui_impl_glfw.cpp
+    vendor/imgui/backends/imgui_impl_glfw.h
+    vendor/imgui/backends/imgui_impl_opengl3.cpp
+    vendor/imgui/backends/imgui_impl_opengl3.h
+
+    vendor/imgui/misc/debuggers/imgui.natvis
+    vendor/imgui/misc/debuggers/imgui.natstepfilter
+
+    vendor/imgui/misc/cpp/imgui_stdlib.cpp
+    vendor/imgui/misc/cpp/imgui_stdlib.h
+)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Taverner)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Taverner)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Taverner)
 
-add_executable(Taverner ${SOURCES})
+add_executable(Taverner 
+    ${SOURCES}
+    ${SOURCES_IMGUI}
+)
 
 source_group(src FILES ${SOURCES})
+source_group(src FILES ${SOURCES_IMGUI})
 
 target_include_directories(Taverner PRIVATE 
 	${CMAKE_SOURCE_DIR}/Tavern/src
 	${CMAKE_SOURCE_DIR}/Tavern/vendor/spdlog/include	
     ${CMAKE_SOURCE_DIR}/Tavern/vendor/Glad/include
+    ${CMAKE_SOURCE_DIR}/Taverner/vendor/imgui
+    ${CMAKE_SOURCE_DIR}/Taverner/vendor/imgui/backends
 )
 
 target_compile_definitions(Taverner PRIVATE

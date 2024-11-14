@@ -93,7 +93,10 @@ namespace Tavern
 	void RenderManager::Render()
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		GetActiveCamera()->ComputeViewMatrix();
+		if (GetActiveCamera())
+		{
+			GetActiveCamera()->ComputeViewMatrix();
+		}
 
 		for (auto& pair : m_Materials)
 		{
