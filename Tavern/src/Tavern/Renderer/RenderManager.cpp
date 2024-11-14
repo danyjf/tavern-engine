@@ -146,7 +146,10 @@ namespace Tavern
 				}
 			}
 		}
+	}
 
+	void RenderManager::SwapBuffers()
+	{
 		glfwSwapBuffers(GetWindow()->GetGLFWWindow());
 	}
 

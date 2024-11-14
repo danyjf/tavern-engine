@@ -2,16 +2,16 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
-#include "Tavern/Core/Log.h"
 #include "Tavern/Core/Engine.h"
 #include "Tavern/Renderer/Window.h"
 #include "Tavern/Renderer/RenderManager.h"
 
 int main()
 {
-	Tavern::Engine Engine;
-
-	GLFWwindow* window = Engine.GetRenderManager().GetWindow()->GetGLFWWindow();
+	Tavern::Engine engine;
+	Tavern::Window* window = engine.GetRenderManager().GetWindow();
+	window->GetCursor().SetIsLocked(false);
+	window->GetCursor().SetIsVisible(true);
 
 	// Setup ImGui context
 	IMGUI_CHECKVERSION();
@@ -26,20 +26,33 @@ int main()
 	// ImGui::StyleColorsLight();
 
 	// Setup Platform/Renderer backends
-	ImGui_ImplGlfw_InitForOpenGL(window, true);
+	ImGui_ImplGlfw_InitForOpenGL(window->GetGLFWWindow(), true);
 	ImGui_ImplOpenGL3_Init("#version 460");
 
-	while (Engine.IsRunning())
+	while (engine.IsRunning())
 	{
-		Engine.Update();
-		Engine.Render();
+		engine.Update();
 
-		// Render the editor
 		// Start the Dear ImGui frame
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
+
+		engine.GetRenderManager().Render();
+
+		// Show windows here
+		ImGui::ShowDemoWindow();
+
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+		engine.GetRenderManager().SwapBuffers();
 	}
+
+	// Cleanup
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
 
 	return 0;
 }

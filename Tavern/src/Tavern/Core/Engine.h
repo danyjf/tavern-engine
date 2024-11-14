@@ -29,7 +29,6 @@ namespace Tavern
 		~Engine();
 
 		void Update();
-		void Render();
 
 		bool IsRunning();
 

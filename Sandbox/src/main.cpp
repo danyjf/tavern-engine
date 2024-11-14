@@ -290,7 +290,8 @@ int main()
 	while (TavernEngine.IsRunning())
 	{
 		TavernEngine.Update();
-		TavernEngine.Render();
+		TavernEngine.GetRenderManager().Render();
+		TavernEngine.GetRenderManager().SwapBuffers();
 	}
 
 	return 0;

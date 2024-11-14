@@ -94,7 +94,7 @@ add_subdirectory(vendor/nlohmann_json)
 set(ASSIMP_WARNINGS_AS_ERRORS OFF)
 add_subdirectory(vendor/assimp)
 
-add_library(Tavern SHARED 
+add_library(Tavern STATIC 
     ${SOURCES} 
     ${SOURCES_TAVERN} 
     ${SOURCES_TAVERN_COMPONENTS}
@@ -152,8 +152,8 @@ target_precompile_headers(Tavern PRIVATE
 
 add_custom_target(RunPostTavernBuild ALL
 	COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_DIRECTORY}/Sandbox
-    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Tavern> ${OUTPUT_DIRECTORY}/Sandbox
-    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Tavern> ${OUTPUT_DIRECTORY}/Taverner
+    # COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Tavern> ${OUTPUT_DIRECTORY}/Sandbox
+    # COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Tavern> ${OUTPUT_DIRECTORY}/Taverner
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Assets ${OUTPUT_DIRECTORY}/Sandbox/BuiltInAssets
 )
 
