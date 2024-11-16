@@ -25,7 +25,7 @@ namespace Tavern
 	class TAVERN_API Engine
 	{
 	public:
-		Engine();
+		Engine(const WindowSettings& windowSettings = WindowSettings());
 		~Engine();
 
 		void Update();

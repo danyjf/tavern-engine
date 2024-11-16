@@ -15,10 +15,10 @@
 
 namespace Tavern
 {
-	Engine::Engine()
+	Engine::Engine(const WindowSettings& windowSettings)
 		: m_EventManager(),
 		  m_ResourceManager(),
-		  m_RenderManager(m_EventManager, m_ResourceManager),
+		  m_RenderManager(m_EventManager, m_ResourceManager, windowSettings),
 		  m_InputManager(m_RenderManager),
 		  m_TimeManager(),
 		  m_Scene(*this),
