@@ -1,7 +1,7 @@
 {
   "name": "Cube",
-  "vertexShader": "C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/BuiltInAssets/Shaders/LitShader.vert",
-  "fragmentShader": "C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/BuiltInAssets/Shaders/LitShader.frag",
+  "vertexShader": "C:/Dev/tavern-engine/bin/Debug-Windows-x64/EngineTestProject/BuiltInAssets/Shaders/LitShader.vert",
+  "fragmentShader": "C:/Dev/tavern-engine/bin/Debug-Windows-x64/EngineTestProject/BuiltInAssets/Shaders/LitShader.frag",
   "properties": {
     "ambient": {
       "type": "vec3",
@@ -21,6 +21,6 @@
     }
   },
   "textures": {
-    "albedoMap": "C:/Dev/tavern-engine/bin/Debug-Windows-x64/Sandbox/Assets/Textures/container.jpg"
+    "albedoMap": "C:/Dev/tavern-engine/bin/Debug-Windows-x64/EngineTestProject/Assets/Textures/backpack/diffuse.jpg"
   }
 }

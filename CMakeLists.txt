@@ -21,8 +21,8 @@ set(CMAKE_CONFIGURATION_TYPES
 set(OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/$<CONFIG>-${CMAKE_SYSTEM_NAME}-x64)
 
 add_subdirectory(Tavern)
-add_subdirectory(Sandbox)
+add_subdirectory(EngineTestProject)
 add_subdirectory(Taverner)
 
-# Set the Sandbox project as the startup project on visual studio
-set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Sandbox)
+# Set the EngineTestProject project as the startup project on visual studio
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT EngineTestProject)
