@@ -1,5 +1,13 @@
 set(SOURCES
 	src/main.cpp
+	src/Backpack.cpp
+	src/Backpack.h
+    src/Cube.cpp
+	src/Cube.h
+    src/Light.cpp
+	src/Light.h
+	src/Player.cpp
+	src/Player.h
 )
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Sandbox)
