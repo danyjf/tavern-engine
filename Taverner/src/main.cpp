@@ -40,7 +40,6 @@ int main()
 
 		// Display windows here
 		{
-
 			ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoResize
 										   | ImGuiWindowFlags_NoTitleBar
 										   | ImGuiWindowFlags_NoMove
@@ -52,6 +51,10 @@ int main()
 			ImGui::SetNextWindowPos(ImVec2(window->GetWindowSettings().Width / 2.0f, window->GetWindowSettings().Height / 2.0f), ImGuiCond_Always, ImVec2(0.5f, 0.5f));
 			ImGui::Begin("Project", nullptr, windowFlags);
 
+			ImGui::Text("Path: ");
+			ImGui::SameLine();
+			char projectPath[512];
+			ImGui::InputText("##1", projectPath, 512);
 			if (ImGui::Button("Create", ImVec2(75.0, 25.0))) // Buttons return true when clicked (most widgets return true when edited/activated)
 			{
 			}
