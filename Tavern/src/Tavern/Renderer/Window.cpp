@@ -142,6 +142,17 @@ namespace Tavern
 		return m_Cursor;
 	}
 
+	void Window::SetSize(int width, int height)
+	{
+		glfwSetWindowSize(m_Window, width, height);
+	}
+
+	void Window::SetTitle(const std::string& title)
+	{
+		glfwSetWindowTitle(m_Window, title.c_str());
+		m_WindowSettings.Title = title;
+	}
+
 	void Window::OnWindowResizeEvent(const std::shared_ptr<WindowResizeEvent>& event)
 	{
 		m_WindowSettings.Width = event->GetWidth();

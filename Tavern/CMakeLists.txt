@@ -143,6 +143,7 @@ target_precompile_headers(Tavern PRIVATE
 	$<$<COMPILE_LANGUAGE:CXX>:<unordered_set$<ANGLE-R>>
 	$<$<COMPILE_LANGUAGE:CXX>:<utility$<ANGLE-R>>
 	$<$<COMPILE_LANGUAGE:CXX>:<vector$<ANGLE-R>>
+	$<$<COMPILE_LANGUAGE:CXX>:<filesystem$<ANGLE-R>>
     $<$<COMPILE_LANGUAGE:CXX>:<glm/glm.hpp$<ANGLE-R>>
     $<$<COMPILE_LANGUAGE:CXX>:<glm/gtc/matrix_transform.hpp$<ANGLE-R>>
 

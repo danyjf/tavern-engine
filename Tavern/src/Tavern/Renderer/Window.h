@@ -36,6 +36,8 @@ namespace Tavern
 		GLFWwindow* GetGLFWWindow() const;
 		const WindowSettings& GetWindowSettings() const;
 		Cursor& GetCursor();
+		void SetSize(const int width, const int height);
+		void SetTitle(const std::string& title);
 
 		void OnWindowResizeEvent(const std::shared_ptr<WindowResizeEvent>& event);
 
