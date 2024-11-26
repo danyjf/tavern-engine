@@ -1,44 +1,28 @@
 #include <filesystem>
 #include <fstream>
+#include <string>
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
-#include <Tavern/Core/Engine.h>
+#include <Tavern/Renderer/Window.h>
 
-int main()
+#include "Taverner/Windows/ProjectWindow.h"
+
+namespace Taverner
 {
-	// Setup Tavern Engine
-	Tavern::Engine engine(Tavern::WindowSettings("Projects", 500, 350));
-	Tavern::Window* window = engine.GetRenderManager().GetWindow();
-	window->GetCursor().SetIsLocked(false);
-	window->GetCursor().SetIsVisible(true);
-
-	// Setup ImGui context
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO();
-	(void)io;
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;	  // Enable Docking
-
-	// Setup Dear ImGui style
-	ImGui::StyleColorsDark();
-
-	// Setup Platform/Renderer backends
-	ImGui_ImplGlfw_InitForOpenGL(window->GetGLFWWindow(), true);
-	ImGui_ImplOpenGL3_Init("#version 460");
-
-	bool selectingProject = true;
-	// Create/Open project stuff -------------------------------------------------
-	while (selectingProject)
+	ProjectWindow::ProjectWindow(Tavern::Window* window, const std::string& title, int width, int height)
 	{
-		engine.Update();
+		m_Window = window;
+		m_Window->SetTitle(title);
+		m_Window->SetSize(width, height);
+	}
 
+	void ProjectWindow::Render()
+	{
 		// Start the Dear ImGui frame
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
-		engine.GetRenderManager().Render();
 
 		// Display windows here
 		{
@@ -50,7 +34,7 @@ int main()
 										   | ImGuiWindowFlags_NoBackground
 										   | ImGuiWindowFlags_AlwaysAutoResize
 										   | ImGuiWindowFlags_NoCollapse;
-			ImGui::SetNextWindowPos(ImVec2(window->GetWindowSettings().Width / 2.0f, window->GetWindowSettings().Height / 2.0f), ImGuiCond_Always, ImVec2(0.5f, 0.5f));
+			ImGui::SetNextWindowPos(ImVec2(m_Window->GetWindowSettings().Width / 2.0f, m_Window->GetWindowSettings().Height / 2.0f), ImGuiCond_Always, ImVec2(0.5f, 0.5f));
 			ImGui::Begin("Project", nullptr, windowFlags);
 
 			// ImGui::Text("Path: ");
@@ -95,7 +79,7 @@ int main()
 
 				// Create a project.config json file
 
-				selectingProject = false;
+				m_IsSelectingProject = false;
 			}
 			ImGui::SameLine(0.0, 20.0);
 			if (ImGui::Button("Open", ImVec2(75.0, 25.0)))
@@ -107,34 +91,10 @@ int main()
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-		engine.GetRenderManager().SwapBuffers();
 	}
 
-	window->SetTitle("MyProject");
-	window->SetSize(800, 600);
-	// Game stuff --------------------------------------------------------------------
-	while (engine.IsRunning())
+	const bool ProjectWindow::IsSelectingProject() const
 	{
-		engine.Update();
-
-		// Start the Dear ImGui frame
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
-		ImGui::NewFrame();
-		engine.GetRenderManager().Render();
-
-		// Display windows here
-		ImGui::ShowDemoWindow();
-
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-		engine.GetRenderManager().SwapBuffers();
+		return m_IsSelectingProject;
 	}
-
-	// Cleanup
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplGlfw_Shutdown();
-	ImGui::DestroyContext();
-
-	return 0;
 }

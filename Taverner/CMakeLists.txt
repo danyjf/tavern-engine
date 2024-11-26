@@ -1,7 +1,13 @@
-set(SOURCES
-	src/main.cpp
+set(SOURCES_TAVERNER
+	src/Taverner/main.cpp
 )
-set(SOURCES_IMGUI
+set(SOURCES_TAVERNER_WINDOWS
+    src/Taverner/Windows/ProjectWindow.h
+    src/Taverner/Windows/ProjectWindow.cpp
+    src/Taverner/Windows/EditorWindow.h
+    src/Taverner/Windows/EditorWindow.cpp
+)
+set(VENDOR_IMGUI
     vendor/imgui/imconfig.h
     vendor/imgui/imgui.cpp
     vendor/imgui/imgui.h
@@ -26,29 +32,27 @@ set(SOURCES_IMGUI
     vendor/imgui/misc/cpp/imgui_stdlib.h
 )
 
+source_group(vendor/imgui FILES ${VENDOR_IMGUI})
+source_group(src/Taverner FILES ${SOURCES_TAVERNER})
+source_group(src/Taverner/Windows FILES ${SOURCES_TAVERNER_WINDOWS})
+
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Taverner)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Taverner)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Taverner)
 
 add_executable(Taverner 
-    ${SOURCES}
-    ${SOURCES_IMGUI}
+    ${VENDOR_IMGUI}
+    ${SOURCES_TAVERNER}
+    ${SOURCES_TAVERNER_WINDOWS}
 )
-
-source_group(src FILES ${SOURCES})
-source_group(src FILES ${SOURCES_IMGUI})
 
 target_include_directories(Taverner PRIVATE 
 	${CMAKE_SOURCE_DIR}/Tavern/src
 	${CMAKE_SOURCE_DIR}/Tavern/vendor/spdlog/include	
     ${CMAKE_SOURCE_DIR}/Tavern/vendor/Glad/include
+    ${CMAKE_SOURCE_DIR}/Taverner/src
     ${CMAKE_SOURCE_DIR}/Taverner/vendor/imgui
     ${CMAKE_SOURCE_DIR}/Taverner/vendor/imgui/backends
-)
-
-target_compile_definitions(Taverner PRIVATE
-	$<$<CONFIG:Debug>:TAVERN_DEBUG>
-	$<$<CONFIG:Release>:TAVERN_RELEASE>
 )
 
 if(WIN32)
