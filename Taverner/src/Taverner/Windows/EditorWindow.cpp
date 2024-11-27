@@ -1,4 +1,7 @@
+#include <filesystem>
+#include <fstream>
 #include <imgui.h>
+#include <imgui_internal.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 #include <Tavern/Renderer/Window.h>
@@ -30,28 +33,93 @@ namespace Taverner
 			| ImGuiWindowFlags_NoBringToFrontOnFocus 
 			| ImGuiWindowFlags_NoBackground
 			| ImGuiWindowFlags_NoNavFocus;
-		ImGui::Begin("Project", nullptr, windowFlags);
-
-		ImGuiDockNodeFlags dockspaceFlags = ImGuiDockNodeFlags_PassthruCentralNode;
-		ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport(), dockspaceFlags);
-
-		if (ImGui::BeginMainMenuBar())
+		if (ImGui::Begin("Editor", nullptr, windowFlags))
 		{
-			if (ImGui::BeginMenu("File"))
+			ImGuiDockNodeFlags dockspaceFlags = ImGuiDockNodeFlags_PassthruCentralNode;
+			ImGuiID dockSpaceID = ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport(), dockspaceFlags);
+
+			if (ImGui::BeginMainMenuBar())
 			{
-				ImGui::MenuItem("New Project");
-				ImGui::MenuItem("Open Project");
-				ImGui::EndMenu();
+				if (ImGui::BeginMenu("File"))
+				{
+					if (ImGui::MenuItem("New Project"))
+					{
+						std::string projectName("EditorTestProject");
+						std::string path("C:/Dev/tavern-engine");
+						path += "/" + projectName;
+
+						// Create CMakeLists.txt to build the project into dll using cmake
+						std::filesystem::create_directory(path);
+						std::ofstream cMakeListsFile(
+							path + "/" + "CMakeLists.txt",
+							std::ofstream::out | std::ofstream::trunc
+						);
+
+						cMakeListsFile << "cmake_minimum_required(VERSION 3.30)" << std::endl;
+						cMakeListsFile << std::endl;
+						cMakeListsFile << "project(" << projectName << ")" << std::endl;
+						cMakeListsFile << std::endl;
+						cMakeListsFile << "set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY .taverner/)" << std::endl;
+						cMakeListsFile << "set(CMAKE_LIBRARY_OUTPUT_DIRECTORY .taverner/)" << std::endl;
+						cMakeListsFile << "set(CMAKE_RUNTIME_OUTPUT_DIRECTORY .taverner/)" << std::endl;
+						cMakeListsFile << std::endl;
+						cMakeListsFile << "set(SOURCES" << std::endl;
+						cMakeListsFile << ")" << std::endl;
+						cMakeListsFile << std::endl;
+						cMakeListsFile << "add_library(${PROJECT_NAME} SHARED ${SOURCES})" << std::endl;
+						cMakeListsFile << std::endl;
+						cMakeListsFile << "target_include_directories(${PROJECT_NAME} PRIVATE" << std::endl;
+						cMakeListsFile << "../Tavern/src" << std::endl;
+						cMakeListsFile << "../Tavern/vendor/spdlog/include" << std::endl;
+						cMakeListsFile << "../Tavern/vendor/Glad/include" << std::endl;
+						cMakeListsFile << ")" << std::endl;
+						cMakeListsFile << std::endl;
+
+						cMakeListsFile.close();
+
+						// Create a project.config json file
+					}
+					if (ImGui::MenuItem("Open Project"))
+					{
+					}
+					ImGui::EndMenu();
+				}
+
+				ImGui::EndMainMenuBar();
 			}
 
-			ImGui::EndMainMenuBar();
+			if (ImGui::Begin("Scene"))
+			{
+				ImGui::Text("Scene Hierarchy Window");
+			}
+			ImGui::End();
+
+			if (ImGui::Begin("Inspector"))
+			{
+				ImGui::Text("Inspector Window");
+			}
+			ImGui::End();
+
+			if (ImGui::Begin("File System"))
+			{
+				ImGui::Text("File System Window");
+			}
+			ImGui::End();
+
+			if (ImGui::Begin("Viewport"))
+			{
+				ImGui::Text("Viewport Window");
+			}
+			ImGui::End();
 		}
-
-		ImGui::ShowDemoWindow();
-
 		ImGui::End();
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+		GLFWwindow* backupCurrentContext = glfwGetCurrentContext();
+        ImGui::UpdatePlatformWindows();
+        ImGui::RenderPlatformWindowsDefault();
+        glfwMakeContextCurrent(backupCurrentContext);
 	}
 }

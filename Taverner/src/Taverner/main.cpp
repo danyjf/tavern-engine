@@ -5,23 +5,7 @@
 #include <imgui_impl_opengl3.h>
 #include <Tavern/Core/Engine.h>
 
-#include "Taverner/Windows/ProjectWindow.h"
 #include "Taverner/Windows/EditorWindow.h"
-
-std::string RunProjectWindow(Tavern::Engine& engine, Tavern::Window* window)
-{
-	Taverner::ProjectWindow projectWindow(window, "Projects", 500, 350);
-	while (projectWindow.IsSelectingProject() && engine.IsRunning())
-	{
-		engine.Update();
-		engine.GetRenderManager().Render();
-
-		projectWindow.Render();
-
-		engine.GetRenderManager().SwapBuffers();
-	}
-	return "ProjectName";
-}
 
 void RunEditorWindow(std::string projectName, Tavern::Engine& engine, Tavern::Window* window)
 {
@@ -53,9 +37,16 @@ int main()
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;	  // Enable Docking
+	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;	  // Enable Multi-Viewports
+	io.IniFilename = "C:/Dev/tavern-engine/bin/Debug-Windows-x64/Taverner/imgui.ini";
 
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
+
+	// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
+    ImGuiStyle& style = ImGui::GetStyle();
+	style.WindowRounding = 0.0f;
+    style.Colors[ImGuiCol_WindowBg].w = 1.0f;
 
 	// Setup Platform/Renderer backends
 	ImGui_ImplGlfw_InitForOpenGL(window->GetGLFWWindow(), true);
@@ -63,8 +54,16 @@ int main()
 
 	// TODO: Instead of having two window, just launch with editor window
 	// and then let the user use "Open Project"/"Create Project" buttons
-	std::string projectName = RunProjectWindow(engine, window);
-	RunEditorWindow(projectName, engine, window);
+	Taverner::EditorWindow editorWindow(window, "Unnamed Project", 800, 600);
+	while (engine.IsRunning())
+	{
+		engine.Update();
+		engine.GetRenderManager().Render();
+
+		editorWindow.Render();
+
+		engine.GetRenderManager().SwapBuffers();
+	}
 
 	// Cleanup
 	ImGui_ImplOpenGL3_Shutdown();

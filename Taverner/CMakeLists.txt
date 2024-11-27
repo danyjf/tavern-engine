@@ -2,8 +2,6 @@ set(SOURCES_TAVERNER
 	src/Taverner/main.cpp
 )
 set(SOURCES_TAVERNER_WINDOWS
-    src/Taverner/Windows/ProjectWindow.h
-    src/Taverner/Windows/ProjectWindow.cpp
     src/Taverner/Windows/EditorWindow.h
     src/Taverner/Windows/EditorWindow.cpp
 )
