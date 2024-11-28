@@ -8,13 +8,21 @@
 
 #include "Taverner/Windows/EditorWindow.h"
 
+using namespace Tavern;
+
 namespace Taverner
 {
-	EditorWindow::EditorWindow(Tavern::Window* window, const std::string& title, int width, int height)
+	EditorWindow::EditorWindow(Window* window, const std::string& title, int width, int height)
 	{
 		m_Window = window;
 		m_Window->SetTitle(title);
 		m_Window->SetSize(width, height);
+
+		FramebufferSettings framebufferSettings;
+		framebufferSettings.Width = 1280;
+		framebufferSettings.Height = 720;
+		framebufferSettings.TextureSettings = FramebufferTextureSettings(1280, 720, FramebufferTextureFormat::RGBA8);
+		m_Framebuffer = Framebuffer(framebufferSettings);
 	}
 
 	void EditorWindow::Render()
@@ -106,9 +114,8 @@ namespace Taverner
 			}
 			ImGui::End();
 
-			if (ImGui::Begin("Viewport"))
+			if (ImGui::Begin("Game"))
 			{
-				ImGui::Text("Viewport Window");
 			}
 			ImGui::End();
 		}

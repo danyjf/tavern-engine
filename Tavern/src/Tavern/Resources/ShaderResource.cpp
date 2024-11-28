@@ -88,7 +88,7 @@ namespace Tavern
 		glDeleteShader(fragment);
 
 		// Get data about uniform variables
-		Use();
+		Bind();
 		int count;
 		glGetProgramiv(ID, GL_ACTIVE_UNIFORMS, &count);
 
@@ -130,7 +130,7 @@ namespace Tavern
 		m_MaterialUniformBufferSize = uniformBufferOffset;
 	}
 
-	void ShaderResource::Use()
+	void ShaderResource::Bind()
 	{
 		glUseProgram(ID);
 	}

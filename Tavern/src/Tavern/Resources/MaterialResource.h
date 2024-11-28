@@ -25,7 +25,7 @@ namespace Tavern
 		std::shared_ptr<ShaderResource> GetShader();
 		const std::shared_ptr<TextureResource> GetTexture(const std::string& name);
 
-		void Use();
+		void Bind();
 
 	private:
 		std::string m_Name;

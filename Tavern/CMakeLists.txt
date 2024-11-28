@@ -49,6 +49,8 @@ set(SOURCES_TAVERN_RENDERER
 	src/Tavern/Renderer/Window.cpp
     src/Tavern/Renderer/Cursor.h
     src/Tavern/Renderer/Cursor.cpp
+    src/Tavern/Renderer/Framebuffer.h
+    src/Tavern/Renderer/Framebuffer.cpp
 )
 set(SOURCES_TAVERN_RESOURCES
     src/Tavern/Resources/ResourceManager.h

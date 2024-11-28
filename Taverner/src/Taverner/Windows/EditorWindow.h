@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Tavern/Renderer/Framebuffer.h>
+
 namespace Taverner
 {
 	class EditorWindow
@@ -11,5 +13,6 @@ namespace Taverner
 
 	private:
 		Tavern::Window* m_Window;
+		Tavern::Framebuffer m_Framebuffer;
 	};
 }

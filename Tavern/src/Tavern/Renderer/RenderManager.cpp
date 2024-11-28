@@ -102,7 +102,7 @@ namespace Tavern
 		{
 			ShaderResource* shader = pair.first;
 			// Set shader uniforms
-			shader->Use();
+			shader->Bind();
 			if (shader->GetBuiltInUniforms().contains("view"))
 			{
 				shader->SetMat4("view", GetActiveCamera()->GetViewMatrix());
@@ -129,12 +129,12 @@ namespace Tavern
 			for (MaterialResource* material : m_Materials[shader])
 			{
 				// Set material uniforms
-				material->Use();
+				material->Bind();
 
 				for (int i = 0; i < shader->GetSamplers().size(); i++)
 				{
 					glActiveTexture(GL_TEXTURE0 + i);
-					material->GetTexture(shader->GetSamplers()[i])->Use();
+					material->GetTexture(shader->GetSamplers()[i])->Bind();
 				}
 
 				for (RenderComponent* renderComponent : m_RenderComponents[material])

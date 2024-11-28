@@ -23,19 +23,21 @@ namespace Tavern
 		unsigned char* textureData = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
 		if (textureData)
 		{
+			m_Width = width;
+			m_Height = height;
 			switch (nrChannels)
 			{
 				case 1:
-					glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, textureData);
+					glTexImage2D(GL_TEXTURE_2D, 0, GL_R16, width, height, 0, GL_RED, GL_UNSIGNED_BYTE, textureData);
 					break;
 				case 2:
-					glTexImage2D(GL_TEXTURE_2D, 0, GL_RG, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, textureData);
+					glTexImage2D(GL_TEXTURE_2D, 0, GL_RG16, width, height, 0, GL_RG, GL_UNSIGNED_BYTE, textureData);
 					break;
 				case 3:
-					glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, textureData);
+					glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, textureData);
 					break;
 				case 4:
-					glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, textureData);
+					glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureData);
 					break;
 			}
 			glGenerateMipmap(GL_TEXTURE_2D);
@@ -48,7 +50,27 @@ namespace Tavern
 		stbi_image_free(textureData);
 	}
 
-	void TextureResource::Use()
+	TextureResource::~TextureResource()
+	{
+		glDeleteTextures(1, &m_Texture);
+	}
+
+	int TextureResource::GetWidth() const
+	{
+		return m_Width;
+	}
+
+	int TextureResource::GetHeight() const
+	{
+		return m_Height;
+	}
+
+	unsigned int TextureResource::GetTexture() const
+	{
+		return m_Texture;
+	}
+
+	void TextureResource::Bind()
 	{
 		glBindTexture(GL_TEXTURE_2D, m_Texture);
 	}

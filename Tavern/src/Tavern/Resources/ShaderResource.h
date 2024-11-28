@@ -17,7 +17,7 @@ namespace Tavern
 		ShaderResource(ResourceManager& resourceManager, const std::string& vertexPath, const std::string& fragmentPath);
 		virtual ~ShaderResource() = default;
 
-		void Use();
+		void Bind();
 
 		const unsigned int GetID() const { return ID; }
 		const std::unordered_set<std::string>& GetBuiltInUniforms() const { return m_BuiltInUniforms; }

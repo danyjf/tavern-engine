@@ -22,4 +22,3 @@ void main()
     Normal = mat3(transpose(inverse(model))) * aNormal;
     TexCoord = aTexCoord;
 }
-

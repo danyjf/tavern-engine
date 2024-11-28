@@ -129,7 +129,7 @@ namespace Tavern
 	// own uniform type classes like, IntShaderUniform, FloatShaderUniform, etc..., and then
 	// have a function like, SendToGPU(Shader* shader, uniform char* buffer), implemented in
 	// each uniform class to easily send them to the GPU.
-	void MaterialResource::Use()
+	void MaterialResource::Bind()
 	{
 		for (auto pair : m_Shader->GetMaterialUniforms())
 		{

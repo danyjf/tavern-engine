@@ -34,12 +34,17 @@ namespace Tavern
 	{
 	public:
 		TextureResource(ResourceManager& resourceManager, const std::string& path, const TextureSettings& textureSettings);
-		virtual ~TextureResource() override = default;
+		virtual ~TextureResource() override;
 
-		void Use();
+		unsigned int GetTexture() const;
+		int GetWidth() const;
+		int GetHeight() const;
+		void Bind();
 
 	private:
 		unsigned int m_Texture = 0;
 		TextureSettings m_TextureSettings = TextureSettings();
+		int m_Width = 0;
+		int m_Height = 0;
 	};
 }
