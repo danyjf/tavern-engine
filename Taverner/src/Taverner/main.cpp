@@ -7,26 +7,13 @@
 
 #include "Taverner/Windows/EditorWindow.h"
 
-void RunEditorWindow(std::string projectName, Tavern::Engine& engine, Tavern::Window* window)
-{
-	Taverner::EditorWindow editorWindow(window, projectName, 800, 600);
-	while (engine.IsRunning())
-	{
-		engine.Update();
-		engine.GetRenderManager().Render();
-
-		editorWindow.Render();
-
-		engine.GetRenderManager().SwapBuffers();
-	}
-}
+using namespace Tavern;
 
 int main()
 {
 	// Setup Tavern Engine
-	//Tavern::Engine engine(Tavern::WindowSettings("Projects", 500, 350));
-	Tavern::Engine engine;
-	Tavern::Window* window = engine.GetRenderManager().GetWindow();
+	Engine engine;
+	Window* window = engine.GetRenderManager().GetWindow();
 	window->GetCursor().SetIsLocked(false);
 	window->GetCursor().SetIsVisible(true);
 
@@ -52,13 +39,18 @@ int main()
 	ImGui_ImplGlfw_InitForOpenGL(window->GetGLFWWindow(), true);
 	ImGui_ImplOpenGL3_Init("#version 460");
 
-	// TODO: Instead of having two window, just launch with editor window
-	// and then let the user use "Open Project"/"Create Project" buttons
-	Taverner::EditorWindow editorWindow(window, "Unnamed Project", 800, 600);
+	FramebufferSettings framebufferSettings;
+	framebufferSettings.Width = 1280;
+	framebufferSettings.Height = 720;
+	framebufferSettings.TextureSettings = FramebufferTextureSettings(1280, 720, FramebufferTextureFormat::RGBA8);
+	Framebuffer gameFramebuffer = Framebuffer(framebufferSettings);
+	Taverner::EditorWindow editorWindow(window, "Unnamed Project", 800, 600, gameFramebuffer);
 	while (engine.IsRunning())
 	{
 		engine.Update();
+		gameFramebuffer.Bind();
 		engine.GetRenderManager().Render();
+		gameFramebuffer.Unbind();
 
 		editorWindow.Render();
 

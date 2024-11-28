@@ -52,6 +52,11 @@ namespace Tavern
 		return m_FramebufferSettings;
 	}
 
+	unsigned int Framebuffer::GetTexture() const
+	{
+		return m_Texture;
+	}
+
 	void Framebuffer::Bind()
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, m_Framebuffer);

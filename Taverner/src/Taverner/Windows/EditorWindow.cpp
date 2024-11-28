@@ -12,17 +12,12 @@ using namespace Tavern;
 
 namespace Taverner
 {
-	EditorWindow::EditorWindow(Window* window, const std::string& title, int width, int height)
+	EditorWindow::EditorWindow(Window* window, const std::string& title, int width, int height, Framebuffer& gameFramebuffer)
+		: m_GameFramebuffer(gameFramebuffer)
 	{
 		m_Window = window;
 		m_Window->SetTitle(title);
 		m_Window->SetSize(width, height);
-
-		FramebufferSettings framebufferSettings;
-		framebufferSettings.Width = 1280;
-		framebufferSettings.Height = 720;
-		framebufferSettings.TextureSettings = FramebufferTextureSettings(1280, 720, FramebufferTextureFormat::RGBA8);
-		m_Framebuffer = Framebuffer(framebufferSettings);
 	}
 
 	void EditorWindow::Render()
@@ -116,6 +111,9 @@ namespace Taverner
 
 			if (ImGui::Begin("Game"))
 			{
+				ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
+				unsigned int textureID = m_GameFramebuffer.GetTexture();
+				ImGui::Image((ImTextureID)textureID, viewportPanelSize);
 			}
 			ImGui::End();
 		}

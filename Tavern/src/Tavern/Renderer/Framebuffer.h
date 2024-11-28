@@ -39,6 +39,7 @@ namespace Tavern
 		~Framebuffer();
 
 		const FramebufferSettings& GetFramebufferSettings() const;
+		unsigned int GetTexture() const;
 
 		void Bind();
 		void Unbind();
