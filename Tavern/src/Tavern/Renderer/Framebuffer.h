@@ -8,6 +8,7 @@ namespace Tavern
 
 	enum FramebufferTextureFormat
 	{
+		NONE,
 		RGBA8,
 		RED16,
 		DEPTH24STENCIL8
@@ -21,14 +22,14 @@ namespace Tavern
 
 		int Width = 0;
 		int Height = 0;
-		FramebufferTextureFormat Format = FramebufferTextureFormat::RGBA8;
+		FramebufferTextureFormat Format = FramebufferTextureFormat::NONE;
 	};
 
 	struct FramebufferSettings
 	{
 		int Width = 0;
 		int Height = 0;
-		FramebufferTextureSettings TextureSettings;
+		std::vector<FramebufferTextureSettings> TextureSettings;
 	};
 
 	class TAVERN_API Framebuffer
@@ -39,14 +40,22 @@ namespace Tavern
 		~Framebuffer();
 
 		const FramebufferSettings& GetFramebufferSettings() const;
-		unsigned int GetTexture() const;
+		const std::vector<unsigned int>& GetColorTextures() const;
 
 		void Bind();
 		void Unbind();
 
 	private:
 		unsigned int m_Framebuffer = 0;
-		unsigned int m_Texture = 0;
+
 		FramebufferSettings m_FramebufferSettings = FramebufferSettings();
+		std::vector<FramebufferTextureSettings> m_ColorTextureSettings;
+		FramebufferTextureSettings m_DepthTextureSettings = FramebufferTextureSettings(0, 0, FramebufferTextureFormat::NONE);
+
+		std::vector<unsigned int> m_ColorTextures;
+		unsigned int m_DepthTexture = 0;
+
+		void AddColorTextureToFramebuffer(int index, GLint internalFormat, int width, int height, GLenum format);
+		void AddDepthTextureToFramebuffer(GLint internalFormat, int width, int height, GLenum format, GLenum attachment);
 	};
 }

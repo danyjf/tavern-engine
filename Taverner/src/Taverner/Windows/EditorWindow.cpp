@@ -112,7 +112,7 @@ namespace Taverner
 			if (ImGui::Begin("Game"))
 			{
 				ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-				unsigned int textureID = m_GameFramebuffer.GetTexture();
+				unsigned int textureID = m_GameFramebuffer.GetColorTextures()[0];
 				ImGui::Image((ImTextureID)textureID, viewportPanelSize);
 			}
 			ImGui::End();
