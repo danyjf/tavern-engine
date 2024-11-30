@@ -158,9 +158,9 @@ int main()
 	FramebufferSettings framebufferSettings;
 	framebufferSettings.Width = 800;
 	framebufferSettings.Height = 600;
-	framebufferSettings.TextureSettings = { 
-		FramebufferTextureSettings(800, 600, FramebufferTextureFormat::RGBA8),
-		FramebufferTextureSettings(800, 600, FramebufferTextureFormat::DEPTH24STENCIL8)
+	framebufferSettings.TextureFormats = { 
+		FramebufferTextureFormat::RGBA8,
+		FramebufferTextureFormat::DEPTH24STENCIL8
 	};
 	Framebuffer gameFramebuffer = Framebuffer(framebufferSettings);
 	Taverner::EditorWindow editorWindow(engine, window, "Unnamed Project", 800, 600, gameFramebuffer);

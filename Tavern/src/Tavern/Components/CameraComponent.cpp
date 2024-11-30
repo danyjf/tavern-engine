@@ -29,6 +29,11 @@ namespace Tavern
 		ComputeProjectionMatrix();
 	}
 
+	const glm::vec2 CameraComponent::GetViewportSize() const
+	{
+		return glm::vec2(m_ViewportWidth, m_ViewportHeight);
+	}
+
 	const glm::mat4& CameraComponent::GetViewMatrix() const
 	{
 		return m_ViewMatrix;

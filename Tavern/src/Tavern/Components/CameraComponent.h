@@ -19,6 +19,7 @@ namespace Tavern
 
 		void SetFOV(float FOV);
 		void SetViewportSize(float width, float height);
+		const glm::vec2 GetViewportSize() const;
 
 		const glm::mat4& GetViewMatrix() const;
 		const glm::mat4& GetProjectionMatrix() const;
