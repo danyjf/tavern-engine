@@ -5,6 +5,7 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 #include <Tavern/Renderer/Window.h>
+#include <Tavern/Core/Engine.h>
 
 #include "Taverner/Windows/EditorWindow.h"
 
@@ -12,10 +13,9 @@ using namespace Tavern;
 
 namespace Taverner
 {
-	EditorWindow::EditorWindow(Window* window, const std::string& title, int width, int height, Framebuffer& gameFramebuffer)
-		: m_GameFramebuffer(gameFramebuffer)
+	EditorWindow::EditorWindow(Tavern::Engine& engine, Window* window, const std::string& title, int width, int height, Framebuffer& gameFramebuffer)
+		: m_Engine(engine), m_Window(window), m_GameFramebuffer(gameFramebuffer)
 	{
-		m_Window = window;
 		m_Window->SetTitle(title);
 		m_Window->SetSize(width, height);
 	}
@@ -114,6 +114,8 @@ namespace Taverner
 				ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 				unsigned int textureID = m_GameFramebuffer.GetColorTextures()[0];
 				ImGui::Image((ImTextureID)textureID, viewportPanelSize);
+
+				m_Engine.GetRenderManager().GetActiveCamera()->SetViewportSize(viewportPanelSize.x, viewportPanelSize.y);
 			}
 			ImGui::End();
 		}

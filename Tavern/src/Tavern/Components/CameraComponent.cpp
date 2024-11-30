@@ -21,6 +21,13 @@ namespace Tavern
 		m_FOV = FOV;
 		ComputeProjectionMatrix();
 	}
+	
+	void CameraComponent::SetViewportSize(float width, float height)
+	{
+		m_ViewportWidth = width;
+		m_ViewportHeight = height;
+		ComputeProjectionMatrix();
+	}
 
 	const glm::mat4& CameraComponent::GetViewMatrix() const
 	{
@@ -46,7 +53,7 @@ namespace Tavern
 	{
 		m_ProjectionMatrix = glm::perspective(
 			glm::radians(m_FOV),
-			m_ViewportWidth / m_ViewportWidth,
+			m_ViewportWidth / m_ViewportHeight,
 			m_NearClipPlane,
 			m_FarClipPlane
 		);

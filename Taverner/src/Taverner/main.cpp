@@ -67,6 +67,7 @@ class Player : public Tavern::Entity
 {
 public:
 	std::vector<Cube*> m_Cubes;
+	Tavern::CameraComponent* m_Camera;
 
 	Player(Tavern::Engine& engine)
 		: Tavern::Entity(engine), m_Speed(2.5f), m_Zoom(45.0f)
@@ -112,7 +113,6 @@ public:
 	}
 
 private:
-	Tavern::CameraComponent* m_Camera;
 	float m_Speed;
 	float m_Zoom;
 };
@@ -163,7 +163,7 @@ int main()
 		FramebufferTextureSettings(800, 600, FramebufferTextureFormat::DEPTH24STENCIL8)
 	};
 	Framebuffer gameFramebuffer = Framebuffer(framebufferSettings);
-	Taverner::EditorWindow editorWindow(window, "Unnamed Project", 800, 600, gameFramebuffer);
+	Taverner::EditorWindow editorWindow(engine, window, "Unnamed Project", 800, 600, gameFramebuffer);
 	while (engine.IsRunning())
 	{
 		engine.Update();
