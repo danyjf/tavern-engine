@@ -62,4 +62,5 @@ target_link_libraries(Taverner PRIVATE
     glfw
     glm::glm
     assimp
+    nlohmann_json::nlohmann_json
 )

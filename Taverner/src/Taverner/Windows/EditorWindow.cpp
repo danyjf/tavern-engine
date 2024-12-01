@@ -1,9 +1,11 @@
 #include <filesystem>
 #include <fstream>
+
 #include <imgui.h>
 #include <imgui_internal.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
+
 #include <Tavern/Renderer/Window.h>
 #include <Tavern/Core/Engine.h>
 
@@ -49,10 +51,10 @@ namespace Taverner
 					{
 						std::string projectName("EditorTestProject");
 						std::string path("C:/Dev/tavern-engine");
-						path += "/" + projectName;
+						path += "/" + projectName + "/.Taverner";
 
 						// Create CMakeLists.txt to build the project into dll using cmake
-						std::filesystem::create_directory(path);
+						std::filesystem::create_directories(path);
 						std::ofstream cMakeListsFile(
 							path + "/" + "CMakeLists.txt",
 							std::ofstream::out | std::ofstream::trunc
@@ -81,9 +83,32 @@ namespace Taverner
 						cMakeListsFile.close();
 
 						// Create a project.config json file
+						std::ofstream projectConfigFile(
+							path + "/" + "project.config",
+							std::ofstream::out | std::ofstream::trunc
+						);
+
+						std::string projectConfig = "{\n"
+													"    \"name\": \"MyProject\",\n"
+													"    \"gameDLL\": \"\"\n"
+													"}";
+
+						projectConfigFile << projectConfig;
+
+						projectConfigFile.close();
 					}
 					if (ImGui::MenuItem("Open Project"))
 					{
+					}
+					ImGui::EndMenu();
+				}
+				if (ImGui::BeginMenu("Tools"))
+				{
+					if (ImGui::MenuItem("New C++ Class"))
+					{
+						// Create c++ files
+						// Add files to CMakeLists
+						// Build DLL
 					}
 					ImGui::EndMenu();
 				}
