@@ -112,8 +112,6 @@ namespace Taverner
 			if (ImGui::Begin("Game"))
 			{
 				ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-				unsigned int textureID = m_GameFramebuffer.GetColorTextures()[0];
-				ImGui::Image((ImTextureID)textureID, viewportPanelSize);
 
 				const FramebufferSettings& settings = m_GameFramebuffer.GetFramebufferSettings();
 				if (viewportPanelSize.x > 0.0f && viewportPanelSize.y > 0.0f &&
@@ -122,6 +120,9 @@ namespace Taverner
 					m_GameFramebuffer.Resize(viewportPanelSize.x, viewportPanelSize.y);
 					m_Engine.GetRenderManager().GetActiveCamera()->SetViewportSize(viewportPanelSize.x, viewportPanelSize.y);
 				}
+
+				unsigned int textureID = m_GameFramebuffer.GetColorTextures()[0];
+				ImGui::Image((ImTextureID)textureID, viewportPanelSize);
 			}
 			ImGui::End();
 		}

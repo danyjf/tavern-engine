@@ -71,7 +71,7 @@ namespace Tavern
 			case FramebufferTextureFormat::NONE:
 				break;
 			case FramebufferTextureFormat::DEPTH24STENCIL8:
-				AddDepthTextureToFramebuffer(GL_DEPTH24_STENCIL8, m_FramebufferSettings.Width, m_FramebufferSettings.Width, GL_DEPTH_STENCIL, GL_DEPTH_STENCIL_ATTACHMENT);
+				AddDepthTextureToFramebuffer(GL_DEPTH24_STENCIL8, m_FramebufferSettings.Width, m_FramebufferSettings.Height, GL_DEPTH_STENCIL, GL_DEPTH_STENCIL_ATTACHMENT);
 				break;
 		}
 

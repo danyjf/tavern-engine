@@ -156,6 +156,7 @@ namespace Tavern
 	void RenderManager::OnWindowResizeEvent(const std::shared_ptr<WindowResizeEvent>& event)
 	{
 		glViewport(0, 0, event->GetWidth(), event->GetHeight());
+		GetActiveCamera()->SetViewportSize(event->GetWidth(), event->GetHeight());
 
 		TAVERN_ENGINE_TRACE("Window Resize Event: ({0}, {1})", event->GetWidth(), event->GetHeight());
 	}
