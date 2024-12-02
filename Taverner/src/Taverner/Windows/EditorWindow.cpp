@@ -1,3 +1,4 @@
+#include <Windows.h>
 #include <filesystem>
 #include <fstream>
 
@@ -64,19 +65,24 @@ namespace Taverner
 						cMakeListsFile << std::endl;
 						cMakeListsFile << "project(" << projectName << ")" << std::endl;
 						cMakeListsFile << std::endl;
-						cMakeListsFile << "set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY .taverner/)" << std::endl;
-						cMakeListsFile << "set(CMAKE_LIBRARY_OUTPUT_DIRECTORY .taverner/)" << std::endl;
-						cMakeListsFile << "set(CMAKE_RUNTIME_OUTPUT_DIRECTORY .taverner/)" << std::endl;
+						cMakeListsFile << "set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)" << std::endl;
+						cMakeListsFile << "set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)" << std::endl;
+						cMakeListsFile << "set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)" << std::endl;
 						cMakeListsFile << std::endl;
 						cMakeListsFile << "set(SOURCES" << std::endl;
+						cMakeListsFile << "../Cube.h" << std::endl;
+						cMakeListsFile << "../Cube.cpp" << std::endl;
 						cMakeListsFile << ")" << std::endl;
 						cMakeListsFile << std::endl;
 						cMakeListsFile << "add_library(${PROJECT_NAME} SHARED ${SOURCES})" << std::endl;
 						cMakeListsFile << std::endl;
 						cMakeListsFile << "target_include_directories(${PROJECT_NAME} PRIVATE" << std::endl;
-						cMakeListsFile << "../Tavern/src" << std::endl;
-						cMakeListsFile << "../Tavern/vendor/spdlog/include" << std::endl;
-						cMakeListsFile << "../Tavern/vendor/Glad/include" << std::endl;
+						cMakeListsFile << "../../Tavern/src" << std::endl;
+						cMakeListsFile << "../../Tavern/vendor/spdlog/include" << std::endl;
+						cMakeListsFile << "../../Tavern/vendor/Glad/include" << std::endl;
+						cMakeListsFile << ")" << std::endl;
+						cMakeListsFile << "target_link_libraries(${PROJECT_NAME} PRIVATE" << std::endl;
+						cMakeListsFile << "C:/Dev/tavern-engine/bin/Debug-Windows-x64/Taverner/Tavernd.lib" << std::endl;
 						cMakeListsFile << ")" << std::endl;
 						cMakeListsFile << std::endl;
 
@@ -89,7 +95,8 @@ namespace Taverner
 						);
 
 						std::string projectConfig = "{\n"
-													"    \"name\": \"MyProject\",\n"
+													"    \"name\": \"EditorTestProject\",\n"
+													"    \"projectPath\": \"" + path + "\",\n"
 													"    \"gameDLL\": \"\"\n"
 													"}";
 
@@ -106,11 +113,27 @@ namespace Taverner
 				{
 					if (ImGui::MenuItem("New C++ Class"))
 					{
+						// TODO:
 						// Create c++ files
 						// Add files to CMakeLists
 						// Build DLL
 					}
+
+					if (ImGui::MenuItem("Generate Visual Studio 2022 Project"))
+					{
+						system("cmake -S C:/Dev/tavern-engine/EditorTestProject/.Taverner -B C:/Dev/tavern-engine/EditorTestProject/.Taverner/Build -G \"Visual Studio 17 2022\" -A x64");
+					}
+
 					ImGui::EndMenu();
+				}
+
+				if (ImGui::MenuItem("Play"))
+				{
+					// TODO:
+					// Build the game dll
+					// Spawn in a cube entity
+					system("cmake --build C:/Dev/tavern-engine/EditorTestProject/.Taverner/Build");
+					//LoadLibrary("C:/Dev/tavern-engine/EditorTestProject/.Taverner/bin/");
 				}
 
 				ImGui::EndMainMenuBar();

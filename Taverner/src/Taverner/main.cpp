@@ -3,8 +3,8 @@
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
-#include <Tavern/Core/Engine.h>
 
+#include <Tavern/Core/Engine.h>
 #include <Tavern/Scene/Entity.h>
 #include <Tavern/Components/MeshComponent.h>
 #include <Tavern/Components/LightComponent.h>
@@ -47,29 +47,10 @@ private:
 	glm::vec3 m_StartPosition;
 };
 
-class Cube : public Tavern::Entity
+class EditorCamera : public Tavern::Entity
 {
 public:
-	Cube(Tavern::Engine& engine)
-		: Tavern::Entity(engine)
-	{
-		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("C:/Dev/tavern-engine/bin/Debug-Windows-x64/EngineTestProject/Assets/Materials/Cube.material");
-		std::shared_ptr<Tavern::MeshResource> mesh = GetEngine().GetResourceManager().LoadMesh("C:/Dev/tavern-engine/bin/Debug-Windows-x64/EngineTestProject/BuiltInAssets/Meshes/Cube.obj");
-		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>(material);
-		m_Mesh->SetMesh(mesh);
-	}
-
-private:
-	Tavern::MeshComponent* m_Mesh;
-};
-
-class Player : public Tavern::Entity
-{
-public:
-	std::vector<Cube*> m_Cubes;
-	Tavern::CameraComponent* m_Camera;
-
-	Player(Tavern::Engine& engine)
+	EditorCamera(Tavern::Engine& engine)
 		: Tavern::Entity(engine), m_Speed(2.5f), m_Zoom(45.0f)
 	{
 		m_Camera = CreateComponentOfType<Tavern::CameraComponent>();
@@ -112,7 +93,13 @@ public:
 		}
 	}
 
+	Tavern::CameraComponent* GetCamera()
+	{
+		return m_Camera;
+	}
+
 private:
+	Tavern::CameraComponent* m_Camera;
 	float m_Speed;
 	float m_Zoom;
 };
@@ -128,10 +115,8 @@ int main()
 	window->GetCursor().SetIsVisible(true);
 
 	// TODO: Remove this game code
-	Player* player = engine.GetScene().CreateEntity<Player>();
+	EditorCamera* editorCamera = engine.GetScene().CreateEntity<EditorCamera>();
 	Light* light = engine.GetScene().CreateEntity<Light>();
-	Cube* cube1 = engine.GetScene().CreateEntity<Cube>();
-	cube1->GetTransform()->SetLocalPosition(glm::vec3(0.0f, 0.0f, 0.0f));
 
 	// Setup ImGui context
 	ImGui::CreateContext();
@@ -152,7 +137,9 @@ int main()
     style.Colors[ImGuiCol_WindowBg].w = 1.0f;
 
 	// Setup Platform/Renderer backends
-	ImGui_ImplGlfw_InitForOpenGL(window->GetGLFWWindow(), true);
+	GLFWwindow* glfwWindow = window->GetGLFWWindow();
+	glfwMakeContextCurrent(glfwWindow);
+	ImGui_ImplGlfw_InitForOpenGL(glfwWindow, true);
 	ImGui_ImplOpenGL3_Init("#version 460");
 
 	FramebufferSettings framebufferSettings;
