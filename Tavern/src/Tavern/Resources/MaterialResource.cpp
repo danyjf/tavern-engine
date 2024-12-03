@@ -14,6 +14,10 @@ namespace Tavern
 		: Resource(resourceManager, path)
 	{
 		std::ifstream file(path);
+		if (file.fail())
+		{
+			TAVERN_ENGINE_ERROR("Failed to read file at {}. File does not exist", path);
+		}
 		nlohmann::json data = nlohmann::json::parse(file);
 
 		m_Name = data["name"];

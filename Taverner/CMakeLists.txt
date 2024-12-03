@@ -1,9 +1,7 @@
 set(SOURCES_TAVERNER
 	src/Taverner/main.cpp
-)
-set(SOURCES_TAVERNER_WINDOWS
-    src/Taverner/Windows/EditorWindow.h
-    src/Taverner/Windows/EditorWindow.cpp
+    src/Taverner/Editor.h
+    src/Taverner/Editor.cpp
 )
 set(VENDOR_IMGUI
     vendor/imgui/imconfig.h
@@ -32,7 +30,6 @@ set(VENDOR_IMGUI
 
 source_group(vendor/imgui FILES ${VENDOR_IMGUI})
 source_group(src/Taverner FILES ${SOURCES_TAVERNER})
-source_group(src/Taverner/Windows FILES ${SOURCES_TAVERNER_WINDOWS})
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Taverner)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Taverner)

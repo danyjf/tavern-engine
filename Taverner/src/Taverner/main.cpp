@@ -9,7 +9,7 @@
 #include <Tavern/Components/MeshComponent.h>
 #include <Tavern/Components/LightComponent.h>
 
-#include "Taverner/Windows/EditorWindow.h"
+#include "Taverner/Editor.h"
 
 class Light : public Tavern::Entity
 {
@@ -142,7 +142,7 @@ int main()
 	ImGui_ImplGlfw_InitForOpenGL(glfwWindow, true);
 	ImGui_ImplOpenGL3_Init("#version 460");
 
-	Taverner::EditorWindow editor(engine, window, "Unnamed Project", 800, 600);
+	Taverner::Editor editor(engine, window, "Unnamed Project", 800, 600);
 	while (engine.IsRunning())
 	{
 		engine.Update();
