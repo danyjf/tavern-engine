@@ -16,8 +16,12 @@ namespace Tavern
 
 	struct FramebufferSettings
 	{
-		int Width = 0;
-		int Height = 0;
+		FramebufferSettings() = default;
+		FramebufferSettings(int width, int height, std::vector<FramebufferTextureFormat> textureFormats)
+			: Width(width), Height(height), TextureFormats(textureFormats) 
+		{}
+		int Width = 1920;
+		int Height = 1080;
 		std::vector<FramebufferTextureFormat> TextureFormats;
 	};
 
@@ -27,6 +31,11 @@ namespace Tavern
 		Framebuffer() = default;
 		Framebuffer(const FramebufferSettings& framebufferSettings);
 		~Framebuffer();
+
+		Framebuffer(const Framebuffer& other) = delete;
+		Framebuffer(Framebuffer&& other) = delete;
+		Framebuffer& operator=(const Framebuffer& other) = delete;
+		Framebuffer& operator=(Framebuffer&& other) = delete;
 
 		const FramebufferSettings& GetFramebufferSettings() const;
 		const std::vector<unsigned int>& GetColorTextures() const;

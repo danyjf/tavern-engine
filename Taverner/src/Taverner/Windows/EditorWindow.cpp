@@ -16,11 +16,16 @@ using namespace Tavern;
 
 namespace Taverner
 {
-	EditorWindow::EditorWindow(Tavern::Engine& engine, Window* window, const std::string& title, int width, int height, Framebuffer& gameFramebuffer)
-		: m_Engine(engine), m_Window(window), m_GameFramebuffer(gameFramebuffer)
+	EditorWindow::EditorWindow(Engine& engine, Window* window, const std::string& title, int width, int height)
+		: m_Engine(engine), m_Window(window)
 	{
 		m_Window->SetTitle(title);
 		m_Window->SetSize(width, height);
+	}
+
+	Tavern::Framebuffer& EditorWindow::GetGameFramebuffer()
+	{
+		return m_GameFramebuffer;
 	}
 
 	void EditorWindow::Render()

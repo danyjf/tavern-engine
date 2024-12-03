@@ -142,23 +142,15 @@ int main()
 	ImGui_ImplGlfw_InitForOpenGL(glfwWindow, true);
 	ImGui_ImplOpenGL3_Init("#version 460");
 
-	FramebufferSettings framebufferSettings;
-	framebufferSettings.Width = 800;
-	framebufferSettings.Height = 600;
-	framebufferSettings.TextureFormats = { 
-		FramebufferTextureFormat::RGBA8,
-		FramebufferTextureFormat::DEPTH24STENCIL8
-	};
-	Framebuffer gameFramebuffer = Framebuffer(framebufferSettings);
-	Taverner::EditorWindow editorWindow(engine, window, "Unnamed Project", 800, 600, gameFramebuffer);
+	Taverner::EditorWindow editor(engine, window, "Unnamed Project", 800, 600);
 	while (engine.IsRunning())
 	{
 		engine.Update();
-		gameFramebuffer.Bind();
+		editor.GetGameFramebuffer().Bind();
 		engine.GetRenderManager().Render();
-		gameFramebuffer.Unbind();
+		editor.GetGameFramebuffer().Unbind();
 
-		editorWindow.Render();
+		editor.Render();
 
 		engine.GetRenderManager().SwapBuffers();
 	}
