@@ -11,6 +11,7 @@
 
 #include <Tavern/Renderer/Window.h>
 #include <Tavern/Core/Engine.h>
+#include <Tavern/Core/Log.h>
 
 #include "Taverner/Editor.h"
 
@@ -19,7 +20,7 @@ using namespace Tavern;
 namespace Taverner
 {
 	Editor::Editor(Engine& engine, Window* window, const std::string& title, int width, int height)
-		: m_Engine(engine), m_Window(window)
+		: m_Engine(engine), m_Window(window), m_EditorPath(std::filesystem::current_path().generic_string())
 	{
 		m_Window->SetTitle(title);
 		m_Window->SetSize(width, height);
@@ -57,7 +58,8 @@ namespace Taverner
 				{
 					if (ImGui::MenuItem("New Project"))
 					{
-						CreateNewProject("EditorTestProject", "C:/Dev/tavern-engine");
+						//CreateNewProject("EditorTestProject", "C:/Dev/tavern-engine");
+						CreateNewProject("EditorTestProject", "../../..");
 					}
 					if (ImGui::MenuItem("Open Project"))
 					{
@@ -169,11 +171,11 @@ namespace Taverner
 						  "    ../Tavern/vendor/assimp/include\n"
 						  ")\n\n"
 						  "target_link_libraries(${PROJECT_NAME} PRIVATE\n"
-						  "    C:/Dev/tavern-engine/bin/Debug-Windows-x64/Taverner/Tavernd.lib\n"
-						  "    C:/Dev/tavern-engine/bin/Debug-Windows-x64/Taverner/assimp-vc143-mtd.lib\n"
-						  "    C:/Dev/tavern-engine/bin/Debug-Windows-x64/Taverner/glfw3d.lib\n"
-						  "    C:/Dev/tavern-engine/bin/Debug-Windows-x64/Taverner/glmd.lib\n"
-						  "    C:/Dev/tavern-engine/bin/Debug-Windows-x64/Taverner/zlibstaticd.lib\n"
+						  "    " + m_EditorPath + "/Tavernd.lib\n"
+						  "	   " + m_EditorPath + "/assimp-vc143-mtd.lib\n"
+						  "    " + m_EditorPath + "/glfw3d.lib\n"
+						  "    " + m_EditorPath + "/glmd.lib\n"
+						  "    " + m_EditorPath + "/zlibstaticd.lib\n"
 						  ")\n";
 
 		cMakeListsFile.close();

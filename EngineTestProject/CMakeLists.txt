@@ -14,7 +14,10 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/EngineTestProject)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/EngineTestProject)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/EngineTestProject)
 
-add_executable(EngineTestProject ${SOURCES})
+add_executable(EngineTestProject 
+    ${SOURCES}
+    CMakeLists.txt
+)
 
 source_group(src FILES ${SOURCES})
 
@@ -38,6 +41,10 @@ target_link_libraries(EngineTestProject PRIVATE
     glfw
     glm::glm
     assimp
+)
+
+set_target_properties(EngineTestProject PROPERTIES
+	VS_DEBUGGER_WORKING_DIRECTORY "${OUTPUT_DIRECTORY}/EngineTestProject"
 )
 
 add_custom_target(RunPostEngineTestProjectBuild ALL

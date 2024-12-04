@@ -16,6 +16,7 @@ namespace Taverner
 
 	private:
 		bool m_IsProjectLoaded = false;
+		std::string m_EditorPath;
 		nlohmann::json m_ProjectConfig;
 		Tavern::Engine& m_Engine;
 		Tavern::Window* m_Window;

@@ -106,6 +106,7 @@ add_library(Tavern STATIC
     ${SOURCES_TAVERN_RENDERER}
     ${SOURCES_TAVERN_RESOURCES}
     ${SOURCES_TAVERN_SCENE}
+    CMakeLists.txt
 )
 
 target_link_libraries(Tavern PRIVATE 

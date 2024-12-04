@@ -9,8 +9,8 @@ Backpack::Backpack(Tavern::Engine& engine)
 {
 	GetTransform()->SetLocalPosition(glm::vec3(3.0f, 0.0f, 3.0f));
 
-	std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("C:/Dev/tavern-engine/bin/Debug-Windows-x64/EngineTestProject/Assets/Materials/Backpack.material");
-	std::shared_ptr<Tavern::MeshResource> mesh = GetEngine().GetResourceManager().LoadMesh("C:/Dev/tavern-engine/bin/Debug-Windows-x64/EngineTestProject/Assets/Meshes/backpack.obj");
+	std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("Assets/Materials/Backpack.material");
+	std::shared_ptr<Tavern::MeshResource> mesh = GetEngine().GetResourceManager().LoadMesh("Assets/Meshes/backpack.obj");
 	m_Mesh = CreateComponentOfType<Tavern::MeshComponent>(material);
 	m_Mesh->SetMesh(mesh);
 }

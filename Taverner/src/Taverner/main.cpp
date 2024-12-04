@@ -21,8 +21,8 @@ public:
 		GetTransform()->SetLocalPosition(m_StartPosition);
 		GetTransform()->SetLocalScale(glm::vec3(0.25f));
 
-		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("C:/Dev/tavern-engine/bin/Debug-Windows-x64/EngineTestProject/Assets/Materials/Light.material");
-		std::shared_ptr<Tavern::MeshResource> mesh = GetEngine().GetResourceManager().LoadMesh("C:/Dev/tavern-engine/bin/Debug-Windows-x64/EngineTestProject/BuiltInAssets/Meshes/Cube.obj");
+		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("../EngineTestProject/Assets/Materials/Light.material");
+		std::shared_ptr<Tavern::MeshResource> mesh = GetEngine().GetResourceManager().LoadMesh("../EngineTestProject/BuiltInAssets/Meshes/Cube.obj");
 		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>(material);
 		m_Mesh->SetMesh(mesh);
 
@@ -126,7 +126,7 @@ int main()
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;	  // Enable Docking
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;	  // Enable Multi-Viewports
-	io.IniFilename = "C:/Dev/tavern-engine/bin/Debug-Windows-x64/Taverner/imgui.ini";
+	io.IniFilename = "imgui.ini";
 
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();

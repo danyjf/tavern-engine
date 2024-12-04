@@ -39,6 +39,7 @@ add_executable(Taverner
     ${VENDOR_IMGUI}
     ${SOURCES_TAVERNER}
     ${SOURCES_TAVERNER_WINDOWS}
+    CMakeLists.txt
 )
 
 target_include_directories(Taverner PRIVATE 
@@ -60,4 +61,8 @@ target_link_libraries(Taverner PRIVATE
     glm::glm
     assimp
     nlohmann_json::nlohmann_json
+)
+
+set_target_properties(Taverner PROPERTIES
+	VS_DEBUGGER_WORKING_DIRECTORY "${OUTPUT_DIRECTORY}/Taverner"
 )
