@@ -22,7 +22,7 @@ namespace Tavern
 	class TAVERN_API RenderManager
 	{
 	public:
-		RenderManager(EventManager& eventManager, ResourceManager& resourceManager, const WindowSettings& windowSettings = WindowSettings());
+		RenderManager(EventManager& eventManager, ResourceManager& resourceManager);
 		~RenderManager();
 		RenderManager(RenderManager& copy) = delete;
 		RenderManager& operator=(const RenderManager& copy) = delete;

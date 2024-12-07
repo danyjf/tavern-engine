@@ -7,7 +7,7 @@
 
 int main()
 {
-	Tavern::Engine TavernEngine;
+	Tavern::Engine& TavernEngine = Tavern::Engine::Get();
 
 	// Create startup game entities
 	Player* player = TavernEngine.GetScene().CreateEntity<Player>();

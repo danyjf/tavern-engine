@@ -15,13 +15,14 @@
 
 namespace Tavern
 {
-	Engine::Engine(const WindowSettings& windowSettings)
+	Engine::Engine()
 		: m_EventManager(),
 		  m_ResourceManager(),
-		  m_RenderManager(m_EventManager, m_ResourceManager, windowSettings),
+		  m_RenderManager(m_EventManager, m_ResourceManager),
 		  m_InputManager(m_RenderManager),
 		  m_TimeManager(),
 		  m_Scene(*this),
+		  m_UserDefinedEntityRegistry(m_Scene),
 		  m_WindowCloseListener(std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1))
 	{
 		m_EventManager.AddListener(EventType::WindowClose, m_WindowCloseListener);
@@ -80,6 +81,11 @@ namespace Tavern
 	Scene& Engine::GetScene()
 	{
 		return m_Scene;
+	}
+
+	UserDefinedEntityRegistry& Engine::GetUserDefinedEntityRegistry()
+	{
+		return m_UserDefinedEntityRegistry;
 	}
 
 	void Engine::OnWindowCloseEvent(const std::shared_ptr<WindowCloseEvent>& event)

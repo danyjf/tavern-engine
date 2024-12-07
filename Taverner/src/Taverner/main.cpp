@@ -109,7 +109,7 @@ using namespace Tavern;
 int main()
 {
 	// Setup Tavern Engine
-	Engine engine;
+	Engine& engine = Engine::Get();
 	Window* window = engine.GetRenderManager().GetWindow();
 	window->GetCursor().SetIsLocked(false);
 	window->GetCursor().SetIsVisible(true);

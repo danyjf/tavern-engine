@@ -71,6 +71,8 @@ set(SOURCES_TAVERN_SCENE
     src/Tavern/Scene/Scene.cpp
     src/Tavern/Scene/Entity.h
     src/Tavern/Scene/Entity.cpp
+    src/Tavern/Scene/UserDefinedEntityRegistry.h
+    src/Tavern/Scene/UserDefinedEntityRegistry.cpp
 )
 
 source_group(src FILES ${SOURCES})

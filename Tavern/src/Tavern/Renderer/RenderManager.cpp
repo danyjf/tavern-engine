@@ -17,11 +17,11 @@
 
 namespace Tavern
 {
-	RenderManager::RenderManager(EventManager& eventManager, ResourceManager& resourceManager, const WindowSettings& windowSettings)
+	RenderManager::RenderManager(EventManager& eventManager, ResourceManager& resourceManager)
 		: m_EventManager(eventManager),
 		  m_WindowResizeListener(std::bind(&RenderManager::OnWindowResizeEvent, this, std::placeholders::_1))
 	{
-		m_Window = std::make_unique<Window>(m_EventManager, windowSettings);
+		m_Window = std::make_unique<Window>(m_EventManager);
 
 		m_EventManager.AddListener(EventType::WindowResize, m_WindowResizeListener);
 

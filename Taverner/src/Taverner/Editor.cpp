@@ -199,14 +199,26 @@ namespace Taverner
 
 	void Editor::BuildGameProject(const std::string& path)
 	{
-		// TODO:
-		// Build the game dll
+		TAVERN_INFO("Building game dll");
 		std::string buildCmd = "cmake --build " + path;
 		system(buildCmd.c_str());
+
+		std::string projectPath = (std::string)m_ProjectConfig["projectPath"];
+		std::string name = (std::string)m_ProjectConfig["name"];
+		std::string gameDLL = std::format("{}/Binaries/Debug/{}.dll", projectPath, name);
+		m_ProjectConfig["gameDLL"] = gameDLL;
+
+		std::ofstream projectConfigFile(
+			projectPath + "/" + name + ".project",
+			std::ofstream::out | std::ofstream::trunc
+		);
+		projectConfigFile << m_ProjectConfig;
+		projectConfigFile.close();
 	}
 
 	void Editor::LoadGameDLL(const std::string& path)
 	{
+		TAVERN_INFO("Loading game dll");
 		LoadLibrary(path.c_str());
 	}
 }
