@@ -8,6 +8,8 @@
 #include <Tavern/Scene/Entity.h>
 #include <Tavern/Components/MeshComponent.h>
 #include <Tavern/Components/LightComponent.h>
+#include <Tavern/UI/Panel.h>
+#include <Tavern/UI/MenuBar.h>
 
 #include "Taverner/Editor.h"
 
@@ -119,46 +121,44 @@ int main()
 	Light* light = engine.GetScene().CreateEntity<Light>();
 
 	// Setup ImGui context
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO();
-	(void)io;
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;	  // Enable Docking
-	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;	  // Enable Multi-Viewports
-	io.IniFilename = "imgui.ini";
+	//ImGui::CreateContext();
+	//ImGuiIO& io = ImGui::GetIO();
+	//(void)io;
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
+	//io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;	  // Enable Docking
+	//io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;	  // Enable Multi-Viewports
+	//io.IniFilename = "imgui.ini";
 
 	// Setup Dear ImGui style
-	ImGui::StyleColorsDark();
+	//ImGui::StyleColorsDark();
 
 	// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
-    ImGuiStyle& style = ImGui::GetStyle();
-	style.WindowRounding = 0.0f;
-    style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+    //ImGuiStyle& style = ImGui::GetStyle();
+	//style.WindowRounding = 0.0f;
+    //style.Colors[ImGuiCol_WindowBg].w = 1.0f;
 
 	// Setup Platform/Renderer backends
-	GLFWwindow* glfwWindow = window->GetGLFWWindow();
-	glfwMakeContextCurrent(glfwWindow);
-	ImGui_ImplGlfw_InitForOpenGL(glfwWindow, true);
-	ImGui_ImplOpenGL3_Init("#version 460");
+	//GLFWwindow* glfwWindow = window->GetGLFWWindow();
+	//ImGui_ImplGlfw_InitForOpenGL(glfwWindow, true);
+	//ImGui_ImplOpenGL3_Init("#version 460");
 
-	Taverner::Editor editor(engine, window, "Unnamed Project", 800, 600);
+	//Taverner::Editor editor(engine, window, "Unnamed Project", 800, 600);
+	//engine.GetUIManager().CreateUIElementOfType<Panel>();
+	Panel* editor = engine.GetUIManager().AddPanel(new Panel());
+	MenuBar* mainMenuBar = dynamic_cast<MenuBar*>(editor->AddUIElement(new MenuBar()));
 	while (engine.IsRunning())
 	{
 		engine.Update();
-		editor.GetGameFramebuffer().Bind();
-		engine.GetRenderManager().Render();
-		editor.GetGameFramebuffer().Unbind();
-
-		editor.Render();
-
-		engine.GetRenderManager().SwapBuffers();
+		//editor.GetGameFramebuffer().Bind();
+		engine.Render();
+		//editor.GetGameFramebuffer().Unbind();
 	}
 
 	// Cleanup
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplGlfw_Shutdown();
-	ImGui::DestroyContext();
+	//ImGui_ImplOpenGL3_Shutdown();
+	//ImGui_ImplGlfw_Shutdown();
+	//ImGui::DestroyContext();
 
 	return 0;
 }

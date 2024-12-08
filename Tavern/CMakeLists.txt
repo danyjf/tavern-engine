@@ -74,6 +74,40 @@ set(SOURCES_TAVERN_SCENE
     src/Tavern/Scene/UserDefinedEntityRegistry.h
     src/Tavern/Scene/UserDefinedEntityRegistry.cpp
 )
+set(SOURCES_TAVERN_UI
+    src/Tavern/UI/UIManager.h
+    src/Tavern/UI/UIManager.cpp
+    src/Tavern/UI/UIElement.h
+    src/Tavern/UI/UIElement.cpp
+    src/Tavern/UI/Panel.h
+    src/Tavern/UI/Panel.cpp
+    src/Tavern/UI/MenuBar.h
+    src/Tavern/UI/MenuBar.cpp
+)
+set(VENDOR_IMGUI
+    ../Taverner/vendor/imgui/imconfig.h
+    ../Taverner/vendor/imgui/imgui.cpp
+    ../Taverner/vendor/imgui/imgui.h
+    ../Taverner/vendor/imgui/imgui_demo.cpp
+    ../Taverner/vendor/imgui/imgui_draw.cpp
+    ../Taverner/vendor/imgui/imgui_internal.h
+    ../Taverner/vendor/imgui/imgui_tables.cpp
+    ../Taverner/vendor/imgui/imgui_widgets.cpp
+    ../Taverner/vendor/imgui/imstb_rectpack.h
+    ../Taverner/vendor/imgui/imstb_textedit.h
+    ../Taverner/vendor/imgui/imstb_truetype.h
+
+    ../Taverner/vendor/imgui/backends/imgui_impl_glfw.cpp
+    ../Taverner/vendor/imgui/backends/imgui_impl_glfw.h
+    ../Taverner/vendor/imgui/backends/imgui_impl_opengl3.cpp
+    ../Taverner/vendor/imgui/backends/imgui_impl_opengl3.h
+
+    ../Taverner/vendor/imgui/misc/debuggers/imgui.natvis
+    ../Taverner/vendor/imgui/misc/debuggers/imgui.natstepfilter
+
+    ../Taverner/vendor/imgui/misc/cpp/imgui_stdlib.cpp
+    ../Taverner/vendor/imgui/misc/cpp/imgui_stdlib.h
+)
 
 source_group(src FILES ${SOURCES})
 source_group(src/Tavern FILES ${SOURCES_TAVERN})
@@ -84,6 +118,8 @@ source_group(src/Tavern/Input FILES ${SOURCES_TAVERN_INPUT})
 source_group(src/Tavern/Renderer FILES ${SOURCES_TAVERN_RENDERER})
 source_group(src/Tavern/Resources FILES ${SOURCES_TAVERN_RESOURCES})
 source_group(src/Tavern/Scene FILES ${SOURCES_TAVERN_SCENE})
+source_group(src/Tavern/UI FILES ${SOURCES_TAVERN_UI})
+source_group(vendor/imgui FILES ${VENDOR_IMGUI})
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)
@@ -98,7 +134,7 @@ add_subdirectory(vendor/nlohmann_json)
 set(ASSIMP_WARNINGS_AS_ERRORS OFF)
 add_subdirectory(vendor/assimp)
 
-add_library(Tavern STATIC 
+add_library(Tavern SHARED 
     ${SOURCES} 
     ${SOURCES_TAVERN} 
     ${SOURCES_TAVERN_COMPONENTS}
@@ -108,6 +144,8 @@ add_library(Tavern STATIC
     ${SOURCES_TAVERN_RENDERER}
     ${SOURCES_TAVERN_RESOURCES}
     ${SOURCES_TAVERN_SCENE}
+    ${SOURCES_TAVERN_UI}
+    ${VENDOR_IMGUI}
     CMakeLists.txt
 )
 
@@ -123,6 +161,8 @@ target_include_directories(Tavern PRIVATE
     ${CMAKE_SOURCE_DIR}/Tavern/vendor/spdlog/include
     ${CMAKE_SOURCE_DIR}/Tavern/vendor/Glad/include
     ${CMAKE_SOURCE_DIR}/Tavern/vendor/stb/include
+    ${CMAKE_SOURCE_DIR}/Taverner/vendor/imgui
+    ${CMAKE_SOURCE_DIR}/Taverner/vendor/imgui/backends
 )
 
 target_compile_definitions(Tavern PRIVATE
@@ -158,12 +198,13 @@ target_precompile_headers(Tavern PRIVATE
 
 add_custom_target(RunPostTavernBuild ALL
     COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_DIRECTORY}/EngineTestProject
-    #COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Tavern> ${OUTPUT_DIRECTORY}/EngineTestProject
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Tavern> ${OUTPUT_DIRECTORY}/EngineTestProject
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_DIRECTORY}/Taverner
     COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Tavern> ${OUTPUT_DIRECTORY}/Taverner
-    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:glfw> ${OUTPUT_DIRECTORY}/Taverner
-    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:glm::glm> ${OUTPUT_DIRECTORY}/Taverner
-    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:assimp> ${OUTPUT_DIRECTORY}/Taverner
-    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:zlibstatic> ${OUTPUT_DIRECTORY}/Taverner
+    #COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:glfw> ${OUTPUT_DIRECTORY}/Taverner
+    #COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:glm::glm> ${OUTPUT_DIRECTORY}/Taverner
+    #COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:assimp> ${OUTPUT_DIRECTORY}/Taverner
+    #COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:zlibstatic> ${OUTPUT_DIRECTORY}/Taverner
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Assets ${OUTPUT_DIRECTORY}/EngineTestProject/BuiltInAssets
 )
 

@@ -19,6 +19,7 @@ namespace Tavern
 		: m_EventManager(),
 		  m_ResourceManager(),
 		  m_RenderManager(m_EventManager, m_ResourceManager),
+		  m_UIManager(m_RenderManager),
 		  m_InputManager(m_RenderManager),
 		  m_TimeManager(),
 		  m_Scene(*this),
@@ -48,6 +49,13 @@ namespace Tavern
 		glfwPollEvents();
 	}
 
+	void Engine::Render()
+	{
+		m_RenderManager.Render();
+		m_UIManager.Render();
+		m_RenderManager.SwapBuffers();
+	}
+
 	bool Engine::IsRunning()
 	{
 		return m_IsRunning;
@@ -66,6 +74,11 @@ namespace Tavern
 	RenderManager& Engine::GetRenderManager()
 	{
 		return m_RenderManager;
+	}
+
+	UIManager& Engine::GetUIManager()
+	{
+		return m_UIManager;
 	}
 
 	InputManager& Engine::GetInputManager()
