@@ -3,7 +3,7 @@
 #include "Tavern/Core/Core.h"
 #include "Tavern/UI/UIElement.h"
 
-namespace Tavern
+namespace Tavern::UI
 {
 	class TAVERN_API Panel : public UIElement
 	{
@@ -11,7 +11,8 @@ namespace Tavern
 		Panel() = default;
 		Panel(Panel& copy) = delete;
 		Panel& operator=(const Panel& copy) = delete;
-		void Render();
+
+		void Render() override;
 
 		UIElement* AddUIElement(UIElement* uiElement);
 

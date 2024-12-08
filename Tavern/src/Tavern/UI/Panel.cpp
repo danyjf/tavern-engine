@@ -5,7 +5,7 @@
 #include "Tavern/UI/Panel.h"
 #include "Tavern/UI/UIElement.h"
 
-namespace Tavern
+namespace Tavern::UI
 {
 	void Panel::Render()
 	{

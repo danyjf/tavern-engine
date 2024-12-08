@@ -52,7 +52,7 @@ namespace Tavern
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		for (std::unique_ptr<Panel>& panel : m_Panels)
+		for (std::unique_ptr<UI::Panel>& panel : m_Panels)
 		{
 			if (panel->IsVisible())
 			{
@@ -69,14 +69,14 @@ namespace Tavern
         glfwMakeContextCurrent(backupCurrentContext);
 	}
 
-	std::vector<std::unique_ptr<Panel>>& UIManager::GetPanels()
+	std::vector<std::unique_ptr<UI::Panel>>& UIManager::GetPanels()
 	{
 		return m_Panels;
 	}
 
-	Panel* UIManager::AddPanel(Panel* panel)
+	UI::Panel* UIManager::AddPanel(UI::Panel* panel)
 	{
-		m_Panels.emplace_back(std::unique_ptr<Panel>(panel));
+		m_Panels.emplace_back(std::unique_ptr<UI::Panel>(panel));
 		return m_Panels.back().get();
 	}
 }

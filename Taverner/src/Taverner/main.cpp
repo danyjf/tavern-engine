@@ -5,6 +5,7 @@
 #include <imgui_impl_opengl3.h>
 
 #include <Tavern/Core/Engine.h>
+#include <Tavern/Core/Log.h>
 #include <Tavern/Scene/Entity.h>
 #include <Tavern/Components/MeshComponent.h>
 #include <Tavern/Components/LightComponent.h>
@@ -120,33 +121,17 @@ int main()
 	EditorCamera* editorCamera = engine.GetScene().CreateEntity<EditorCamera>();
 	Light* light = engine.GetScene().CreateEntity<Light>();
 
-	// Setup ImGui context
-	//ImGui::CreateContext();
-	//ImGuiIO& io = ImGui::GetIO();
-	//(void)io;
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
-	//io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;	  // Enable Docking
-	//io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;	  // Enable Multi-Viewports
-	//io.IniFilename = "imgui.ini";
-
-	// Setup Dear ImGui style
-	//ImGui::StyleColorsDark();
-
-	// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
-    //ImGuiStyle& style = ImGui::GetStyle();
-	//style.WindowRounding = 0.0f;
-    //style.Colors[ImGuiCol_WindowBg].w = 1.0f;
-
-	// Setup Platform/Renderer backends
-	//GLFWwindow* glfwWindow = window->GetGLFWWindow();
-	//ImGui_ImplGlfw_InitForOpenGL(glfwWindow, true);
-	//ImGui_ImplOpenGL3_Init("#version 460");
-
-	//Taverner::Editor editor(engine, window, "Unnamed Project", 800, 600);
-	//engine.GetUIManager().CreateUIElementOfType<Panel>();
-	Panel* editor = engine.GetUIManager().AddPanel(new Panel());
-	MenuBar* mainMenuBar = dynamic_cast<MenuBar*>(editor->AddUIElement(new MenuBar()));
+	UI::Panel* editor = engine.GetUIManager().AddPanel(new UI::Panel());
+	UI::MenuBar* mainMenuBar = dynamic_cast<UI::MenuBar*>(editor->AddUIElement(new UI::MenuBar()));
+	UI::Menu* filesMenu = mainMenuBar->AddMenu("File");
+	filesMenu->AddMenuItem("New Project", []() {});
+	filesMenu->AddMenuItem("Open Project", []() {});
+	UI::Menu* toolsMenu = mainMenuBar->AddMenu("Tools");
+	toolsMenu->AddMenuItem("New C++ Class", []() {});
+	toolsMenu->AddMenuItem("Generate Visual Studio 2022 Project", []() {});
+	UI::Menu* gameMenu = mainMenuBar->AddMenu("Game");
+	gameMenu->AddMenuItem("Play", []() {});
+	gameMenu->AddMenuItem("Pause", []() {});
 	while (engine.IsRunning())
 	{
 		engine.Update();
