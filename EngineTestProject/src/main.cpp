@@ -1,9 +1,30 @@
 #include <Tavern/Core/Engine.h>
+#include <Tavern/Scene/Entity.h>
+#include <Tavern/Resources/MaterialResource.h>
+#include <Tavern/Resources/MeshResource.h>
+#include <Tavern/Components/MeshComponent.h>
 
 #include "Cube.h"
 #include "Light.h"
 #include "Backpack.h"
 #include "Player.h"
+
+class Ground : public Tavern::Entity
+{
+public:
+	Ground(Tavern::Engine& engine)
+		: Tavern::Entity(engine)
+	{
+		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("Assets/Materials/Ground.material");
+		std::shared_ptr<Tavern::MeshResource> mesh = GetEngine().GetResourceManager().LoadMesh("Assets/Meshes/ground.obj");
+		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>(material);
+		m_Mesh->SetMesh(mesh);
+		GetTransform()->SetLocalPosition(glm::vec3(0.0f, -8.0f, 0.0f));
+	}
+
+private:
+	Tavern::MeshComponent* m_Mesh;
+};
 
 int main()
 {
@@ -13,6 +34,7 @@ int main()
 	Player* player = TavernEngine.GetScene().CreateEntity<Player>();
 	Light* light = TavernEngine.GetScene().CreateEntity<Light>();
 	Backpack* backpack = TavernEngine.GetScene().CreateEntity<Backpack>();
+	Ground* ground = TavernEngine.GetScene().CreateEntity<Ground>();
 
 	glm::vec3 cubePositions[] = {
 		glm::vec3(0.0f, 0.0f, 0.0f),
