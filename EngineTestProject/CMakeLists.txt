@@ -25,6 +25,8 @@ target_include_directories(EngineTestProject PRIVATE
 	${CMAKE_SOURCE_DIR}/Tavern/src
 	${CMAKE_SOURCE_DIR}/Tavern/vendor/spdlog/include	
     ${CMAKE_SOURCE_DIR}/Tavern/vendor/Glad/include
+    ${CMAKE_SOURCE_DIR}/Taverner/vendor/imgui
+    ${CMAKE_SOURCE_DIR}/Taverner/vendor/imgui/backends
 )
 
 target_compile_definitions(EngineTestProject PRIVATE
