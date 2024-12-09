@@ -49,13 +49,6 @@ namespace Tavern
 		glfwPollEvents();
 	}
 
-	void Engine::Render()
-	{
-		m_RenderManager.Render();
-		m_UIManager.Render();
-		m_RenderManager.SwapBuffers();
-	}
-
 	bool Engine::IsRunning()
 	{
 		return m_IsRunning;

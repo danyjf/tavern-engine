@@ -83,6 +83,8 @@ set(SOURCES_TAVERN_UI
     src/Tavern/UI/Panel.cpp
     src/Tavern/UI/MenuBar.h
     src/Tavern/UI/MenuBar.cpp
+    src/Tavern/UI/Image.h
+    src/Tavern/UI/Image.cpp
 )
 set(VENDOR_IMGUI
     ../Taverner/vendor/imgui/imconfig.h

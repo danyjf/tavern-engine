@@ -7,21 +7,21 @@
 
 namespace Tavern::UI
 {
+	Panel::Panel(const std::string& name, ImGuiWindowFlags windowFlags, bool isDockSpace)
+		: m_Name(name), m_WindowFlags(windowFlags), m_IsDockSpace(isDockSpace)
+	{
+	}
+
 	void Panel::Render()
 	{
-		// Display windows here
-		ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoTitleBar
-			| ImGuiWindowFlags_NoDocking
-			| ImGuiWindowFlags_NoCollapse 
-			| ImGuiWindowFlags_NoResize 
-			| ImGuiWindowFlags_NoMove 
-			| ImGuiWindowFlags_NoBringToFrontOnFocus 
-			| ImGuiWindowFlags_NoBackground
-			| ImGuiWindowFlags_NoNavFocus;
-		if (ImGui::Begin("Editor", nullptr, windowFlags))
+		if (ImGui::Begin(m_Name.c_str(), nullptr, m_WindowFlags))
 		{
-			ImGuiDockNodeFlags dockspaceFlags = ImGuiDockNodeFlags_PassthruCentralNode;
-			ImGuiID dockSpaceID = ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport(), dockspaceFlags);
+			m_Size = ImGui::GetContentRegionAvail();
+			if (m_IsDockSpace)
+			{
+				ImGuiDockNodeFlags dockspaceFlags = ImGuiDockNodeFlags_PassthruCentralNode;
+				ImGuiID dockSpaceID = ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport(), dockspaceFlags);
+			}
 
 			for (std::unique_ptr<UIElement>& uiElement : m_UIElements)
 			{
@@ -38,5 +38,10 @@ namespace Tavern::UI
 	{
 		m_UIElements.emplace_back(std::unique_ptr<UIElement>(uiElement));
 		return uiElement;
+	}
+
+	ImVec2 Panel::GetSize()
+	{
+		return m_Size;
 	}
 }

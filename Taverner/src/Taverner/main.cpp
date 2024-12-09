@@ -121,29 +121,18 @@ int main()
 	EditorCamera* editorCamera = engine.GetScene().CreateEntity<EditorCamera>();
 	Light* light = engine.GetScene().CreateEntity<Light>();
 
-	UI::Panel* editor = engine.GetUIManager().AddPanel(new UI::Panel());
-	UI::MenuBar* mainMenuBar = dynamic_cast<UI::MenuBar*>(editor->AddUIElement(new UI::MenuBar()));
-	UI::Menu* filesMenu = mainMenuBar->AddMenu("File");
-	filesMenu->AddMenuItem("New Project", []() {});
-	filesMenu->AddMenuItem("Open Project", []() {});
-	UI::Menu* toolsMenu = mainMenuBar->AddMenu("Tools");
-	toolsMenu->AddMenuItem("New C++ Class", []() {});
-	toolsMenu->AddMenuItem("Generate Visual Studio 2022 Project", []() {});
-	UI::Menu* gameMenu = mainMenuBar->AddMenu("Game");
-	gameMenu->AddMenuItem("Play", []() {});
-	gameMenu->AddMenuItem("Pause", []() {});
+	Taverner::Editor editor(engine);
 	while (engine.IsRunning())
 	{
 		engine.Update();
-		//editor.GetGameFramebuffer().Bind();
-		engine.Render();
-		//editor.GetGameFramebuffer().Unbind();
-	}
+		editor.Update();
 
-	// Cleanup
-	//ImGui_ImplOpenGL3_Shutdown();
-	//ImGui_ImplGlfw_Shutdown();
-	//ImGui::DestroyContext();
+		editor.GetGameFramebuffer().Bind();
+		engine.GetRenderManager().Render();
+		editor.GetGameFramebuffer().Unbind();
+		engine.GetUIManager().Render();
+		engine.GetRenderManager().SwapBuffers();
+	}
 
 	return 0;
 }
