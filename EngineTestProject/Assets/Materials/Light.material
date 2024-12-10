@@ -1,7 +1,7 @@
 {
   "name": "Light",
-  "vertexShader": "C:/Dev/tavern-engine/bin/Debug-Windows-x64/EngineTestProject/BuiltInAssets/Shaders/UnlitShader.vert",
-  "fragmentShader": "C:/Dev/tavern-engine/bin/Debug-Windows-x64/EngineTestProject/BuiltInAssets/Shaders/UnlitShader.frag",
+  "vertexShader": "BuiltInAssets/Shaders/UnlitShader.vert",
+  "fragmentShader": "BuiltInAssets/Shaders/UnlitShader.frag",
   "properties": {
     "albedo": {
       "type": "vec3",
@@ -9,6 +9,6 @@
     }
   },
   "textures": {
-    "albedoMap": "C:/Dev/tavern-engine/bin/Debug-Windows-x64/EngineTestProject/BuiltInAssets/Textures/DefaultWhiteTexture.png"
+    "albedoMap": "BuiltInAssets/Textures/DefaultWhiteTexture.png"
   }
 }
