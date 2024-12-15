@@ -87,28 +87,28 @@ set(SOURCES_TAVERN_UI
     src/Tavern/UI/Image.cpp
 )
 set(VENDOR_IMGUI
-    ../Taverner/vendor/imgui/imconfig.h
-    ../Taverner/vendor/imgui/imgui.cpp
-    ../Taverner/vendor/imgui/imgui.h
-    ../Taverner/vendor/imgui/imgui_demo.cpp
-    ../Taverner/vendor/imgui/imgui_draw.cpp
-    ../Taverner/vendor/imgui/imgui_internal.h
-    ../Taverner/vendor/imgui/imgui_tables.cpp
-    ../Taverner/vendor/imgui/imgui_widgets.cpp
-    ../Taverner/vendor/imgui/imstb_rectpack.h
-    ../Taverner/vendor/imgui/imstb_textedit.h
-    ../Taverner/vendor/imgui/imstb_truetype.h
+    vendor/imgui/imconfig.h
+    vendor/imgui/imgui.cpp
+    vendor/imgui/imgui.h
+    vendor/imgui/imgui_demo.cpp
+    vendor/imgui/imgui_draw.cpp
+    vendor/imgui/imgui_internal.h
+    vendor/imgui/imgui_tables.cpp
+    vendor/imgui/imgui_widgets.cpp
+    vendor/imgui/imstb_rectpack.h
+    vendor/imgui/imstb_textedit.h
+    vendor/imgui/imstb_truetype.h
 
-    ../Taverner/vendor/imgui/backends/imgui_impl_glfw.cpp
-    ../Taverner/vendor/imgui/backends/imgui_impl_glfw.h
-    ../Taverner/vendor/imgui/backends/imgui_impl_opengl3.cpp
-    ../Taverner/vendor/imgui/backends/imgui_impl_opengl3.h
+    vendor/imgui/backends/imgui_impl_glfw.cpp
+    vendor/imgui/backends/imgui_impl_glfw.h
+    vendor/imgui/backends/imgui_impl_opengl3.cpp
+    vendor/imgui/backends/imgui_impl_opengl3.h
 
-    ../Taverner/vendor/imgui/misc/debuggers/imgui.natvis
-    ../Taverner/vendor/imgui/misc/debuggers/imgui.natstepfilter
+    vendor/imgui/misc/debuggers/imgui.natvis
+    vendor/imgui/misc/debuggers/imgui.natstepfilter
 
-    ../Taverner/vendor/imgui/misc/cpp/imgui_stdlib.cpp
-    ../Taverner/vendor/imgui/misc/cpp/imgui_stdlib.h
+    vendor/imgui/misc/cpp/imgui_stdlib.cpp
+    vendor/imgui/misc/cpp/imgui_stdlib.h
 )
 
 source_group(src FILES ${SOURCES})
@@ -163,8 +163,8 @@ target_include_directories(Tavern PRIVATE
     ${CMAKE_SOURCE_DIR}/Tavern/vendor/spdlog/include
     ${CMAKE_SOURCE_DIR}/Tavern/vendor/Glad/include
     ${CMAKE_SOURCE_DIR}/Tavern/vendor/stb/include
-    ${CMAKE_SOURCE_DIR}/Taverner/vendor/imgui
-    ${CMAKE_SOURCE_DIR}/Taverner/vendor/imgui/backends
+    ${CMAKE_SOURCE_DIR}/Tavern/vendor/imgui
+    ${CMAKE_SOURCE_DIR}/Tavern/vendor/imgui/backends
 )
 
 target_compile_definitions(Tavern PRIVATE
