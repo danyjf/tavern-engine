@@ -19,6 +19,7 @@ public:
 		std::shared_ptr<Tavern::MeshResource> mesh = GetEngine().GetResourceManager().LoadMesh("Assets/Meshes/ground.obj");
 		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>(material);
 		m_Mesh->SetMesh(mesh);
+		// FIX: if i dont use local position it crashes
 		GetTransform()->SetLocalPosition(glm::vec3(0.0f, -8.0f, 0.0f));
 	}
 
@@ -28,7 +29,8 @@ private:
 
 int main()
 {
-	Tavern::Engine& TavernEngine = Tavern::Engine::Get();
+	//Tavern::Engine& TavernEngine = Tavern::Engine::Get();
+	Tavern::Engine TavernEngine;
 
 	// Create startup game entities
 	Player* player = TavernEngine.GetScene().CreateEntity<Player>();

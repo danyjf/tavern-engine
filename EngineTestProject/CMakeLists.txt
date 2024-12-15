@@ -49,10 +49,15 @@ set_target_properties(EngineTestProject PROPERTIES
 	VS_DEBUGGER_WORKING_DIRECTORY "${OUTPUT_DIRECTORY}/EngineTestProject"
 )
 
-add_custom_target(RunPostEngineTestProjectBuild ALL
+#add_custom_target(RunPostEngineTestProjectBuild ALL
+#	COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_SOURCE_DIR}/Assets
+#	COMMAND ${CMAKE_COMMAND} -E rm -rf ${OUTPUT_DIRECTORY}/EngineTestProject/Assets
+#    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Assets ${OUTPUT_DIRECTORY}/EngineTestProject/Assets
+#)
+add_custom_command(TARGET EngineTestProject POST_BUILD
 	COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_SOURCE_DIR}/Assets
 	COMMAND ${CMAKE_COMMAND} -E rm -rf ${OUTPUT_DIRECTORY}/EngineTestProject/Assets
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Assets ${OUTPUT_DIRECTORY}/EngineTestProject/Assets
 )
 
-add_dependencies(RunPostEngineTestProjectBuild EngineTestProject)
+#add_dependencies(RunPostEngineTestProjectBuild EngineTestProject)

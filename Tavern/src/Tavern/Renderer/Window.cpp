@@ -116,6 +116,10 @@ namespace Tavern
 			eventManager.QueueEvent(event);
 		});
 
+		glfwSetErrorCallback([](int error, const char* description) {
+			TAVERN_ENGINE_ERROR("GLFW Error [{}]: {}", error, description);
+		});
+
 		m_EventManager.AddListener(EventType::WindowResize, m_WindowResizeListener);
 
 		m_Cursor = Cursor(this, false, true);
@@ -125,6 +129,7 @@ namespace Tavern
 	{
 		m_EventManager.RemoveListener(EventType::WindowResize, m_WindowResizeListener);
 		glfwDestroyWindow(m_Window);
+		TAVERN_ENGINE_INFO("Window destroyed");
 	}
 
 	GLFWwindow* Window::GetGLFWWindow() const

@@ -17,7 +17,6 @@ namespace Tavern
 {
 	class Event;
 
-	// TODO: Make the engine a singleton so that i can use it for the entity registry and stuff
 	// TODO: Create editor interface
 	// TODO: Add PBR
 	// TODO: Add multiple lights
@@ -28,11 +27,13 @@ namespace Tavern
 	class TAVERN_API Engine
 	{
 	public:
-		static Engine& Get()
-		{
-			static Engine engine;
-			return engine;
-		}
+		//static Engine& Get()
+		//{
+		//	static Engine engine;
+		//	return engine;
+		//}
+		Engine();
+		~Engine();
 
 		Engine(const Engine& other) = delete;
 		Engine& operator=(const Engine& other) = delete;
@@ -47,7 +48,7 @@ namespace Tavern
 		InputManager& GetInputManager();
 		TimeManager& GetTimeManager();
 		Scene& GetScene();
-		UserDefinedEntityRegistry& GetUserDefinedEntityRegistry();
+		//UserDefinedEntityRegistry& GetUserDefinedEntityRegistry();
 
 		void OnWindowCloseEvent(const std::shared_ptr<WindowCloseEvent>& event);
 
@@ -59,13 +60,11 @@ namespace Tavern
 		InputManager m_InputManager = InputManager(m_RenderManager);
 		TimeManager m_TimeManager = TimeManager();
 		Scene m_Scene = Scene(*this);
-		UserDefinedEntityRegistry m_UserDefinedEntityRegistry = UserDefinedEntityRegistry(m_Scene);
+		// TODO: Make this a singleton
+		//UserDefinedEntityRegistry m_UserDefinedEntityRegistry = UserDefinedEntityRegistry(m_Scene);
 
 		EventListener<WindowCloseEvent> m_WindowCloseListener;
 
 		bool m_IsRunning = true;
-
-		Engine();
-		~Engine();
 	};
 }

@@ -4,8 +4,7 @@
 
 namespace Tavern
 {
-	UserDefinedEntityRegistry::UserDefinedEntityRegistry(Scene& scene)
-		: m_Scene(scene)
+	UserDefinedEntityRegistry::UserDefinedEntityRegistry()
 	{
 		TAVERN_ENGINE_INFO("UserDefineEntityRegistry created");
 	}
@@ -18,5 +17,10 @@ namespace Tavern
 	void UserDefinedEntityRegistry::Register(const std::string& name, CreatorFunction createEntityFunction)
 	{
 		m_Registry[name] = createEntityFunction;
+	}
+
+	void UserDefinedEntityRegistry::SetScene(Scene* scene)
+	{
+		m_Scene = scene;
 	}
 }
