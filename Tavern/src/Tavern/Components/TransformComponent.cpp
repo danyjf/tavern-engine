@@ -65,8 +65,15 @@ namespace Tavern
 
 	void TransformComponent::SetPosition(const glm::vec3& position)
 	{
-		TransformComponent* parentTransform = GetOwner()->GetParent()->GetTransform();
-		m_LocalPosition = position - parentTransform->GetPosition();
+		if (GetOwner()->GetParent())
+		{
+			TransformComponent* parentTransform = GetOwner()->GetParent()->GetTransform();
+			m_LocalPosition = position - parentTransform->GetPosition();
+		}
+		else
+		{
+			m_LocalPosition = position;
+		}
 
 		ComputeLocalModelMatrix();
 		ComputeModelMatrix();
@@ -79,8 +86,15 @@ namespace Tavern
 
 	void TransformComponent::SetEulerRotation(const glm::vec3& eulerRotation)
 	{
-		TransformComponent* parentTransform = GetOwner()->GetParent()->GetTransform();
-		m_LocalEulerRotation = eulerRotation - parentTransform->GetEulerRotation();
+		if (GetOwner()->GetParent())
+		{
+			TransformComponent* parentTransform = GetOwner()->GetParent()->GetTransform();
+			m_LocalEulerRotation = eulerRotation - parentTransform->GetEulerRotation();
+		}
+		else
+		{
+			m_LocalEulerRotation = eulerRotation;
+		}
 
 		ComputeLocalModelMatrix();
 		ComputeModelMatrix();
@@ -93,8 +107,15 @@ namespace Tavern
 
 	void TransformComponent::SetScale(const glm::vec3& scale)
 	{
-		TransformComponent* parentTransform = GetOwner()->GetParent()->GetTransform();
-		m_LocalScale = scale / parentTransform->GetScale();
+		if (GetOwner()->GetParent())
+		{
+			TransformComponent* parentTransform = GetOwner()->GetParent()->GetTransform();
+			m_LocalScale = scale / parentTransform->GetScale();
+		}
+		else
+		{
+			m_LocalScale = scale;
+		}
 
 		ComputeLocalModelMatrix();
 		ComputeModelMatrix();
