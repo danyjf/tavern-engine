@@ -14,18 +14,17 @@ namespace Tavern
 	class TAVERN_API UserDefinedEntityRegistry
 	{
 	public:
-		static UserDefinedEntityRegistry& Get()
-		{
-			static UserDefinedEntityRegistry registry;
-			return registry;
-		}
+		static UserDefinedEntityRegistry& Get();
+
 		UserDefinedEntityRegistry(const UserDefinedEntityRegistry& other) = delete;
 		UserDefinedEntityRegistry& operator=(const UserDefinedEntityRegistry& other) = delete;
 
 		using CreatorFunction = std::function<Entity*(Entity*)>;
 		void Register(const std::string& name, CreatorFunction createEntityFunction);
+		void Create(const std::string& name);
 
 		void SetScene(Scene* scene);
+		Scene* GetScene() const;
 
 	private:
 		Scene* m_Scene = nullptr;

@@ -8,6 +8,11 @@ namespace Tavern::UI
 {
 	void MenuBar::Render()
 	{
+		if (!m_IsVisible)
+		{
+			return;
+		}
+
 		if (ImGui::BeginMainMenuBar())
 		{
 			for (std::unique_ptr<Menu>& menu : m_Menus)
@@ -32,6 +37,11 @@ namespace Tavern::UI
 
 	void Menu::Render()
 	{
+		if (!m_IsVisible)
+		{
+			return;
+		}
+
 		if (ImGui::BeginMenu(m_Name.c_str()))
 		{
 			for (std::unique_ptr<MenuItem>& menuItem : m_MenuItems)
@@ -56,6 +66,11 @@ namespace Tavern::UI
 
 	void MenuItem::Render()
 	{
+		if (!m_IsVisible)
+		{
+			return;
+		}
+
 		if (ImGui::MenuItem(m_Name.c_str()))
 		{
 			m_ItemPressedFunction();

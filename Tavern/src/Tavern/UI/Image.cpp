@@ -14,6 +14,11 @@ namespace Tavern::UI
 
 	void Image::Render()
 	{
+		if (!m_IsVisible)
+		{
+			return;
+		}
+
 		ImGui::Image(m_TextureID, m_Size);
 	}
 

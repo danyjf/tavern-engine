@@ -62,6 +62,7 @@ namespace Taverner
 			BuildGameProject((std::string)m_ProjectConfig["projectPath"] + "/VisualStudioProject");
 			LoadGameDLL(m_ProjectConfig["gameDLL"]);
 			// Spawn in a cube entity
+			UserDefinedEntityRegistry::Get().Create("Cube");
 		});
 		m_GameMenu->AddMenuItem("Pause", []() {});
 		m_GameMenu->SetIsVisible(false);
@@ -127,13 +128,11 @@ namespace Taverner
 						  "    ../Tavern/vendor/GLFW/include\n"
 						  "    ../Tavern/vendor/glm/\n"
 						  "    ../Tavern/vendor/assimp/include\n"
+						  "    ../Tavern/vendor/imgui\n"
+						  "    ../Tavern/vendor/imgui/backends\n"
 						  ")\n\n"
 						  "target_link_libraries(${PROJECT_NAME} PRIVATE\n"
 						  "    " + m_EditorPath + "/Tavernd.lib\n"
-						  "	   " + m_EditorPath + "/assimp-vc143-mtd.lib\n"
-						  "    " + m_EditorPath + "/glfw3d.lib\n"
-						  "    " + m_EditorPath + "/glmd.lib\n"
-						  "    " + m_EditorPath + "/zlibstaticd.lib\n"
 						  ")\n";
 
 		cMakeListsFile.close();

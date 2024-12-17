@@ -54,10 +54,7 @@ namespace Tavern
 
 		for (std::unique_ptr<UI::Panel>& panel : m_Panels)
 		{
-			if (panel->IsVisible())
-			{
-				panel->Render();
-			}
+			panel->Render();
 		}
 
 		ImGui::Render();

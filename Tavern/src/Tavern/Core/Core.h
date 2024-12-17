@@ -33,3 +33,9 @@
 	#define TAVERN_ENGINE_ASSERT(x, ...)
 	#define TAVERN_ASSERT(x, ...)
 #endif
+
+#define REGISTER_ENTITY(TYPE) \
+	static bool TYPE##Registered = []() { \
+		UserDefinedEntityRegistry::Get().Register(#TYPE, std::bind(&Scene::CreateEntity<TYPE>, UserDefinedEntityRegistry::Get().GetScene(), std::placeholders::_1)); \
+		return true; \
+	}();

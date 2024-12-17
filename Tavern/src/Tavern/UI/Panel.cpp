@@ -14,6 +14,11 @@ namespace Tavern::UI
 
 	void Panel::Render()
 	{
+		if (!m_IsVisible)
+		{
+			return;
+		}
+
 		if (ImGui::Begin(m_Name.c_str(), nullptr, m_WindowFlags))
 		{
 			m_Size = ImGui::GetContentRegionAvail();
@@ -25,10 +30,7 @@ namespace Tavern::UI
 
 			for (std::unique_ptr<UIElement>& uiElement : m_UIElements)
 			{
-				if (uiElement->IsVisible())
-				{
-					uiElement->Render();
-				}
+				uiElement->Render();
 			}
 		}
 		ImGui::End();

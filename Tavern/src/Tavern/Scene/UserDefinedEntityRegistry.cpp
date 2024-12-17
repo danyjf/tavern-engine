@@ -4,6 +4,12 @@
 
 namespace Tavern
 {
+	UserDefinedEntityRegistry& UserDefinedEntityRegistry::Get()
+	{
+		static UserDefinedEntityRegistry registry;
+		return registry;
+	}
+
 	UserDefinedEntityRegistry::UserDefinedEntityRegistry()
 	{
 		TAVERN_ENGINE_INFO("UserDefineEntityRegistry created");
@@ -19,8 +25,23 @@ namespace Tavern
 		m_Registry[name] = createEntityFunction;
 	}
 
+	void UserDefinedEntityRegistry::Create(const std::string& name)
+	{
+		if (!m_Registry.contains(name))
+		{
+			TAVERN_ENGINE_ERROR("Error creating entity {}. Entity not registered", name);
+			return;
+		}
+		m_Registry[name](nullptr);
+	}
+
 	void UserDefinedEntityRegistry::SetScene(Scene* scene)
 	{
 		m_Scene = scene;
+	}
+
+	Scene* UserDefinedEntityRegistry::GetScene() const
+	{
+		return m_Scene;
 	}
 }
