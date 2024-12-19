@@ -17,12 +17,17 @@ namespace Taverner
 
 	private:
 		Tavern::UI::Panel* m_EditorPanel;
+		Tavern::UI::Panel* m_ScenePanel;
+		Tavern::UI::Panel* m_InspectorPanel;
+		Tavern::UI::Panel* m_FileSystemPanel;
+		Tavern::UI::Panel* m_GamePanel;
+
+		Tavern::UI::Image* m_GameImage;
+
 		Tavern::UI::MenuBar* m_MainMenuBar;
 		Tavern::UI::Menu* m_FilesMenu;
 		Tavern::UI::Menu* m_ToolsMenu;
 		Tavern::UI::Menu* m_GameMenu;
-		Tavern::UI::Panel* m_GamePanel;
-		Tavern::UI::Image* m_GameImage;
 
 		std::string m_EditorPath;
 		nlohmann::json m_ProjectConfig;
@@ -40,6 +45,6 @@ namespace Taverner
 
 		void CreateNewProject();
 		void BuildGameProject(const std::string& path);
-		void LoadGameDLL(const std::string& path);
+		void LoadGame(const std::string& dllPath);
 	};
 }

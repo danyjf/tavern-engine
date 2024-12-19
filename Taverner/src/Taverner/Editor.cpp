@@ -13,11 +13,13 @@
 #include <Tavern/UI/MenuBar.h>
 #include <Tavern/UI/UIManager.h>
 #include <Tavern/UI/Image.h>
+#include <Tavern/UI/Button.h>
 
 #include "Taverner/Editor.h"
 
 using namespace Tavern;
 
+// TODO: Change button ui and menu item ui to use the engine event manager instead of callbacks
 namespace Taverner
 {
 	Editor::Editor(Engine& engine)
@@ -60,16 +62,18 @@ namespace Taverner
 		m_GameMenu = m_MainMenuBar->AddMenu("Game");
 		m_GameMenu->AddMenuItem("Play", [this]() {
 			BuildGameProject((std::string)m_ProjectConfig["projectPath"] + "/VisualStudioProject");
-			LoadGameDLL(m_ProjectConfig["gameDLL"]);
-			// Spawn in a cube entity
-			UserDefinedEntityRegistry::Get().Create("Cube");
+			LoadGame(m_ProjectConfig["gameDLL"]);
 		});
 		m_GameMenu->AddMenuItem("Pause", []() {});
 		m_GameMenu->SetIsVisible(false);
 
-		m_EditorPanel->AddUIElement(new UI::Panel("Scene", ImGuiWindowFlags_None));
-		m_EditorPanel->AddUIElement(new UI::Panel("Inspector", ImGuiWindowFlags_None));
-		m_EditorPanel->AddUIElement(new UI::Panel("File System", ImGuiWindowFlags_None));
+		m_ScenePanel = static_cast<UI::Panel*>(m_EditorPanel->AddUIElement(new UI::Panel("Scene", ImGuiWindowFlags_None)));
+		m_ScenePanel->AddUIElement(new UI::Button("+", [this]() {
+			TAVERN_INFO("Add entity");
+		}));
+
+		m_InspectorPanel = static_cast<UI::Panel*>(m_EditorPanel->AddUIElement(new UI::Panel("Inspector", ImGuiWindowFlags_None)));
+		m_FileSystemPanel = static_cast<UI::Panel*>(m_EditorPanel->AddUIElement(new UI::Panel("File System", ImGuiWindowFlags_None)));
 		m_GamePanel = static_cast<UI::Panel*>(m_EditorPanel->AddUIElement(new UI::Panel("Game", ImGuiWindowFlags_None)));
 		m_GameImage = static_cast<UI::Image*>(m_GamePanel->AddUIElement(new UI::Image(0, ImVec2(100.0f, 100.0f))));
 	}
@@ -141,7 +145,7 @@ namespace Taverner
 		m_ProjectConfig = {
 			{ "name", name },
 			{ "projectPath", projectPath },
-			{ "gameDLL", "" }
+			{ "gameDLL", projectPath + "/Binaries/Debug/" + name + ".dll" }
 		};
 
 		std::ofstream projectConfigFile(
@@ -160,23 +164,14 @@ namespace Taverner
 		TAVERN_INFO("Building game dll");
 		std::string buildCmd = "cmake --build " + path;
 		system(buildCmd.c_str());
-
-		std::string projectPath = (std::string)m_ProjectConfig["projectPath"];
-		std::string name = (std::string)m_ProjectConfig["name"];
-		std::string gameDLL = std::format("{}/Binaries/Debug/{}.dll", projectPath, name);
-		m_ProjectConfig["gameDLL"] = gameDLL;
-
-		std::ofstream projectConfigFile(
-			projectPath + "/" + name + ".project",
-			std::ofstream::out | std::ofstream::trunc
-		);
-		projectConfigFile << m_ProjectConfig;
-		projectConfigFile.close();
 	}
 
-	void Editor::LoadGameDLL(const std::string& path)
+	void Editor::LoadGame(const std::string& dllPath)
 	{
 		TAVERN_INFO("Loading game dll");
-		LoadLibrary(path.c_str());
+		LoadLibrary(dllPath.c_str());
+
+		// Spawn in a cube entity
+		UserDefinedEntityRegistry::Get().Create("Cube");
 	}
 }
