@@ -10,12 +10,14 @@ namespace Tavern::UI
 	class TAVERN_API MenuItem : public UIElement
 	{
 	public:
-		MenuItem(const std::string& name, ItemPressedFunction itemPressedFunction);
+		MenuItem(const std::string& name);
 		void Render() override;
+
+		void AddOnClickListener(ItemPressedFunction itemPressedFunction);
 
 	private:
 		std::string m_Name;
-		ItemPressedFunction m_ItemPressedFunction;
+		std::vector<ItemPressedFunction> m_ItemPressedListeners;
 	};
 
 	class TAVERN_API Menu : public UIElement
@@ -26,7 +28,7 @@ namespace Tavern::UI
 		Menu& operator=(const Menu& copy) = delete;
 
 		void Render() override;
-		MenuItem* AddMenuItem(const std::string& name, ItemPressedFunction itemPressedFunction);
+		MenuItem* AddMenuItem(const std::string& name);
 
 	private:
 		std::vector<std::unique_ptr<MenuItem>> m_MenuItems;

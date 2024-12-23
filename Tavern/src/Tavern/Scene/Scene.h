@@ -17,18 +17,18 @@ namespace Tavern
 
 		Entity* GetRoot() const;
 
-		template <typename EntityClass>
-		EntityClass* CreateEntity(Entity* parent = nullptr)
+		template <typename T>
+		T* CreateEntity(Entity* parent = nullptr)
 		{
 			if (parent == nullptr)
 			{
 				parent = GetRoot();
 			}
 
-			std::unique_ptr<EntityClass> entity = std::make_unique<EntityClass>(m_Engine);
+			std::unique_ptr<T> entity = std::make_unique<T>(m_Engine);
 			entity->SetParent(parent);
 
-			EntityClass* pEntity = entity.get();
+			T* pEntity = entity.get();
 
 			m_Entities.emplace(entity->GetID(), std::move(entity));
 

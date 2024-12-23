@@ -7,9 +7,14 @@
 
 namespace Tavern::UI
 {
-	Button::Button(const std::string& name, ButtonPressedFunction buttonPressedFunction)
-		: m_Name(name), m_ButtonPressedFunction(buttonPressedFunction)
+	Button::Button(const std::string& name)
+		: m_Name(name)
 	{
+	}
+
+	void Button::AddOnClickListener(ButtonPressedFunction buttonPressedFunction)
+	{
+		m_ButtonPressedListeners.push_back(buttonPressedFunction);
 	}
 
 	void Button::Render()
@@ -21,7 +26,10 @@ namespace Tavern::UI
 
 		if (ImGui::Button(m_Name.c_str()))
 		{
-			m_ButtonPressedFunction();
+			for (ButtonPressedFunction& listener : m_ButtonPressedListeners)
+			{
+				listener();
+			}
 		}
 	}
 }

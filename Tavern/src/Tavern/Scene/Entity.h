@@ -36,38 +36,38 @@ namespace Tavern
 		void SetParent(Entity* parent);
 		std::unordered_map<unsigned long, Entity*>& GetChildren();
 
-		template <typename ComponentClass, typename... Args>
-		ComponentClass* CreateComponentOfType(Args... args)
+		template <typename T, typename... Args>
+		T* CreateComponentOfType(Args... args)
 		{
-			std::type_index typeIndex(typeid(ComponentClass));
+			std::type_index typeIndex(typeid(T));
 
 			if (m_Components.contains(typeIndex))
 			{
-				m_Components[typeIndex].push_back(std::make_unique<ComponentClass>(GetEngine(), this, args...));
+				m_Components[typeIndex].push_back(std::make_unique<T>(GetEngine(), this, args...));
 			}
 			else
 			{
 				m_Components.emplace(typeIndex, std::vector<std::unique_ptr<Component>>());
-				m_Components[typeIndex].push_back(std::make_unique<ComponentClass>(GetEngine(), this, args...));
+				m_Components[typeIndex].push_back(std::make_unique<T>(GetEngine(), this, args...));
 			}
 
-			return static_cast<ComponentClass*>(m_Components[typeIndex].back().get());
+			return static_cast<T*>(m_Components[typeIndex].back().get());
 		}
-		template <typename ComponentClass>
-		ComponentClass* GetComponentOfType()
+		template <typename T>
+		T* GetComponentOfType()
 		{
-			std::type_index typeIndex(typeid(ComponentClass));
+			std::type_index typeIndex(typeid(T));
 			if (m_Components.contains(typeIndex) && !m_Components[typeIndex].empty())
 			{
-				return static_cast<ComponentClass*>(m_Components[typeIndex][0].get());
+				return static_cast<T*>(m_Components[typeIndex][0].get());
 			}
 			return nullptr;
 		}
-		template <typename ComponentClass>
-		std::vector<ComponentClass*> GetComponentsOfType()
+		template <typename T>
+		std::vector<T*> GetComponentsOfType()
 		{
-			std::type_index typeIndex(typeid(ComponentClass));
-			std::vector<ComponentClass*> components;
+			std::type_index typeIndex(typeid(T));
+			std::vector<T*> components;
 
 			if (!m_Components.contains(typeIndex))
 			{
@@ -76,7 +76,7 @@ namespace Tavern
 
 			for (std::unique_ptr<Component>& component : m_Components[typeIndex])
 			{
-				components.push_back(static_cast<ComponentClass*>(component.get()));
+				components.push_back(static_cast<T*>(component.get()));
 			}
 
 			return components;

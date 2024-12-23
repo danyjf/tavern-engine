@@ -19,7 +19,6 @@
 
 using namespace Tavern;
 
-// TODO: Change button ui and menu item ui to use the engine event manager instead of callbacks
 namespace Taverner
 {
 	Editor::Editor(Engine& engine)
@@ -40,42 +39,43 @@ namespace Taverner
 			| ImGuiWindowFlags_NoNavFocus;
 		m_EditorPanel = engine.GetUIManager().AddPanel(new UI::Panel("Editor", windowFlags, true));
 
-		m_MainMenuBar = static_cast<UI::MenuBar*>(m_EditorPanel->AddUIElement(new UI::MenuBar()));
+		m_MainMenuBar = m_EditorPanel->AddUIElement<UI::MenuBar>();
 
 		m_FilesMenu = m_MainMenuBar->AddMenu("File");
-		m_FilesMenu->AddMenuItem("New Project", std::bind(&Editor::CreateNewProject, this));
-		m_FilesMenu->AddMenuItem("Open Project", []() {});
+		m_FilesMenu->AddMenuItem("New Project")->AddOnClickListener(std::bind(&Editor::CreateNewProject, this));
+		m_FilesMenu->AddMenuItem("Open Project");
+		m_FilesMenu->AddMenuItem("Save");
 
 		m_ToolsMenu = m_MainMenuBar->AddMenu("Tools");
-		m_ToolsMenu->AddMenuItem("New C++ Class", []() {
+		m_ToolsMenu->AddMenuItem("New C++ Class")->AddOnClickListener([]() {
 			// TODO:
 			// Create c++ files
 			// Add files to CMakeLists
 			// Build DLL
 		});
-		m_ToolsMenu->AddMenuItem("Generate Visual Studio 2022 Project", [this]() {
+		m_ToolsMenu->AddMenuItem("Generate Visual Studio 2022 Project")->AddOnClickListener([this]() {
 			std::string generateCmd = "cmake -S " + (std::string)m_ProjectConfig["projectPath"] + " -B " + (std::string)m_ProjectConfig["projectPath"] + "/VisualStudioProject -G \"Visual Studio 17 2022\" -A x64";
 			system(generateCmd.c_str());
 		});
 		m_ToolsMenu->SetIsVisible(false);
 
 		m_GameMenu = m_MainMenuBar->AddMenu("Game");
-		m_GameMenu->AddMenuItem("Play", [this]() {
+		m_GameMenu->AddMenuItem("Play")->AddOnClickListener([this]() {
 			BuildGameProject((std::string)m_ProjectConfig["projectPath"] + "/VisualStudioProject");
 			LoadGame(m_ProjectConfig["gameDLL"]);
 		});
-		m_GameMenu->AddMenuItem("Pause", []() {});
+		m_GameMenu->AddMenuItem("Pause")->AddOnClickListener([]() {});
 		m_GameMenu->SetIsVisible(false);
 
-		m_ScenePanel = static_cast<UI::Panel*>(m_EditorPanel->AddUIElement(new UI::Panel("Scene", ImGuiWindowFlags_None)));
-		m_ScenePanel->AddUIElement(new UI::Button("+", [this]() {
+		m_ScenePanel = m_EditorPanel->AddUIElement<UI::Panel>("Scene", ImGuiWindowFlags_None);
+		m_ScenePanel->AddUIElement<UI::Button>("+")->AddOnClickListener([this]() {
 			TAVERN_INFO("Add entity");
-		}));
+		});
 
-		m_InspectorPanel = static_cast<UI::Panel*>(m_EditorPanel->AddUIElement(new UI::Panel("Inspector", ImGuiWindowFlags_None)));
-		m_FileSystemPanel = static_cast<UI::Panel*>(m_EditorPanel->AddUIElement(new UI::Panel("File System", ImGuiWindowFlags_None)));
-		m_GamePanel = static_cast<UI::Panel*>(m_EditorPanel->AddUIElement(new UI::Panel("Game", ImGuiWindowFlags_None)));
-		m_GameImage = static_cast<UI::Image*>(m_GamePanel->AddUIElement(new UI::Image(0, ImVec2(100.0f, 100.0f))));
+		m_InspectorPanel = m_EditorPanel->AddUIElement<UI::Panel>("Inspector", ImGuiWindowFlags_None);
+		m_FileSystemPanel = m_EditorPanel->AddUIElement<UI::Panel>("File System", ImGuiWindowFlags_None);
+		m_GamePanel = m_EditorPanel->AddUIElement<UI::Panel>("Game", ImGuiWindowFlags_None);
+		m_GameImage = m_GamePanel->AddUIElement<UI::Image>(0, ImVec2(100.0f, 100.0f));
 	}
 
 	void Editor::Update()

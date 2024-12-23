@@ -36,11 +36,11 @@ namespace Tavern::UI
 		ImGui::End();
 	}
 
-	UIElement* Panel::AddUIElement(UIElement* uiElement)
-	{
-		m_UIElements.emplace_back(std::unique_ptr<UIElement>(uiElement));
-		return uiElement;
-	}
+	//UIElement* Panel::AddUIElement(UIElement* uiElement)
+	//{
+	//	m_UIElements.emplace_back(std::unique_ptr<UIElement>(uiElement));
+	//	return uiElement;
+	//}
 
 	ImVec2 Panel::GetSize()
 	{

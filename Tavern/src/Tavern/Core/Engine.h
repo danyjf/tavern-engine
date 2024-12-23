@@ -27,11 +27,6 @@ namespace Tavern
 	class TAVERN_API Engine
 	{
 	public:
-		//static Engine& Get()
-		//{
-		//	static Engine engine;
-		//	return engine;
-		//}
 		Engine();
 		~Engine();
 
@@ -48,7 +43,6 @@ namespace Tavern
 		InputManager& GetInputManager();
 		TimeManager& GetTimeManager();
 		Scene& GetScene();
-		//UserDefinedEntityRegistry& GetUserDefinedEntityRegistry();
 
 		void OnWindowCloseEvent(const std::shared_ptr<WindowCloseEvent>& event);
 
@@ -60,8 +54,6 @@ namespace Tavern
 		InputManager m_InputManager = InputManager(m_RenderManager);
 		TimeManager m_TimeManager = TimeManager();
 		Scene m_Scene = Scene(*this);
-		// TODO: Make this a singleton
-		//UserDefinedEntityRegistry m_UserDefinedEntityRegistry = UserDefinedEntityRegistry(m_Scene);
 
 		EventListener<WindowCloseEvent> m_WindowCloseListener;
 

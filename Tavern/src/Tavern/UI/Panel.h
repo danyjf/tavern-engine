@@ -16,7 +16,12 @@ namespace Tavern::UI
 
 		void Render() override;
 
-		UIElement* AddUIElement(UIElement* uiElement);
+		template <typename T, typename... Args>
+		T* AddUIElement(Args... args)
+		{
+			m_UIElements.emplace_back(std::make_unique<T>(args...));
+			return static_cast<T*>(m_UIElements.back().get());
+		}
 		ImVec2 GetSize();
 
 	private:

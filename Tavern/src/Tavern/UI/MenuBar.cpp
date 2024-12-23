@@ -53,15 +53,20 @@ namespace Tavern::UI
 		}
 	}
 
-	MenuItem::MenuItem(const std::string& name, ItemPressedFunction itemPressedFunction)
-		: m_Name(name), m_ItemPressedFunction(itemPressedFunction)
+	MenuItem* Menu::AddMenuItem(const std::string& name)
+	{
+		m_MenuItems.emplace_back(std::make_unique<MenuItem>(name));
+		return m_MenuItems.back().get();
+	}
+
+	MenuItem::MenuItem(const std::string& name)
+		: m_Name(name)
 	{
 	}
 
-	MenuItem* Menu::AddMenuItem(const std::string& name, ItemPressedFunction itemPressedFunction)
+	void MenuItem::AddOnClickListener(ItemPressedFunction itemPressedFunction)
 	{
-		m_MenuItems.emplace_back(std::make_unique<MenuItem>(name, itemPressedFunction));
-		return m_MenuItems.back().get();
+		m_ItemPressedListeners.push_back(itemPressedFunction);
 	}
 
 	void MenuItem::Render()
@@ -73,7 +78,10 @@ namespace Tavern::UI
 
 		if (ImGui::MenuItem(m_Name.c_str()))
 		{
-			m_ItemPressedFunction();
+			for (ItemPressedFunction& listener : m_ItemPressedListeners)
+			{
+				listener();
+			}
 		}
 	}
 }

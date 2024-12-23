@@ -12,14 +12,16 @@ namespace Tavern::UI
 	class TAVERN_API Button : public UIElement
 	{
 	public:
-		Button(const std::string& name, ButtonPressedFunction buttonPressedFunction);
+		Button(const std::string& name);
 		Button(Button& copy) = delete;
 		Button& operator=(const Button& copy) = delete;
+
+		void AddOnClickListener(ButtonPressedFunction buttonPressedFunction);
 
 		void Render() override;
 
 	private:
 		std::string m_Name;
-		ButtonPressedFunction m_ButtonPressedFunction;
+		std::vector<ButtonPressedFunction> m_ButtonPressedListeners;
 	};
 }
