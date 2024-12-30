@@ -18,6 +18,11 @@ namespace Tavern
 		ComputeLocalModelMatrix();
 		ComputeModelMatrix();
 	}
+	
+	void TransformComponent::Serialize()
+	{
+
+	}
 
 	const glm::vec3& TransformComponent::GetLocalPosition() const
 	{
@@ -205,9 +210,9 @@ namespace Tavern
 			m_Up = m_LocalUp;
 		}
 
-		for (auto& pair : GetOwner()->GetChildren())
+		for (Entity* child : GetOwner()->GetChildren())
 		{
-			TransformComponent* childTransform = pair.second->GetTransform();
+			TransformComponent* childTransform = child->GetTransform();
 			childTransform->ComputeModelMatrix();
 		}
 	}

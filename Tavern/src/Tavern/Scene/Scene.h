@@ -38,6 +38,8 @@ namespace Tavern
 
 		void Update();
 
+		void Serialize();
+
 	private:
 		// TODO: This is kinda weird, maybe change the ownership of the child entities
 		// into the parent entities themselves so that it is easier to destroy entities

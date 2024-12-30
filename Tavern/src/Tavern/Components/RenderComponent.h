@@ -17,6 +17,7 @@ namespace Tavern
 		virtual ~RenderComponent() override;
 
 		virtual void Render() = 0;
+		void Serialize() override;
 
 		bool IsVisible() const;
 		void SetIsVisible(bool isVisible);

@@ -26,4 +26,9 @@ namespace Tavern
 
 		m_Mesh->Render();
 	}
+
+	void MeshComponent::Serialize()
+	{
+
+	}
 }

@@ -14,6 +14,8 @@ namespace Tavern
 		LightComponent(Engine& engine, Entity* owner);
 		virtual ~LightComponent() override;
 
+		void Serialize() override;
+
 		const glm::vec3& GetColor() const;
 		void SetColor(const glm::vec3& color);
 

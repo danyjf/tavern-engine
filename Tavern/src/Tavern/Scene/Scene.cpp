@@ -32,12 +32,12 @@ namespace Tavern
 
 		if (entity->m_Parent)
 		{
-			entity->m_Parent->m_Children.erase(entity->GetID());
+			entity->m_Parent->RemoveChild(entity);
 		}
 
-		for (auto& pair : entity->m_Children)
+		for (Entity* child : entity->m_Children)
 		{
-			m_Entities.erase(pair.first);
+			m_Entities.erase(child->GetID());
 		}
 
 		m_Entities.erase(entity->GetID());
@@ -49,5 +49,9 @@ namespace Tavern
 		{
 			(*it).second->Update();
 		}
+	}
+
+	void Scene::Serialize()
+	{
 	}
 }

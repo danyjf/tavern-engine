@@ -44,7 +44,11 @@ namespace Taverner
 		m_FilesMenu = m_MainMenuBar->AddMenu("File");
 		m_FilesMenu->AddMenuItem("New Project")->AddOnClickListener(std::bind(&Editor::CreateNewProject, this));
 		m_FilesMenu->AddMenuItem("Open Project");
-		m_FilesMenu->AddMenuItem("Save");
+		m_FilesMenu->AddMenuItem("Save")->AddOnClickListener([]() {
+			// TODO: 
+			// Serialize entities
+			// Serialize scene
+		});
 
 		m_ToolsMenu = m_MainMenuBar->AddMenu("Tools");
 		m_ToolsMenu->AddMenuItem("New C++ Class")->AddOnClickListener([]() {

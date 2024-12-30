@@ -1,6 +1,7 @@
 #include "Tavern/Components/TransformComponent.h"
 #include "Tavern/Scene/Entity.h"
 #include "Tavern/Core/Engine.h"
+#include "Tavern/Core/Log.h"
 
 namespace Tavern
 {
@@ -40,20 +41,33 @@ namespace Tavern
 
 	void Entity::SetParent(Entity* parent)
 	{
-		// Remove this entity from the list of children of current parent
 		if (m_Parent)
 		{
-			m_Parent->m_Children.erase(m_ID);
+			m_Parent->RemoveChild(this);
 		}
-
-		// Add this entity to the list of children of the new parent
-		parent->m_Children[m_ID] = this;
-
 		m_Parent = parent;
+
+		m_Parent->AddChild(this);
 	}
 
-	std::unordered_map<unsigned long, Entity*>& Entity::GetChildren()
+	std::vector<Entity*>& Entity::GetChildren()
 	{
 		return m_Children;
+	}
+
+	void Entity::RemoveChild(Entity* child)
+	{
+		m_Children.erase(std::remove(m_Children.begin(), m_Children.end(), child), m_Children.end());
+	}
+
+	void Entity::AddChild(Entity* child)
+	{
+		if (std::find(m_Children.begin(), m_Children.end(), child) != m_Children.end())
+		{
+			TAVERN_ENGINE_ERROR("Tried to add child to entity, but entity is already parent of child");
+			return;
+		}
+		
+		m_Children.push_back(child);
 	}
 }

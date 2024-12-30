@@ -15,6 +15,8 @@ namespace Tavern
 		TransformComponent(Engine& engine, Entity* owner);
 		virtual ~TransformComponent() = default;
 
+		void Serialize() override;
+
 		const glm::vec3& GetLocalPosition() const;
 		void SetLocalPosition(const glm::vec3& localPosition);
 

@@ -16,6 +16,8 @@ namespace Tavern
 		Engine& GetEngine() const;
 		Entity* GetOwner() const;
 
+		virtual void Serialize() = 0;
+
 	private:
 		Engine& m_Engine;
 		Entity* m_Owner = nullptr;

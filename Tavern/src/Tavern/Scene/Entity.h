@@ -32,9 +32,11 @@ namespace Tavern
 		const unsigned long GetID() const;
 		Engine& GetEngine() const;
 		TransformComponent* GetTransform() const;
+
 		Entity* GetParent() const;
 		void SetParent(Entity* parent);
-		std::unordered_map<unsigned long, Entity*>& GetChildren();
+
+		std::vector<Entity*>& GetChildren();
 
 		template <typename T, typename... Args>
 		T* CreateComponentOfType(Args... args)
@@ -83,7 +85,7 @@ namespace Tavern
 		}
 
 	protected:
-		std::unordered_map<unsigned long, Entity*> m_Children;
+		std::vector<Entity*> m_Children;
 		Entity* m_Parent = nullptr;
 
 	private:
@@ -93,5 +95,8 @@ namespace Tavern
 		std::unordered_map<std::type_index, std::vector<std::unique_ptr<Component>>> m_Components;
 
 		static inline unsigned long s_Counter = 0;
+
+		void RemoveChild(Entity* child);
+		void AddChild(Entity* child);
 	};
 }

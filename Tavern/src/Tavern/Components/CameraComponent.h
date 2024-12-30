@@ -17,6 +17,8 @@ namespace Tavern
 		CameraComponent(Engine& engine, Entity* owner);
 		virtual ~CameraComponent() override = default;
 
+		void Serialize() override;
+
 		void SetFOV(float FOV);
 		void SetViewportSize(float width, float height);
 		const glm::vec2 GetViewportSize() const;

@@ -20,6 +20,7 @@ namespace Tavern
 
 		void SetMesh(std::shared_ptr<MeshResource> mesh);
 		void Render() override;
+		void Serialize() override;
 
 	private:
 		std::shared_ptr<MeshResource> m_Mesh = nullptr;

@@ -16,6 +16,11 @@ namespace Tavern
 		GetEngine().GetRenderManager().RemoveRenderComponent(this);
 	}
 
+	void RenderComponent::Serialize()
+	{
+
+	}
+
 	bool RenderComponent::IsVisible() const
 	{
 		return m_IsVisible;

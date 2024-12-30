@@ -16,6 +16,11 @@ namespace Tavern
 		ComputeProjectionMatrix();
 	}
 
+	void CameraComponent::Serialize()
+	{
+
+	}
+
 	void CameraComponent::SetFOV(float FOV)
 	{
 		m_FOV = FOV;

@@ -15,6 +15,11 @@ namespace Tavern
 		GetEngine().GetRenderManager().RemoveLightComponent(this);
 	}
 
+	void LightComponent::Serialize()
+	{
+
+	}
+
 	const glm::vec3& LightComponent::GetColor() const
 	{
 		return m_Color;
