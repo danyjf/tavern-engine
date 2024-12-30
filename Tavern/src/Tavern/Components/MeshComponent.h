@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <glm/glm.hpp>
+#include <nlohmann/json.hpp>
 
 #include "Tavern/Components/RenderComponent.h"
 #include "Tavern/Core/Core.h"
@@ -20,7 +21,8 @@ namespace Tavern
 
 		void SetMesh(std::shared_ptr<MeshResource> mesh);
 		void Render() override;
-		void Serialize() override;
+		nlohmann::json Serialize() override;
+		void Deserialize() override;
 
 	private:
 		std::shared_ptr<MeshResource> m_Mesh = nullptr;

@@ -1,3 +1,5 @@
+#include <nlohmann/json.hpp>
+
 #include "Tavern/Scene/Scene.h"
 #include "Tavern/Scene/Entity.h"
 #include "Tavern/Core/Log.h"
@@ -7,6 +9,7 @@ namespace Tavern
 {
 	Scene::Scene(Engine& engine)
 		: m_Engine(engine),
+		  m_Name("Default"),
 		  m_RootEntity(std::make_unique<Entity>(engine))
 	{
 		TAVERN_ENGINE_INFO("Scene created");
@@ -15,6 +18,16 @@ namespace Tavern
 	Scene::~Scene()
 	{
 		TAVERN_ENGINE_INFO("Scene destroyed");
+	}
+
+	void Scene::SetName(const std::string& name)
+	{
+		m_Name = name;
+	}
+
+	const std::string& Scene::GetName() const
+	{
+		return m_Name;
 	}
 
 	Entity* Scene::GetRoot() const
@@ -51,7 +64,19 @@ namespace Tavern
 		}
 	}
 
-	void Scene::Serialize()
+	nlohmann::json Scene::Serialize()
 	{
+		nlohmann::json json;
+		json["name"] = m_Name;
+		for (const auto& [id, entity] : m_Entities)
+		{
+			json["entities"].push_back(entity->Serialize());
+		}
+		return json;
+	}
+
+	void Scene::Deserialize()
+	{
+
 	}
 }

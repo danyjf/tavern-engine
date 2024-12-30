@@ -17,7 +17,8 @@ namespace Tavern
 		virtual ~RenderComponent() override;
 
 		virtual void Render() = 0;
-		void Serialize() override;
+		nlohmann::json Serialize() override;
+		void Deserialize() override;
 
 		bool IsVisible() const;
 		void SetIsVisible(bool isVisible);

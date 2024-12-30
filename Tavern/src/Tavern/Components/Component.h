@@ -1,5 +1,7 @@
 #pragma once
 
+#include <nlohmann/json.hpp>
+
 #include "Tavern/Core/Core.h"
 
 namespace Tavern
@@ -16,7 +18,8 @@ namespace Tavern
 		Engine& GetEngine() const;
 		Entity* GetOwner() const;
 
-		virtual void Serialize() = 0;
+		virtual nlohmann::json Serialize() = 0;
+		virtual void Deserialize() = 0;
 
 	private:
 		Engine& m_Engine;

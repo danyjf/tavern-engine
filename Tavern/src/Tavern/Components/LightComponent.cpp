@@ -1,3 +1,5 @@
+#include <nlohmann/json.hpp>
+
 #include "Tavern/Components/LightComponent.h"
 #include "Tavern/Core/Engine.h"
 #include "Tavern/Scene/Entity.h"
@@ -15,7 +17,14 @@ namespace Tavern
 		GetEngine().GetRenderManager().RemoveLightComponent(this);
 	}
 
-	void LightComponent::Serialize()
+	nlohmann::json LightComponent::Serialize()
+	{
+		nlohmann::json json;
+		json["light"]["color"] = { m_Color.x, m_Color.y, m_Color.z };
+		return json;
+	}
+
+	void LightComponent::Deserialize()
 	{
 
 	}

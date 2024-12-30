@@ -1,3 +1,5 @@
+#include <nlohmann/json.hpp>
+
 #include "Tavern/Components/TransformComponent.h"
 #include "Tavern/Scene/Entity.h"
 #include "Tavern/Core/Engine.h"
@@ -17,6 +19,34 @@ namespace Tavern
 
 	void Entity::Update()
 	{
+	}
+
+	nlohmann::json Entity::Serialize()
+	{
+		nlohmann::json json;
+		json["id"] = m_ID;
+		json["parent"] = m_Parent ? m_Parent->GetID() : -1;		// -1 means no parent
+
+		for (Entity* child : m_Children)
+		{
+			json["children"].push_back(child->GetID());
+		}
+
+		json["components"].emplace(m_Transform->Serialize());
+		for (const auto& [type, componentVector] : m_Components)
+		{
+			for (const std::unique_ptr<Component>& component : componentVector)
+			{
+				json["components"].emplace(component->Serialize());
+			}
+		}
+
+		return json;
+	}
+	
+	void Entity::Deserialize()
+	{
+
 	}
 
 	const unsigned long Entity::GetID() const

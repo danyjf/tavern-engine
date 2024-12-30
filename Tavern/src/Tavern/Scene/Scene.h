@@ -1,5 +1,7 @@
 #pragma once
 
+#include <nlohmann/json.hpp>
+
 #include "Tavern/Core/Core.h"
 
 namespace Tavern
@@ -14,6 +16,9 @@ namespace Tavern
 		~Scene();
 		Scene(Scene& copy) = delete;
 		Scene& operator=(const Scene& copy) = delete;
+
+		void SetName(const std::string& name);
+		const std::string& GetName() const;
 
 		Entity* GetRoot() const;
 
@@ -38,11 +43,11 @@ namespace Tavern
 
 		void Update();
 
-		void Serialize();
+		nlohmann::json Serialize();
+		void Deserialize();
 
 	private:
-		// TODO: This is kinda weird, maybe change the ownership of the child entities
-		// into the parent entities themselves so that it is easier to destroy entities
+		std::string m_Name = "Default";
 		std::unordered_map<unsigned long, std::unique_ptr<Entity>> m_Entities = {};
 		std::unique_ptr<Entity> m_RootEntity;
 		Engine& m_Engine;

@@ -17,7 +17,8 @@ namespace Tavern
 		CameraComponent(Engine& engine, Entity* owner);
 		virtual ~CameraComponent() override = default;
 
-		void Serialize() override;
+		nlohmann::json Serialize() override;
+		void Deserialize() override;
 
 		void SetFOV(float FOV);
 		void SetViewportSize(float width, float height);

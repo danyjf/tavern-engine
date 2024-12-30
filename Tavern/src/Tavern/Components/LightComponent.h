@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <nlohmann/json.hpp>
 
 #include "Tavern/Components/RenderComponent.h"
 #include "Tavern/Components/Component.h"
@@ -14,7 +15,8 @@ namespace Tavern
 		LightComponent(Engine& engine, Entity* owner);
 		virtual ~LightComponent() override;
 
-		void Serialize() override;
+		nlohmann::json Serialize() override;
+		void Deserialize() override;
 
 		const glm::vec3& GetColor() const;
 		void SetColor(const glm::vec3& color);

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <nlohmann/json.hpp>
 
 #include "Tavern/Core/Core.h"
 #include "Tavern/Components/Component.h"
@@ -15,7 +16,8 @@ namespace Tavern
 		TransformComponent(Engine& engine, Entity* owner);
 		virtual ~TransformComponent() = default;
 
-		void Serialize() override;
+		nlohmann::json Serialize() override;
+		void Deserialize() override;
 
 		const glm::vec3& GetLocalPosition() const;
 		void SetLocalPosition(const glm::vec3& localPosition);

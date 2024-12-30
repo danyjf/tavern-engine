@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <vector>
 #include <typeindex>
+#include <nlohmann/json.hpp>
 
 #include "Tavern/Core/Core.h"
 #include "Tavern/Scene/Scene.h"
@@ -28,6 +29,8 @@ namespace Tavern
 		Entity& operator=(const Entity& copy) = delete;
 
 		virtual void Update();
+		nlohmann::json Serialize();
+		void Deserialize();
 
 		const unsigned long GetID() const;
 		Engine& GetEngine() const;

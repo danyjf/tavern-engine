@@ -1,3 +1,5 @@
+#include <nlohmann/json.hpp>
+
 #include "Tavern/Components/RenderComponent.h"
 #include "Tavern/Resources/MaterialResource.h"
 #include "Tavern/Scene/Entity.h"
@@ -16,7 +18,15 @@ namespace Tavern
 		GetEngine().GetRenderManager().RemoveRenderComponent(this);
 	}
 
-	void RenderComponent::Serialize()
+	nlohmann::json RenderComponent::Serialize()
+	{
+		nlohmann::json json;
+		json["isVisible"] = m_IsVisible;
+		json["material"] = m_Material ? m_Material->GetPath() : "";
+		return json;
+	}
+
+	void RenderComponent::Deserialize()
 	{
 
 	}

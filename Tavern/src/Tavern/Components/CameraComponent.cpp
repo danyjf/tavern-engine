@@ -1,6 +1,7 @@
 #include <glm/glm.hpp>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <nlohmann/json.hpp>
 
 #include "Tavern/Components/CameraComponent.h"
 #include "Tavern/Core/Engine.h"
@@ -16,7 +17,18 @@ namespace Tavern
 		ComputeProjectionMatrix();
 	}
 
-	void CameraComponent::Serialize()
+	nlohmann::json CameraComponent::Serialize()
+	{
+		nlohmann::json json;
+		json["camera"]["fov"] = m_FOV;
+		json["camera"]["viewportWidth"] = m_ViewportWidth;
+		json["camera"]["viewportHeight"] = m_ViewportHeight;
+		json["camera"]["nearClipPlane"] = m_NearClipPlane;
+		json["camera"]["farClipPlane"] = m_FarClipPlane;
+		return json;
+	}
+
+	void CameraComponent::Deserialize()
 	{
 
 	}

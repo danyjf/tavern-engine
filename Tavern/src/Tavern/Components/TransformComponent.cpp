@@ -1,3 +1,4 @@
+#include <nlohmann/json.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -19,7 +20,16 @@ namespace Tavern
 		ComputeModelMatrix();
 	}
 	
-	void TransformComponent::Serialize()
+	nlohmann::json TransformComponent::Serialize()
+	{
+		nlohmann::json json;
+		json["transform"]["localPosition"] = { m_LocalPosition.x, m_LocalPosition.y, m_LocalPosition.z };
+		json["transform"]["localEulerRotation"] = {m_LocalEulerRotation.x, m_LocalEulerRotation.y, m_LocalEulerRotation.z};
+		json["transform"]["localScale"] = {m_LocalScale.x, m_LocalScale.y, m_LocalScale.z};
+		return json;
+	}
+
+	void TransformComponent::Deserialize()
 	{
 
 	}

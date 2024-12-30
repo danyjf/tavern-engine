@@ -1,3 +1,5 @@
+#include <nlohmann/json.hpp>
+
 #include "Tavern/Components/MeshComponent.h"
 #include "Tavern/Renderer/RenderManager.h"
 #include "Tavern/Core/Engine.h"
@@ -27,7 +29,17 @@ namespace Tavern
 		m_Mesh->Render();
 	}
 
-	void MeshComponent::Serialize()
+	nlohmann::json MeshComponent::Serialize()
+	{
+		nlohmann::json renderJson = RenderComponent::Serialize();
+
+		nlohmann::json json;
+		json["mesh"].emplace(renderJson);
+		json["mesh"]["mesh"] = m_Mesh ? m_Mesh->GetPath() : "";
+		return json;
+	}
+
+	void MeshComponent::Deserialize()
 	{
 
 	}
