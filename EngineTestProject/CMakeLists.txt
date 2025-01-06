@@ -42,6 +42,7 @@ target_link_libraries(EngineTestProject PRIVATE
     Tavern
     glfw
     glm::glm
+    nlohmann_json::nlohmann_json
     assimp
 )
 

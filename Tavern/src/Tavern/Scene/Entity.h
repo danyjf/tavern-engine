@@ -32,6 +32,8 @@ namespace Tavern
 		nlohmann::json Serialize();
 		void Deserialize();
 
+		const std::string& GetClassName() const;
+		void SetClassName(const std::string& className);
 		const unsigned long GetID() const;
 		Engine& GetEngine() const;
 		TransformComponent* GetTransform() const;
@@ -92,6 +94,7 @@ namespace Tavern
 		Entity* m_Parent = nullptr;
 
 	private:
+		std::string m_ClassName = "";
 		unsigned long m_ID = 0;
 		Engine& m_Engine;
 		TransformComponent* m_Transform;

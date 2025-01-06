@@ -138,6 +138,7 @@ namespace Taverner
 						  "    ../Tavern/vendor/assimp/include\n"
 						  "    ../Tavern/vendor/imgui\n"
 						  "    ../Tavern/vendor/imgui/backends\n"
+						  "    ../Tavern/vendor/nlohmann_json/include\n"
 						  ")\n\n"
 						  "target_link_libraries(${PROJECT_NAME} PRIVATE\n"
 						  "    " + m_EditorPath + "/Tavernd.lib\n"

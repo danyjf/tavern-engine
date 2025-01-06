@@ -33,8 +33,8 @@ target_link_libraries(Taverner PRIVATE
     Tavern
     glfw
     glm::glm
-    assimp
     nlohmann_json::nlohmann_json
+    assimp
 )
 
 set_target_properties(Taverner PROPERTIES

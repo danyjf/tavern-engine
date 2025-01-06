@@ -49,6 +49,16 @@ namespace Tavern
 
 	}
 
+	const std::string& Entity::GetClassName() const
+	{
+		return m_ClassName;
+	}
+
+	void Entity::SetClassName(const std::string& className)
+	{
+		m_ClassName = className;
+	}
+
 	const unsigned long Entity::GetID() const
 	{
 		return m_ID;
