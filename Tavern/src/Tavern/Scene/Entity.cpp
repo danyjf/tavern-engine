@@ -24,6 +24,7 @@ namespace Tavern
 	nlohmann::json Entity::Serialize()
 	{
 		nlohmann::json json;
+		json["typeName"] = m_TypeName;
 		json["id"] = m_ID;
 		json["parent"] = m_Parent ? m_Parent->GetID() : -1;		// -1 means no parent
 
@@ -49,14 +50,14 @@ namespace Tavern
 
 	}
 
-	const std::string& Entity::GetClassName() const
+	const std::string& Entity::GetTypeName() const
 	{
-		return m_ClassName;
+		return m_TypeName;
 	}
 
-	void Entity::SetClassName(const std::string& className)
+	void Entity::SetTypeName(const std::string& typeName)
 	{
-		m_ClassName = className;
+		m_TypeName = typeName;
 	}
 
 	const unsigned long Entity::GetID() const

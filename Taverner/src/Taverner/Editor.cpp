@@ -6,6 +6,7 @@
 
 #include <imgui.h>
 
+#include <Tavern/Scene/Entity.h>
 #include <Tavern/Renderer/Window.h>
 #include <Tavern/Core/Engine.h>
 #include <Tavern/Core/Log.h>
@@ -177,6 +178,7 @@ namespace Taverner
 		LoadLibrary(dllPath.c_str());
 
 		// Spawn in a cube entity
-		UserDefinedEntityRegistry::Get().Create("Cube");
+		Entity* cube = UserDefinedEntityRegistry::Get().Create("Cube");
+		TAVERN_INFO("Class Loaded: {}", cube->GetTypeName());
 	}
 }

@@ -19,9 +19,9 @@ namespace Tavern
 		UserDefinedEntityRegistry(const UserDefinedEntityRegistry& other) = delete;
 		UserDefinedEntityRegistry& operator=(const UserDefinedEntityRegistry& other) = delete;
 
-		using CreatorFunction = std::function<Entity*(Entity*)>;
+		using CreatorFunction = std::function<Entity*()>;
 		void Register(const std::string& name, CreatorFunction createEntityFunction);
-		void Create(const std::string& name);
+		Entity* Create(const std::string& name);
 
 		void SetScene(Scene* scene);
 		Scene* GetScene() const;

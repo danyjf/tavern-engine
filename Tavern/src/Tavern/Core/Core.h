@@ -36,6 +36,10 @@
 
 #define REGISTER_ENTITY(TYPE) \
 	static bool TYPE##Registered = []() { \
-		UserDefinedEntityRegistry::Get().Register(#TYPE, std::bind(&Scene::CreateEntity<TYPE>, UserDefinedEntityRegistry::Get().GetScene(), std::placeholders::_1)); \
+		UserDefinedEntityRegistry::Get().Register(#TYPE, []() -> Entity* { \
+			auto entity = UserDefinedEntityRegistry::Get().GetScene()->CreateEntity<TYPE>(); \
+			entity->SetTypeName(#TYPE); \
+			return entity; \
+		}); \
 		return true; \
 	}();
