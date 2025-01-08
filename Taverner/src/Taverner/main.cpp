@@ -6,6 +6,7 @@
 
 #include <Tavern/Core/Engine.h>
 #include <Tavern/Core/Log.h>
+#include <Tavern/Core/Core.h>
 #include <Tavern/Scene/Entity.h>
 #include <Tavern/Components/MeshComponent.h>
 #include <Tavern/Components/LightComponent.h>
@@ -13,6 +14,8 @@
 #include <Tavern/UI/MenuBar.h>
 
 #include "Taverner/Editor.h"
+
+using namespace Tavern;
 
 class Light : public Tavern::Entity
 {
@@ -49,6 +52,7 @@ private:
 	Tavern::LightComponent* m_Light;
 	glm::vec3 m_StartPosition;
 };
+REGISTER_ENTITY(Light);
 
 class EditorCamera : public Tavern::Entity
 {
@@ -106,8 +110,7 @@ private:
 	float m_Speed;
 	float m_Zoom;
 };
-
-using namespace Tavern;
+REGISTER_ENTITY(EditorCamera);
 
 int main()
 {
@@ -119,8 +122,8 @@ int main()
 	window->GetCursor().SetIsVisible(true);
 
 	// TODO: Remove this game code
-	EditorCamera* editorCamera = engine.GetScene().CreateEntity<EditorCamera>();
-	Light* light = engine.GetScene().CreateEntity<Light>();
+	Entity* editorCamera = UserDefinedEntityRegistry::Get().Create("EditorCamera");
+	Entity* light = UserDefinedEntityRegistry::Get().Create("Light");
 
 	Taverner::Editor editor(engine);
 	while (engine.IsRunning())

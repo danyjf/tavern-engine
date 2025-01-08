@@ -34,8 +34,8 @@ namespace Tavern
 		nlohmann::json renderJson = RenderComponent::Serialize();
 
 		nlohmann::json json;
-		json["mesh"].emplace(renderJson);
-		json["mesh"]["mesh"] = m_Mesh ? m_Mesh->GetPath() : "";
+		json["mesh"] = renderJson;
+		json["mesh"]["meshPath"] = m_Mesh ? m_Mesh->GetPath().c_str() : "";
 		return json;
 	}
 

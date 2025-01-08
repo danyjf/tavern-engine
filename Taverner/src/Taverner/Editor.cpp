@@ -5,6 +5,7 @@
 #include <fstream>
 
 #include <imgui.h>
+#include <nlohmann/json.hpp>
 
 #include <Tavern/Scene/Entity.h>
 #include <Tavern/Renderer/Window.h>
@@ -45,10 +46,12 @@ namespace Taverner
 		m_FilesMenu = m_MainMenuBar->AddMenu("File");
 		m_FilesMenu->AddMenuItem("New Project")->AddOnClickListener(std::bind(&Editor::CreateNewProject, this));
 		m_FilesMenu->AddMenuItem("Open Project");
-		m_FilesMenu->AddMenuItem("Save")->AddOnClickListener([]() {
+		m_FilesMenu->AddMenuItem("Save")->AddOnClickListener([this]() {
 			// TODO: 
 			// Serialize entities
 			// Serialize scene
+			nlohmann::json serializedScene = m_Engine.GetScene().Serialize();
+			TAVERN_INFO(serializedScene.dump(2));
 		});
 
 		m_ToolsMenu = m_MainMenuBar->AddMenu("Tools");

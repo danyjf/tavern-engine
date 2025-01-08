@@ -33,12 +33,11 @@ namespace Tavern
 			json["children"].push_back(child->GetID());
 		}
 
-		json["components"].emplace(m_Transform->Serialize());
 		for (const auto& [type, componentVector] : m_Components)
 		{
 			for (const std::unique_ptr<Component>& component : componentVector)
 			{
-				json["components"].emplace(component->Serialize());
+				json["components"].update(component->Serialize());
 			}
 		}
 
