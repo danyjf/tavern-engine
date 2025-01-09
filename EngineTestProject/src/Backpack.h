@@ -1,15 +1,13 @@
 #include <Tavern/Scene/Entity.h>
 
-namespace Tavern
-{
-	class MeshComponent;
-}
+using namespace Tavern;
 
-class Backpack : public Tavern::Entity
+class Backpack : public Entity
 {
 public:
-	Backpack(Tavern::Engine& engine);
+	Backpack(Engine& engine);
 
 private:
-	Tavern::MeshComponent* m_Mesh;
+	MeshComponent* m_Mesh;
 };
+REGISTER_ENTITY(Backpack);
