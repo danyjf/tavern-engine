@@ -8,6 +8,8 @@ set(SOURCES
 	src/Light.h
 	src/Player.cpp
 	src/Player.h
+	src/Ground.cpp
+	src/Ground.h
 )
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/EngineTestProject)
