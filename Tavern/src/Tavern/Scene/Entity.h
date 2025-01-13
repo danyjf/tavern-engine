@@ -15,7 +15,7 @@ namespace Tavern
 	class TextureResource;
 	class TransformComponent;
 	class Component;
-	//class Engine;
+	class Engine;
 
 	class TAVERN_API Entity
 	{
@@ -23,18 +23,14 @@ namespace Tavern
 
 	public:
 		Entity(Engine& engine);
-		//Entity();
 		virtual ~Entity();
 
 		Entity(Entity& copy) = delete;
 		Entity& operator=(const Entity& copy) = delete;
 
-		//virtual void Update();
 		nlohmann::json Serialize();
 		void Deserialize();
 
-		//const std::string& GetTypeName() const;
-		//void SetTypeName(const std::string& className);
 		const unsigned long GetID() const;
 		Engine& GetEngine() const;
 		TransformComponent* GetTransform() const;
@@ -43,8 +39,6 @@ namespace Tavern
 		void SetParent(Entity* parent);
 
 		std::vector<Entity*>& GetChildren();
-
-		//void AddComponent(Component* component);
 
 		template <typename T, typename... Args>
 		T* CreateComponentOfType(Args... args)
@@ -56,13 +50,6 @@ namespace Tavern
 		template <typename T>
 		T* GetComponentOfType()
 		{
-			//std::type_index typeIndex(typeid(T));
-			//if (m_Components.contains(typeIndex) && !m_Components[typeIndex].empty())
-			//{
-			//	return static_cast<T*>(m_Components[typeIndex][0].get());
-			//}
-			//return nullptr;
-
 			for (std::unique_ptr<Component>& component : m_Components)
 			{
 				if (typeid(T) == typeid(*component))
@@ -77,11 +64,9 @@ namespace Tavern
 		Entity* m_Parent = nullptr;
 
 	private:
-		//std::string m_TypeName = "";
 		unsigned long m_ID = 0;
 		Engine& m_Engine;
 		TransformComponent* m_Transform;
-		//std::unordered_map<std::type_index, std::vector<std::unique_ptr<Component>>> m_Components;
 		std::vector<std::unique_ptr<Component>> m_Components;
 
 		static inline unsigned long s_Counter = 0;

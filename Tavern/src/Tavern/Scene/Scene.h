@@ -25,23 +25,6 @@ namespace Tavern
 
 		Entity* GetRoot() const;
 
-		//template <typename T>
-		//T* CreateEntity(Entity* parent = nullptr)
-		//{
-		//	if (parent == nullptr)
-		//	{
-		//		parent = GetRoot();
-		//	}
-
-		//	std::unique_ptr<T> entity = std::make_unique<T>(m_Engine);
-		//	entity->SetParent(parent);
-
-		//	T* pEntity = entity.get();
-
-		//	m_Entities.emplace(entity->GetID(), std::move(entity));
-
-		//	return pEntity;
-		//}
 		Entity* CreateEntity(Entity* parent = nullptr);
 		void DestroyEntity(Entity* entity);
 

@@ -76,10 +76,6 @@ namespace Tavern
 
 	void Scene::Update()
 	{
-		//for (auto it = m_Entities.begin(); it != m_Entities.end(); it++)
-		//{
-		//	(*it).second->Update();
-		//}
 		for (ScriptComponent* script : m_Scripts)
 		{
 			script->Update();
