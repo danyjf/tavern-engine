@@ -4,6 +4,7 @@
 #include "Tavern/Scene/Entity.h"
 #include "Tavern/Core/Log.h"
 #include "Tavern/Core/Engine.h"
+#include "Tavern/Components/ScriptComponent.h"
 
 namespace Tavern
 {
@@ -12,7 +13,7 @@ namespace Tavern
 		  m_Name("Default"),
 		  m_RootEntity(std::make_unique<Entity>(engine))
 	{
-		TAVERN_ENGINE_INFO("Scene created");
+		TAVERN_ENGINE_INFO("Scene initialized");
 	}
 
 	Scene::~Scene()
@@ -33,6 +34,23 @@ namespace Tavern
 	Entity* Scene::GetRoot() const
 	{
 		return m_RootEntity.get();
+	}
+
+	Entity* Scene::CreateEntity(Entity* parent)
+	{
+		if (parent == nullptr)
+		{
+			parent = GetRoot();
+		}
+
+		std::unique_ptr<Entity> entity = std::make_unique<Entity>(m_Engine);
+		entity->SetParent(parent);
+
+		Entity* pEntity = entity.get();
+
+		m_Entities.emplace(entity->GetID(), std::move(entity));
+
+		return pEntity;
 	}
 
 	void Scene::DestroyEntity(Entity* entity)
@@ -58,9 +76,13 @@ namespace Tavern
 
 	void Scene::Update()
 	{
-		for (auto it = m_Entities.begin(); it != m_Entities.end(); it++)
+		//for (auto it = m_Entities.begin(); it != m_Entities.end(); it++)
+		//{
+		//	(*it).second->Update();
+		//}
+		for (ScriptComponent* script : m_Scripts)
 		{
-			(*it).second->Update();
+			script->Update();
 		}
 	}
 
@@ -78,5 +100,15 @@ namespace Tavern
 	void Scene::Deserialize()
 	{
 
+	}
+
+	void Scene::AddScriptComponent(ScriptComponent* script)
+	{
+		m_Scripts.push_back(script);
+	}
+
+	void Scene::RemoveScriptComponent(ScriptComponent* script)
+	{
+		m_Scripts.erase(std::remove(m_Scripts.begin(), m_Scripts.end(), script), m_Scripts.end());
 	}
 }

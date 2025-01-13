@@ -8,7 +8,9 @@
 namespace Tavern
 {
 	Entity::Entity(Engine& engine)
+	//Entity::Entity()
 		: m_Engine(engine), m_ID(++s_Counter)
+		//: m_ID(++s_Counter)
 	{
 		m_Transform = CreateComponentOfType<TransformComponent>();
 	}
@@ -17,14 +19,14 @@ namespace Tavern
 	{
 	}
 
-	void Entity::Update()
-	{
-	}
+	//void Entity::Update()
+	//{
+	//}
 
 	nlohmann::json Entity::Serialize()
 	{
 		nlohmann::json json;
-		json["typeName"] = m_TypeName;
+		//json["typeName"] = m_TypeName;
 		json["id"] = m_ID;
 		json["parent"] = m_Parent ? m_Parent->GetID() : -1;		// -1 means no parent
 
@@ -33,12 +35,9 @@ namespace Tavern
 			json["children"].push_back(child->GetID());
 		}
 
-		for (const auto& [type, componentVector] : m_Components)
+		for (const std::unique_ptr<Component>& component : m_Components)
 		{
-			for (const std::unique_ptr<Component>& component : componentVector)
-			{
-				json["components"].update(component->Serialize());
-			}
+			json["components"].update(component->Serialize());
 		}
 
 		return json;
@@ -49,15 +48,15 @@ namespace Tavern
 
 	}
 
-	const std::string& Entity::GetTypeName() const
-	{
-		return m_TypeName;
-	}
+	//const std::string& Entity::GetTypeName() const
+	//{
+	//	return m_TypeName;
+	//}
 
-	void Entity::SetTypeName(const std::string& typeName)
-	{
-		m_TypeName = typeName;
-	}
+	//void Entity::SetTypeName(const std::string& typeName)
+	//{
+	//	m_TypeName = typeName;
+	//}
 
 	const unsigned long Entity::GetID() const
 	{
@@ -110,4 +109,9 @@ namespace Tavern
 		
 		m_Children.push_back(child);
 	}
+
+	//void Entity::AddComponent(Component* component)
+	//{
+	//	m_Components.push_back(std::make_unique<Component>(component));
+	//}
 }

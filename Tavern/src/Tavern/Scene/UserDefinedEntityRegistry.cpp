@@ -1,5 +1,7 @@
 #include "Tavern/Scene/UserDefinedEntityRegistry.h"
 #include "Tavern/Scene/Scene.h"
+#include "Tavern/Scene/Entity.h"
+#include "Tavern/Components/ScriptComponent.h"
 #include "Tavern/Core/Log.h"
 
 namespace Tavern
@@ -25,14 +27,14 @@ namespace Tavern
 		m_Registry[name] = createEntityFunction;
 	}
 
-	Entity* UserDefinedEntityRegistry::Create(const std::string& name)
+	ScriptComponent* UserDefinedEntityRegistry::Create(const std::string& name)
 	{
 		if (!m_Registry.contains(name))
 		{
 			TAVERN_ENGINE_ERROR("Error creating entity {}. Entity not registered", name);
 			return nullptr;
 		}
-		return m_Registry[name]();
+		return m_Registry[name](nullptr);
 	}
 
 	void UserDefinedEntityRegistry::SetScene(Scene* scene)

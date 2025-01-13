@@ -6,36 +6,35 @@
 
 #include "Cube.h"
 #include "Light.h"
-#include "Backpack.h"
+//#include "Backpack.h"
 #include "Player.h"
 
-class Ground : public Tavern::Entity
-{
-public:
-	Ground(Tavern::Engine& engine)
-		: Tavern::Entity(engine)
-	{
-		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("Assets/Materials/Ground.material");
-		std::shared_ptr<Tavern::MeshResource> mesh = GetEngine().GetResourceManager().LoadMesh("Assets/Meshes/ground.obj");
-		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>(material);
-		m_Mesh->SetMesh(mesh);
-		GetTransform()->SetPosition(glm::vec3(0.0f, -8.0f, 0.0f));
-	}
-
-private:
-	Tavern::MeshComponent* m_Mesh;
-};
+//class Ground : public Tavern::Entity
+//{
+//public:
+//	Ground(Tavern::Engine& engine)
+//		: Tavern::Entity(engine)
+//	{
+//		std::shared_ptr<Tavern::MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("Assets/Materials/Ground.material");
+//		std::shared_ptr<Tavern::MeshResource> mesh = GetEngine().GetResourceManager().LoadMesh("Assets/Meshes/ground.obj");
+//		m_Mesh = CreateComponentOfType<Tavern::MeshComponent>(material);
+//		m_Mesh->SetMesh(mesh);
+//		GetTransform()->SetPosition(glm::vec3(0.0f, -8.0f, 0.0f));
+//	}
+//
+//private:
+//	Tavern::MeshComponent* m_Mesh;
+//};
 
 int main()
 {
-	//Tavern::Engine& TavernEngine = Tavern::Engine::Get();
 	Tavern::Engine TavernEngine;
 
 	// Create startup game entities
-	Player* player = TavernEngine.GetScene().CreateEntity<Player>();
-	Light* light = TavernEngine.GetScene().CreateEntity<Light>();
-	Backpack* backpack = TavernEngine.GetScene().CreateEntity<Backpack>();
-	Ground* ground = TavernEngine.GetScene().CreateEntity<Ground>();
+	Player* player = TavernEngine.GetScene().CreateEntity()->CreateComponentOfType<Player>();
+	Light* light = TavernEngine.GetScene().CreateEntity()->CreateComponentOfType<Light>();
+	//Backpack* backpack = TavernEngine.GetScene().CreateEntity<Backpack>();
+	//Ground* ground = TavernEngine.GetScene().CreateEntity<Ground>();
 
 	glm::vec3 cubePositions[] = {
 		glm::vec3(0.0f, 0.0f, 0.0f),
@@ -50,23 +49,23 @@ int main()
 		glm::vec3(-1.3f, 1.0f, -1.5f)
 	};
 
-	Cube* cube1 = TavernEngine.GetScene().CreateEntity<Cube>();
-	cube1->GetTransform()->SetLocalPosition(cubePositions[0]);
+	Cube* cube1 = TavernEngine.GetScene().CreateEntity()->CreateComponentOfType<Cube>();
+	cube1->GetOwner()->GetTransform()->SetLocalPosition(cubePositions[0]);
 	player->m_Cubes.push_back(cube1);
 
-	Cube* cube2 = TavernEngine.GetScene().CreateEntity<Cube>(cube1);
-	cube2->GetTransform()->SetLocalPosition(cubePositions[1]);
+	Cube* cube2 = TavernEngine.GetScene().CreateEntity(cube1->GetOwner())->CreateComponentOfType<Cube>();
+	cube2->GetOwner()->GetTransform()->SetLocalPosition(cubePositions[1]);
 	player->m_Cubes.push_back(cube2);
 
-	Cube* cube3 = TavernEngine.GetScene().CreateEntity<Cube>(cube2);
-	cube3->GetTransform()->SetLocalPosition(cubePositions[2]);
+	Cube* cube3 = TavernEngine.GetScene().CreateEntity(cube2->GetOwner())->CreateComponentOfType<Cube>();
+	cube3->GetOwner()->GetTransform()->SetLocalPosition(cubePositions[2]);
 	player->m_Cubes.push_back(cube3);
 
 	for (int i = 3; i < 10; i++)
 	{
-		Cube* cube = TavernEngine.GetScene().CreateEntity<Cube>();
-		cube->GetTransform()->SetLocalPosition(cubePositions[i]);
-		cube->GetTransform()->SetLocalEulerRotation(glm::vec3(i * 10.0, i * 21.0, i * 13.0));
+		Cube* cube = TavernEngine.GetScene().CreateEntity()->CreateComponentOfType<Cube>();
+		cube->GetOwner()->GetTransform()->SetLocalPosition(cubePositions[i]);
+		cube->GetOwner()->GetTransform()->SetLocalEulerRotation(glm::vec3(i * 10.0, i * 21.0, i * 13.0));
 		player->m_Cubes.push_back(cube);
 	}
 

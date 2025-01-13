@@ -8,13 +8,13 @@ using namespace Tavern;
 
 class Cube;
 
-class Player : public Entity
+class Player : public ScriptComponent
 {
 public:
-	std::vector<Cube*> m_Cubes;
-
-	Player(Engine& engine);
+	Player(Engine& engine, Entity* owner);
 	~Player();
+
+	std::vector<Cube*> m_Cubes;
 
 	void Update() override;
 
@@ -34,4 +34,4 @@ private:
 	EventListener<MouseScrolledEvent> m_MouseScrolled;
 	EventListener<MouseButtonPressedEvent> m_MouseButtonPressed;
 };
-REGISTER_ENTITY(Player);
+REGISTER_SCRIPT(Player);

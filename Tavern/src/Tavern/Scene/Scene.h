@@ -8,9 +8,12 @@ namespace Tavern
 {
 	class Engine;
 	class Entity;
+	class ScriptComponent;
 
 	class TAVERN_API Scene
 	{
+		friend class ScriptComponent;
+
 	public:
 		Scene(Engine& engine);
 		~Scene();
@@ -22,23 +25,24 @@ namespace Tavern
 
 		Entity* GetRoot() const;
 
-		template <typename T>
-		T* CreateEntity(Entity* parent = nullptr)
-		{
-			if (parent == nullptr)
-			{
-				parent = GetRoot();
-			}
+		//template <typename T>
+		//T* CreateEntity(Entity* parent = nullptr)
+		//{
+		//	if (parent == nullptr)
+		//	{
+		//		parent = GetRoot();
+		//	}
 
-			std::unique_ptr<T> entity = std::make_unique<T>(m_Engine);
-			entity->SetParent(parent);
+		//	std::unique_ptr<T> entity = std::make_unique<T>(m_Engine);
+		//	entity->SetParent(parent);
 
-			T* pEntity = entity.get();
+		//	T* pEntity = entity.get();
 
-			m_Entities.emplace(entity->GetID(), std::move(entity));
+		//	m_Entities.emplace(entity->GetID(), std::move(entity));
 
-			return pEntity;
-		}
+		//	return pEntity;
+		//}
+		Entity* CreateEntity(Entity* parent = nullptr);
 		void DestroyEntity(Entity* entity);
 
 		void Update();
@@ -51,5 +55,9 @@ namespace Tavern
 		std::unordered_map<unsigned long, std::unique_ptr<Entity>> m_Entities = {};
 		std::unique_ptr<Entity> m_RootEntity;
 		Engine& m_Engine;
+		std::vector<ScriptComponent*> m_Scripts;
+
+		void AddScriptComponent(ScriptComponent* script);
+		void RemoveScriptComponent(ScriptComponent* script);
 	};
 }

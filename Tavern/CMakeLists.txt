@@ -7,6 +7,8 @@ set(SOURCES_TAVERN
 set(SOURCES_TAVERN_COMPONENTS
     src/Tavern/Components/Component.h
     src/Tavern/Components/Component.cpp
+    src/Tavern/Components/ScriptComponent.h
+    src/Tavern/Components/ScriptComponent.cpp
     src/Tavern/Components/CameraComponent.h
     src/Tavern/Components/CameraComponent.cpp
     src/Tavern/Components/TransformComponent.h

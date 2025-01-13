@@ -34,12 +34,21 @@
 	#define TAVERN_ASSERT(x, ...)
 #endif
 
-#define REGISTER_ENTITY(TYPE)																 \
-	static bool TYPE##Registered = []() {													 \
-		UserDefinedEntityRegistry::Get().Register(#TYPE, []() -> Entity* {					 \
-			auto entity = UserDefinedEntityRegistry::Get().GetScene()->CreateEntity<TYPE>(); \
-			entity->SetTypeName(#TYPE);														 \
-			return entity;																	 \
-		});																					 \
-		return true;																		 \
+//#define REGISTER_ENTITY(TYPE)																 \
+//	static bool TYPE##Registered = []() {													 \
+//		UserDefinedEntityRegistry::Get().Register(#TYPE, []() -> Entity* {					 \
+//			auto entity = UserDefinedEntityRegistry::Get().GetScene()->CreateEntity<TYPE>(); \
+//			entity->SetTypeName(#TYPE);														 \
+//			return entity;																	 \
+//		});																					 \
+//		return true;																		 \
+//	}();
+#define REGISTER_SCRIPT(TYPE)																		\
+	static bool TYPE##Registered = []() {															\
+		UserDefinedEntityRegistry::Get().Register(#TYPE, [](Entity* entity) -> ScriptComponent* {	\
+			auto script = entity->CreateComponentOfType<TYPE>();									\
+			script->SetTypeName(#TYPE);																\
+			return script;																			\
+		});																							\
+		return true;																				\
 	}();
