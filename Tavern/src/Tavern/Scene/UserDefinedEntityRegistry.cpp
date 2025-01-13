@@ -14,7 +14,7 @@ namespace Tavern
 
 	UserDefinedEntityRegistry::UserDefinedEntityRegistry()
 	{
-		TAVERN_ENGINE_INFO("UserDefineEntityRegistry created");
+		TAVERN_ENGINE_INFO("UserDefineEntityRegistry initialized");
 	}
 
 	UserDefinedEntityRegistry::~UserDefinedEntityRegistry()

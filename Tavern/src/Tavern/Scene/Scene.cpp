@@ -109,6 +109,10 @@ namespace Tavern
 
 	void Scene::RemoveScriptComponent(ScriptComponent* script)
 	{
-		m_Scripts.erase(std::remove(m_Scripts.begin(), m_Scripts.end(), script), m_Scripts.end());
+		auto position = std::find(m_Scripts.begin(), m_Scripts.end(), script);
+		if (position != m_Scripts.end())
+		{
+			m_Scripts.erase(position);
+		}
 	}
 }
