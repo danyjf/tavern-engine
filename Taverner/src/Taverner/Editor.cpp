@@ -8,6 +8,7 @@
 #include <nlohmann/json.hpp>
 
 #include <Tavern/Scene/Entity.h>
+#include <Tavern/Components/ScriptComponent.h>
 #include <Tavern/Renderer/Window.h>
 #include <Tavern/Core/Engine.h>
 #include <Tavern/Core/Log.h>
@@ -181,7 +182,8 @@ namespace Taverner
 		LoadLibrary(dllPath.c_str());
 
 		// Spawn in a cube entity
-		Entity* cube = UserDefinedEntityRegistry::Get().Create("Cube");
-		TAVERN_INFO("Class Loaded: {}", cube->GetTypeName());
+		Entity* cube = m_Engine.GetScene().CreateEntity();
+		ScriptComponent* cubeScript = UserDefinedEntityRegistry::Get().Create("Cube", cube);
+		TAVERN_INFO("Class Loaded: {}", cubeScript->GetTypeName());
 	}
 }

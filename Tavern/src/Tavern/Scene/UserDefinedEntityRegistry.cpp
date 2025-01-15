@@ -27,14 +27,14 @@ namespace Tavern
 		m_Registry[name] = createEntityFunction;
 	}
 
-	ScriptComponent* UserDefinedEntityRegistry::Create(const std::string& name)
+	ScriptComponent* UserDefinedEntityRegistry::Create(const std::string& name, Entity* attachToEntity)
 	{
 		if (!m_Registry.contains(name))
 		{
 			TAVERN_ENGINE_ERROR("Error creating entity {}. Entity not registered", name);
 			return nullptr;
 		}
-		return m_Registry[name](nullptr);
+		return m_Registry[name](attachToEntity);
 	}
 
 	void UserDefinedEntityRegistry::SetScene(Scene* scene)
