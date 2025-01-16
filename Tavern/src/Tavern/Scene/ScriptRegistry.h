@@ -12,7 +12,6 @@ namespace Tavern
 	class Scene;
 	class ScriptComponent;
 
-	// TODO: Move this to the Editor project
 	class TAVERN_API ScriptRegistry
 	{
 	public:
