@@ -73,8 +73,8 @@ set(SOURCES_TAVERN_SCENE
     src/Tavern/Scene/Scene.cpp
     src/Tavern/Scene/Entity.h
     src/Tavern/Scene/Entity.cpp
-    src/Tavern/Scene/UserDefinedEntityRegistry.h
-    src/Tavern/Scene/UserDefinedEntityRegistry.cpp
+    src/Tavern/Scene/ScriptRegistry.h
+    src/Tavern/Scene/ScriptRegistry.cpp
 )
 set(SOURCES_TAVERN_UI
     src/Tavern/UI/UIManager.h

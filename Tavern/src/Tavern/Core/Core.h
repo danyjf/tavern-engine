@@ -36,7 +36,7 @@
 
 #define REGISTER_SCRIPT(TYPE)																		\
 	static bool TYPE##Registered = []() {															\
-		UserDefinedEntityRegistry::Get().Register(#TYPE, [](Entity* entity) -> ScriptComponent* {	\
+		ScriptRegistry::Get().Register(#TYPE, [](Entity* entity) -> ScriptComponent* {	\
 			auto script = entity->CreateComponentOfType<TYPE>();									\
 			script->SetTypeName(#TYPE);																\
 			return script;																			\

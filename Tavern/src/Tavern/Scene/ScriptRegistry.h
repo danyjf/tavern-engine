@@ -13,13 +13,13 @@ namespace Tavern
 	class ScriptComponent;
 
 	// TODO: Move this to the Editor project
-	class TAVERN_API UserDefinedEntityRegistry
+	class TAVERN_API ScriptRegistry
 	{
 	public:
-		static UserDefinedEntityRegistry& Get();
+		static ScriptRegistry& Get();
 
-		UserDefinedEntityRegistry(const UserDefinedEntityRegistry& other) = delete;
-		UserDefinedEntityRegistry& operator=(const UserDefinedEntityRegistry& other) = delete;
+		ScriptRegistry(const ScriptRegistry& other) = delete;
+		ScriptRegistry& operator=(const ScriptRegistry& other) = delete;
 
 		using CreatorFunction = std::function<ScriptComponent*(Entity*)>;
 		void Register(const std::string& name, CreatorFunction createEntityFunction);
@@ -32,7 +32,7 @@ namespace Tavern
 		Scene* m_Scene = nullptr;
 		std::unordered_map<std::string, CreatorFunction> m_Registry = {};
 
-		UserDefinedEntityRegistry();
-		~UserDefinedEntityRegistry();
+		ScriptRegistry();
+		~ScriptRegistry();
 	};
 }

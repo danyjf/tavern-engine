@@ -121,8 +121,8 @@ int main()
 	// TODO: Remove this game code
 	Entity* editorCamera = engine.GetScene().CreateEntity();
 	Entity* light = engine.GetScene().CreateEntity();
-	UserDefinedEntityRegistry::Get().Create("EditorCamera", editorCamera);
-	UserDefinedEntityRegistry::Get().Create("Light", light);
+	ScriptRegistry::Get().Create("EditorCamera", editorCamera);
+	ScriptRegistry::Get().Create("Light", light);
 
 	Taverner::Editor editor(engine);
 	while (engine.IsRunning())

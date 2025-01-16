@@ -25,7 +25,7 @@ namespace Tavern
 		  m_Scene(*this),
 		  m_WindowCloseListener(std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1))
 	{
-		UserDefinedEntityRegistry::Get().SetScene(&m_Scene);
+		ScriptRegistry::Get().SetScene(&m_Scene);
 		m_EventManager.AddListener(EventType::WindowClose, m_WindowCloseListener);
 		TAVERN_ENGINE_INFO("Engine initialized");
 	}

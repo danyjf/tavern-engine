@@ -10,7 +10,7 @@
 #include "Tavern/Input/InputManager.h"
 #include "Tavern/Resources/ResourceManager.h"
 #include "Tavern/Scene/Scene.h"
-#include "Tavern/Scene/UserDefinedEntityRegistry.h"
+#include "Tavern/Scene/ScriptRegistry.h"
 #include "Tavern/UI/UIManager.h"
 
 namespace Tavern

@@ -183,7 +183,7 @@ namespace Taverner
 
 		// Spawn in a cube entity
 		Entity* cube = m_Engine.GetScene().CreateEntity();
-		ScriptComponent* cubeScript = UserDefinedEntityRegistry::Get().Create("Cube", cube);
+		ScriptComponent* cubeScript = ScriptRegistry::Get().Create("Cube", cube);
 		TAVERN_INFO("Class Loaded: {}", cubeScript->GetTypeName());
 	}
 }
