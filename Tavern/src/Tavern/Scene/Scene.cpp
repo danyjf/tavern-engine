@@ -10,8 +10,7 @@ namespace Tavern
 {
 	Scene::Scene(Engine& engine)
 		: m_Engine(engine),
-		  m_Name("Default"),
-		  m_RootEntity(std::make_unique<Entity>(engine))
+		  m_Name("Default")
 	{
 		TAVERN_ENGINE_INFO("Scene initialized");
 	}
@@ -31,20 +30,13 @@ namespace Tavern
 		return m_Name;
 	}
 
-	Entity* Scene::GetRoot() const
-	{
-		return m_RootEntity.get();
-	}
-
 	Entity* Scene::CreateEntity(Entity* parent)
 	{
-		if (parent == nullptr)
-		{
-			parent = GetRoot();
-		}
-
 		std::unique_ptr<Entity> entity = std::make_unique<Entity>(m_Engine);
-		entity->SetParent(parent);
+		if (parent)
+		{
+			entity->SetParent(parent);
+		}
 
 		Entity* pEntity = entity.get();
 

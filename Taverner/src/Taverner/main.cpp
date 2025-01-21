@@ -18,41 +18,6 @@
 
 using namespace Tavern;
 
-class Light : public ScriptComponent
-{
-public:
-	Light(Engine& engine, Entity* owner)
-		: ScriptComponent(engine, owner)
-	{
-		m_StartPosition = glm::vec3(0.0f, 1.0f, -3.0f);
-		GetOwner()->GetTransform()->SetLocalPosition(m_StartPosition);
-		GetOwner()->GetTransform()->SetLocalScale(glm::vec3(0.25f));
-
-		std::shared_ptr<MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("../../../EditorTestProject/Content/Assets/Materials/Light.material");
-		std::shared_ptr<MeshResource> mesh = GetEngine().GetResourceManager().LoadMesh("../../../EditorTestProject/Content/BuiltInAssets/Meshes/Cube.obj");
-		m_Mesh = GetOwner()->CreateComponentOfType<MeshComponent>(material);
-		m_Mesh->SetMesh(mesh);
-
-		m_Light = GetOwner()->CreateComponentOfType<LightComponent>();
-		m_Light->SetColor(glm::vec3(1.0f));
-	}
-
-	void Update() override
-	{
-		GetOwner()->GetTransform()->SetLocalPosition(glm::vec3(
-			m_StartPosition.x + sin(2.0f * GetEngine().GetTimeManager().GetElapsedTime()) / 2.0f * 3.0f,
-			m_StartPosition.y,
-			m_StartPosition.z + cos(GetEngine().GetTimeManager().GetElapsedTime()) * 3.0f
-		));
-	}
-
-private:
-	MeshComponent* m_Mesh;
-	LightComponent* m_Light;
-	glm::vec3 m_StartPosition;
-};
-REGISTER_SCRIPT(Light);
-
 class EditorCamera : public ScriptComponent
 {
 public:
@@ -120,9 +85,7 @@ int main()
 
 	// TODO: Remove this game code
 	Entity* editorCamera = engine.GetScene().CreateEntity();
-	Entity* light = engine.GetScene().CreateEntity();
 	ScriptRegistry::Get().Create("EditorCamera", editorCamera);
-	ScriptRegistry::Get().Create("Light", light);
 
 	Taverner::Editor editor(engine);
 	while (engine.IsRunning())

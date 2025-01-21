@@ -48,11 +48,14 @@ namespace Taverner
 		m_FilesMenu->AddMenuItem("New Project")->AddOnClickListener(std::bind(&Editor::CreateNewProject, this));
 		m_FilesMenu->AddMenuItem("Open Project");
 		m_FilesMenu->AddMenuItem("Save")->AddOnClickListener([this]() {
-			// TODO: 
-			// Serialize entities
-			// Serialize scene
 			nlohmann::json serializedScene = m_Engine.GetScene().Serialize();
-			TAVERN_INFO(serializedScene.dump(2));
+
+			std::ofstream saveSceneFile(
+				(std::string)m_ProjectConfig["projectPath"] + "/Content/Scenes/" + m_Engine.GetScene().GetName() + ".scene",
+				std::ofstream::out | std::ofstream::trunc
+			);
+			saveSceneFile << std::setw(2) << serializedScene;	// setw(4) sets indentation for pretty printing
+			saveSceneFile.close();
 		});
 
 		m_ToolsMenu = m_MainMenuBar->AddMenu("Tools");
@@ -132,6 +135,8 @@ namespace Taverner
 						  "set(SOURCES\n"
 						  "    ./Source/Cube.h\n"
 						  "    ./Source/Cube.cpp\n"
+						  "    ./Source/Light.h\n"
+						  "    ./Source/Light.cpp\n"
 						  ")\n\n"
 						  "add_library(${PROJECT_NAME} SHARED ${SOURCES})\n\n"
 						  "target_include_directories(${PROJECT_NAME} PRIVATE\n"
@@ -184,6 +189,10 @@ namespace Taverner
 		// Spawn in a cube entity
 		Entity* cube = m_Engine.GetScene().CreateEntity();
 		ScriptComponent* cubeScript = ScriptRegistry::Get().Create("Cube", cube);
-		TAVERN_INFO("Class Loaded: {}", cubeScript->GetTypeName());
+		TAVERN_INFO("Script Loaded: {}", cubeScript->GetTypeName());
+
+		Entity* light = m_Engine.GetScene().CreateEntity();
+		ScriptComponent* lightScript = ScriptRegistry::Get().Create("Light", light);
+		TAVERN_INFO("Script Loaded: {}", lightScript->GetTypeName());
 	}
 }

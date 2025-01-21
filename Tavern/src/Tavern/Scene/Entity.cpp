@@ -21,7 +21,11 @@ namespace Tavern
 	{
 		nlohmann::json json;
 		json["id"] = m_ID;
-		json["parent"] = m_Parent ? m_Parent->GetID() : -1;		// -1 means no parent
+		json["parent"] = -1;
+		if (m_Parent)
+		{
+			json["parent"] = m_Parent->GetID();		// -1 means no parent
+		}
 
 		for (Entity* child : m_Children)
 		{

@@ -23,8 +23,6 @@ namespace Tavern
 		void SetName(const std::string& name);
 		const std::string& GetName() const;
 
-		Entity* GetRoot() const;
-
 		Entity* CreateEntity(Entity* parent = nullptr);
 		void DestroyEntity(Entity* entity);
 
@@ -36,7 +34,6 @@ namespace Tavern
 	private:
 		std::string m_Name = "Default";
 		std::unordered_map<unsigned long, std::unique_ptr<Entity>> m_Entities = {};
-		std::unique_ptr<Entity> m_RootEntity;
 		Engine& m_Engine;
 		std::vector<ScriptComponent*> m_Scripts;
 
