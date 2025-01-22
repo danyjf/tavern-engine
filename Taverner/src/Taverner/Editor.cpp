@@ -46,7 +46,7 @@ namespace Taverner
 
 		m_FilesMenu = m_MainMenuBar->AddMenu("File");
 		m_FilesMenu->AddMenuItem("New Project")->AddOnClickListener(std::bind(&Editor::CreateNewProject, this));
-		m_FilesMenu->AddMenuItem("Open Project");
+		m_FilesMenu->AddMenuItem("Open Project")->AddOnClickListener(std::bind(&Editor::OpenProject, this));;
 		m_FilesMenu->AddMenuItem("Save")->AddOnClickListener([this]() {
 			nlohmann::json serializedScene = m_Engine.GetScene().Serialize();
 
@@ -172,6 +172,11 @@ namespace Taverner
 
 		m_ToolsMenu->SetIsVisible(true);
 		m_GameMenu->SetIsVisible(true);
+	}
+
+	void Editor::OpenProject()
+	{
+
 	}
 
 	void Editor::BuildGameProject(const std::string& path)

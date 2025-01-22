@@ -44,6 +44,7 @@ namespace Taverner
 		));
 
 		void CreateNewProject();
+		void OpenProject();
 		void BuildGameProject(const std::string& path);
 		void LoadGame(const std::string& dllPath);
 	};
