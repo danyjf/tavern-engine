@@ -17,3 +17,6 @@
 	path = Tavern/vendor/imgui
 	url = git@github.com:ocornut/imgui.git
 	branch = docking
+[submodule "Tavern/vendor/ImGuiFileDialog"]
+	path = Tavern/vendor/ImGuiFileDialog
+	url = git@github.com:aiekick/ImGuiFileDialog.git

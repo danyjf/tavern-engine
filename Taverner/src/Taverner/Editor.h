@@ -1,9 +1,11 @@
 #pragma once
 
+#include <nlohmann/json.hpp>
+
 #include <Tavern/Renderer/Framebuffer.h>
 #include <Tavern/Core/Engine.h>
 #include <Tavern/UI/Image.h>
-#include <nlohmann/json.hpp>
+#include <Tavern/UI/FileDialog.h>
 
 namespace Taverner
 {
@@ -16,6 +18,8 @@ namespace Taverner
 		Tavern::Framebuffer& GetGameFramebuffer();
 
 	private:
+		Tavern::UI::FileDialog* m_OpenProjectFileDialog;
+
 		Tavern::UI::Panel* m_EditorPanel;
 		Tavern::UI::Panel* m_ScenePanel;
 		Tavern::UI::Panel* m_InspectorPanel;

@@ -89,6 +89,8 @@ set(SOURCES_TAVERN_UI
     src/Tavern/UI/Image.cpp
     src/Tavern/UI/Button.h
     src/Tavern/UI/Button.cpp
+    src/Tavern/UI/FileDialog.h
+    src/Tavern/UI/FileDialog.cpp
 )
 set(VENDOR_IMGUI
     vendor/imgui/imconfig.h
@@ -114,6 +116,9 @@ set(VENDOR_IMGUI
     vendor/imgui/misc/cpp/imgui_stdlib.cpp
     vendor/imgui/misc/cpp/imgui_stdlib.h
 )
+set(VENDOR_IMGUIFILEDIALOG
+    vendor/ImGuiFileDialog/ImGuiFileDialog.cpp
+)
 
 source_group(src FILES ${SOURCES})
 source_group(src/Tavern FILES ${SOURCES_TAVERN})
@@ -126,6 +131,7 @@ source_group(src/Tavern/Resources FILES ${SOURCES_TAVERN_RESOURCES})
 source_group(src/Tavern/Scene FILES ${SOURCES_TAVERN_SCENE})
 source_group(src/Tavern/UI FILES ${SOURCES_TAVERN_UI})
 source_group(vendor/imgui FILES ${VENDOR_IMGUI})
+source_group(vendor/ImGuiFileDialog FILES ${VENDOR_IMGUIFILEDIALOG})
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)
@@ -152,6 +158,7 @@ add_library(Tavern SHARED
     ${SOURCES_TAVERN_SCENE}
     ${SOURCES_TAVERN_UI}
     ${VENDOR_IMGUI}
+    ${VENDOR_IMGUIFILEDIALOG}
     CMakeLists.txt
 )
 
@@ -169,6 +176,7 @@ target_include_directories(Tavern PRIVATE
     ${CMAKE_SOURCE_DIR}/Tavern/vendor/stb/include
     ${CMAKE_SOURCE_DIR}/Tavern/vendor/imgui
     ${CMAKE_SOURCE_DIR}/Tavern/vendor/imgui/backends
+    ${CMAKE_SOURCE_DIR}/Tavern/vendor/ImGuiFileDialog
 )
 
 target_compile_definitions(Tavern PRIVATE

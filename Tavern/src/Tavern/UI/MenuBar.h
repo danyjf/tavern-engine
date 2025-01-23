@@ -5,14 +5,13 @@
 
 namespace Tavern::UI
 {
-	using ItemPressedFunction = std::function<void()>;
-
 	class TAVERN_API MenuItem : public UIElement
 	{
 	public:
 		MenuItem(const std::string& name);
 		void Render() override;
 
+		using ItemPressedFunction = std::function<void()>;
 		void AddOnClickListener(ItemPressedFunction itemPressedFunction);
 
 	private:

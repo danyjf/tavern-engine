@@ -22,6 +22,7 @@ target_include_directories(Taverner PRIVATE
     ${CMAKE_SOURCE_DIR}/Tavern/vendor/Glad/include
     ${CMAKE_SOURCE_DIR}/Tavern/vendor/imgui
     ${CMAKE_SOURCE_DIR}/Tavern/vendor/imgui/backends
+    ${CMAKE_SOURCE_DIR}/Tavern/vendor/ImGuiFileDialog
     ${CMAKE_SOURCE_DIR}/Taverner/src
 )
 

@@ -17,6 +17,7 @@
 #include <Tavern/UI/UIManager.h>
 #include <Tavern/UI/Image.h>
 #include <Tavern/UI/Button.h>
+#include <Tavern/UI/FileDialog.h>
 
 #include "Taverner/Editor.h"
 
@@ -41,6 +42,14 @@ namespace Taverner
 			| ImGuiWindowFlags_NoBackground
 			| ImGuiWindowFlags_NoNavFocus;
 		m_EditorPanel = engine.GetUIManager().AddPanel(new UI::Panel("Editor", windowFlags, true));
+
+		IGFD::FileDialogConfig config;
+		config.path = ".";
+		m_OpenProjectFileDialog = m_EditorPanel->AddUIElement<UI::FileDialog>("Open Project File", ".project", config);
+		m_OpenProjectFileDialog->AddOnOkListener([this]() {
+			std::string filePath= m_OpenProjectFileDialog->GetFilePath();
+			TAVERN_INFO("FilePath: {}", filePath);
+		});
 
 		m_MainMenuBar = m_EditorPanel->AddUIElement<UI::MenuBar>();
 
@@ -148,6 +157,7 @@ namespace Taverner
 						  "    ../Tavern/vendor/assimp/include\n"
 						  "    ../Tavern/vendor/imgui\n"
 						  "    ../Tavern/vendor/imgui/backends\n"
+						  "	   ../Tavern/vendor/ImGuiFileDialog\n"
 						  "    ../Tavern/vendor/nlohmann_json/include\n"
 						  ")\n\n"
 						  "target_link_libraries(${PROJECT_NAME} PRIVATE\n"
@@ -176,7 +186,7 @@ namespace Taverner
 
 	void Editor::OpenProject()
 	{
-
+		m_OpenProjectFileDialog->Open();
 	}
 
 	void Editor::BuildGameProject(const std::string& path)

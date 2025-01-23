@@ -29,6 +29,7 @@ target_include_directories(EngineTestProject PRIVATE
     ${CMAKE_SOURCE_DIR}/Tavern/vendor/Glad/include
     ${CMAKE_SOURCE_DIR}/Tavern/vendor/imgui
     ${CMAKE_SOURCE_DIR}/Tavern/vendor/imgui/backends
+    ${CMAKE_SOURCE_DIR}/Tavern/vendor/ImGuiFileDialog
 )
 
 target_compile_definitions(EngineTestProject PRIVATE
