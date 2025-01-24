@@ -40,28 +40,36 @@ namespace Taverner
 		m_GameDLLPath = gameDLLPath;
 	}
 
-	void ProjectConfig::Save(const std::string& path)
+	nlohmann::json ProjectConfig::ToJson()
 	{
 		nlohmann::json projectConfigJson = {
 			{		 "name",		m_Name },
 			{ "projectPath", m_ProjectPath },
 			{ "gameDLLPath", m_GameDLLPath }
 		};
+		return projectConfigJson;
+	}
 
+	void ProjectConfig::FromJson(const nlohmann::json& data)
+	{
+		m_Name = data["name"];
+		m_ProjectPath = data["projectPath"];
+		m_GameDLLPath = data["gameDLLPath"];
+	}
+
+	void ProjectConfig::Save(const std::string& path)
+	{
 		std::ofstream projectConfigFile(
 			path,
 			std::ofstream::out | std::ofstream::trunc
 		);
-		projectConfigFile << projectConfigJson;
+		projectConfigFile << ToJson();
 		projectConfigFile.close();
 	}
 
 	void ProjectConfig::Load(const std::string& path)
 	{
 		std::ifstream f(path);
-		nlohmann::json data = nlohmann::json::parse(f);
-		m_Name = data["name"];
-		m_ProjectPath = data["projectPath"];
-		m_GameDLLPath = data["gameDLLPath"];
+		FromJson(nlohmann::json::parse(f));
 	}
 }

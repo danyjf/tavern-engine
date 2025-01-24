@@ -16,14 +16,14 @@ namespace Tavern
 		GetEngine().GetScene().RemoveScriptComponent(this);
 	}
 
-	nlohmann::json ScriptComponent::Serialize()
+	nlohmann::json ScriptComponent::ToJson()
 	{
 		nlohmann::json json;
 		json["script"]["typeName"] = m_TypeName;
 		return json;
 	}
 
-	void ScriptComponent::Deserialize()
+	void ScriptComponent::FromJson(const nlohmann::json& data)
 	{
 	}
 

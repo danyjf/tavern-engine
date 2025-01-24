@@ -17,7 +17,7 @@ namespace Tavern
 		ComputeProjectionMatrix();
 	}
 
-	nlohmann::json CameraComponent::Serialize()
+	nlohmann::json CameraComponent::ToJson()
 	{
 		nlohmann::json json;
 		json["camera"]["fov"] = m_FOV;
@@ -28,7 +28,7 @@ namespace Tavern
 		return json;
 	}
 
-	void CameraComponent::Deserialize()
+	void CameraComponent::FromJson(const nlohmann::json& data)
 	{
 
 	}

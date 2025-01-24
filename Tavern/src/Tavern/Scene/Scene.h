@@ -28,8 +28,11 @@ namespace Tavern
 
 		void Update();
 
-		nlohmann::json Serialize();
-		void Deserialize();
+		nlohmann::json ToJson();
+		void FromJson(const nlohmann::json& data);
+
+		void Save(const std::string& path);
+		void Load(const std::string& path);
 
 	private:
 		std::string m_Name = "Default";

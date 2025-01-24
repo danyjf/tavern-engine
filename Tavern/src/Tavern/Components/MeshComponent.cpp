@@ -29,9 +29,9 @@ namespace Tavern
 		m_Mesh->Render();
 	}
 
-	nlohmann::json MeshComponent::Serialize()
+	nlohmann::json MeshComponent::ToJson()
 	{
-		nlohmann::json renderJson = RenderComponent::Serialize();
+		nlohmann::json renderJson = RenderComponent::ToJson();
 
 		nlohmann::json json;
 		json["mesh"] = renderJson;
@@ -39,7 +39,7 @@ namespace Tavern
 		return json;
 	}
 
-	void MeshComponent::Deserialize()
+	void MeshComponent::FromJson(const nlohmann::json& data)
 	{
 
 	}

@@ -28,8 +28,8 @@ namespace Tavern
 		Entity(Entity& copy) = delete;
 		Entity& operator=(const Entity& copy) = delete;
 
-		nlohmann::json Serialize();
-		void Deserialize();
+		nlohmann::json ToJson();
+		void FromJson(const nlohmann::json& data);
 
 		const unsigned long GetID() const;
 		Engine& GetEngine() const;

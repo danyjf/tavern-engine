@@ -18,7 +18,7 @@ namespace Tavern
 		GetEngine().GetRenderManager().RemoveRenderComponent(this);
 	}
 
-	nlohmann::json RenderComponent::Serialize()
+	nlohmann::json RenderComponent::ToJson()
 	{
 		nlohmann::json json;
 		json["isVisible"] = m_IsVisible;
@@ -26,7 +26,7 @@ namespace Tavern
 		return json;
 	}
 
-	void RenderComponent::Deserialize()
+	void RenderComponent::FromJson(const nlohmann::json& data)
 	{
 
 	}

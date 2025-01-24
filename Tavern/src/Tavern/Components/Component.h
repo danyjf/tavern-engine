@@ -18,8 +18,8 @@ namespace Tavern
 		Engine& GetEngine() const;
 		Entity* GetOwner() const;
 
-		virtual nlohmann::json Serialize() = 0;
-		virtual void Deserialize() = 0;
+		virtual nlohmann::json ToJson() = 0;
+		virtual void FromJson(const nlohmann::json& data) = 0;
 
 	private:
 		Engine& m_Engine;

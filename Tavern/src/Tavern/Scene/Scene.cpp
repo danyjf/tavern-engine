@@ -74,18 +74,33 @@ namespace Tavern
 		}
 	}
 
-	nlohmann::json Scene::Serialize()
+	nlohmann::json Scene::ToJson()
 	{
 		nlohmann::json json;
 		json["name"] = m_Name;
 		for (const auto& [id, entity] : m_Entities)
 		{
-			json["entities"].push_back(entity->Serialize());
+			json["entities"].push_back(entity->ToJson());
 		}
 		return json;
 	}
 
-	void Scene::Deserialize()
+	void Scene::FromJson(const nlohmann::json& data)
+	{
+
+	}
+
+	void Scene::Save(const std::string& path)
+	{
+		std::ofstream saveSceneFile(
+			path,
+			std::ofstream::out | std::ofstream::trunc
+		);
+		saveSceneFile << std::setw(2) << ToJson();	// setw(4) sets indentation for pretty printing
+		saveSceneFile.close();
+	}
+
+	void Scene::Load(const std::string& path)
 	{
 
 	}

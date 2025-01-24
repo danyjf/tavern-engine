@@ -17,7 +17,7 @@ namespace Tavern
 	{
 	}
 
-	nlohmann::json Entity::Serialize()
+	nlohmann::json Entity::ToJson()
 	{
 		nlohmann::json json;
 		json["id"] = m_ID;
@@ -34,13 +34,13 @@ namespace Tavern
 
 		for (const std::unique_ptr<Component>& component : m_Components)
 		{
-			json["components"].update(component->Serialize());
+			json["components"].update(component->ToJson());
 		}
 
 		return json;
 	}
 	
-	void Entity::Deserialize()
+	void Entity::FromJson(const nlohmann::json& data)
 	{
 
 	}

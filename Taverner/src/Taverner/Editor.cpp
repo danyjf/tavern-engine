@@ -57,14 +57,8 @@ namespace Taverner
 			m_OpenProjectFileDialog->Open();
 		});
 		m_FilesMenu->AddMenuItem("Save")->AddOnClickListener([this]() {
-			nlohmann::json serializedScene = m_Engine.GetScene().Serialize();
-
-			std::ofstream saveSceneFile(
-				m_ProjectConfig.GetProjectPath() + "/Content/Scenes/" + m_Engine.GetScene().GetName() + ".scene",
-				std::ofstream::out | std::ofstream::trunc
-			);
-			saveSceneFile << std::setw(2) << serializedScene;	// setw(4) sets indentation for pretty printing
-			saveSceneFile.close();
+			Scene& scene = m_Engine.GetScene();
+			scene.Save(m_ProjectConfig.GetProjectPath() + "/Content/Scenes/" + scene.GetName() + ".scene");
 		});
 
 		m_ToolsMenu = m_MainMenuBar->AddMenu("Tools");

@@ -17,6 +17,9 @@ namespace Taverner
 		const std::string& GetGameDLLPath() const;
 		void SetGameDLLPath(const std::string& gameDLLPath);
 
+		nlohmann::json ToJson();
+		void FromJson(const nlohmann::json& data);
+
 		void Save(const std::string& path);
 		void Load(const std::string& path);
 

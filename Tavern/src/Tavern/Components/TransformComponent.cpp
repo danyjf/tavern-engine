@@ -20,7 +20,7 @@ namespace Tavern
 		ComputeModelMatrix();
 	}
 	
-	nlohmann::json TransformComponent::Serialize()
+	nlohmann::json TransformComponent::ToJson()
 	{
 		nlohmann::json json;
 		json["transform"]["localPosition"] = { m_LocalPosition.x, m_LocalPosition.y, m_LocalPosition.z };
@@ -29,7 +29,7 @@ namespace Tavern
 		return json;
 	}
 
-	void TransformComponent::Deserialize()
+	void TransformComponent::FromJson(const nlohmann::json& data)
 	{
 
 	}
