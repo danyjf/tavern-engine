@@ -7,6 +7,8 @@
 #include <Tavern/UI/Image.h>
 #include <Tavern/UI/FileDialog.h>
 
+#include "Taverner/ProjectConfig.h"
+
 namespace Taverner
 {
 	class Editor
@@ -34,7 +36,7 @@ namespace Taverner
 		Tavern::UI::Menu* m_GameMenu;
 
 		std::string m_EditorPath;
-		nlohmann::json m_ProjectConfig;
+		ProjectConfig m_ProjectConfig;
 		Tavern::Engine& m_Engine;
 		Tavern::Window* m_Window;
 		Tavern::Framebuffer m_GameFramebuffer = Tavern::Framebuffer(

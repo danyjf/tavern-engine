@@ -2,6 +2,8 @@ set(SOURCES_TAVERNER
 	src/Taverner/main.cpp
     src/Taverner/Editor.h
     src/Taverner/Editor.cpp
+    src/Taverner/ProjectConfig.h
+    src/Taverner/ProjectConfig.cpp
 )
 
 source_group(src/Taverner FILES ${SOURCES_TAVERNER})

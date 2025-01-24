@@ -46,21 +46,21 @@ namespace Taverner
 		IGFD::FileDialogConfig config;
 		config.path = ".";
 		m_OpenProjectFileDialog = m_EditorPanel->AddUIElement<UI::FileDialog>("Open Project File", ".project", config);
-		m_OpenProjectFileDialog->AddOnOkListener([this]() {
-			std::string filePath= m_OpenProjectFileDialog->GetFilePath();
-			TAVERN_INFO("FilePath: {}", filePath);
-		});
+		m_OpenProjectFileDialog->AddOnOkListener(std::bind(&Editor::OpenProject, this));
 
 		m_MainMenuBar = m_EditorPanel->AddUIElement<UI::MenuBar>();
 
 		m_FilesMenu = m_MainMenuBar->AddMenu("File");
 		m_FilesMenu->AddMenuItem("New Project")->AddOnClickListener(std::bind(&Editor::CreateNewProject, this));
-		m_FilesMenu->AddMenuItem("Open Project")->AddOnClickListener(std::bind(&Editor::OpenProject, this));;
+		m_FilesMenu->AddMenuItem("Open Project")->AddOnClickListener([this]()
+		{
+			m_OpenProjectFileDialog->Open();
+		});
 		m_FilesMenu->AddMenuItem("Save")->AddOnClickListener([this]() {
 			nlohmann::json serializedScene = m_Engine.GetScene().Serialize();
 
 			std::ofstream saveSceneFile(
-				(std::string)m_ProjectConfig["projectPath"] + "/Content/Scenes/" + m_Engine.GetScene().GetName() + ".scene",
+				m_ProjectConfig.GetProjectPath() + "/Content/Scenes/" + m_Engine.GetScene().GetName() + ".scene",
 				std::ofstream::out | std::ofstream::trunc
 			);
 			saveSceneFile << std::setw(2) << serializedScene;	// setw(4) sets indentation for pretty printing
@@ -75,15 +75,15 @@ namespace Taverner
 			// Build DLL
 		});
 		m_ToolsMenu->AddMenuItem("Generate Visual Studio 2022 Project")->AddOnClickListener([this]() {
-			std::string generateCmd = "cmake -S " + (std::string)m_ProjectConfig["projectPath"] + " -B " + (std::string)m_ProjectConfig["projectPath"] + "/VisualStudioProject -G \"Visual Studio 17 2022\" -A x64";
+			std::string generateCmd = "cmake -S " + m_ProjectConfig.GetProjectPath() + " -B " + m_ProjectConfig.GetProjectPath() + "/VisualStudioProject -G \"Visual Studio 17 2022\" -A x64";
 			system(generateCmd.c_str());
 		});
 		m_ToolsMenu->SetIsVisible(false);
 
 		m_GameMenu = m_MainMenuBar->AddMenu("Game");
 		m_GameMenu->AddMenuItem("Play")->AddOnClickListener([this]() {
-			BuildGameProject((std::string)m_ProjectConfig["projectPath"] + "/VisualStudioProject");
-			LoadGame(m_ProjectConfig["gameDLL"]);
+			BuildGameProject(m_ProjectConfig.GetProjectPath() + "/VisualStudioProject");
+			LoadGame(m_ProjectConfig.GetGameDLLPath());
 		});
 		m_GameMenu->AddMenuItem("Pause")->AddOnClickListener([]() {});
 		m_GameMenu->SetIsVisible(false);
@@ -167,18 +167,10 @@ namespace Taverner
 		cMakeListsFile.close();
 
 		// Create a project.config json file
-		m_ProjectConfig = {
-			{ "name", name },
-			{ "projectPath", projectPath },
-			{ "gameDLL", projectPath + "/Binaries/Debug/" + name + ".dll" }
-		};
-
-		std::ofstream projectConfigFile(
-			projectPath + "/" + name + ".project",
-			std::ofstream::out | std::ofstream::trunc
-		);
-		projectConfigFile << m_ProjectConfig;
-		projectConfigFile.close();
+		m_ProjectConfig.SetName(name);
+		m_ProjectConfig.SetProjectPath(projectPath);
+		m_ProjectConfig.SetGameDLLPath(projectPath + "/Binaries/Debug/" + name + ".dll");
+		m_ProjectConfig.Save(projectPath + "/" + name + ".project");
 
 		m_ToolsMenu->SetIsVisible(true);
 		m_GameMenu->SetIsVisible(true);
@@ -186,7 +178,12 @@ namespace Taverner
 
 	void Editor::OpenProject()
 	{
-		m_OpenProjectFileDialog->Open();
+		std::string path = m_OpenProjectFileDialog->GetFilePath();
+
+		m_ProjectConfig.Load(path);
+		TAVERN_INFO("Project Name: {}", m_ProjectConfig.GetName());
+		TAVERN_INFO("Project Path: {}", m_ProjectConfig.GetProjectPath());
+		TAVERN_INFO("Game DLL Path: {}", m_ProjectConfig.GetGameDLLPath());
 	}
 
 	void Editor::BuildGameProject(const std::string& path)
