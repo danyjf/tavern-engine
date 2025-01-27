@@ -14,9 +14,10 @@ namespace Tavern::UI
 
 	void FileDialog::Render()
 	{
-		if (m_ImGuiFileDialog.Display(m_Name + "Key"))
+		if (m_ImGuiFileDialog.Display(m_Name + "Key", ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDocking))
 		{			
-			if (m_ImGuiFileDialog.IsOk()) {
+			if (m_ImGuiFileDialog.IsOk()) 
+			{
 				for (OkPressedFunction& listener : m_OkPressedListeners)
 				{
 					listener();
