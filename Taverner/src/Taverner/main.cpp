@@ -11,8 +11,6 @@
 #include <Tavern/Components/ScriptComponent.h>
 #include <Tavern/Components/MeshComponent.h>
 #include <Tavern/Components/LightComponent.h>
-#include <Tavern/UI/Panel.h>
-#include <Tavern/UI/MenuBar.h>
 
 #include "Taverner/Editor.h"
 
@@ -77,7 +75,6 @@ REGISTER_SCRIPT(EditorCamera);
 int main()
 {
 	// Setup Tavern Engine
-	//Engine& engine = Engine::Get();
 	Engine engine;
 	Window* window = engine.GetRenderManager().GetWindow();
 	window->GetCursor().SetIsLocked(false);
@@ -114,7 +111,6 @@ int main()
 	while (engine.IsRunning())
 	{
 		engine.Update();
-		//editor.Update();
 
 		editor.GetGameFramebuffer().Bind();
 		engine.GetRenderManager().Render();

@@ -11,7 +11,6 @@
 #include "Tavern/Resources/ResourceManager.h"
 #include "Tavern/Scene/Scene.h"
 #include "Tavern/Scene/ScriptRegistry.h"
-#include "Tavern/UI/UIManager.h"
 
 namespace Tavern
 {
@@ -39,7 +38,6 @@ namespace Tavern
 		EventManager& GetEventManager();
 		ResourceManager& GetResourceManager();
 		RenderManager& GetRenderManager();
-		UIManager& GetUIManager();
 		InputManager& GetInputManager();
 		TimeManager& GetTimeManager();
 		Scene& GetScene();
@@ -50,7 +48,6 @@ namespace Tavern
 		EventManager m_EventManager = EventManager();
 		ResourceManager m_ResourceManager = ResourceManager();
 		RenderManager m_RenderManager = RenderManager(m_EventManager, m_ResourceManager);
-		UIManager m_UIManager = UIManager(m_RenderManager);
 		InputManager m_InputManager = InputManager(m_RenderManager);
 		TimeManager m_TimeManager = TimeManager();
 		Scene m_Scene = Scene(*this);

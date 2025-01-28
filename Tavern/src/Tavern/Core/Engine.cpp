@@ -19,7 +19,6 @@ namespace Tavern
 		: m_EventManager(),
 		  m_ResourceManager(),
 		  m_RenderManager(m_EventManager, m_ResourceManager),
-		  m_UIManager(m_RenderManager),
 		  m_InputManager(m_RenderManager),
 		  m_TimeManager(),
 		  m_Scene(*this),
@@ -67,11 +66,6 @@ namespace Tavern
 	RenderManager& Engine::GetRenderManager()
 	{
 		return m_RenderManager;
-	}
-
-	UIManager& Engine::GetUIManager()
-	{
-		return m_UIManager;
 	}
 
 	InputManager& Engine::GetInputManager()

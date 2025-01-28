@@ -76,22 +76,6 @@ set(SOURCES_TAVERN_SCENE
     src/Tavern/Scene/ScriptRegistry.h
     src/Tavern/Scene/ScriptRegistry.cpp
 )
-set(SOURCES_TAVERN_UI
-    src/Tavern/UI/UIManager.h
-    src/Tavern/UI/UIManager.cpp
-    src/Tavern/UI/UIElement.h
-    src/Tavern/UI/UIElement.cpp
-    src/Tavern/UI/Panel.h
-    src/Tavern/UI/Panel.cpp
-    src/Tavern/UI/MenuBar.h
-    src/Tavern/UI/MenuBar.cpp
-    src/Tavern/UI/Image.h
-    src/Tavern/UI/Image.cpp
-    src/Tavern/UI/Button.h
-    src/Tavern/UI/Button.cpp
-    src/Tavern/UI/FileDialog.h
-    src/Tavern/UI/FileDialog.cpp
-)
 set(VENDOR_IMGUI
     vendor/imgui/imconfig.h
     vendor/imgui/imgui.cpp
@@ -129,7 +113,6 @@ source_group(src/Tavern/Input FILES ${SOURCES_TAVERN_INPUT})
 source_group(src/Tavern/Renderer FILES ${SOURCES_TAVERN_RENDERER})
 source_group(src/Tavern/Resources FILES ${SOURCES_TAVERN_RESOURCES})
 source_group(src/Tavern/Scene FILES ${SOURCES_TAVERN_SCENE})
-source_group(src/Tavern/UI FILES ${SOURCES_TAVERN_UI})
 source_group(vendor/imgui FILES ${VENDOR_IMGUI})
 source_group(vendor/ImGuiFileDialog FILES ${VENDOR_IMGUIFILEDIALOG})
 
@@ -158,7 +141,6 @@ add_library(Tavern SHARED
     ${SOURCES_TAVERN_RENDERER}
     ${SOURCES_TAVERN_RESOURCES}
     ${SOURCES_TAVERN_SCENE}
-    ${SOURCES_TAVERN_UI}
     ${VENDOR_IMGUI}
     ${VENDOR_IMGUIFILEDIALOG}
     CMakeLists.txt

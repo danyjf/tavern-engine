@@ -5,6 +5,7 @@
 #include <fstream>
 
 #include <imgui.h>
+#include <ImGuiFileDialog.h>
 #include <nlohmann/json.hpp>
 
 #include <Tavern/Scene/Entity.h>
@@ -12,12 +13,6 @@
 #include <Tavern/Renderer/Window.h>
 #include <Tavern/Core/Engine.h>
 #include <Tavern/Core/Log.h>
-#include <Tavern/UI/Panel.h>
-#include <Tavern/UI/MenuBar.h>
-#include <Tavern/UI/UIManager.h>
-#include <Tavern/UI/Image.h>
-#include <Tavern/UI/Button.h>
-#include <Tavern/UI/FileDialog.h>
 
 #include "Taverner/Editor.h"
 
@@ -32,82 +27,6 @@ namespace Taverner
 	{
 		m_Window->SetTitle("Unnamed Project");
 		m_Window->SetSize(800, 600);
-
-		//ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoTitleBar
-		//	| ImGuiWindowFlags_NoDocking
-		//	| ImGuiWindowFlags_NoCollapse 
-		//	| ImGuiWindowFlags_NoResize 
-		//	| ImGuiWindowFlags_NoMove 
-		//	| ImGuiWindowFlags_NoBringToFrontOnFocus 
-		//	| ImGuiWindowFlags_NoBackground
-		//	| ImGuiWindowFlags_NoNavFocus;
-		//m_EditorPanel = engine.GetUIManager().AddPanel(new UI::Panel("Editor", windowFlags, true));
-
-		//IGFD::FileDialogConfig config;
-		//config.path = ".";
-		//m_OpenProjectFileDialog = m_EditorPanel->AddUIElement<UI::FileDialog>("Open Project File", ".project", config);
-		//m_OpenProjectFileDialog->AddOnOkListener(std::bind(&Editor::OpenProject, this));
-
-		//m_MainMenuBar = m_EditorPanel->AddUIElement<UI::MenuBar>();
-
-		//m_FilesMenu = m_MainMenuBar->AddMenu("File");
-		//m_FilesMenu->AddMenuItem("New Project")->AddOnClickListener(std::bind(&Editor::CreateNewProject, this));
-		//m_FilesMenu->AddMenuItem("Open Project")->AddOnClickListener([this]()
-		//{
-		//	m_OpenProjectFileDialog->Open();
-		//});
-		//m_FilesMenu->AddMenuItem("Save")->AddOnClickListener([this]() {
-		//	Scene& scene = m_Engine.GetScene();
-		//	scene.Save(m_ProjectConfig.GetProjectPath() + "/Content/Scenes/" + scene.GetName() + ".scene");
-		//});
-
-		//m_ToolsMenu = m_MainMenuBar->AddMenu("Tools");
-		//m_ToolsMenu->AddMenuItem("New C++ Class")->AddOnClickListener([]() {
-		//	// TODO:
-		//	// Create c++ files
-		//	// Add files to CMakeLists
-		//	// Build DLL
-		//});
-		//m_ToolsMenu->AddMenuItem("Generate Visual Studio 2022 Project")->AddOnClickListener([this]() {
-		//	std::string generateCmd = "cmake -S " + m_ProjectConfig.GetProjectPath() + " -B " + m_ProjectConfig.GetProjectPath() + "/VisualStudioProject -G \"Visual Studio 17 2022\" -A x64";
-		//	system(generateCmd.c_str());
-		//});
-		//m_ToolsMenu->SetIsVisible(false);
-
-		//m_GameMenu = m_MainMenuBar->AddMenu("Game");
-		//m_GameMenu->AddMenuItem("Play")->AddOnClickListener([this]() {
-		//	BuildGameProject(m_ProjectConfig.GetProjectPath() + "/VisualStudioProject");
-		//	LoadGame(m_ProjectConfig.GetGameDLLPath());
-		//});
-		//m_GameMenu->AddMenuItem("Pause")->AddOnClickListener([]() {});
-		//m_GameMenu->SetIsVisible(false);
-
-		//m_ScenePanel = m_EditorPanel->AddUIElement<UI::Panel>("Scene", ImGuiWindowFlags_None);
-		//m_ScenePanel->AddUIElement<UI::Button>("+")->AddOnClickListener([this]() {
-		//	TAVERN_INFO("Add entity");
-		//});
-
-		//m_InspectorPanel = m_EditorPanel->AddUIElement<UI::Panel>("Inspector", ImGuiWindowFlags_None);
-		//m_FileSystemPanel = m_EditorPanel->AddUIElement<UI::Panel>("File System", ImGuiWindowFlags_None);
-		//m_GamePanel = m_EditorPanel->AddUIElement<UI::Panel>("Game", ImGuiWindowFlags_None);
-		//m_GameImage = m_GamePanel->AddUIElement<UI::Image>(0, ImVec2(100.0f, 100.0f));
-	}
-
-	void Editor::Update()
-	{
-		//ImVec2 viewportPanelSize = m_GamePanel->GetSize();
-
-		//const FramebufferSettings& settings = m_GameFramebuffer.GetFramebufferSettings();
-		//if (viewportPanelSize.x > 0.0f && viewportPanelSize.y > 0.0f &&
-		//	(viewportPanelSize.x != settings.Width || viewportPanelSize.y != settings.Height))
-		//{
-		//	m_GameFramebuffer.Resize(viewportPanelSize.x, viewportPanelSize.y);
-		//	m_Engine.GetRenderManager().GetActiveCamera()->SetViewportSize(viewportPanelSize.x, viewportPanelSize.y);
-		//}
-
-		//unsigned int textureID = m_GameFramebuffer.GetColorTextures()[0];
-		//m_GameImage->SetTextureID((ImTextureID)textureID);
-		//m_GameImage->SetSize(viewportPanelSize);
 	}
 
 	void Editor::Render()
@@ -160,7 +79,7 @@ namespace Taverner
 					ImGui::EndMenu();
 				}
 
-				if (ImGui::BeginMenu("Tools"))
+				if (m_ProjectLoaded && ImGui::BeginMenu("Tools"))
 				{
 					if (ImGui::MenuItem("New C++ Class"))
 					{
@@ -179,7 +98,7 @@ namespace Taverner
 					ImGui::EndMenu();
 				}
 
-				if (ImGui::BeginMenu("Game"))
+				if (m_ProjectLoaded && ImGui::BeginMenu("Game"))
 				{
 					if (ImGui::MenuItem("Play"))
 					{
@@ -292,8 +211,7 @@ namespace Taverner
 		m_ProjectConfig.SetGameDLLPath(projectPath + "/Binaries/Debug/" + name + ".dll");
 		m_ProjectConfig.Save(projectPath + "/" + name + ".project");
 
-		//m_ToolsMenu->SetIsVisible(true);
-		//m_GameMenu->SetIsVisible(true);
+		m_ProjectLoaded = true;
 	}
 
 	void Editor::OpenProject()
@@ -304,6 +222,8 @@ namespace Taverner
 		TAVERN_INFO("Project Name: {}", m_ProjectConfig.GetName());
 		TAVERN_INFO("Project Path: {}", m_ProjectConfig.GetProjectPath());
 		TAVERN_INFO("Game DLL Path: {}", m_ProjectConfig.GetGameDLLPath());
+
+		m_ProjectLoaded = true;
 	}
 
 	void Editor::BuildGameProject(const std::string& path)
