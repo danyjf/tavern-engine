@@ -6,31 +6,31 @@ set(SOURCES_TAVERNER
     src/Taverner/ProjectConfig.cpp
 )
 set(VENDOR_IMGUI
-    ../Tavern/vendor/imgui/imconfig.h
-    ../Tavern/vendor/imgui/imgui.cpp
-    ../Tavern/vendor/imgui/imgui.h
-    ../Tavern/vendor/imgui/imgui_demo.cpp
-    ../Tavern/vendor/imgui/imgui_draw.cpp
-    ../Tavern/vendor/imgui/imgui_internal.h
-    ../Tavern/vendor/imgui/imgui_tables.cpp
-    ../Tavern/vendor/imgui/imgui_widgets.cpp
-    ../Tavern/vendor/imgui/imstb_rectpack.h
-    ../Tavern/vendor/imgui/imstb_textedit.h
-    ../Tavern/vendor/imgui/imstb_truetype.h
+    vendor/imgui/imconfig.h
+    vendor/imgui/imgui.cpp
+    vendor/imgui/imgui.h
+    vendor/imgui/imgui_demo.cpp
+    vendor/imgui/imgui_draw.cpp
+    vendor/imgui/imgui_internal.h
+    vendor/imgui/imgui_tables.cpp
+    vendor/imgui/imgui_widgets.cpp
+    vendor/imgui/imstb_rectpack.h
+    vendor/imgui/imstb_textedit.h
+    vendor/imgui/imstb_truetype.h
 
-    ../Tavern/vendor/imgui/backends/imgui_impl_glfw.cpp
-    ../Tavern/vendor/imgui/backends/imgui_impl_glfw.h
-    ../Tavern/vendor/imgui/backends/imgui_impl_opengl3.cpp
-    ../Tavern/vendor/imgui/backends/imgui_impl_opengl3.h
+    vendor/imgui/backends/imgui_impl_glfw.cpp
+    vendor/imgui/backends/imgui_impl_glfw.h
+    vendor/imgui/backends/imgui_impl_opengl3.cpp
+    vendor/imgui/backends/imgui_impl_opengl3.h
 
-    ../Tavern/vendor/imgui/misc/debuggers/imgui.natvis
-    ../Tavern/vendor/imgui/misc/debuggers/imgui.natstepfilter
+    vendor/imgui/misc/debuggers/imgui.natvis
+    vendor/imgui/misc/debuggers/imgui.natstepfilter
 
-    ../Tavern/vendor/imgui/misc/cpp/imgui_stdlib.cpp
-    ../Tavern/vendor/imgui/misc/cpp/imgui_stdlib.h
+    vendor/imgui/misc/cpp/imgui_stdlib.cpp
+    vendor/imgui/misc/cpp/imgui_stdlib.h
 )
 set(VENDOR_IMGUIFILEDIALOG
-    ../Tavern/vendor/ImGuiFileDialog/ImGuiFileDialog.cpp
+    vendor/ImGuiFileDialog/ImGuiFileDialog.cpp
 )
 
 source_group(src/Taverner FILES ${SOURCES_TAVERNER})
@@ -53,9 +53,9 @@ target_include_directories(Taverner PRIVATE
 	${CMAKE_SOURCE_DIR}/Tavern/src
 	${CMAKE_SOURCE_DIR}/Tavern/vendor/spdlog/include	
     ${CMAKE_SOURCE_DIR}/Tavern/vendor/Glad/include
-    ${CMAKE_SOURCE_DIR}/Tavern/vendor/imgui
-    ${CMAKE_SOURCE_DIR}/Tavern/vendor/imgui/backends
-    ${CMAKE_SOURCE_DIR}/Tavern/vendor/ImGuiFileDialog
+    ${CMAKE_SOURCE_DIR}/Taverner/vendor/imgui
+    ${CMAKE_SOURCE_DIR}/Taverner/vendor/imgui/backends
+    ${CMAKE_SOURCE_DIR}/Taverner/vendor/ImGuiFileDialog
     ${CMAKE_SOURCE_DIR}/Taverner/src
 )
 
