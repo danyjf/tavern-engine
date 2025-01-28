@@ -83,6 +83,29 @@ int main()
 	window->GetCursor().SetIsLocked(false);
 	window->GetCursor().SetIsVisible(true);
 
+	// Setup ImGui context
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO();
+	(void)io;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;	  // Enable Docking
+	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;	  // Enable Multi-Viewports
+	io.IniFilename = "imgui.ini";
+
+	// Setup Dear ImGui style
+	ImGui::StyleColorsDark();
+
+	// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
+	ImGuiStyle& style = ImGui::GetStyle();
+	style.WindowRounding = 0.0f;
+	style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+
+	// Setup Platform/Renderer backends
+	GLFWwindow* glfwWindow = window->GetGLFWWindow();
+	ImGui_ImplGlfw_InitForOpenGL(glfwWindow, true);
+	ImGui_ImplOpenGL3_Init("#version 460");
+
 	// TODO: Remove this game code
 	Entity* editorCamera = engine.GetScene().CreateEntity();
 	ScriptRegistry::Get().Create("EditorCamera", editorCamera);
@@ -91,14 +114,32 @@ int main()
 	while (engine.IsRunning())
 	{
 		engine.Update();
-		editor.Update();
+		//editor.Update();
 
 		editor.GetGameFramebuffer().Bind();
 		engine.GetRenderManager().Render();
 		editor.GetGameFramebuffer().Unbind();
-		engine.GetUIManager().Render();
+
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		editor.Render();
+
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+		GLFWwindow* backupCurrentContext = glfwGetCurrentContext();
+        ImGui::UpdatePlatformWindows();
+        ImGui::RenderPlatformWindowsDefault();
+        glfwMakeContextCurrent(backupCurrentContext);
+
 		engine.GetRenderManager().SwapBuffers();
 	}
+
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
 
 	return 0;
 }
