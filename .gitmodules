@@ -14,9 +14,9 @@
 	path = Tavern/vendor/assimp
 	url = git@github.com:assimp/assimp.git
 [submodule "Tavern/vendor/imgui"]
-	path = Tavern/vendor/imgui
+	path = Taverner/vendor/imgui
 	url = git@github.com:ocornut/imgui.git
 	branch = docking
 [submodule "Tavern/vendor/ImGuiFileDialog"]
-	path = Tavern/vendor/ImGuiFileDialog
+	path = Taverner/vendor/ImGuiFileDialog
 	url = git@github.com:aiekick/ImGuiFileDialog.git
