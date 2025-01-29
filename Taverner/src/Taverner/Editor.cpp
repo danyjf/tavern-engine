@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include <filesystem>
 #include <fstream>
+#include <filesystem>
 
 #include <imgui.h>
 #include <ImGuiFileDialog.h>
@@ -15,6 +16,7 @@
 #include <Tavern/Core/Log.h>
 
 #include "Taverner/Editor.h"
+#include "Taverner/FileSystemWindow.h"
 
 using namespace Tavern;
 
@@ -130,10 +132,7 @@ namespace Taverner
 			}
 			ImGui::End();
 
-			if (ImGui::Begin("File System", nullptr, ImGuiWindowFlags_None))
-			{
-			}
-			ImGui::End();
+			m_FileSystemWindow.Render();
 
 			if (ImGui::Begin("Game", nullptr, ImGuiWindowFlags_None))
 			{
@@ -212,6 +211,8 @@ namespace Taverner
 		m_ProjectConfig.Save(projectPath + "/" + name + ".project");
 
 		m_ProjectLoaded = true;
+		m_Window->SetTitle(m_ProjectConfig.GetName());
+		m_FileSystemWindow.LoadFileStructure(m_ProjectConfig.GetProjectPath() + "/Content");
 	}
 
 	void Editor::OpenProject()
@@ -222,6 +223,9 @@ namespace Taverner
 		TAVERN_INFO("Project Name: {}", m_ProjectConfig.GetName());
 		TAVERN_INFO("Project Path: {}", m_ProjectConfig.GetProjectPath());
 		TAVERN_INFO("Game DLL Path: {}", m_ProjectConfig.GetGameDLLPath());
+
+		m_Window->SetTitle(m_ProjectConfig.GetName());
+		m_FileSystemWindow.LoadFileStructure(m_ProjectConfig.GetProjectPath() + "/Content");
 
 		m_ProjectLoaded = true;
 	}

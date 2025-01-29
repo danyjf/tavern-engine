@@ -6,6 +6,7 @@
 #include <Tavern/Core/Engine.h>
 
 #include "Taverner/ProjectConfig.h"
+#include "Taverner/FileSystemWindow.h"
 
 namespace Taverner
 {
@@ -18,11 +19,14 @@ namespace Taverner
 		Tavern::Framebuffer& GetGameFramebuffer();
 
 	private:
-		bool m_ProjectLoaded = false;
-		std::string m_EditorPath;
-		ProjectConfig m_ProjectConfig;
+		FileSystemWindow m_FileSystemWindow;
+
 		Tavern::Engine& m_Engine;
 		Tavern::Window* m_Window;
+
+		bool m_ProjectLoaded = false;
+		ProjectConfig m_ProjectConfig;
+		std::string m_EditorPath;
 		Tavern::Framebuffer m_GameFramebuffer = Tavern::Framebuffer(
 			Tavern::FramebufferSettings(
 				800, 

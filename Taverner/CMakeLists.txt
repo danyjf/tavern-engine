@@ -1,9 +1,11 @@
 set(SOURCES_TAVERNER
 	src/Taverner/main.cpp
-    src/Taverner/Editor.h
-    src/Taverner/Editor.cpp
     src/Taverner/ProjectConfig.h
     src/Taverner/ProjectConfig.cpp
+    src/Taverner/Editor.h
+    src/Taverner/Editor.cpp
+    src/Taverner/FileSystemWindow.h
+    src/Taverner/FileSystemWindow.cpp
 )
 set(VENDOR_IMGUI
     vendor/imgui/imconfig.h
