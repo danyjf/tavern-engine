@@ -1,6 +1,8 @@
 #include <filesystem>
 #include <imgui.h>
 
+#include <Tavern/Core/Log.h>
+
 #include "Taverner/FileSystemWindow.h"
 
 namespace Taverner
@@ -9,7 +11,7 @@ namespace Taverner
 	{
 		m_ContentPath = path;
 
-		m_Root = make_unique<FileSystemNode>(m_ContentPath.filename().string(), true);
+		m_Root = std::make_unique<FileSystemNode>(*this, m_ContentPath, true);
 		LoadDir(m_Root.get(), path);
 	}
 
@@ -20,12 +22,12 @@ namespace Taverner
 		{
 			if (dirEntry.is_directory())
 			{
-				node->AddChild(make_unique<FileSystemNode>(dirEntry.path().filename().string(), true));
+				node->AddChild(std::make_unique<FileSystemNode>(*this, dirEntry.path(), true));
 				LoadDir(node->GetChildren().back().get(), dirEntry.path());
 			}
 			else
 			{
-				node->AddChild(make_unique<FileSystemNode>(dirEntry.path().filename().string(), false));
+				node->AddChild(std::make_unique<FileSystemNode>(*this, dirEntry.path(), false));
 			}
 		}
 	}
@@ -42,9 +44,16 @@ namespace Taverner
 		ImGui::End();
 	}
 
-	FileSystemNode::FileSystemNode(const std::string& name, bool isDirectory)
-		: m_Name(name), m_IsDirectory(isDirectory)
+	void FileSystemWindow::OpenFile(const std::filesystem::path& filePath)
 	{
+		TAVERN_INFO(filePath.string());
+		// TODO: Do stuff based on file extension
+	}
+
+	FileSystemNode::FileSystemNode(FileSystemWindow& fileSystemWindow, const std::filesystem::path& path, bool isDirectory)
+		: m_FileSystemWindow(fileSystemWindow), m_Path(path), m_IsDirectory(isDirectory)
+	{
+		m_Name = m_Path.filename().string();
 	}
 
 	void FileSystemNode::Render() const
@@ -65,6 +74,7 @@ namespace Taverner
 			ImGui::TreeNodeEx(GetName().c_str(), ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen);
 			if (ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left) && ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
 			{
+				m_FileSystemWindow.OpenFile(m_Path);
 			}
 		}
 	}

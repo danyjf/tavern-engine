@@ -2,10 +2,12 @@
 
 namespace Taverner
 {
+	class FileSystemWindow;
+
 	class FileSystemNode
 	{
 	public:
-		FileSystemNode(const std::string& name, bool isDirectory);
+		FileSystemNode(FileSystemWindow& fileSystemWindow, const std::filesystem::path& path, bool isDirectory);
 
 		virtual void Render() const;
 		const std::string& GetName() const;
@@ -14,7 +16,9 @@ namespace Taverner
 		void AddChild(std::unique_ptr<FileSystemNode> node);
 
 	private:
+		FileSystemWindow& m_FileSystemWindow;
 		std::string m_Name;
+		std::filesystem::path m_Path;
 		std::vector<std::unique_ptr<FileSystemNode>> m_Children;
 		bool m_IsDirectory;
 	};
@@ -22,6 +26,8 @@ namespace Taverner
 	class FileSystemWindow
 	{
 	public:
+		friend class FileSystemNode;
+
 		void Render();
 		void LoadFileStructure(const std::string& path);
 
@@ -30,5 +36,6 @@ namespace Taverner
 		std::unique_ptr<FileSystemNode> m_Root;
 
 		void LoadDir(FileSystemNode* node, const std::filesystem::path& path);
+		void OpenFile(const std::filesystem::path& filePath);
 	};
 }
