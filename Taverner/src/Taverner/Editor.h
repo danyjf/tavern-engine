@@ -19,10 +19,10 @@ namespace Taverner
 		Tavern::Framebuffer& GetGameFramebuffer();
 
 	private:
-		FileSystemWindow m_FileSystemWindow;
-
 		Tavern::Engine& m_Engine;
 		Tavern::Window* m_Window;
+
+		FileSystemWindow m_FileSystemWindow;
 
 		bool m_ProjectLoaded = false;
 		ProjectConfig m_ProjectConfig;

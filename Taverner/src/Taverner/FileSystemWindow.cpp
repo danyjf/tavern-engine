@@ -2,11 +2,18 @@
 #include <imgui.h>
 
 #include <Tavern/Core/Log.h>
+#include <Tavern/Core/Engine.h>
+#include <Tavern/Scene/Scene.h>
 
 #include "Taverner/FileSystemWindow.h"
 
 namespace Taverner
 {
+	FileSystemWindow::FileSystemWindow(Tavern::Engine& engine)
+		: m_Engine(engine)
+	{
+	}
+
 	void FileSystemWindow::LoadFileStructure(const std::string& path)
 	{
 		m_ContentPath = path;
@@ -46,17 +53,20 @@ namespace Taverner
 
 	void FileSystemWindow::OpenFile(const std::filesystem::path& filePath)
 	{
-		TAVERN_INFO(filePath.string());
-		// TODO: Do stuff based on file extension
+		std::string fileExtension = filePath.filename().extension().string();
+
+		if (fileExtension == ".scene")
+		{
+			m_Engine.GetScene().Load(filePath.string());
+		}
 	}
 
 	FileSystemNode::FileSystemNode(FileSystemWindow& fileSystemWindow, const std::filesystem::path& path, bool isDirectory)
 		: m_FileSystemWindow(fileSystemWindow), m_Path(path), m_IsDirectory(isDirectory)
 	{
-		m_Name = m_Path.filename().string();
 	}
 
-	void FileSystemNode::Render() const
+	void FileSystemNode::Render()
 	{
 		if (IsDirectory())
 		{
@@ -79,9 +89,9 @@ namespace Taverner
 		}
 	}
 
-	const std::string& FileSystemNode::GetName() const
+	const std::string FileSystemNode::GetName() const
 	{
-		return m_Name;
+		return m_Path.filename().string();
 	}
 
 	bool FileSystemNode::IsDirectory() const

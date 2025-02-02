@@ -87,7 +87,9 @@ namespace Tavern
 
 	void Scene::FromJson(const nlohmann::json& data)
 	{
-
+		TAVERN_INFO(data.dump(2));
+		m_Name = data["name"];
+		//for ()
 	}
 
 	void Scene::Save(const std::string& path)
@@ -102,7 +104,9 @@ namespace Tavern
 
 	void Scene::Load(const std::string& path)
 	{
-
+		std::ifstream sceneFile(path);
+		FromJson(nlohmann::json::parse(sceneFile));
+		sceneFile.close();
 	}
 
 	void Scene::AddScriptComponent(ScriptComponent* script)

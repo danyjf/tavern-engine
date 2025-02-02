@@ -63,7 +63,7 @@ namespace Taverner
 			path,
 			std::ofstream::out | std::ofstream::trunc
 		);
-		projectConfigFile << ToJson();
+		projectConfigFile << std::setw(2) << ToJson();
 		projectConfigFile.close();
 	}
 
@@ -71,5 +71,6 @@ namespace Taverner
 	{
 		std::ifstream f(path);
 		FromJson(nlohmann::json::parse(f));
+		f.close();
 	}
 }

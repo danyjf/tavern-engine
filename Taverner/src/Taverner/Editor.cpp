@@ -3,7 +3,6 @@
 #include <Windows.h>
 #include <filesystem>
 #include <fstream>
-#include <filesystem>
 
 #include <imgui.h>
 #include <ImGuiFileDialog.h>
@@ -23,9 +22,10 @@ using namespace Tavern;
 namespace Taverner
 {
 	Editor::Editor(Engine& engine)
-		: m_Engine(engine), 
-		 m_Window(engine.GetRenderManager().GetWindow()), 
-		 m_EditorPath(std::filesystem::current_path().generic_string())
+		: m_Engine(engine),
+		  m_FileSystemWindow(engine),
+		  m_Window(engine.GetRenderManager().GetWindow()), 
+		  m_EditorPath(std::filesystem::current_path().generic_string())
 	{
 		m_Window->SetTitle("Unnamed Project");
 		m_Window->SetSize(800, 600);
