@@ -16,10 +16,12 @@ namespace Tavern
 	class TAVERN_API MeshComponent : public RenderComponent
 	{
 	public:
-		MeshComponent(Engine& engine, Entity* owner, std::shared_ptr<MaterialResource> material);
+		MeshComponent(Engine& engine, Entity* owner);
 		virtual ~MeshComponent() = default;
 
 		void SetMesh(std::shared_ptr<MeshResource> mesh);
+		std::shared_ptr<MeshResource> GetMesh();
+
 		void Render() override;
 		nlohmann::json ToJson() override;
 		void FromJson(const nlohmann::json& data) override;

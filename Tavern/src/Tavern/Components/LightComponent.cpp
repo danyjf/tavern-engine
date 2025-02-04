@@ -26,7 +26,11 @@ namespace Tavern
 
 	void LightComponent::FromJson(const nlohmann::json& data)
 	{
-
+		SetColor(glm::vec3(
+			data["color"][0],
+			data["color"][1],
+			data["color"][2]
+		));
 	}
 
 	const glm::vec3& LightComponent::GetColor() const

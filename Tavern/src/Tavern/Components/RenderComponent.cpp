@@ -7,10 +7,9 @@
 
 namespace Tavern
 {
-	RenderComponent::RenderComponent(Engine& engine, Entity* owner, std::shared_ptr<MaterialResource> material)
-		: Component(engine, owner), m_Material(material)
+	RenderComponent::RenderComponent(Engine& engine, Entity* owner)
+		: Component(engine, owner)
 	{
-		GetEngine().GetRenderManager().AddRenderComponent(this);
 	}
 
 	RenderComponent::~RenderComponent()
@@ -22,7 +21,7 @@ namespace Tavern
 	{
 		nlohmann::json json;
 		json["isVisible"] = m_IsVisible;
-		json["material"] = m_Material ? m_Material->GetPath() : "";
+		json["materialPath"] = m_Material ? m_Material->GetPath() : "";
 		return json;
 	}
 
@@ -49,5 +48,6 @@ namespace Tavern
 	void RenderComponent::SetMaterial(std::shared_ptr<MaterialResource> material)
 	{
 		m_Material = material;
+		GetEngine().GetRenderManager().AddRenderComponent(this);
 	}
 }

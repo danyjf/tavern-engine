@@ -9,14 +9,19 @@
 namespace Tavern
 {
 	// TODO: Add a way to get the path to a file instead of putting the absolute path here
-	MeshComponent::MeshComponent(Engine& engine, Entity* owner, std::shared_ptr<MaterialResource> material)
-		: RenderComponent(engine, owner, material)
+	MeshComponent::MeshComponent(Engine& engine, Entity* owner)
+		: RenderComponent(engine, owner)
 	{
 	}
 
 	void MeshComponent::SetMesh(std::shared_ptr<MeshResource> mesh)
 	{
 		m_Mesh = mesh;
+	}
+
+	std::shared_ptr<MeshResource> MeshComponent::GetMesh()
+	{
+		return m_Mesh;
 	}
 
 	void MeshComponent::Render()
@@ -41,6 +46,8 @@ namespace Tavern
 
 	void MeshComponent::FromJson(const nlohmann::json& data)
 	{
-
+		SetIsVisible(data["isVisible"]);
+		SetMesh(GetEngine().GetResourceManager().LoadMesh(data["meshPath"]));
+		SetMaterial(GetEngine().GetResourceManager().LoadMaterial(data["materialPath"]));
 	}
 }

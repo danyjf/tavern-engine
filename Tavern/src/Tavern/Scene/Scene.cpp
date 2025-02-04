@@ -30,7 +30,7 @@ namespace Tavern
 		return m_Name;
 	}
 
-	Entity* Scene::CreateEntity(Entity* parent)
+	Entity* Scene::CreateEntity(Entity* parent, const std::string& name)
 	{
 		std::unique_ptr<Entity> entity = std::make_unique<Entity>(m_Engine);
 		if (parent)
@@ -66,6 +66,11 @@ namespace Tavern
 		m_Entities.erase(entity->GetID());
 	}
 
+	Entity* Scene::GetEntity(unsigned long id)
+	{
+		return m_Entities[id].get();
+	}
+
 	void Scene::Update()
 	{
 		for (ScriptComponent* script : m_Scripts)
@@ -87,9 +92,23 @@ namespace Tavern
 
 	void Scene::FromJson(const nlohmann::json& data)
 	{
-		TAVERN_INFO(data.dump(2));
+		//TAVERN_INFO(data.dump(2));
 		m_Name = data["name"];
-		//for ()
+
+		for (const nlohmann::json& entityData : data["entities"])
+		{
+			std::unique_ptr<Entity> entity = std::make_unique<Entity>(m_Engine);
+			entity->FromJson(entityData);
+			m_Entities.emplace(entity->GetID(), std::move(entity));
+		}
+
+		for (const nlohmann::json& entityData : data["entities"])
+		{
+			if (entityData["parent"] != -1)
+			{
+				GetEntity(entityData["id"])->SetParent(GetEntity(entityData["parent"]));
+			}
+		}
 	}
 
 	void Scene::Save(const std::string& path)

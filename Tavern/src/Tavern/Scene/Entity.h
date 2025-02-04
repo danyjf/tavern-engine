@@ -38,12 +38,15 @@ namespace Tavern
 		Entity* GetParent() const;
 		void SetParent(Entity* parent);
 
+		const std::string& GetName() const;
+		void SetName(const std::string& name);
+
 		std::vector<Entity*>& GetChildren();
 
-		template <typename T, typename... Args>
-		T* CreateComponentOfType(Args... args)
+		template <typename T>
+		T* CreateComponentOfType()
 		{
-			m_Components.push_back(std::make_unique<T>(GetEngine(), this, args...));
+			m_Components.push_back(std::make_unique<T>(GetEngine(), this));
 
 			return static_cast<T*>(m_Components.back().get());
 		}
@@ -64,8 +67,10 @@ namespace Tavern
 		Entity* m_Parent = nullptr;
 
 	private:
-		unsigned long m_ID = 0;
 		Engine& m_Engine;
+
+		unsigned long m_ID = 0;
+		std::string m_Name = "Default";
 		TransformComponent* m_Transform;
 		std::vector<std::unique_ptr<Component>> m_Components;
 

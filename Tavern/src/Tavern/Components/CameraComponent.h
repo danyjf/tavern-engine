@@ -21,8 +21,16 @@ namespace Tavern
 		void FromJson(const nlohmann::json& data) override;
 
 		void SetFOV(float FOV);
+		const float GetFOV() const;
+
 		void SetViewportSize(float width, float height);
 		const glm::vec2 GetViewportSize() const;
+
+		void SetNearClipPlane(float nearClipPlane);
+		const float GetNearClipPlane() const;
+
+		void SetFarClipPlane(float farClipPlane);
+		const float GetFarClipPlane() const;
 
 		const glm::mat4& GetViewMatrix() const;
 		const glm::mat4& GetProjectionMatrix() const;

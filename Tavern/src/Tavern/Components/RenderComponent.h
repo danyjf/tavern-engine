@@ -13,7 +13,7 @@ namespace Tavern
 	class TAVERN_API RenderComponent : public Component
 	{
 	public:
-		RenderComponent(Engine& engine, Entity* owner, std::shared_ptr<MaterialResource> material);
+		RenderComponent(Engine& engine, Entity* owner);
 		virtual ~RenderComponent() override;
 
 		virtual void Render() = 0;

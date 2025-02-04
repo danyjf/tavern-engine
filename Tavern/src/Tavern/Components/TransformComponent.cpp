@@ -23,15 +23,29 @@ namespace Tavern
 	nlohmann::json TransformComponent::ToJson()
 	{
 		nlohmann::json json;
-		json["transform"]["localPosition"] = { m_LocalPosition.x, m_LocalPosition.y, m_LocalPosition.z };
-		json["transform"]["localEulerRotation"] = {m_LocalEulerRotation.x, m_LocalEulerRotation.y, m_LocalEulerRotation.z};
-		json["transform"]["localScale"] = {m_LocalScale.x, m_LocalScale.y, m_LocalScale.z};
+		json["transform"]["position"] = { m_Position.x, m_Position.y, m_Position.z };
+		json["transform"]["eulerRotation"] = {m_EulerRotation.x, m_EulerRotation.y, m_EulerRotation.z};
+		json["transform"]["scale"] = {m_Scale.x, m_Scale.y, m_Scale.z};
 		return json;
 	}
 
 	void TransformComponent::FromJson(const nlohmann::json& data)
 	{
-
+		SetPosition(glm::vec3(
+			data["position"][0],
+			data["position"][1],
+			data["position"][2]
+		));
+		SetEulerRotation(glm::vec3(
+			data["eulerRotation"][0],
+			data["eulerRotation"][1],
+			data["eulerRotation"][2]
+		));
+		SetScale(glm::vec3(
+			data["scale"][0],
+			data["scale"][1],
+			data["scale"][2]
+		));
 	}
 
 	const glm::vec3& TransformComponent::GetLocalPosition() const

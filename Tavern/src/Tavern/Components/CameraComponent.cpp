@@ -30,13 +30,21 @@ namespace Tavern
 
 	void CameraComponent::FromJson(const nlohmann::json& data)
 	{
-
+		SetFOV(data["fov"]);
+		SetViewportSize(data["viewportWidth"], data["viewportHeight"]);
+		SetNearClipPlane(data["nearClipPlane"]);
+		SetFarClipPlane(data["farClipPlane"]);
 	}
 
 	void CameraComponent::SetFOV(float FOV)
 	{
 		m_FOV = FOV;
 		ComputeProjectionMatrix();
+	}
+
+	const float CameraComponent::GetFOV() const
+	{
+		return m_FOV;
 	}
 	
 	void CameraComponent::SetViewportSize(float width, float height)
@@ -49,6 +57,28 @@ namespace Tavern
 	const glm::vec2 CameraComponent::GetViewportSize() const
 	{
 		return glm::vec2(m_ViewportWidth, m_ViewportHeight);
+	}
+
+	void CameraComponent::SetNearClipPlane(float nearClipPlane)
+	{
+		m_NearClipPlane = nearClipPlane;
+		ComputeProjectionMatrix();
+	}
+
+	const float CameraComponent::GetNearClipPlane() const
+	{
+		return m_NearClipPlane;
+	}
+
+	void CameraComponent::SetFarClipPlane(float farClipPlane)
+	{
+		m_FarClipPlane = farClipPlane;
+		ComputeProjectionMatrix();
+	}
+
+	const float CameraComponent::GetFarClipPlane() const
+	{
+		return m_FarClipPlane;
 	}
 
 	const glm::mat4& CameraComponent::GetViewMatrix() const

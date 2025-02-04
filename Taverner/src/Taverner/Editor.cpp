@@ -224,6 +224,9 @@ namespace Taverner
 		TAVERN_INFO("Project Path: {}", m_ProjectConfig.GetProjectPath());
 		TAVERN_INFO("Game DLL Path: {}", m_ProjectConfig.GetGameDLLPath());
 
+		BuildGameProject(m_ProjectConfig.GetProjectPath() + "/VisualStudioProject");
+		LoadGame(m_ProjectConfig.GetGameDLLPath());
+
 		m_Window->SetTitle(m_ProjectConfig.GetName());
 		m_FileSystemWindow.LoadFileStructure(m_ProjectConfig.GetProjectPath() + "/Content");
 
@@ -243,12 +246,12 @@ namespace Taverner
 		LoadLibrary(dllPath.c_str());
 
 		// Spawn in a cube entity
-		Entity* cube = m_Engine.GetScene().CreateEntity();
-		ScriptComponent* cubeScript = ScriptRegistry::Get().Create("Cube", cube);
-		TAVERN_INFO("Script Loaded: {}", cubeScript->GetTypeName());
+		//Entity* cube = m_Engine.GetScene().CreateEntity();
+		//ScriptComponent* cubeScript = ScriptRegistry::Get().Create("Cube", cube);
+		//TAVERN_INFO("Script Loaded: {}", cubeScript->GetTypeName());
 
-		Entity* light = m_Engine.GetScene().CreateEntity();
-		ScriptComponent* lightScript = ScriptRegistry::Get().Create("Light", light);
-		TAVERN_INFO("Script Loaded: {}", lightScript->GetTypeName());
+		//Entity* light = m_Engine.GetScene().CreateEntity();
+		//ScriptComponent* lightScript = ScriptRegistry::Get().Create("Light", light);
+		//TAVERN_INFO("Script Loaded: {}", lightScript->GetTypeName());
 	}
 }

@@ -23,8 +23,9 @@ namespace Tavern
 		void SetName(const std::string& name);
 		const std::string& GetName() const;
 
-		Entity* CreateEntity(Entity* parent = nullptr);
+		Entity* CreateEntity(Entity* parent = nullptr, const std::string& name = "Default");
 		void DestroyEntity(Entity* entity);
+		Entity* GetEntity(unsigned long id);
 
 		void Update();
 

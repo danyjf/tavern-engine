@@ -17,7 +17,7 @@ namespace Tavern
 		ScriptComponent& operator=(ScriptComponent&& other) noexcept = delete;
 
 		nlohmann::json ToJson() override;
-		void FromJson(const nlohmann::json& data) override;
+		virtual void FromJson(const nlohmann::json& data) override;
 
 		virtual void Update() = 0;
 

@@ -15,10 +15,9 @@ Light::Light(Engine& engine, Entity* owner)
 	GetOwner()->GetTransform()->SetLocalPosition(m_StartPosition);
 	GetOwner()->GetTransform()->SetLocalScale(glm::vec3(0.25f));
 
-	std::shared_ptr<MaterialResource> material = GetEngine().GetResourceManager().LoadMaterial("Assets/Materials/Light.material");
-	std::shared_ptr<MeshResource> mesh = GetEngine().GetResourceManager().LoadMesh("BuiltInAssets/Meshes/Cube.obj");
-	m_Mesh = GetOwner()->CreateComponentOfType<MeshComponent>(material);
-	m_Mesh->SetMesh(mesh);
+	m_Mesh = GetOwner()->CreateComponentOfType<MeshComponent>();
+	m_Mesh->SetMaterial(GetEngine().GetResourceManager().LoadMaterial("Assets/Materials/Light.material"));
+	m_Mesh->SetMesh(GetEngine().GetResourceManager().LoadMesh("BuiltInAssets/Meshes/Cube.obj"));
 
 	m_Light = GetOwner()->CreateComponentOfType<LightComponent>();
 	m_Light->SetColor(glm::vec3(1.0f));
