@@ -35,17 +35,23 @@ namespace Tavern
 		TAVERN_ENGINE_INFO("Engine destroyed");
 	}
 
+	void Engine::HandleEvents()
+	{
+		glfwPollEvents();
+		m_EventManager.DispatchEvents();
+	}
+
 	void Engine::Update()
 	{
 		m_TimeManager.UpdateTime();
 
-		// Process events
-		m_EventManager.DispatchEvents();
-
 		// Update State
 		m_Scene.Update();
+	}
 
-		glfwPollEvents();
+	void Engine::Render()
+	{
+		GetRenderManager().Render();
 	}
 
 	bool Engine::IsRunning()

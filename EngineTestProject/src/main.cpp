@@ -12,13 +12,13 @@
 
 int main()
 {
-	Tavern::Engine TavernEngine;
+	Tavern::Engine engine;
 
 	// Create startup game entities
-	Player* player = TavernEngine.GetScene().CreateEntity()->CreateComponentOfType<Player>();
-	Light* light = TavernEngine.GetScene().CreateEntity()->CreateComponentOfType<Light>();
-	Backpack* backpack = TavernEngine.GetScene().CreateEntity()->CreateComponentOfType<Backpack>();
-	Ground* ground = TavernEngine.GetScene().CreateEntity()->CreateComponentOfType<Ground>();
+	Player* player = engine.GetScene().CreateEntity()->CreateComponentOfType<Player>();
+	Light* light = engine.GetScene().CreateEntity()->CreateComponentOfType<Light>();
+	Backpack* backpack = engine.GetScene().CreateEntity()->CreateComponentOfType<Backpack>();
+	Ground* ground = engine.GetScene().CreateEntity()->CreateComponentOfType<Ground>();
 
 	glm::vec3 cubePositions[] = {
 		glm::vec3(0.0f, 0.0f, 0.0f),
@@ -33,31 +33,31 @@ int main()
 		glm::vec3(-1.3f, 1.0f, -1.5f)
 	};
 
-	Cube* cube1 = TavernEngine.GetScene().CreateEntity()->CreateComponentOfType<Cube>();
+	Cube* cube1 = engine.GetScene().CreateEntity()->CreateComponentOfType<Cube>();
 	cube1->GetOwner()->GetTransform()->SetLocalPosition(cubePositions[0]);
 	player->m_Cubes.push_back(cube1);
 
-	Cube* cube2 = TavernEngine.GetScene().CreateEntity(cube1->GetOwner())->CreateComponentOfType<Cube>();
+	Cube* cube2 = engine.GetScene().CreateEntity(cube1->GetOwner())->CreateComponentOfType<Cube>();
 	cube2->GetOwner()->GetTransform()->SetLocalPosition(cubePositions[1]);
 	player->m_Cubes.push_back(cube2);
 
-	Cube* cube3 = TavernEngine.GetScene().CreateEntity(cube2->GetOwner())->CreateComponentOfType<Cube>();
+	Cube* cube3 = engine.GetScene().CreateEntity(cube2->GetOwner())->CreateComponentOfType<Cube>();
 	cube3->GetOwner()->GetTransform()->SetLocalPosition(cubePositions[2]);
 	player->m_Cubes.push_back(cube3);
 
 	for (int i = 3; i < 10; i++)
 	{
-		Cube* cube = TavernEngine.GetScene().CreateEntity()->CreateComponentOfType<Cube>();
+		Cube* cube = engine.GetScene().CreateEntity()->CreateComponentOfType<Cube>();
 		cube->GetOwner()->GetTransform()->SetLocalPosition(cubePositions[i]);
 		cube->GetOwner()->GetTransform()->SetLocalEulerRotation(glm::vec3(i * 10.0, i * 21.0, i * 13.0));
 		player->m_Cubes.push_back(cube);
 	}
 
-	while (TavernEngine.IsRunning())
+	while (engine.IsRunning())
 	{
-		TavernEngine.Update();
-		TavernEngine.GetRenderManager().Render();
-		TavernEngine.GetRenderManager().SwapBuffers();
+		engine.HandleEvents();
+		engine.Update();
+		engine.Render();
 	}
 
 	return 0;

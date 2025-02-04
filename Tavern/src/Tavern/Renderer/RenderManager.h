@@ -36,7 +36,6 @@ namespace Tavern
 		void RemoveLightComponent(LightComponent* lightComponent);
 
 		void Render();
-		void SwapBuffers();
 
 		void OnWindowResizeEvent(const std::shared_ptr<WindowResizeEvent>& event);
 

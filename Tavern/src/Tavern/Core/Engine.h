@@ -32,7 +32,10 @@ namespace Tavern
 		Engine(const Engine& other) = delete;
 		Engine& operator=(const Engine& other) = delete;
 
+		void HandleEvents();
 		void Update();
+		void Render();
+
 		bool IsRunning();
 
 		EventManager& GetEventManager();

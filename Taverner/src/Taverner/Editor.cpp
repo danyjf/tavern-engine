@@ -5,8 +5,9 @@
 #include <fstream>
 
 #include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
 #include <ImGuiFileDialog.h>
-#include <nlohmann/json.hpp>
 
 #include <Tavern/Scene/Entity.h>
 #include <Tavern/Components/ScriptComponent.h>
@@ -27,12 +28,48 @@ namespace Taverner
 		  m_Window(engine.GetRenderManager().GetWindow()), 
 		  m_EditorPath(std::filesystem::current_path().generic_string())
 	{
+		m_Window->GetCursor().SetIsLocked(false);
+		m_Window->GetCursor().SetIsVisible(true);
 		m_Window->SetTitle("Unnamed Project");
 		m_Window->SetSize(800, 600);
+
+		// Setup ImGui context
+		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO();
+		(void)io;
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;	  // Enable Docking
+		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;	  // Enable Multi-Viewports
+		io.IniFilename = "imgui.ini";
+
+		// Setup Dear ImGui style
+		ImGui::StyleColorsDark();
+
+		// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
+		ImGuiStyle& style = ImGui::GetStyle();
+		style.WindowRounding = 0.0f;
+		style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+
+		// Setup Platform/Renderer backends
+		GLFWwindow* glfwWindow = m_Window->GetGLFWWindow();
+		ImGui_ImplGlfw_InitForOpenGL(glfwWindow, true);
+		ImGui_ImplOpenGL3_Init("#version 460");
+	}
+
+	Editor::~Editor()
+	{
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui_ImplGlfw_Shutdown();
+		ImGui::DestroyContext();
 	}
 
 	void Editor::Render()
 	{
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
 		if (ImGuiFileDialog::Instance()->Display("OpenProjectFile", ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDocking))
 		{			
 			if (ImGuiFileDialog::Instance()->IsOk()) 
@@ -106,6 +143,7 @@ namespace Taverner
 					{
 						BuildGameProject(m_ProjectConfig.GetProjectPath() + "/VisualStudioProject");
 						LoadGame(m_ProjectConfig.GetGameDLLPath());
+						m_EditorState = EditorState::Playing;
 					}
 
 					if (ImGui::MenuItem("Pause"))
@@ -152,11 +190,24 @@ namespace Taverner
 			ImGui::End();
 		}
 		ImGui::End();
+
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+		GLFWwindow* backupCurrentContext = glfwGetCurrentContext();
+        ImGui::UpdatePlatformWindows();
+        ImGui::RenderPlatformWindowsDefault();
+        glfwMakeContextCurrent(backupCurrentContext);
 	}
 
 	Framebuffer& Editor::GetGameFramebuffer()
 	{
 		return m_GameFramebuffer;
+	}
+
+	Editor::EditorState Editor::GetEditorState()
+	{
+		return m_EditorState;
 	}
 
 	void Editor::CreateNewProject()
@@ -244,14 +295,5 @@ namespace Taverner
 	{
 		TAVERN_INFO("Loading game dll");
 		LoadLibrary(dllPath.c_str());
-
-		// Spawn in a cube entity
-		//Entity* cube = m_Engine.GetScene().CreateEntity();
-		//ScriptComponent* cubeScript = ScriptRegistry::Get().Create("Cube", cube);
-		//TAVERN_INFO("Script Loaded: {}", cubeScript->GetTypeName());
-
-		//Entity* light = m_Engine.GetScene().CreateEntity();
-		//ScriptComponent* lightScript = ScriptRegistry::Get().Create("Light", light);
-		//TAVERN_INFO("Script Loaded: {}", lightScript->GetTypeName());
 	}
 }

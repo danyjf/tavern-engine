@@ -1,8 +1,5 @@
 #include <filesystem>
 #include <fstream>
-#include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
 
 #include <Tavern/Core/Engine.h>
 #include <Tavern/Core/Log.h>
@@ -76,32 +73,6 @@ int main()
 {
 	// Setup Tavern Engine
 	Engine engine;
-	Window* window = engine.GetRenderManager().GetWindow();
-	window->GetCursor().SetIsLocked(false);
-	window->GetCursor().SetIsVisible(true);
-
-	// Setup ImGui context
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO();
-	(void)io;
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;	  // Enable Docking
-	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;	  // Enable Multi-Viewports
-	io.IniFilename = "imgui.ini";
-
-	// Setup Dear ImGui style
-	ImGui::StyleColorsDark();
-
-	// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
-	ImGuiStyle& style = ImGui::GetStyle();
-	style.WindowRounding = 0.0f;
-	style.Colors[ImGuiCol_WindowBg].w = 1.0f;
-
-	// Setup Platform/Renderer backends
-	GLFWwindow* glfwWindow = window->GetGLFWWindow();
-	ImGui_ImplGlfw_InitForOpenGL(glfwWindow, true);
-	ImGui_ImplOpenGL3_Init("#version 460");
 
 	// TODO: Remove this game code
 	Entity* editorCamera = engine.GetScene().CreateEntity();
@@ -110,32 +81,19 @@ int main()
 	Taverner::Editor editor(engine);
 	while (engine.IsRunning())
 	{
-		engine.Update();
+		engine.HandleEvents();
+
+		if (editor.GetEditorState() == Taverner::Editor::EditorState::Playing)
+		{
+			engine.Update();
+		}
 
 		editor.GetGameFramebuffer().Bind();
-		engine.GetRenderManager().Render();
+		engine.Render();
 		editor.GetGameFramebuffer().Unbind();
 
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
-		ImGui::NewFrame();
-
 		editor.Render();
-
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-		GLFWwindow* backupCurrentContext = glfwGetCurrentContext();
-        ImGui::UpdatePlatformWindows();
-        ImGui::RenderPlatformWindowsDefault();
-        glfwMakeContextCurrent(backupCurrentContext);
-
-		engine.GetRenderManager().SwapBuffers();
 	}
-
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplGlfw_Shutdown();
-	ImGui::DestroyContext();
 
 	return 0;
 }

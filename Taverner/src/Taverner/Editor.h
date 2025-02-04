@@ -14,15 +14,26 @@ namespace Taverner
 	{
 	public:
 		Editor(Tavern::Engine& engine);
+		~Editor();
 		
 		void Render();
 		Tavern::Framebuffer& GetGameFramebuffer();
+
+		enum EditorState
+		{
+			Editing,
+			Playing,
+			Paused
+		};
+		EditorState GetEditorState();
 
 	private:
 		Tavern::Engine& m_Engine;
 		Tavern::Window* m_Window;
 
 		FileSystemWindow m_FileSystemWindow;
+
+		EditorState m_EditorState = EditorState::Editing;
 
 		bool m_ProjectLoaded = false;
 		ProjectConfig m_ProjectConfig;
