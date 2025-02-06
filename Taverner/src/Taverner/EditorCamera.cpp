@@ -1,13 +1,16 @@
+#include <imgui.h>
+
 #include "Taverner/EditorCamera.h"
+#include "Taverner/GameWindow.h"
 
 namespace Taverner
 {
 	EditorCameraScript::EditorCameraScript(Engine& engine, Entity* owner)
-		: ScriptComponent(engine, owner), m_Speed(2.5f), m_Zoom(45.0f)
+		: ScriptComponent(engine, owner),
+		  m_Camera(GetOwner()->GetComponentOfType<CameraComponent>()),
+		  m_Speed(2.5f),
+		  m_Zoom(45.0f)
 	{
-		m_Camera = GetOwner()->CreateComponentOfType<CameraComponent>();
-		GetEngine().GetRenderManager().SetActiveCamera(m_Camera);
-
 		GetOwner()->GetTransform()->SetLocalPosition(glm::vec3(0.0f, 0.0f, 3.0f));
 		GetOwner()->GetTransform()->SetLocalEulerRotation(glm::vec3(0.0f, -90.0f, 0.0f));
 	}
@@ -48,15 +51,24 @@ namespace Taverner
 		return m_Camera;
 	}
 
-	EditorCamera::EditorCamera(Engine& engine)
-		: m_Engine(engine)
+	EditorCamera::EditorCamera(Engine& engine, GameWindow& gameWindow)
+		: m_Engine(engine), m_GameWindow(gameWindow)
 	{
 	}
 
 	void EditorCamera::AddToScene()
 	{
 		Entity* editorCamera = m_Engine.GetScene().CreateEntity();
+		CameraComponent* cameraComponent = editorCamera->CreateComponentOfType<CameraComponent>();
 		editorCamera->CreateComponentOfType<EditorCameraScript>();
+
+		ImVec2 viewportSize = m_GameWindow.GetViewportSize();
+		if (viewportSize.x > 0.0f && viewportSize.y > 0.0f)
+		{
+			cameraComponent->SetViewportSize(viewportSize.x, viewportSize.y);
+		}
+
+		m_Engine.GetRenderManager().SetActiveCamera(cameraComponent);
 	}
 
 	void EditorCamera::Reset()

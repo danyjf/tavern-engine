@@ -5,6 +5,7 @@
 
 #include "Tavern/Components/CameraComponent.h"
 #include "Tavern/Core/Engine.h"
+#include "Tavern/Core/Log.h"
 #include "Tavern/Scene/Entity.h"
 
 namespace Tavern
@@ -49,6 +50,11 @@ namespace Tavern
 	
 	void CameraComponent::SetViewportSize(float width, float height)
 	{
+		if (width <= 0.0f || height <= 0.0f)
+		{
+			TAVERN_ENGINE_ERROR("Tried to set camera widht or height to a value <= 0");
+			return;
+		}
 		m_ViewportWidth = width;
 		m_ViewportHeight = height;
 		ComputeProjectionMatrix();

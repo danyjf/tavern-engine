@@ -16,18 +16,18 @@ namespace Taverner
 	{
 		if (ImGui::Begin("Game", nullptr, ImGuiWindowFlags_None))
 		{
-			ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
+			m_ViewportSize = ImGui::GetContentRegionAvail();
 
 			const FramebufferSettings& settings = m_GameFramebuffer.GetFramebufferSettings();
-			if (viewportPanelSize.x > 0.0f && viewportPanelSize.y > 0.0f &&
-				(viewportPanelSize.x != settings.Width || viewportPanelSize.y != settings.Height))
+			if (m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f &&
+				(m_ViewportSize.x != settings.Width || m_ViewportSize.y != settings.Height))
 			{
-				m_GameFramebuffer.Resize(viewportPanelSize.x, viewportPanelSize.y);
-				m_Engine.GetRenderManager().GetActiveCamera()->SetViewportSize(viewportPanelSize.x, viewportPanelSize.y);
+				m_GameFramebuffer.Resize(m_ViewportSize.x, m_ViewportSize.y);
+				m_Engine.GetRenderManager().GetActiveCamera()->SetViewportSize(m_ViewportSize.x, m_ViewportSize.y);
 			}
 
 			unsigned int textureID = m_GameFramebuffer.GetColorTextures()[0];
-			ImGui::Image(textureID, viewportPanelSize);
+			ImGui::Image(textureID, m_ViewportSize);
 		}
 		ImGui::End();
 	}
@@ -35,5 +35,10 @@ namespace Taverner
 	Tavern::Framebuffer& GameWindow::GetGameFramebuffer()
 	{
 		return m_GameFramebuffer;
+	}
+
+	const ImVec2 GameWindow::GetViewportSize() const
+	{
+		return m_ViewportSize;
 	}
 }

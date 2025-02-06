@@ -33,14 +33,14 @@ namespace Taverner
 		Tavern::Engine& m_Engine;
 		Tavern::Window* m_Window;
 
-		EditorCamera m_EditorCamera;
 		EditorState m_EditorState = EditorState::Editing;
 		bool m_ProjectLoaded = false;
 		ProjectConfig m_ProjectConfig;
 		std::string m_EditorPath;
 
-		FileSystemWindow m_FileSystemWindow;
 		GameWindow m_GameWindow;
+		EditorCamera m_EditorCamera;
+		FileSystemWindow m_FileSystemWindow;
 
 		void CreateNewProject();
 		void OpenProject();

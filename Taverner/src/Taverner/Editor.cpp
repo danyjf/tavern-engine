@@ -25,10 +25,10 @@ namespace Taverner
 	Editor::Editor(Engine& engine)
 		: m_Engine(engine),
 		  m_Window(engine.GetRenderManager().GetWindow()), 
-		  m_EditorCamera(engine),
 		  m_EditorPath(std::filesystem::current_path().generic_string()),
-		  m_FileSystemWindow(engine, m_EditorCamera),
-		  m_GameWindow(engine)
+		  m_GameWindow(engine),
+		  m_EditorCamera(engine, m_GameWindow),
+		  m_FileSystemWindow(engine, m_EditorCamera)
 	{
 		m_EditorCamera.AddToScene();
 

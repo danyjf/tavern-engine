@@ -1,5 +1,7 @@
 #pragma once
 
+#include <imgui.h>
+
 #include <Tavern/Core/Engine.h>
 #include <Tavern/Renderer/Framebuffer.h>
 
@@ -15,6 +17,7 @@ namespace Taverner
 		void Render();
 
 		Tavern::Framebuffer& GetGameFramebuffer();
+		const ImVec2 GetViewportSize() const;
 
 	private:
 		Tavern::Engine& m_Engine;
@@ -28,5 +31,6 @@ namespace Taverner
 					Tavern::FramebufferTextureFormat::DEPTH24STENCIL8
 				}
 		));
+		ImVec2 m_ViewportSize;
 	};
 }

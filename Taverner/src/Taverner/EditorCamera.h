@@ -9,6 +9,8 @@ using namespace Tavern;
 
 namespace Taverner
 {
+	class GameWindow;
+
 	class EditorCameraScript : public ScriptComponent
 	{
 	public:
@@ -27,13 +29,14 @@ namespace Taverner
 	class EditorCamera
 	{
 	public:
-		EditorCamera(Engine& engine);
+		EditorCamera(Engine& engine, GameWindow& gameWindow);
 
 		void AddToScene();
 		void Reset();
 
 	private:
 		Engine& m_Engine;
+		GameWindow& m_GameWindow;
 
 		glm::vec3 m_LastPosition = glm::vec3(0.0f);
 		glm::vec3 m_LastRotation = glm::vec3(0.0f);
