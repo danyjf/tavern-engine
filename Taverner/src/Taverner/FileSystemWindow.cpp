@@ -5,12 +5,13 @@
 #include <Tavern/Core/Engine.h>
 #include <Tavern/Scene/Scene.h>
 
+#include "Taverner/Editor.h"
 #include "Taverner/FileSystemWindow.h"
 
 namespace Taverner
 {
-	FileSystemWindow::FileSystemWindow(Tavern::Engine& engine)
-		: m_Engine(engine)
+	FileSystemWindow::FileSystemWindow(Tavern::Engine& engine, EditorCamera& editorCamera)
+		: m_Engine(engine), m_EditorCamera(editorCamera)
 	{
 	}
 
@@ -58,6 +59,7 @@ namespace Taverner
 		if (fileExtension == ".scene")
 		{
 			m_Engine.GetScene().Load(filePath.string());
+			m_EditorCamera.AddToScene();
 		}
 	}
 

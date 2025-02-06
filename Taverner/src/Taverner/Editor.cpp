@@ -24,10 +24,14 @@ namespace Taverner
 {
 	Editor::Editor(Engine& engine)
 		: m_Engine(engine),
-		  m_FileSystemWindow(engine),
 		  m_Window(engine.GetRenderManager().GetWindow()), 
-		  m_EditorPath(std::filesystem::current_path().generic_string())
+		  m_EditorCamera(engine),
+		  m_EditorPath(std::filesystem::current_path().generic_string()),
+		  m_FileSystemWindow(engine, m_EditorCamera),
+		  m_GameWindow(engine)
 	{
+		m_EditorCamera.AddToScene();
+
 		m_Window->GetCursor().SetIsLocked(false);
 		m_Window->GetCursor().SetIsVisible(true);
 		m_Window->SetTitle("Unnamed Project");
@@ -141,13 +145,21 @@ namespace Taverner
 				{
 					if (ImGui::MenuItem("Play"))
 					{
-						BuildGameProject(m_ProjectConfig.GetProjectPath() + "/VisualStudioProject");
-						LoadGame(m_ProjectConfig.GetGameDLLPath());
 						m_EditorState = EditorState::Playing;
+						m_Engine.GetTimeManager().SetTimeScale(1.0f);
 					}
 
 					if (ImGui::MenuItem("Pause"))
 					{
+						m_EditorState = EditorState::Paused;
+						m_Engine.GetTimeManager().SetTimeScale(0.0f);
+					}
+
+					if (ImGui::MenuItem("Stop"))
+					{
+						m_EditorState = EditorState::Editing;
+						// TODO: Restore initial state
+						m_Engine.GetTimeManager().SetTimeScale(0.0f);
 					}
 
 					ImGui::EndMenu();
@@ -171,23 +183,7 @@ namespace Taverner
 			ImGui::End();
 
 			m_FileSystemWindow.Render();
-
-			if (ImGui::Begin("Game", nullptr, ImGuiWindowFlags_None))
-			{
-				ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-
-				const FramebufferSettings& settings = m_GameFramebuffer.GetFramebufferSettings();
-				if (viewportPanelSize.x > 0.0f && viewportPanelSize.y > 0.0f &&
-					(viewportPanelSize.x != settings.Width || viewportPanelSize.y != settings.Height))
-				{
-					m_GameFramebuffer.Resize(viewportPanelSize.x, viewportPanelSize.y);
-					m_Engine.GetRenderManager().GetActiveCamera()->SetViewportSize(viewportPanelSize.x, viewportPanelSize.y);
-				}
-
-				unsigned int textureID = m_GameFramebuffer.GetColorTextures()[0];
-				ImGui::Image(textureID, viewportPanelSize);
-			}
-			ImGui::End();
+			m_GameWindow.Render();
 		}
 		ImGui::End();
 
@@ -200,14 +196,19 @@ namespace Taverner
         glfwMakeContextCurrent(backupCurrentContext);
 	}
 
-	Framebuffer& Editor::GetGameFramebuffer()
-	{
-		return m_GameFramebuffer;
-	}
-
 	Editor::EditorState Editor::GetEditorState()
 	{
 		return m_EditorState;
+	}
+
+	EditorCamera& Editor::GetEditorCamera()
+	{
+		return m_EditorCamera;
+	}
+
+	GameWindow& Editor::GetGameWindow()
+	{
+		return m_GameWindow;
 	}
 
 	void Editor::CreateNewProject()

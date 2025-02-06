@@ -4,7 +4,7 @@
 
 #include "Tavern/Core/Engine.h"
 #include "Tavern/Core/Log.h"
-#include "Tavern/Core/Time.h"
+#include "Tavern/Core/TimeManager.h"
 #include "Tavern/Scene/Scene.h"
 #include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Events/EventListener.h"
@@ -43,7 +43,7 @@ namespace Tavern
 
 	void Engine::Update()
 	{
-		m_TimeManager.UpdateTime();
+		m_TimeManager.Update();
 
 		// Update State
 		m_Scene.Update();

@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "Tavern/Core/Core.h"
-#include "Tavern/Core/Time.h"
+#include "Tavern/Core/TimeManager.h"
 #include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Events/EventManager.h"
 #include "Tavern/Renderer/RenderManager.h"

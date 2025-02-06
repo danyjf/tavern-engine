@@ -2,11 +2,12 @@
 
 #include <nlohmann/json.hpp>
 
-#include <Tavern/Renderer/Framebuffer.h>
 #include <Tavern/Core/Engine.h>
 
 #include "Taverner/ProjectConfig.h"
+#include "Taverner/EditorCamera.h"
 #include "Taverner/FileSystemWindow.h"
+#include "Taverner/GameWindow.h"
 
 namespace Taverner
 {
@@ -17,7 +18,6 @@ namespace Taverner
 		~Editor();
 		
 		void Render();
-		Tavern::Framebuffer& GetGameFramebuffer();
 
 		enum EditorState
 		{
@@ -26,27 +26,21 @@ namespace Taverner
 			Paused
 		};
 		EditorState GetEditorState();
+		EditorCamera& GetEditorCamera();
+		GameWindow& GetGameWindow();
 
 	private:
 		Tavern::Engine& m_Engine;
 		Tavern::Window* m_Window;
 
-		FileSystemWindow m_FileSystemWindow;
-
+		EditorCamera m_EditorCamera;
 		EditorState m_EditorState = EditorState::Editing;
-
 		bool m_ProjectLoaded = false;
 		ProjectConfig m_ProjectConfig;
 		std::string m_EditorPath;
-		Tavern::Framebuffer m_GameFramebuffer = Tavern::Framebuffer(
-			Tavern::FramebufferSettings(
-				800, 
-				600, 
-				std::vector<Tavern::FramebufferTextureFormat>{
-					Tavern::FramebufferTextureFormat::RGBA8, 
-					Tavern::FramebufferTextureFormat::DEPTH24STENCIL8
-				}
-		));
+
+		FileSystemWindow m_FileSystemWindow;
+		GameWindow m_GameWindow;
 
 		void CreateNewProject();
 		void OpenProject();

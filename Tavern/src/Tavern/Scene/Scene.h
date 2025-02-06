@@ -27,6 +27,8 @@ namespace Tavern
 		void DestroyEntity(Entity* entity);
 		Entity* GetEntity(unsigned long id);
 
+		void Clear();
+
 		void Update();
 
 		nlohmann::json ToJson();

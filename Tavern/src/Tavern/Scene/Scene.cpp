@@ -71,6 +71,11 @@ namespace Tavern
 		return m_Entities[id].get();
 	}
 
+	void Scene::Clear()
+	{
+		m_Entities.clear();
+	}
+
 	void Scene::Update()
 	{
 		for (ScriptComponent* script : m_Scripts)
@@ -123,6 +128,8 @@ namespace Tavern
 
 	void Scene::Load(const std::string& path)
 	{
+		Clear();
+
 		std::ifstream sceneFile(path);
 		FromJson(nlohmann::json::parse(sceneFile));
 		sceneFile.close();

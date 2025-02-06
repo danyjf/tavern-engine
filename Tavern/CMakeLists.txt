@@ -26,8 +26,8 @@ set(SOURCES_TAVERN_CORE
     src/Tavern/Core/Engine.cpp
     src/Tavern/Core/Log.h
     src/Tavern/Core/Log.cpp
-    src/Tavern/Core/Time.h
-    src/Tavern/Core/Time.cpp
+    src/Tavern/Core/TimeManager.h
+    src/Tavern/Core/TimeManager.cpp
 )
 set(SOURCES_TAVERN_EVENTS
 	src/Tavern/Events/EventManager.h
