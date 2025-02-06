@@ -28,7 +28,7 @@ namespace Taverner
 		  m_EditorPath(std::filesystem::current_path().generic_string()),
 		  m_GameWindow(engine),
 		  m_EditorCamera(engine, m_GameWindow),
-		  m_FileSystemWindow(engine, m_EditorCamera)
+		  m_FileSystemWindow(engine, *this)
 	{
 		m_EditorCamera.AddToScene();
 
@@ -146,6 +146,7 @@ namespace Taverner
 					if (ImGui::MenuItem("Play"))
 					{
 						m_EditorState = EditorState::Playing;
+						m_Engine.SetUpdateEnabled(true);
 						m_Engine.GetTimeManager().SetTimeScale(1.0f);
 					}
 
@@ -153,13 +154,16 @@ namespace Taverner
 					{
 						m_EditorState = EditorState::Paused;
 						m_Engine.GetTimeManager().SetTimeScale(0.0f);
+						m_Engine.SetUpdateEnabled(false);
 					}
 
 					if (ImGui::MenuItem("Stop"))
 					{
 						m_EditorState = EditorState::Editing;
-						// TODO: Restore initial state
 						m_Engine.GetTimeManager().SetTimeScale(0.0f);
+						m_Engine.GetTimeManager().Reset();
+						m_Engine.SetUpdateEnabled(false);
+						LoadScene(m_CurrentScenePath);
 					}
 
 					ImGui::EndMenu();
@@ -194,6 +198,14 @@ namespace Taverner
         ImGui::UpdatePlatformWindows();
         ImGui::RenderPlatformWindowsDefault();
         glfwMakeContextCurrent(backupCurrentContext);
+	}
+
+	void Editor::LoadScene(const std::string& scenePath)
+	{
+		m_Engine.GetScene().Load(scenePath);
+		m_EditorCamera.AddToScene();
+
+		m_CurrentScenePath = scenePath;
 	}
 
 	Editor::EditorState Editor::GetEditorState()
@@ -276,8 +288,8 @@ namespace Taverner
 		TAVERN_INFO("Project Path: {}", m_ProjectConfig.GetProjectPath());
 		TAVERN_INFO("Game DLL Path: {}", m_ProjectConfig.GetGameDLLPath());
 
-		BuildGameProject(m_ProjectConfig.GetProjectPath() + "/VisualStudioProject");
-		LoadGame(m_ProjectConfig.GetGameDLLPath());
+		BuildDLL(m_ProjectConfig.GetProjectPath() + "/VisualStudioProject");
+		LoadDLL(m_ProjectConfig.GetGameDLLPath());
 
 		m_Window->SetTitle(m_ProjectConfig.GetName());
 		m_FileSystemWindow.LoadFileStructure(m_ProjectConfig.GetProjectPath() + "/Content");
@@ -285,14 +297,14 @@ namespace Taverner
 		m_ProjectLoaded = true;
 	}
 
-	void Editor::BuildGameProject(const std::string& path)
+	void Editor::BuildDLL(const std::string& path)
 	{
 		TAVERN_INFO("Building game dll");
 		std::string buildCmd = "cmake --build " + path;
 		system(buildCmd.c_str());
 	}
 
-	void Editor::LoadGame(const std::string& dllPath)
+	void Editor::LoadDLL(const std::string& dllPath)
 	{
 		TAVERN_INFO("Loading game dll");
 		LoadLibrary(dllPath.c_str());

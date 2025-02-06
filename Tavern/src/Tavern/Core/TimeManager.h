@@ -14,8 +14,9 @@ namespace Tavern
 
 		void Update();
 
-		const float GetDeltaTime() const;
+		void Reset();
 
+		const float GetDeltaTime() const;
 		const float GetElapsedTime() const;
 
 		void SetTimeScale(float timeScale);

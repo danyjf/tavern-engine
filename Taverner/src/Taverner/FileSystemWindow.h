@@ -3,7 +3,7 @@
 namespace Taverner
 {
 	class FileSystemWindow;
-	class EditorCamera;
+	class Editor;
 
 	class FileSystemNode
 	{
@@ -28,14 +28,14 @@ namespace Taverner
 	public:
 		friend class FileSystemNode;
 
-		FileSystemWindow(Tavern::Engine& engine, EditorCamera& editorCamera);
+		FileSystemWindow(Tavern::Engine& engine, Editor& editor);
 
 		void Render();
 		void LoadFileStructure(const std::string& path);
 
 	private:
-		EditorCamera& m_EditorCamera;
 		Tavern::Engine& m_Engine;
+		Editor& m_Editor;
 
 		std::filesystem::path m_ContentPath;
 		std::unique_ptr<FileSystemNode> m_Root;

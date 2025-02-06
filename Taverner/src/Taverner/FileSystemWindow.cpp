@@ -10,8 +10,8 @@
 
 namespace Taverner
 {
-	FileSystemWindow::FileSystemWindow(Tavern::Engine& engine, EditorCamera& editorCamera)
-		: m_Engine(engine), m_EditorCamera(editorCamera)
+	FileSystemWindow::FileSystemWindow(Tavern::Engine& engine, Editor& editor)
+		: m_Engine(engine), m_Editor(editor)
 	{
 	}
 
@@ -58,8 +58,7 @@ namespace Taverner
 
 		if (fileExtension == ".scene")
 		{
-			m_Engine.GetScene().Load(filePath.string());
-			m_EditorCamera.AddToScene();
+			m_Editor.LoadScene(filePath.string());
 		}
 	}
 

@@ -30,6 +30,11 @@ namespace Tavern
 		m_ElapsedTime += m_DeltaTime * m_TimeScale;
 	}
 
+	void TimeManager::Reset()
+	{
+		m_ElapsedTime = 0.0f;
+	}
+
 	const float TimeManager::GetDeltaTime() const
 	{
 		return m_DeltaTime;

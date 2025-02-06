@@ -46,7 +46,10 @@ namespace Tavern
 		m_TimeManager.Update();
 
 		// Update State
-		m_Scene.Update();
+		if (m_IsUpdateEnabled)
+		{
+			m_Scene.Update();
+		}
 	}
 
 	void Engine::Render()
@@ -57,6 +60,16 @@ namespace Tavern
 	bool Engine::IsRunning()
 	{
 		return m_IsRunning;
+	}
+
+	void Engine::SetUpdateEnabled(bool isUpdateEnabled)
+	{
+		m_IsUpdateEnabled = isUpdateEnabled;
+	}
+
+	const bool Engine::IsUpdateEnabled() const
+	{
+		return m_IsUpdateEnabled;
 	}
 
 	EventManager& Engine::GetEventManager()

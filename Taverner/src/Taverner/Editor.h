@@ -19,6 +19,8 @@ namespace Taverner
 		
 		void Render();
 
+		void LoadScene(const std::string& scenePath);
+
 		enum EditorState
 		{
 			Editing,
@@ -37,6 +39,7 @@ namespace Taverner
 		bool m_ProjectLoaded = false;
 		ProjectConfig m_ProjectConfig;
 		std::string m_EditorPath;
+		std::string m_CurrentScenePath;
 
 		GameWindow m_GameWindow;
 		EditorCamera m_EditorCamera;
@@ -44,7 +47,7 @@ namespace Taverner
 
 		void CreateNewProject();
 		void OpenProject();
-		void BuildGameProject(const std::string& path);
-		void LoadGame(const std::string& dllPath);
+		void BuildDLL(const std::string& path);
+		void LoadDLL(const std::string& dllPath);
 	};
 }

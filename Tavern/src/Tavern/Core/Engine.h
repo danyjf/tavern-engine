@@ -38,6 +38,9 @@ namespace Tavern
 
 		bool IsRunning();
 
+		void SetUpdateEnabled(bool isUpdateEnabled);
+		const bool IsUpdateEnabled() const;
+
 		EventManager& GetEventManager();
 		ResourceManager& GetResourceManager();
 		RenderManager& GetRenderManager();
@@ -58,5 +61,6 @@ namespace Tavern
 		EventListener<WindowCloseEvent> m_WindowCloseListener;
 
 		bool m_IsRunning = true;
+		bool m_IsUpdateEnabled = true;
 	};
 }

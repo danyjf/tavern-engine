@@ -17,14 +17,14 @@ int main()
 {
 	// Setup Tavern Engine
 	Engine engine;
-	engine.GetTimeManager().SetTimeScale(0.0f);
+	//engine.GetTimeManager().SetTimeScale(0.0f);
+	engine.SetUpdateEnabled(false);
 	Taverner::Editor editor(engine);
 
 	while (engine.IsRunning())
 	{
 		engine.HandleEvents();
 		engine.Update();
-
 		editor.GetGameWindow().GetGameFramebuffer().Bind();
 		engine.Render();
 		editor.GetGameWindow().GetGameFramebuffer().Unbind();
