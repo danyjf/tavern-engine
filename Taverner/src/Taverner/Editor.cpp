@@ -83,6 +83,15 @@ namespace Taverner
 			
 			ImGuiFileDialog::Instance()->Close();
 		}
+		if (ImGuiFileDialog::Instance()->Display("NewScene", ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDocking))
+		{			
+			if (ImGuiFileDialog::Instance()->IsOk()) 
+			{
+				NewScene();
+			}
+			
+			ImGuiFileDialog::Instance()->Close();
+		}
 
 		ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoTitleBar
 			| ImGuiWindowFlags_NoDocking
@@ -101,6 +110,24 @@ namespace Taverner
 			{
 				if (ImGui::BeginMenu("File"))
 				{
+					if (m_ProjectLoaded)
+					{
+						if (ImGui::MenuItem("New Scene"))
+						{
+							IGFD::FileDialogConfig config;
+							config.path = m_ProjectConfig.GetProjectPath() + "/Content";
+							ImGuiFileDialog::Instance()->OpenDialog("NewScene", "New Scene", nullptr, config);
+						}
+
+						if (ImGui::MenuItem("Save Scene"))
+						{
+							Scene& scene = m_Engine.GetScene();
+							scene.Save(m_ProjectConfig.GetProjectPath() + "/Content/Scenes/" + scene.GetName() + ".scene");
+						}
+
+						ImGui::Separator();
+					}
+
 					if (ImGui::MenuItem("New Project"))
 					{
 						CreateNewProject();
@@ -111,12 +138,6 @@ namespace Taverner
 						IGFD::FileDialogConfig config;
 						config.path = ".";
 						ImGuiFileDialog::Instance()->OpenDialog("OpenProjectFile", "Open Project File", ".project", config);
-					}
-
-					if (ImGui::MenuItem("Save"))
-					{
-						Scene& scene = m_Engine.GetScene();
-						scene.Save(m_ProjectConfig.GetProjectPath() + "/Content/Scenes/" + scene.GetName() + ".scene");
 					}
 
 					ImGui::EndMenu();
@@ -223,6 +244,11 @@ namespace Taverner
 		return m_GameWindow;
 	}
 
+	const std::string& Editor::GetCurrentScenePath() const
+	{
+		return m_CurrentScenePath;
+	}
+
 	void Editor::CreateNewProject()
 	{
 		// Get name and path of project
@@ -284,9 +310,6 @@ namespace Taverner
 		std::string path = ImGuiFileDialog::Instance()->GetFilePathName(); 
 
 		m_ProjectConfig.Load(path);
-		TAVERN_INFO("Project Name: {}", m_ProjectConfig.GetName());
-		TAVERN_INFO("Project Path: {}", m_ProjectConfig.GetProjectPath());
-		TAVERN_INFO("Game DLL Path: {}", m_ProjectConfig.GetGameDLLPath());
 
 		BuildDLL(m_ProjectConfig.GetProjectPath() + "/VisualStudioProject");
 		LoadDLL(m_ProjectConfig.GetGameDLLPath());
@@ -295,6 +318,12 @@ namespace Taverner
 		m_FileSystemWindow.LoadFileStructure(m_ProjectConfig.GetProjectPath() + "/Content");
 
 		m_ProjectLoaded = true;
+	}
+
+	void Editor::NewScene()
+	{
+		std::string path = ImGuiFileDialog::Instance()->GetCurrentPath(); 
+		TAVERN_TRACE("Create New Scene At: {}", path);
 	}
 
 	void Editor::BuildDLL(const std::string& path)

@@ -30,6 +30,7 @@ namespace Taverner
 		EditorState GetEditorState();
 		EditorCamera& GetEditorCamera();
 		GameWindow& GetGameWindow();
+		const std::string& GetCurrentScenePath() const;
 
 	private:
 		Tavern::Engine& m_Engine;
@@ -47,6 +48,7 @@ namespace Taverner
 
 		void CreateNewProject();
 		void OpenProject();
+		void NewScene();
 		void BuildDLL(const std::string& path);
 		void LoadDLL(const std::string& dllPath);
 	};

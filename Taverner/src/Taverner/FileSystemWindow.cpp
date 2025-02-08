@@ -56,7 +56,7 @@ namespace Taverner
 	{
 		std::string fileExtension = filePath.filename().extension().string();
 
-		if (fileExtension == ".scene")
+		if (fileExtension == ".scene" && m_Editor.GetCurrentScenePath() != filePath.string())
 		{
 			m_Editor.LoadScene(filePath.string());
 		}
