@@ -116,7 +116,7 @@ namespace Taverner
 						{
 							IGFD::FileDialogConfig config;
 							config.path = m_ProjectConfig.GetProjectPath() + "/Content";
-							ImGuiFileDialog::Instance()->OpenDialog("NewScene", "New Scene", nullptr, config);
+							ImGuiFileDialog::Instance()->OpenDialog("NewScene", "New Scene", ".scene", config);
 						}
 
 						if (ImGui::MenuItem("Save Scene"))
@@ -322,8 +322,10 @@ namespace Taverner
 
 	void Editor::NewScene()
 	{
-		std::string path = ImGuiFileDialog::Instance()->GetCurrentPath(); 
-		TAVERN_TRACE("Create New Scene At: {}", path);
+		std::string path = ImGuiFileDialog::Instance()->GetFilePathName(); 
+		m_Engine.GetScene().Clear();
+		m_Engine.GetScene().Save(path);
+		m_EditorCamera.AddToScene();
 	}
 
 	void Editor::BuildDLL(const std::string& path)

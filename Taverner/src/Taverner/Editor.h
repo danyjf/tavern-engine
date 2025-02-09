@@ -11,6 +11,11 @@
 
 namespace Taverner
 {
+	// TODO:
+	// - Add scene elements to scene hierarchy display
+	// - Display entity components on inspector
+	// - Update entity position when changing transform component on inspector
+	// - Fix creation of new projects
 	class Editor
 	{
 	public:

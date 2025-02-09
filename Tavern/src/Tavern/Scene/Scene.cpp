@@ -97,7 +97,6 @@ namespace Tavern
 
 	void Scene::FromJson(const nlohmann::json& data)
 	{
-		//TAVERN_INFO(data.dump(2));
 		m_Name = data["name"];
 
 		for (const nlohmann::json& entityData : data["entities"])

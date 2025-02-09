@@ -18,6 +18,14 @@ namespace Tavern
 		ComputeProjectionMatrix();
 	}
 
+	CameraComponent::~CameraComponent()
+	{
+		if (GetEngine().GetRenderManager().GetActiveCamera() == this)
+		{
+			GetEngine().GetRenderManager().SetActiveCamera(nullptr);
+		}
+	}
+
 	nlohmann::json CameraComponent::ToJson()
 	{
 		nlohmann::json json;

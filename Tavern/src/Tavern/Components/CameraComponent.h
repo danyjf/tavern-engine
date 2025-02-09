@@ -15,7 +15,7 @@ namespace Tavern
 	{
 	public:
 		CameraComponent(Engine& engine, Entity* owner);
-		virtual ~CameraComponent() override = default;
+		virtual ~CameraComponent() override;
 
 		nlohmann::json ToJson() override;
 		void FromJson(const nlohmann::json& data) override;
