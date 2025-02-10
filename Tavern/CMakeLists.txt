@@ -35,6 +35,7 @@ set(SOURCES_TAVERN_EVENTS
 	src/Tavern/Events/Event.h
 	src/Tavern/Events/ApplicationEvent.h
 	src/Tavern/Events/KeyEvent.h
+	src/Tavern/Events/MouseEvent.h
     src/Tavern/Events/EventListenerInterface.h
     src/Tavern/Events/EventListener.h
 )

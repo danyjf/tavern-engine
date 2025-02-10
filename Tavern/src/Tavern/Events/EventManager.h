@@ -2,6 +2,7 @@
 
 #include <queue>
 #include <unordered_map>
+#include <string>
 
 #include "Tavern/Core/Core.h"
 #include "Tavern/Events/Event.h"
@@ -19,11 +20,11 @@ namespace Tavern
 		EventManager(EventManager& copy) = delete;
 		EventManager& operator=(const EventManager& copy) = delete;
 
-		// Register a delegate function to be called when the event type is triggered.
-		void AddListener(const EventType& type, EventListenerInterface& eventListener);
-		void AddListener(const EventType& type, EventListenerInterface&& eventListener) = delete;
+		// Register a delegate function to be called when the event is triggered.
+		void AddListener(const std::string& eventName, EventListenerInterface& eventListener);
+		void AddListener(const std::string& eventName, EventListenerInterface&& eventListener) = delete;
 
-		void RemoveListener(const EventType& type, EventListenerInterface& eventListener);
+		void RemoveListener(const std::string& eventName, EventListenerInterface& eventListener);
 
 		// Immediately trigger an event ignoring the queue
 		void TriggerEvent(const std::shared_ptr<Event>& event);
@@ -33,7 +34,7 @@ namespace Tavern
 
 	private:
 		std::queue<std::shared_ptr<Event>> m_Events;
-		std::unordered_map<EventType, std::vector<EventListenerInterface*>> m_EventListeners;
+		std::unordered_map<std::string, std::vector<EventListenerInterface*>> m_EventListeners;
 
 		// Process all events from the queue
 		void DispatchEvents();

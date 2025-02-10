@@ -15,18 +15,18 @@ namespace Tavern
 		TAVERN_ENGINE_INFO("EventManager destroyed");
 	}
 
-	void EventManager::AddListener(const EventType& type, EventListenerInterface& eventListener)
+	void EventManager::AddListener(const std::string& eventName, EventListenerInterface& eventListener)
 	{
-		m_EventListeners[type].push_back(&eventListener);
+		m_EventListeners[eventName].push_back(&eventListener);
 	}
 
-	void EventManager::RemoveListener(const EventType& type, EventListenerInterface& eventListener)
+	void EventManager::RemoveListener(const std::string& eventName, EventListenerInterface& eventListener)
 	{
 		// Ignore if the event doesn't exist
-		if (m_EventListeners.find(type) == m_EventListeners.end())
+		if (m_EventListeners.find(eventName) == m_EventListeners.end())
 			return;
 
-		std::vector<EventListenerInterface*>& listeners = m_EventListeners[type];
+		std::vector<EventListenerInterface*>& listeners = m_EventListeners[eventName];
 
 		std::erase_if(listeners, [&eventListener](EventListenerInterface* storedListener) {
 			return storedListener->GetID() == eventListener.GetID();
@@ -36,10 +36,10 @@ namespace Tavern
 	void EventManager::TriggerEvent(const std::shared_ptr<Event>& event)
 	{
 		// Ignore events that have no observer yet
-		if (m_EventListeners.find(event->GetEventType()) == m_EventListeners.end())
+		if (m_EventListeners.find(event->GetName()) == m_EventListeners.end())
 			return;
 
-		for (EventListenerInterface* eventListener : m_EventListeners[event->GetEventType()])
+		for (EventListenerInterface* eventListener : m_EventListeners[event->GetName()])
 		{
 			eventListener->Call(event);
 		}
@@ -48,7 +48,7 @@ namespace Tavern
 	void EventManager::QueueEvent(const std::shared_ptr<Event>& event)
 	{
 		// Ignore events that have no observer yet
-		if (m_EventListeners.find(event->GetEventType()) == m_EventListeners.end())
+		if (m_EventListeners.find(event->GetName()) == m_EventListeners.end())
 			return;
 
 		m_Events.push(event);
@@ -60,13 +60,13 @@ namespace Tavern
 		{
 			std::shared_ptr<Event>& event = m_Events.front();
 
-			if (m_EventListeners.find(event->GetEventType()) == m_EventListeners.end())
+			if (m_EventListeners.find(event->GetName()) == m_EventListeners.end())
 			{
 				m_Events.pop();
 				continue;
 			}
 
-			for (EventListenerInterface* eventListener : m_EventListeners[event->GetEventType()])
+			for (EventListenerInterface* eventListener : m_EventListeners[event->GetName()])
 			{
 				eventListener->Call(event);
 			}

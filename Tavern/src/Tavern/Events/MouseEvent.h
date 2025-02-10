@@ -13,7 +13,6 @@ namespace Tavern
 
 		const Mouse GetMouseButton() const { return m_Button; }
 
-		const EventType GetEventType() const override { return EventType::MouseButtonPressed; }
 		const char* GetName() const override { return "MouseButtonPressed"; }
 
 	private:
@@ -28,7 +27,6 @@ namespace Tavern
 
 		const Mouse GetMouseButton() const { return m_Button; }
 
-		const EventType GetEventType() const override { return EventType::MouseButtonReleased; }
 		const char* GetName() const override { return "MouseButtonReleased"; }
 
 	private:
@@ -44,7 +42,6 @@ namespace Tavern
 		const float GetX() const { return m_MouseX; }
 		const float GetY() const { return m_MouseY; }
 
-		const EventType GetEventType() const override { return EventType::MouseMoved; }
 		const char* GetName() const override { return "MouseMoved"; }
 
 	private:
@@ -61,7 +58,6 @@ namespace Tavern
 		const float GetXOffset() const { return m_XOffset; }
 		const float GetYOffset() const { return m_YOffset; }
 
-		const EventType GetEventType() const override { return EventType::MouseScrolled; }
 		const char* GetName() const override { return "MouseScrolled"; }
 
 	private:

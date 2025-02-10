@@ -14,7 +14,6 @@ namespace Tavern
 		const Key GetKey() const { return m_Key; }
 		bool IsRepeat() const { return m_IsRepeat; }
 
-		const EventType GetEventType() const override { return EventType::KeyPressed; }
 		const char* GetName() const override { return "KeyPressed"; }
 
 	private:
@@ -30,7 +29,6 @@ namespace Tavern
 
 		const Key GetKey() const { return m_Key; }
 
-		const EventType GetEventType() const override { return EventType::KeyReleased; }
 		const char* GetName() const override { return "KeyReleased"; }
 
 	private:

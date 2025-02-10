@@ -120,14 +120,14 @@ namespace Tavern
 			TAVERN_ENGINE_ERROR("GLFW Error [{}]: {}", error, description);
 		});
 
-		m_EventManager.AddListener(EventType::WindowResize, m_WindowResizeListener);
+		m_EventManager.AddListener("WindowResize", m_WindowResizeListener);
 
 		m_Cursor = Cursor(this, false, true);
 	}
 
 	Window::~Window()
 	{
-		m_EventManager.RemoveListener(EventType::WindowResize, m_WindowResizeListener);
+		m_EventManager.RemoveListener("WindowResize", m_WindowResizeListener);
 		glfwDestroyWindow(m_Window);
 		TAVERN_ENGINE_INFO("Window destroyed");
 	}

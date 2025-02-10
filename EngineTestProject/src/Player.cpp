@@ -25,18 +25,18 @@ Player::Player(Engine& engine, Entity* owner)
 	GetOwner()->GetTransform()->SetLocalPosition(glm::vec3(0.0f, 0.0f, 3.0f));
 	GetOwner()->GetTransform()->SetLocalEulerRotation(glm::vec3(0.0f, -90.0f, 0.0f));
 
-	GetEngine().GetEventManager().AddListener(EventType::KeyPressed, m_KeyPressed);
-	GetEngine().GetEventManager().AddListener(EventType::MouseMoved, m_MouseMoved);
-	GetEngine().GetEventManager().AddListener(EventType::MouseScrolled, m_MouseScrolled);
-	GetEngine().GetEventManager().AddListener(EventType::MouseButtonPressed, m_MouseButtonPressed);
+	GetEngine().GetEventManager().AddListener("KeyPressed", m_KeyPressed);
+	GetEngine().GetEventManager().AddListener("MouseMoved", m_MouseMoved);
+	GetEngine().GetEventManager().AddListener("MouseScrolled", m_MouseScrolled);
+	GetEngine().GetEventManager().AddListener("MouseButtonPressed", m_MouseButtonPressed);
 }
 
 Player::~Player()
 {
-	GetEngine().GetEventManager().RemoveListener(EventType::KeyPressed, m_KeyPressed);
-	GetEngine().GetEventManager().RemoveListener(EventType::MouseMoved, m_MouseMoved);
-	GetEngine().GetEventManager().RemoveListener(EventType::MouseScrolled, m_MouseScrolled);
-	GetEngine().GetEventManager().RemoveListener(EventType::MouseButtonPressed, m_MouseButtonPressed);
+	GetEngine().GetEventManager().RemoveListener("KeyPressed", m_KeyPressed);
+	GetEngine().GetEventManager().RemoveListener("MouseMoved", m_MouseMoved);
+	GetEngine().GetEventManager().RemoveListener("MouseScrolled", m_MouseScrolled);
+	GetEngine().GetEventManager().RemoveListener("MouseButtonPressed", m_MouseButtonPressed);
 }
 
 void Player::Update()

@@ -7,7 +7,6 @@ namespace Tavern
 	class WindowCloseEvent : public Event
 	{
 	public:
-		const EventType GetEventType() const override { return EventType::WindowClose; }
 		const char* GetName() const override { return "WindowClose"; }
 	};
 
@@ -20,10 +19,6 @@ namespace Tavern
 		int GetWidth() const { return m_Width; }
 		int GetHeight() const { return m_Height; }
 
-		const EventType GetEventType() const override
-		{
-			return EventType::WindowResize;
-		};
 		const char* GetName() const override { return "WindowResize"; }
 
 	private:
