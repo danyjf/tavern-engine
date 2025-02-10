@@ -5,13 +5,12 @@
 #include <Tavern/Core/Engine.h>
 #include <Tavern/Scene/Scene.h>
 
-#include "Taverner/Editor.h"
 #include "Taverner/FileSystemWindow.h"
 
 namespace Taverner
 {
-	FileSystemWindow::FileSystemWindow(Tavern::Engine& engine, Editor& editor)
-		: m_Engine(engine), m_Editor(editor)
+	FileSystemWindow::FileSystemWindow(Tavern::Engine& engine)
+		: m_Engine(engine)
 	{
 	}
 
@@ -56,9 +55,9 @@ namespace Taverner
 	{
 		std::string fileExtension = filePath.filename().extension().string();
 
-		if (fileExtension == ".scene" && m_Editor.GetCurrentScenePath() != filePath.string())
+		if (fileExtension == ".scene")
 		{
-			m_Editor.LoadScene(filePath.string());
+			m_Engine.GetEventManager().QueueEvent(std::make_shared<SceneSelectedEvent>(filePath.string()));
 		}
 	}
 
@@ -108,5 +107,15 @@ namespace Taverner
 	void FileSystemNode::AddChild(std::unique_ptr<FileSystemNode> node)
 	{
 		m_Children.push_back(std::move(node));
+	}
+
+	SceneSelectedEvent::SceneSelectedEvent(const std::string& scenePath)
+		: m_ScenePath(scenePath)
+	{
+	}
+
+	const std::string& SceneSelectedEvent::GetScenePath() const
+	{
+		return m_ScenePath;
 	}
 }

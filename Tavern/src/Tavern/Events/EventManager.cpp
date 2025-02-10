@@ -1,7 +1,8 @@
+#include <vector>
+
 #include "Tavern/Events/EventManager.h"
 #include "Tavern/Core/Log.h"
 #include "Tavern/Events/EventListenerInterface.h"
-#include <vector>
 
 namespace Tavern
 {

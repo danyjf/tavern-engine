@@ -27,11 +27,14 @@ namespace Taverner
 		  m_Window(engine.GetRenderManager().GetWindow()), 
 		  m_EditorPath(std::filesystem::current_path().generic_string()),
 		  m_GameWindow(engine),
-		  m_FileSystemWindow(engine, *this),
+		  m_FileSystemWindow(engine),
 		  m_SceneWindow(engine),
 		  m_InspectorWindow(engine),
-		  m_EditorCamera(engine, m_GameWindow)
+		  m_EditorCamera(engine, m_GameWindow),
+		  m_SceneSelectedEventListener(std::bind(&Editor::OnSceneSelected, this, std::placeholders::_1))
 	{
+		m_Engine.GetEventManager().AddListener("SceneSelected", m_SceneSelectedEventListener);
+
 		m_EditorCamera.AddToScene();
 
 		m_Window->GetCursor().SetIsLocked(false);
@@ -65,6 +68,8 @@ namespace Taverner
 
 	Editor::~Editor()
 	{
+		m_Engine.GetEventManager().RemoveListener("SceneSelected", m_SceneSelectedEventListener);
+
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
@@ -329,5 +334,14 @@ namespace Taverner
 	{
 		TAVERN_INFO("Loading game dll");
 		LoadLibrary(dllPath.c_str());
+	}
+
+	void Editor::OnSceneSelected(const std::shared_ptr<SceneSelectedEvent>& event)
+	{
+		if (GetCurrentScenePath() == event->GetScenePath())
+		{
+			return;
+		}
+		LoadScene(event->GetScenePath());
 	}
 }

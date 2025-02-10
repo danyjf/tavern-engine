@@ -1,9 +1,23 @@
 #pragma once
 
+#include <Tavern/Events/Event.h>
+
 namespace Taverner
 {
 	class FileSystemWindow;
 	class Editor;
+
+	class SceneSelectedEvent : public Tavern::Event
+	{
+	public:
+		SceneSelectedEvent(const std::string& scenePath);
+		const char* GetName() const override { return "SceneSelected"; };
+
+		const std::string& GetScenePath() const;
+
+	private:
+		std::string m_ScenePath;
+	};
 
 	class FileSystemNode
 	{
@@ -28,14 +42,13 @@ namespace Taverner
 	public:
 		friend class FileSystemNode;
 
-		FileSystemWindow(Tavern::Engine& engine, Editor& editor);
+		FileSystemWindow(Tavern::Engine& engine);
 
 		void Render();
 		void LoadFileStructure(const std::string& path);
 
 	private:
 		Tavern::Engine& m_Engine;
-		Editor& m_Editor;
 
 		std::filesystem::path m_ContentPath;
 		std::unique_ptr<FileSystemNode> m_Root;
