@@ -13,7 +13,7 @@ namespace Tavern
 		MouseButtonPressed,
 		MouseButtonReleased,
 		MouseMoved,
-		MouseScrolled,
+		MouseScrolled
 	};
 
 	class Event

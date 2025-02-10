@@ -10,6 +10,10 @@ set(SOURCES_TAVERNER
     src/Taverner/FileSystemWindow.cpp
     src/Taverner/GameWindow.h
     src/Taverner/GameWindow.cpp
+    src/Taverner/SceneWindow.h
+    src/Taverner/SceneWindow.cpp
+    src/Taverner/InspectorWindow.h
+    src/Taverner/InspectorWindow.cpp
 )
 set(VENDOR_IMGUI
     vendor/imgui/imconfig.h

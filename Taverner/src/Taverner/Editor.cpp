@@ -27,8 +27,10 @@ namespace Taverner
 		  m_Window(engine.GetRenderManager().GetWindow()), 
 		  m_EditorPath(std::filesystem::current_path().generic_string()),
 		  m_GameWindow(engine),
-		  m_EditorCamera(engine, m_GameWindow),
-		  m_FileSystemWindow(engine, *this)
+		  m_FileSystemWindow(engine, *this),
+		  m_SceneWindow(engine),
+		  m_InspectorWindow(engine),
+		  m_EditorCamera(engine, m_GameWindow)
 	{
 		m_EditorCamera.AddToScene();
 
@@ -193,20 +195,8 @@ namespace Taverner
 				ImGui::EndMainMenuBar();
 			}
 
-			if (ImGui::Begin("Scene", nullptr, ImGuiWindowFlags_None))
-			{
-				if (ImGui::Button("+"))
-				{
-					TAVERN_INFO("Add Entity");
-				}
-			}
-			ImGui::End();
-
-			if (ImGui::Begin("Inspector", nullptr, ImGuiWindowFlags_None))
-			{
-			}
-			ImGui::End();
-
+			m_SceneWindow.Render();
+			m_InspectorWindow.Render();
 			m_FileSystemWindow.Render();
 			m_GameWindow.Render();
 		}

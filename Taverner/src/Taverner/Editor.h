@@ -8,6 +8,8 @@
 #include "Taverner/EditorCamera.h"
 #include "Taverner/FileSystemWindow.h"
 #include "Taverner/GameWindow.h"
+#include "Taverner/SceneWindow.h"
+#include "Taverner/InspectorWindow.h"
 
 namespace Taverner
 {
@@ -48,8 +50,11 @@ namespace Taverner
 		std::string m_CurrentScenePath;
 
 		GameWindow m_GameWindow;
-		EditorCamera m_EditorCamera;
 		FileSystemWindow m_FileSystemWindow;
+		SceneWindow m_SceneWindow;
+		InspectorWindow m_InspectorWindow;
+
+		EditorCamera m_EditorCamera;
 
 		void CreateNewProject();
 		void OpenProject();

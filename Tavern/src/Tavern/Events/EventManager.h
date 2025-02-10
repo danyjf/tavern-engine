@@ -31,11 +31,13 @@ namespace Tavern
 		// Add an event to the end of the queue
 		void QueueEvent(const std::shared_ptr<Event>& event);
 
-		// Process all events from the queue
-		void DispatchEvents();
-
 	private:
 		std::queue<std::shared_ptr<Event>> m_Events;
 		std::unordered_map<EventType, std::vector<EventListenerInterface*>> m_EventListeners;
+
+		// Process all events from the queue
+		void DispatchEvents();
+
+		friend class Engine;
 	};
 }
