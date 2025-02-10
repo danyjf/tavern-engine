@@ -7,7 +7,6 @@
 #include "Tavern/Core/TimeManager.h"
 #include "Tavern/Scene/Scene.h"
 #include "Tavern/Events/ApplicationEvent.h"
-#include "Tavern/Events/EventListener.h"
 #include "Tavern/Events/EventManager.h"
 #include "Tavern/Events/Event.h"
 #include "Tavern/Input/InputManager.h"
@@ -21,17 +20,16 @@ namespace Tavern
 		  m_RenderManager(m_EventManager, m_ResourceManager),
 		  m_InputManager(m_RenderManager),
 		  m_TimeManager(),
-		  m_Scene(*this),
-		  m_WindowCloseListener(std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1))
+		  m_Scene(*this)
 	{
 		ScriptRegistry::Get().SetScene(&m_Scene);
-		m_EventManager.AddListener("WindowClose", m_WindowCloseListener);
+		m_WindowCloseListenerID = m_EventManager.AddListener("WindowClose", std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1));
 		TAVERN_ENGINE_INFO("Engine initialized");
 	}
 
 	Engine::~Engine()
 	{
-		m_EventManager.RemoveListener("WindowClose", m_WindowCloseListener);
+		m_EventManager.RemoveListener("WindowClose", m_WindowCloseListenerID);
 		TAVERN_ENGINE_INFO("Engine destroyed");
 	}
 
@@ -102,7 +100,7 @@ namespace Tavern
 		return m_Scene;
 	}
 
-	void Engine::OnWindowCloseEvent(const std::shared_ptr<WindowCloseEvent>& event)
+	void Engine::OnWindowCloseEvent(const std::shared_ptr<Event>& event)
 	{
 		m_IsRunning = false;
 	}

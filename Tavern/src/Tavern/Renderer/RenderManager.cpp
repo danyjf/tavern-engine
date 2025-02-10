@@ -8,7 +8,6 @@
 #include "Tavern/Events/Event.h"
 #include "Tavern/Events/EventManager.h"
 #include "Tavern/Events/ApplicationEvent.h"
-#include "Tavern/Events/EventListener.h"
 #include "Tavern/Core/Log.h"
 #include "Tavern/Resources/ShaderResource.h"
 #include "Tavern/Scene/Entity.h"
@@ -19,10 +18,9 @@ namespace Tavern
 {
 	RenderManager::RenderManager(EventManager& eventManager, ResourceManager& resourceManager)
 		: m_EventManager(eventManager),
-		  m_WindowResizeListener(std::bind(&RenderManager::OnWindowResizeEvent, this, std::placeholders::_1)),
 		  m_Window(std::make_unique<Window>(m_EventManager))
 	{
-		m_EventManager.AddListener("WindowResize", m_WindowResizeListener);
+		m_WindowResizeListenerID = m_EventManager.AddListener("WindowResize", std::bind(&RenderManager::OnWindowResizeEvent, this, std::placeholders::_1));
 
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glEnable(GL_DEPTH_TEST);
@@ -32,7 +30,7 @@ namespace Tavern
 
 	RenderManager::~RenderManager()
 	{
-		m_EventManager.RemoveListener("WindowResize", m_WindowResizeListener);
+		m_EventManager.RemoveListener("WindowResize", m_WindowResizeListenerID);
 		m_Window.reset();
 		glfwTerminate();
 		TAVERN_ENGINE_INFO("RenderManager destroyed");
@@ -149,11 +147,12 @@ namespace Tavern
 		glfwSwapBuffers(GetWindow()->GetGLFWWindow());
 	}
 
-	void RenderManager::OnWindowResizeEvent(const std::shared_ptr<WindowResizeEvent>& event)
+	void RenderManager::OnWindowResizeEvent(const std::shared_ptr<Event>& event)
 	{
-		glViewport(0, 0, event->GetWidth(), event->GetHeight());
-		GetActiveCamera()->SetViewportSize(event->GetWidth(), event->GetHeight());
+		auto resizeEvent = std::static_pointer_cast<WindowResizeEvent>(event);
+		glViewport(0, 0, resizeEvent->GetWidth(), resizeEvent->GetHeight());
+		GetActiveCamera()->SetViewportSize(resizeEvent->GetWidth(), resizeEvent->GetHeight());
 
-		TAVERN_ENGINE_TRACE("Window Resize Event: ({0}, {1})", event->GetWidth(), event->GetHeight());
+		TAVERN_ENGINE_TRACE("Window Resize Event: ({0}, {1})", resizeEvent->GetWidth(), resizeEvent->GetHeight());
 	}
 }

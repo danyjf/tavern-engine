@@ -2,7 +2,6 @@
 
 #include "Tavern/Events/EventManager.h"
 #include "Tavern/Core/Log.h"
-#include "Tavern/Events/EventListenerInterface.h"
 
 namespace Tavern
 {
@@ -16,22 +15,24 @@ namespace Tavern
 		TAVERN_ENGINE_INFO("EventManager destroyed");
 	}
 
-	void EventManager::AddListener(const std::string& eventName, EventListenerInterface& eventListener)
+	unsigned long EventManager::AddListener(const std::string& eventName, CallbackFunction callback)
 	{
-		m_EventListeners[eventName].push_back(&eventListener);
+		unsigned long callbackID = s_CallbackCounter++;
+		m_EventListeners[eventName].emplace_back(callbackID, callback);
+		return callbackID;
 	}
 
-	void EventManager::RemoveListener(const std::string& eventName, EventListenerInterface& eventListener)
+	void EventManager::RemoveListener(const std::string& eventName, unsigned long callbackID)
 	{
 		// Ignore if the event doesn't exist
 		if (m_EventListeners.find(eventName) == m_EventListeners.end())
 			return;
 
-		std::vector<EventListenerInterface*>& listeners = m_EventListeners[eventName];
-
-		std::erase_if(listeners, [&eventListener](EventListenerInterface* storedListener) {
-			return storedListener->GetID() == eventListener.GetID();
-		});
+		auto& listeners = m_EventListeners[eventName];
+		std::erase_if(listeners, 
+			[callbackID](std::pair<unsigned long, CallbackFunction> listener) {
+				return listener.first == callbackID;
+			});
 	}
 
 	void EventManager::TriggerEvent(const std::shared_ptr<Event>& event)
@@ -40,9 +41,9 @@ namespace Tavern
 		if (m_EventListeners.find(event->GetName()) == m_EventListeners.end())
 			return;
 
-		for (EventListenerInterface* eventListener : m_EventListeners[event->GetName()])
+		for (auto& [id, callback] : m_EventListeners[event->GetName()])
 		{
-			eventListener->Call(event);
+			callback(event);
 		}
 	}
 
@@ -50,7 +51,9 @@ namespace Tavern
 	{
 		// Ignore events that have no observer yet
 		if (m_EventListeners.find(event->GetName()) == m_EventListeners.end())
+		{
 			return;
+		}
 
 		m_Events.push(event);
 	}
@@ -61,15 +64,12 @@ namespace Tavern
 		{
 			std::shared_ptr<Event>& event = m_Events.front();
 
-			if (m_EventListeners.find(event->GetName()) == m_EventListeners.end())
+			if (m_EventListeners.find(event->GetName()) != m_EventListeners.end())
 			{
-				m_Events.pop();
-				continue;
-			}
-
-			for (EventListenerInterface* eventListener : m_EventListeners[event->GetName()])
-			{
-				eventListener->Call(event);
+				for (auto& [id, callback] : m_EventListeners[event->GetName()])
+				{
+					callback(event);
+				}
 			}
 
 			m_Events.pop();

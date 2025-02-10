@@ -6,7 +6,6 @@
 #include "Tavern/Core/Log.h"
 #include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Events/EventManager.h"
-#include "Tavern/Events/EventListener.h"
 #include "Tavern/Events/KeyEvent.h"
 #include "Tavern/Events/MouseEvent.h"
 #include "Tavern/Renderer/Cursor.h"
@@ -16,7 +15,6 @@ namespace Tavern
 {
 	Window::Window(EventManager& eventManager, const WindowSettings& windowSettings)
 		: m_EventManager(eventManager),
-		  m_WindowResizeListener(std::bind(&Window::OnWindowResizeEvent, this, std::placeholders::_1)),
 		  m_WindowSettings(windowSettings)
 	{
 		// Initialize glfw
@@ -120,14 +118,14 @@ namespace Tavern
 			TAVERN_ENGINE_ERROR("GLFW Error [{}]: {}", error, description);
 		});
 
-		m_EventManager.AddListener("WindowResize", m_WindowResizeListener);
+		m_WindowResizeListenerID = m_EventManager.AddListener("WindowResize", std::bind(&Window::OnWindowResizeEvent, this, std::placeholders::_1));
 
 		m_Cursor = Cursor(this, false, true);
 	}
 
 	Window::~Window()
 	{
-		m_EventManager.RemoveListener("WindowResize", m_WindowResizeListener);
+		m_EventManager.RemoveListener("WindowResize", m_WindowResizeListenerID);
 		glfwDestroyWindow(m_Window);
 		TAVERN_ENGINE_INFO("Window destroyed");
 	}
@@ -158,9 +156,10 @@ namespace Tavern
 		m_WindowSettings.Title = title;
 	}
 
-	void Window::OnWindowResizeEvent(const std::shared_ptr<WindowResizeEvent>& event)
+	void Window::OnWindowResizeEvent(const std::shared_ptr<Event>& event)
 	{
-		m_WindowSettings.Width = event->GetWidth();
-		m_WindowSettings.Height = event->GetHeight();
+		auto resizeEvent = std::static_pointer_cast<WindowResizeEvent>(event);
+		m_WindowSettings.Width = resizeEvent->GetWidth();
+		m_WindowSettings.Height = resizeEvent->GetHeight();
 	}
 }

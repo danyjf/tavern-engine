@@ -48,7 +48,7 @@ namespace Tavern
 		TimeManager& GetTimeManager();
 		Scene& GetScene();
 
-		void OnWindowCloseEvent(const std::shared_ptr<WindowCloseEvent>& event);
+		void OnWindowCloseEvent(const std::shared_ptr<Event>& event);
 
 	private:
 		EventManager m_EventManager = EventManager();
@@ -57,9 +57,8 @@ namespace Tavern
 		InputManager m_InputManager = InputManager(m_RenderManager);
 		TimeManager m_TimeManager = TimeManager();
 		Scene m_Scene = Scene(*this);
-
-		EventListener<WindowCloseEvent> m_WindowCloseListener;
-
+		
+		unsigned long m_WindowCloseListenerID = 0;
 		bool m_IsRunning = true;
 		bool m_IsUpdateEnabled = true;
 	};

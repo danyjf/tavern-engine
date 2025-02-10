@@ -26,8 +26,6 @@ namespace Taverner
 		
 		void Render();
 
-		void LoadScene(const std::string& scenePath);
-
 		enum EditorState
 		{
 			Editing,
@@ -43,7 +41,7 @@ namespace Taverner
 		Tavern::Engine& m_Engine;
 		Tavern::Window* m_Window;
 
-		EventListener<SceneSelectedEvent> m_SceneSelectedEventListener;
+		unsigned long m_SceneSelectedListenerID;
 
 		ProjectConfig m_ProjectConfig;
 		EditorState m_EditorState = EditorState::Editing;
@@ -61,9 +59,10 @@ namespace Taverner
 		void CreateNewProject();
 		void OpenProject();
 		void NewScene();
+		void LoadScene(const std::string& path);
 		void BuildDLL(const std::string& path);
 		void LoadDLL(const std::string& dllPath);
 
-		void OnSceneSelected(const std::shared_ptr<SceneSelectedEvent>& event);
+		void OnSceneSelected(const std::shared_ptr<Event>& event);
 	};
 }

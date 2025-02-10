@@ -3,15 +3,13 @@
 #include <queue>
 #include <unordered_map>
 #include <string>
+#include <functional>
 
 #include "Tavern/Core/Core.h"
 #include "Tavern/Events/Event.h"
-#include "Tavern/Events/EventListenerInterface.h"
 
 namespace Tavern
 {
-	class EventListenerInterface;
-
 	class TAVERN_API EventManager
 	{
 	public:
@@ -21,10 +19,10 @@ namespace Tavern
 		EventManager& operator=(const EventManager& copy) = delete;
 
 		// Register a delegate function to be called when the event is triggered.
-		void AddListener(const std::string& eventName, EventListenerInterface& eventListener);
-		void AddListener(const std::string& eventName, EventListenerInterface&& eventListener) = delete;
+		using CallbackFunction = std::function<void(const std::shared_ptr<Event>&)>;
+		unsigned long AddListener(const std::string& eventName, CallbackFunction callback);
 
-		void RemoveListener(const std::string& eventName, EventListenerInterface& eventListener);
+		void RemoveListener(const std::string& eventName, unsigned long callbackID);
 
 		// Immediately trigger an event ignoring the queue
 		void TriggerEvent(const std::shared_ptr<Event>& event);
@@ -33,8 +31,9 @@ namespace Tavern
 		void QueueEvent(const std::shared_ptr<Event>& event);
 
 	private:
+		inline static unsigned long s_CallbackCounter = 0;
 		std::queue<std::shared_ptr<Event>> m_Events;
-		std::unordered_map<std::string, std::vector<EventListenerInterface*>> m_EventListeners;
+		std::unordered_map<std::string, std::vector<std::pair<unsigned long, CallbackFunction>>> m_EventListeners;
 
 		// Process all events from the queue
 		void DispatchEvents();

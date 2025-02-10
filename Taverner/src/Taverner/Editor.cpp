@@ -30,10 +30,9 @@ namespace Taverner
 		  m_FileSystemWindow(engine),
 		  m_SceneWindow(engine),
 		  m_InspectorWindow(engine),
-		  m_EditorCamera(engine, m_GameWindow),
-		  m_SceneSelectedEventListener(std::bind(&Editor::OnSceneSelected, this, std::placeholders::_1))
+		  m_EditorCamera(engine, m_GameWindow)
 	{
-		m_Engine.GetEventManager().AddListener("SceneSelected", m_SceneSelectedEventListener);
+		m_SceneSelectedListenerID = m_Engine.GetEventManager().AddListener("SceneSelected", std::bind(&Editor::OnSceneSelected, this, std::placeholders::_1));
 
 		m_EditorCamera.AddToScene();
 
@@ -68,7 +67,7 @@ namespace Taverner
 
 	Editor::~Editor()
 	{
-		m_Engine.GetEventManager().RemoveListener("SceneSelected", m_SceneSelectedEventListener);
+		m_Engine.GetEventManager().RemoveListener("SceneSelected", m_SceneSelectedListenerID);
 
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
@@ -216,12 +215,12 @@ namespace Taverner
         glfwMakeContextCurrent(backupCurrentContext);
 	}
 
-	void Editor::LoadScene(const std::string& scenePath)
+	void Editor::LoadScene(const std::string& path)
 	{
-		m_Engine.GetScene().Load(scenePath);
+		m_Engine.GetScene().Load(path);
 		m_EditorCamera.AddToScene();
 
-		m_CurrentScenePath = scenePath;
+		m_CurrentScenePath = path;
 	}
 
 	Editor::EditorState Editor::GetEditorState()
@@ -336,12 +335,13 @@ namespace Taverner
 		LoadLibrary(dllPath.c_str());
 	}
 
-	void Editor::OnSceneSelected(const std::shared_ptr<SceneSelectedEvent>& event)
+	void Editor::OnSceneSelected(const std::shared_ptr<Event>& event)
 	{
-		if (GetCurrentScenePath() == event->GetScenePath())
+		auto sceneSelectedEvent = std::static_pointer_cast<SceneSelectedEvent>(event);
+		if (GetCurrentScenePath() == sceneSelectedEvent->GetScenePath())
 		{
 			return;
 		}
-		LoadScene(event->GetScenePath());
+		LoadScene(sceneSelectedEvent->GetScenePath());
 	}
 }
