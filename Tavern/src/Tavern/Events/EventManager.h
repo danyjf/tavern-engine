@@ -19,16 +19,16 @@ namespace Tavern
 		EventManager& operator=(const EventManager& copy) = delete;
 
 		// Register a delegate function to be called when the event is triggered.
-		using CallbackFunction = std::function<void(const std::shared_ptr<Event>&)>;
+		using CallbackFunction = std::function<void(const std::shared_ptr<Event>)>;
 		unsigned long AddListener(const std::string& eventName, CallbackFunction callback);
 
 		void RemoveListener(const std::string& eventName, unsigned long callbackID);
 
 		// Immediately trigger an event ignoring the queue
-		void TriggerEvent(const std::shared_ptr<Event>& event);
+		void TriggerEvent(const std::shared_ptr<Event> event);
 
 		// Add an event to the end of the queue
-		void QueueEvent(const std::shared_ptr<Event>& event);
+		void QueueEvent(const std::shared_ptr<Event> event);
 
 	private:
 		inline static unsigned long s_CallbackCounter = 0;

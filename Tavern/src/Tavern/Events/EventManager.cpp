@@ -35,7 +35,7 @@ namespace Tavern
 			});
 	}
 
-	void EventManager::TriggerEvent(const std::shared_ptr<Event>& event)
+	void EventManager::TriggerEvent(const std::shared_ptr<Event> event)
 	{
 		// Ignore events that have no observer yet
 		if (m_EventListeners.find(event->GetName()) == m_EventListeners.end())
@@ -47,7 +47,7 @@ namespace Tavern
 		}
 	}
 
-	void EventManager::QueueEvent(const std::shared_ptr<Event>& event)
+	void EventManager::QueueEvent(const std::shared_ptr<Event> event)
 	{
 		// Ignore events that have no observer yet
 		if (m_EventListeners.find(event->GetName()) == m_EventListeners.end())
@@ -62,7 +62,7 @@ namespace Tavern
 	{
 		while (!m_Events.empty())
 		{
-			std::shared_ptr<Event>& event = m_Events.front();
+			std::shared_ptr<Event> event = m_Events.front();
 
 			if (m_EventListeners.find(event->GetName()) != m_EventListeners.end())
 			{
