@@ -12,27 +12,21 @@
 using namespace Tavern;
 
 Player::Player(Engine& engine, Entity* owner)
-	: ScriptComponent(engine, owner), m_Speed(2.5f), m_LastMousePosition(0.0f),
-	  m_CameraSensitivity(0.05f), m_Zoom(45.0f)
+	: ScriptComponent(engine, owner),
+	  m_Speed(2.5f),
+	  m_LastMousePosition(0.0f),
+	  m_CameraSensitivity(0.05f),
+	  m_Zoom(45.0f),
+	  m_KeyPressedListener(engine.GetEventManager(), "KeyPressed", std::bind(&Player::OnKeyPressed, this, std::placeholders::_1)),
+	  m_MouseMovedListener(engine.GetEventManager(), "MouseMoved", std::bind(&Player::OnMouseMoved, this, std::placeholders::_1)),
+	  m_MouseScrolledListener(engine.GetEventManager(), "MouseScrolled", std::bind(&Player::OnMouseScrolled, this, std::placeholders::_1)),
+	  m_MouseButtonPressedListener(engine.GetEventManager(), "MouseButtonPressed", std::bind(&Player::OnMouseButtonPressed, this, std::placeholders::_1))
 {
 	m_Camera = GetOwner()->CreateComponentOfType<CameraComponent>();
 	GetEngine().GetRenderManager().SetActiveCamera(m_Camera);
 
 	GetOwner()->GetTransform()->SetLocalPosition(glm::vec3(0.0f, 0.0f, 3.0f));
 	GetOwner()->GetTransform()->SetLocalEulerRotation(glm::vec3(0.0f, -90.0f, 0.0f));
-
-	m_KeyPressedListenerID = GetEngine().GetEventManager().AddListener("KeyPressed", std::bind(&Player::OnKeyPressed, this, std::placeholders::_1));
-	m_MouseMovedListenerID = GetEngine().GetEventManager().AddListener("MouseMoved", std::bind(&Player::OnMouseMoved, this, std::placeholders::_1));
-	m_MouseScrolledListenerID = GetEngine().GetEventManager().AddListener("MouseScrolled", std::bind(&Player::OnMouseScrolled, this, std::placeholders::_1));
-	m_MouseButtonPressedListenerID = GetEngine().GetEventManager().AddListener("MouseButtonPressed", std::bind(&Player::OnMouseButtonPressed, this, std::placeholders::_1));
-}
-
-Player::~Player()
-{
-	GetEngine().GetEventManager().RemoveListener("KeyPressed", m_KeyPressedListenerID);
-	GetEngine().GetEventManager().RemoveListener("MouseMoved", m_MouseMovedListenerID);
-	GetEngine().GetEventManager().RemoveListener("MouseScrolled", m_MouseScrolledListenerID);
-	GetEngine().GetEventManager().RemoveListener("MouseButtonPressed", m_MouseButtonPressedListenerID);
 }
 
 void Player::Update()

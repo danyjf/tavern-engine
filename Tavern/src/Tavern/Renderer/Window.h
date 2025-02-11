@@ -7,6 +7,7 @@
 
 #include "Tavern/Core/Core.h"
 #include "Tavern/Events/ApplicationEvent.h"
+#include "Tavern/Events/EventListener.h"
 #include "Tavern/Renderer/Cursor.h"
 
 namespace Tavern
@@ -45,6 +46,6 @@ namespace Tavern
 		GLFWwindow* m_Window = nullptr;
 		WindowSettings m_WindowSettings;
 		Cursor m_Cursor;
-		unsigned long m_WindowResizeListenerID;
+		EventListener m_WindowResizeListener;
 	};
 }

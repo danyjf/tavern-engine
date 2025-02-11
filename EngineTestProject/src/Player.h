@@ -1,6 +1,7 @@
 #include <Tavern/Scene/Entity.h>
 #include <Tavern/Events/KeyEvent.h>
 #include <Tavern/Events/MouseEvent.h>
+#include <Tavern/Events/EventListener.h>
 #include <glm/glm.hpp>
 
 using namespace Tavern;
@@ -11,7 +12,6 @@ class Player : public ScriptComponent
 {
 public:
 	Player(Engine& engine, Entity* owner);
-	~Player();
 
 	std::vector<Cube*> m_Cubes;
 
@@ -28,9 +28,9 @@ private:
 	glm::vec2 m_LastMousePosition;
 	float m_CameraSensitivity;
 	float m_Zoom;
-	unsigned long m_KeyPressedListenerID;
-	unsigned long m_MouseMovedListenerID;
-	unsigned long m_MouseScrolledListenerID;
-	unsigned long m_MouseButtonPressedListenerID;
+	EventListener m_KeyPressedListener;
+	EventListener m_MouseMovedListener;
+	EventListener m_MouseScrolledListener;
+	EventListener m_MouseButtonPressedListener;
 };
 REGISTER_SCRIPT(Player);

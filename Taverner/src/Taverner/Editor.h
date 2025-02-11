@@ -3,6 +3,7 @@
 #include <nlohmann/json.hpp>
 
 #include <Tavern/Core/Engine.h>
+#include <Tavern/Events/EventListener.h>
 
 #include "Taverner/ProjectConfig.h"
 #include "Taverner/EditorCamera.h"
@@ -41,7 +42,7 @@ namespace Taverner
 		Tavern::Engine& m_Engine;
 		Tavern::Window* m_Window;
 
-		unsigned long m_SceneSelectedListenerID;
+		EventListener m_SceneSelectedListener;
 
 		ProjectConfig m_ProjectConfig;
 		EditorState m_EditorState = EditorState::Editing;

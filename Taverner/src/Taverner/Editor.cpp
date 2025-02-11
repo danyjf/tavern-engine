@@ -30,10 +30,9 @@ namespace Taverner
 		  m_FileSystemWindow(engine),
 		  m_SceneWindow(engine),
 		  m_InspectorWindow(engine),
-		  m_EditorCamera(engine, m_GameWindow)
+		  m_EditorCamera(engine, m_GameWindow),
+		  m_SceneSelectedListener(m_Engine.GetEventManager(), "SceneSelected", std::bind(&Editor::OnSceneSelected, this, std::placeholders::_1))
 	{
-		m_SceneSelectedListenerID = m_Engine.GetEventManager().AddListener("SceneSelected", std::bind(&Editor::OnSceneSelected, this, std::placeholders::_1));
-
 		m_EditorCamera.AddToScene();
 
 		m_Window->GetCursor().SetIsLocked(false);
@@ -67,8 +66,6 @@ namespace Taverner
 
 	Editor::~Editor()
 	{
-		m_Engine.GetEventManager().RemoveListener("SceneSelected", m_SceneSelectedListenerID);
-
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();

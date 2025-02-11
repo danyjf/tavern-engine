@@ -15,7 +15,8 @@ namespace Tavern
 {
 	Window::Window(EventManager& eventManager, const WindowSettings& windowSettings)
 		: m_EventManager(eventManager),
-		  m_WindowSettings(windowSettings)
+		  m_WindowSettings(windowSettings),
+		  m_WindowResizeListener(eventManager, "WindowResize", std::bind(&Window::OnWindowResizeEvent, this, std::placeholders::_1))
 	{
 		// Initialize glfw
 		TAVERN_ENGINE_INFO("Initializing GLFW");
@@ -118,14 +119,11 @@ namespace Tavern
 			TAVERN_ENGINE_ERROR("GLFW Error [{}]: {}", error, description);
 		});
 
-		m_WindowResizeListenerID = m_EventManager.AddListener("WindowResize", std::bind(&Window::OnWindowResizeEvent, this, std::placeholders::_1));
-
 		m_Cursor = Cursor(this, false, true);
 	}
 
 	Window::~Window()
 	{
-		m_EventManager.RemoveListener("WindowResize", m_WindowResizeListenerID);
 		glfwDestroyWindow(m_Window);
 		TAVERN_ENGINE_INFO("Window destroyed");
 	}

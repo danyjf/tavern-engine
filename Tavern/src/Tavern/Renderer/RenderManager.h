@@ -7,6 +7,7 @@
 #include "Tavern/Components/RenderComponent.h"
 #include "Tavern/Core/Core.h"
 #include "Tavern/Events/ApplicationEvent.h"
+#include "Tavern/Events/EventListener.h"
 #include "Tavern/Renderer/Window.h"
 #include "Tavern/Resources/ResourceManager.h"
 
@@ -41,7 +42,7 @@ namespace Tavern
 
 	private:
 		EventManager& m_EventManager;
-		unsigned long m_WindowResizeListenerID = 0;
+		EventListener m_WindowResizeListener;
 		std::unique_ptr<Window> m_Window;
 		CameraComponent* m_Camera = nullptr;
 

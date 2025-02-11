@@ -18,10 +18,9 @@ namespace Tavern
 {
 	RenderManager::RenderManager(EventManager& eventManager, ResourceManager& resourceManager)
 		: m_EventManager(eventManager),
-		  m_Window(std::make_unique<Window>(m_EventManager))
+		  m_Window(std::make_unique<Window>(m_EventManager)),
+		  m_WindowResizeListener(eventManager, "WindowResize", std::bind(&RenderManager::OnWindowResizeEvent, this, std::placeholders::_1))
 	{
-		m_WindowResizeListenerID = m_EventManager.AddListener("WindowResize", std::bind(&RenderManager::OnWindowResizeEvent, this, std::placeholders::_1));
-
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glEnable(GL_DEPTH_TEST);
 
@@ -30,7 +29,6 @@ namespace Tavern
 
 	RenderManager::~RenderManager()
 	{
-		m_EventManager.RemoveListener("WindowResize", m_WindowResizeListenerID);
 		m_Window.reset();
 		glfwTerminate();
 		TAVERN_ENGINE_INFO("RenderManager destroyed");

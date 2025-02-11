@@ -6,6 +6,7 @@
 #include "Tavern/Core/TimeManager.h"
 #include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Events/EventManager.h"
+#include "Tavern/Events/EventListener.h"
 #include "Tavern/Renderer/RenderManager.h"
 #include "Tavern/Input/InputManager.h"
 #include "Tavern/Resources/ResourceManager.h"
@@ -58,7 +59,8 @@ namespace Tavern
 		TimeManager m_TimeManager = TimeManager();
 		Scene m_Scene = Scene(*this);
 		
-		unsigned long m_WindowCloseListenerID = 0;
+		EventListener m_WindowCloseListener;
+
 		bool m_IsRunning = true;
 		bool m_IsUpdateEnabled = true;
 	};
