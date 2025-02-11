@@ -17,10 +17,10 @@ public:
 
 	void Update() override;
 
-	void OnKeyPressed(const std::shared_ptr<Event>& event);
-	void OnMouseMoved(const std::shared_ptr<Event>& event);
-	void OnMouseScrolled(const std::shared_ptr<Event>& event);
-	void OnMouseButtonPressed(const std::shared_ptr<Event>& event);
+	void OnKeyPressed(const std::shared_ptr<KeyPressedEvent>& event);
+	void OnMouseMoved(const std::shared_ptr<MouseMovedEvent>& event);
+	void OnMouseScrolled(const std::shared_ptr<MouseScrolledEvent>& event);
+	void OnMouseButtonPressed(const std::shared_ptr<MouseButtonPressedEvent>& event);
 
 private:
 	CameraComponent* m_Camera;
@@ -28,9 +28,9 @@ private:
 	glm::vec2 m_LastMousePosition;
 	float m_CameraSensitivity;
 	float m_Zoom;
-	EventListener m_KeyPressedListener;
-	EventListener m_MouseMovedListener;
-	EventListener m_MouseScrolledListener;
-	EventListener m_MouseButtonPressedListener;
+	EventListener<KeyPressedEvent> m_KeyPressedListener;
+	EventListener<MouseMovedEvent> m_MouseMovedListener;
+	EventListener<MouseScrolledEvent> m_MouseScrolledListener;
+	EventListener<MouseButtonPressedEvent> m_MouseButtonPressedListener;
 };
 REGISTER_SCRIPT(Player);

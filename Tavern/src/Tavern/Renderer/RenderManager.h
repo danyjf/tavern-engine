@@ -38,11 +38,11 @@ namespace Tavern
 
 		void Render();
 
-		void OnWindowResizeEvent(const std::shared_ptr<Event>& event);
+		void OnWindowResizeEvent(const std::shared_ptr<WindowResizeEvent> event);
 
 	private:
 		EventManager& m_EventManager;
-		EventListener m_WindowResizeListener;
+		EventListener<WindowResizeEvent> m_WindowResizeListener;
 		std::unique_ptr<Window> m_Window;
 		CameraComponent* m_Camera = nullptr;
 

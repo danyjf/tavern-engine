@@ -37,7 +37,6 @@ set(SOURCES_TAVERN_EVENTS
 	src/Tavern/Events/KeyEvent.h
 	src/Tavern/Events/MouseEvent.h
 	src/Tavern/Events/EventListener.h
-	src/Tavern/Events/EventListener.cpp
 )
 set(SOURCES_TAVERN_INPUT
     src/Tavern/Input/InputManager.h

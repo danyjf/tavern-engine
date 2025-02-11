@@ -21,7 +21,7 @@ namespace Tavern
 		  m_InputManager(m_RenderManager),
 		  m_TimeManager(),
 		  m_Scene(*this),
-		  m_WindowCloseListener(m_EventManager, "WindowClose", std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1))
+		  m_WindowCloseListener(m_EventManager, std::bind(&Engine::OnWindowCloseEvent, this, std::placeholders::_1))
 	{
 		ScriptRegistry::Get().SetScene(&m_Scene);
 		TAVERN_ENGINE_INFO("Engine initialized");
@@ -99,7 +99,7 @@ namespace Tavern
 		return m_Scene;
 	}
 
-	void Engine::OnWindowCloseEvent(const std::shared_ptr<Event>& event)
+	void Engine::OnWindowCloseEvent(const std::shared_ptr<WindowCloseEvent>& event)
 	{
 		m_IsRunning = false;
 	}

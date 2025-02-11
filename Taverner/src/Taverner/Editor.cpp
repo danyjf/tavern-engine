@@ -31,7 +31,7 @@ namespace Taverner
 		  m_SceneWindow(engine),
 		  m_InspectorWindow(engine),
 		  m_EditorCamera(engine, m_GameWindow),
-		  m_SceneSelectedListener(m_Engine.GetEventManager(), "SceneSelected", std::bind(&Editor::OnSceneSelected, this, std::placeholders::_1))
+		  m_SceneSelectedListener(m_Engine.GetEventManager(), std::bind(&Editor::OnSceneSelected, this, std::placeholders::_1))
 	{
 		m_EditorCamera.AddToScene();
 
@@ -332,13 +332,12 @@ namespace Taverner
 		LoadLibrary(dllPath.c_str());
 	}
 
-	void Editor::OnSceneSelected(const std::shared_ptr<Event>& event)
+	void Editor::OnSceneSelected(const std::shared_ptr<SceneSelectedEvent>& event)
 	{
-		auto sceneSelectedEvent = std::static_pointer_cast<SceneSelectedEvent>(event);
-		if (GetCurrentScenePath() == sceneSelectedEvent->GetScenePath())
+		if (GetCurrentScenePath() == event->GetScenePath())
 		{
 			return;
 		}
-		LoadScene(sceneSelectedEvent->GetScenePath());
+		LoadScene(event->GetScenePath());
 	}
 }

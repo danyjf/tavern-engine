@@ -60,6 +60,7 @@ namespace Tavern
 					return dynamic_cast<T*>(component.get());
 				}
 			}
+			return nullptr;
 		}
 
 	protected:

@@ -17,10 +17,10 @@ Player::Player(Engine& engine, Entity* owner)
 	  m_LastMousePosition(0.0f),
 	  m_CameraSensitivity(0.05f),
 	  m_Zoom(45.0f),
-	  m_KeyPressedListener(engine.GetEventManager(), "KeyPressed", std::bind(&Player::OnKeyPressed, this, std::placeholders::_1)),
-	  m_MouseMovedListener(engine.GetEventManager(), "MouseMoved", std::bind(&Player::OnMouseMoved, this, std::placeholders::_1)),
-	  m_MouseScrolledListener(engine.GetEventManager(), "MouseScrolled", std::bind(&Player::OnMouseScrolled, this, std::placeholders::_1)),
-	  m_MouseButtonPressedListener(engine.GetEventManager(), "MouseButtonPressed", std::bind(&Player::OnMouseButtonPressed, this, std::placeholders::_1))
+	  m_KeyPressedListener(engine.GetEventManager(), std::bind(&Player::OnKeyPressed, this, std::placeholders::_1)),
+	  m_MouseMovedListener(engine.GetEventManager(), std::bind(&Player::OnMouseMoved, this, std::placeholders::_1)),
+	  m_MouseScrolledListener(engine.GetEventManager(), std::bind(&Player::OnMouseScrolled, this, std::placeholders::_1)),
+	  m_MouseButtonPressedListener(engine.GetEventManager(), std::bind(&Player::OnMouseButtonPressed, this, std::placeholders::_1))
 {
 	m_Camera = GetOwner()->CreateComponentOfType<CameraComponent>();
 	GetEngine().GetRenderManager().SetActiveCamera(m_Camera);
@@ -73,15 +73,14 @@ void Player::Update()
 	}
 }
 
-void Player::OnKeyPressed(const std::shared_ptr<Event>& event)
+void Player::OnKeyPressed(const std::shared_ptr<KeyPressedEvent>& event)
 {
-	auto keyEvent = std::static_pointer_cast<KeyPressedEvent>(event);
-	if (keyEvent->IsRepeat())
+	if (event->IsRepeat())
 	{
 		return;
 	}
 
-	switch (keyEvent->GetKey())
+	switch (event->GetKey())
 	{
 		case Key::Escape:
 		{
@@ -95,17 +94,16 @@ void Player::OnKeyPressed(const std::shared_ptr<Event>& event)
 	}
 }
 
-void Player::OnMouseMoved(const std::shared_ptr<Event>& event)
+void Player::OnMouseMoved(const std::shared_ptr<MouseMovedEvent>& event)
 {
-	auto mouseEvent = std::static_pointer_cast<MouseMovedEvent>(event);
 	glm::vec2 mouseOffset(
-		mouseEvent->GetX() - m_LastMousePosition.x,
-		mouseEvent->GetY() - m_LastMousePosition.y
+		event->GetX() - m_LastMousePosition.x,
+		event->GetY() - m_LastMousePosition.y
 	);
 	mouseOffset *= m_CameraSensitivity;
 
-	m_LastMousePosition.x = mouseEvent->GetX();
-	m_LastMousePosition.y = mouseEvent->GetY();
+	m_LastMousePosition.x = event->GetX();
+	m_LastMousePosition.y = event->GetY();
 
 	const glm::vec3& rotation = GetOwner()->GetTransform()->GetLocalEulerRotation();
 	GetOwner()->GetTransform()->SetLocalEulerRotation(rotation + glm::vec3(-mouseOffset.y, mouseOffset.x, 0.0f));
@@ -120,16 +118,15 @@ void Player::OnMouseMoved(const std::shared_ptr<Event>& event)
 	}
 }
 
-void Player::OnMouseScrolled(const std::shared_ptr<Event>& event)
+void Player::OnMouseScrolled(const std::shared_ptr<MouseScrolledEvent>& event)
 {
-	auto scrollEvent = std::static_pointer_cast<MouseScrolledEvent>(event);
-	m_Zoom -= scrollEvent->GetYOffset();
+	m_Zoom -= event->GetYOffset();
 	m_Zoom = std::clamp(m_Zoom, 1.0f, 45.0f);
 
 	m_Camera->SetFOV(m_Zoom);
 }
 
-void Player::OnMouseButtonPressed(const std::shared_ptr<Event>& event)
+void Player::OnMouseButtonPressed(const std::shared_ptr<MouseButtonPressedEvent>& event)
 {
 	if (m_Cubes.empty())
 	{

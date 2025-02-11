@@ -19,7 +19,7 @@ namespace Tavern
 	RenderManager::RenderManager(EventManager& eventManager, ResourceManager& resourceManager)
 		: m_EventManager(eventManager),
 		  m_Window(std::make_unique<Window>(m_EventManager)),
-		  m_WindowResizeListener(eventManager, "WindowResize", std::bind(&RenderManager::OnWindowResizeEvent, this, std::placeholders::_1))
+		  m_WindowResizeListener(eventManager, std::bind(&RenderManager::OnWindowResizeEvent, this, std::placeholders::_1))
 	{
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glEnable(GL_DEPTH_TEST);
@@ -145,12 +145,11 @@ namespace Tavern
 		glfwSwapBuffers(GetWindow()->GetGLFWWindow());
 	}
 
-	void RenderManager::OnWindowResizeEvent(const std::shared_ptr<Event>& event)
+	void RenderManager::OnWindowResizeEvent(const std::shared_ptr<WindowResizeEvent> event)
 	{
-		auto resizeEvent = std::static_pointer_cast<WindowResizeEvent>(event);
-		glViewport(0, 0, resizeEvent->GetWidth(), resizeEvent->GetHeight());
-		GetActiveCamera()->SetViewportSize(resizeEvent->GetWidth(), resizeEvent->GetHeight());
+		glViewport(0, 0, event->GetWidth(), event->GetHeight());
+		GetActiveCamera()->SetViewportSize(event->GetWidth(), event->GetHeight());
 
-		TAVERN_ENGINE_TRACE("Window Resize Event: ({0}, {1})", resizeEvent->GetWidth(), resizeEvent->GetHeight());
+		TAVERN_ENGINE_TRACE("Window Resize Event: ({0}, {1})", event->GetWidth(), event->GetHeight());
 	}
 }

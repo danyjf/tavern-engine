@@ -16,7 +16,7 @@ namespace Tavern
 	Window::Window(EventManager& eventManager, const WindowSettings& windowSettings)
 		: m_EventManager(eventManager),
 		  m_WindowSettings(windowSettings),
-		  m_WindowResizeListener(eventManager, "WindowResize", std::bind(&Window::OnWindowResizeEvent, this, std::placeholders::_1))
+		  m_WindowResizeListener(eventManager, std::bind(&Window::OnWindowResizeEvent, this, std::placeholders::_1))
 	{
 		// Initialize glfw
 		TAVERN_ENGINE_INFO("Initializing GLFW");
@@ -154,10 +154,9 @@ namespace Tavern
 		m_WindowSettings.Title = title;
 	}
 
-	void Window::OnWindowResizeEvent(const std::shared_ptr<Event>& event)
+	void Window::OnWindowResizeEvent(const std::shared_ptr<WindowResizeEvent> event)
 	{
-		auto resizeEvent = std::static_pointer_cast<WindowResizeEvent>(event);
-		m_WindowSettings.Width = resizeEvent->GetWidth();
-		m_WindowSettings.Height = resizeEvent->GetHeight();
+		m_WindowSettings.Width = event->GetWidth();
+		m_WindowSettings.Height = event->GetHeight();
 	}
 }

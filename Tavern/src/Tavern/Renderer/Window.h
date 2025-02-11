@@ -39,13 +39,13 @@ namespace Tavern
 		void SetSize(const int width, const int height);
 		void SetTitle(const std::string& title);
 
-		void OnWindowResizeEvent(const std::shared_ptr<Event>& event);
+		void OnWindowResizeEvent(const std::shared_ptr<WindowResizeEvent> event);
 
 	private:
 		EventManager& m_EventManager;
 		GLFWwindow* m_Window = nullptr;
 		WindowSettings m_WindowSettings;
 		Cursor m_Cursor;
-		EventListener m_WindowResizeListener;
+		EventListener<WindowResizeEvent> m_WindowResizeListener;
 	};
 }
