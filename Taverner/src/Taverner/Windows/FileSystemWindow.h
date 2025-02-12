@@ -7,18 +7,6 @@ namespace Taverner
 	class FileSystemWindow;
 	class Editor;
 
-	class SceneSelectedEvent : public Tavern::Event
-	{
-	public:
-		SceneSelectedEvent(const std::string& scenePath);
-		const char* GetName() const override { return "SceneSelected"; };
-
-		const std::string& GetScenePath() const;
-
-	private:
-		std::string m_ScenePath;
-	};
-
 	class FileSystemNode
 	{
 	public:

@@ -3,7 +3,7 @@
 #include <Tavern/Core/Engine.h>
 #include <Tavern/Core/Log.h>
 
-#include "Taverner/SceneWindow.h"
+#include "Taverner/Windows/SceneWindow.h"
 
 namespace Taverner
 {

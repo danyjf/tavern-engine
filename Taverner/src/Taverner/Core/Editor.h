@@ -5,15 +5,17 @@
 #include <Tavern/Core/Engine.h>
 #include <Tavern/Events/EventListener.h>
 
-#include "Taverner/ProjectConfig.h"
-#include "Taverner/EditorCamera.h"
-#include "Taverner/FileSystemWindow.h"
-#include "Taverner/GameWindow.h"
-#include "Taverner/SceneWindow.h"
-#include "Taverner/InspectorWindow.h"
+#include "Taverner/Core/ProjectConfig.h"
+#include "Taverner/Core/EditorCamera.h"
+#include "Taverner/Windows/FileSystemWindow.h"
+#include "Taverner/Windows/GameWindow.h"
+#include "Taverner/Windows/SceneWindow.h"
+#include "Taverner/Windows/InspectorWindow.h"
 
 namespace Taverner
 {
+	class SceneSelectedEvent;
+
 	// TODO:
 	// - Add scene elements to scene hierarchy display
 	// - Display entity components on inspector

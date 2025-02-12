@@ -5,7 +5,8 @@
 #include <Tavern/Core/Engine.h>
 #include <Tavern/Scene/Scene.h>
 
-#include "Taverner/FileSystemWindow.h"
+#include "Taverner/Windows/FileSystemWindow.h"
+#include "Taverner/Events/EditorEvents.h"
 
 namespace Taverner
 {
@@ -107,15 +108,5 @@ namespace Taverner
 	void FileSystemNode::AddChild(std::unique_ptr<FileSystemNode> node)
 	{
 		m_Children.push_back(std::move(node));
-	}
-
-	SceneSelectedEvent::SceneSelectedEvent(const std::string& scenePath)
-		: m_ScenePath(scenePath)
-	{
-	}
-
-	const std::string& SceneSelectedEvent::GetScenePath() const
-	{
-		return m_ScenePath;
 	}
 }

@@ -9,7 +9,7 @@
 #include <Tavern/Components/MeshComponent.h>
 #include <Tavern/Components/LightComponent.h>
 
-#include "Taverner/Editor.h"
+#include "Taverner/Core/Editor.h"
 
 using namespace Tavern;
 

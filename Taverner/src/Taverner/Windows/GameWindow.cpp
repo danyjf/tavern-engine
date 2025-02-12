@@ -2,8 +2,8 @@
 
 #include <Tavern/Core/Engine.h>
 
-#include "Taverner/Editor.h"
-#include "Taverner/GameWindow.h"
+#include "Taverner/Core/Editor.h"
+#include "Taverner/Windows/GameWindow.h"
 
 namespace Taverner
 {

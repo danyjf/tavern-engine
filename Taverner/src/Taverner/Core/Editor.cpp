@@ -15,8 +15,9 @@
 #include <Tavern/Core/Engine.h>
 #include <Tavern/Core/Log.h>
 
-#include "Taverner/Editor.h"
-#include "Taverner/FileSystemWindow.h"
+#include "Taverner/Core/Editor.h"
+#include "Taverner/Windows/FileSystemWindow.h"
+#include "Taverner/Events/EditorEvents.h"
 
 using namespace Tavern;
 
@@ -138,6 +139,7 @@ namespace Taverner
 
 					if (ImGui::MenuItem("Open Project"))
 					{
+						// TODO: Turn this into an event
 						IGFD::FileDialogConfig config;
 						config.path = ".";
 						ImGuiFileDialog::Instance()->OpenDialog("OpenProjectFile", "Open Project File", ".project", config);

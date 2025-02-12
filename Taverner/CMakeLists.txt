@@ -1,19 +1,27 @@
 set(SOURCES_TAVERNER
-	src/Taverner/main.cpp
-    src/Taverner/ProjectConfig.h
-    src/Taverner/ProjectConfig.cpp
-    src/Taverner/EditorCamera.h
-    src/Taverner/EditorCamera.cpp
-    src/Taverner/Editor.h
-    src/Taverner/Editor.cpp
-    src/Taverner/FileSystemWindow.h
-    src/Taverner/FileSystemWindow.cpp
-    src/Taverner/GameWindow.h
-    src/Taverner/GameWindow.cpp
-    src/Taverner/SceneWindow.h
-    src/Taverner/SceneWindow.cpp
-    src/Taverner/InspectorWindow.h
-    src/Taverner/InspectorWindow.cpp
+    src/Taverner/main.cpp
+)
+set(SOURCES_TAVERNER_CORE
+    src/Taverner/Core/ProjectConfig.h
+    src/Taverner/Core/ProjectConfig.cpp
+    src/Taverner/Core/EditorCamera.h
+    src/Taverner/Core/EditorCamera.cpp
+    src/Taverner/Core/Editor.h
+    src/Taverner/Core/Editor.cpp
+)
+set(SOURCES_TAVERNER_WINDOWS
+    src/Taverner/Windows/FileSystemWindow.h
+    src/Taverner/Windows/FileSystemWindow.cpp
+    src/Taverner/Windows/GameWindow.h
+    src/Taverner/Windows/GameWindow.cpp
+    src/Taverner/Windows/SceneWindow.h
+    src/Taverner/Windows/SceneWindow.cpp
+    src/Taverner/Windows/InspectorWindow.h
+    src/Taverner/Windows/InspectorWindow.cpp
+)
+set(SOURCES_TAVERNER_EVENTS
+    src/Taverner/Events/EditorEvents.h
+    src/Taverner/Events/EditorEvents.cpp
 )
 set(VENDOR_IMGUI
     vendor/imgui/imconfig.h
@@ -44,6 +52,9 @@ set(VENDOR_IMGUIFILEDIALOG
 )
 
 source_group(src/Taverner FILES ${SOURCES_TAVERNER})
+source_group(src/Taverner/Core FILES ${SOURCES_TAVERNER_CORE})
+source_group(src/Taverner/Windows FILES ${SOURCES_TAVERNER_WINDOWS})
+source_group(src/Taverner/Events FILES ${SOURCES_TAVERNER_EVENTS})
 source_group(vendor/imgui FILES ${VENDOR_IMGUI})
 source_group(vendor/ImGuiFileDialog FILES ${VENDOR_IMGUIFILEDIALOG})
 
@@ -53,7 +64,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Taverner)
 
 add_executable(Taverner 
     ${SOURCES_TAVERNER}
+    ${SOURCES_TAVERNER_CORE}
     ${SOURCES_TAVERNER_WINDOWS}
+    ${SOURCES_TAVERNER_EVENTS}
     ${VENDOR_IMGUI}
     ${VENDOR_IMGUIFILEDIALOG}
     CMakeLists.txt

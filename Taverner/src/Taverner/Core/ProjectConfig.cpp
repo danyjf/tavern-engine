@@ -1,7 +1,7 @@
 #include <nlohmann/json.hpp>
 #include <fstream>
 
-#include "Taverner/ProjectConfig.h"
+#include "Taverner/Core/ProjectConfig.h"
 
 namespace Taverner
 {

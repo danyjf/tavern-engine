@@ -2,7 +2,7 @@
 
 #include <Tavern/Core/Engine.h>
 
-#include "Taverner/InspectorWindow.h"
+#include "Taverner/Windows/InspectorWindow.h"
 
 namespace Taverner
 {
