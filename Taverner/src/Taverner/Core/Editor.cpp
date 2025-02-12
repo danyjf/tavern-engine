@@ -82,7 +82,7 @@ namespace Taverner
 		{			
 			if (ImGuiFileDialog::Instance()->IsOk()) 
 			{
-				OpenProject();
+				OpenProject(ImGuiFileDialog::Instance()->GetFilePathName());
 			}
 			
 			ImGuiFileDialog::Instance()->Close();
@@ -293,24 +293,22 @@ namespace Taverner
 		m_ProjectConfig.SetGameDLLPath(projectPath + "/Binaries/Debug/" + name + ".dll");
 		m_ProjectConfig.Save(projectPath + "/" + name + ".project");
 
-		m_ProjectLoaded = true;
 		m_Window->SetTitle(m_ProjectConfig.GetName());
-		m_FileSystemWindow.LoadFileStructure(m_ProjectConfig.GetProjectPath() + "/Content");
+
+		m_ProjectLoaded = true;
+		m_Engine.GetEventManager().QueueEvent<ProjectLoadedEvent>(std::make_shared<ProjectLoadedEvent>(m_ProjectConfig));
 	}
 
-	void Editor::OpenProject()
+	void Editor::OpenProject(const std::string& path)
 	{
-		std::string path = ImGuiFileDialog::Instance()->GetFilePathName(); 
-
 		m_ProjectConfig.Load(path);
 
 		BuildDLL(m_ProjectConfig.GetProjectPath() + "/VisualStudioProject");
 		LoadDLL(m_ProjectConfig.GetGameDLLPath());
-
 		m_Window->SetTitle(m_ProjectConfig.GetName());
-		m_FileSystemWindow.LoadFileStructure(m_ProjectConfig.GetProjectPath() + "/Content");
 
 		m_ProjectLoaded = true;
+		m_Engine.GetEventManager().QueueEvent<ProjectLoadedEvent>(std::make_shared<ProjectLoadedEvent>(m_ProjectConfig));
 	}
 
 	void Editor::NewScene()

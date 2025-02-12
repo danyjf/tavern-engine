@@ -5,6 +5,8 @@
 
 namespace Taverner
 {
+	class ProjectConfig;
+
 	class SceneSelectedEvent : public Tavern::Event
 	{
 	public:
@@ -15,5 +17,17 @@ namespace Taverner
 
 	private:
 		std::string m_ScenePath;
+	};
+
+	class ProjectLoadedEvent : public Tavern::Event
+	{
+	public:
+		ProjectLoadedEvent(ProjectConfig& projectConfig);
+		const char* GetName() const override { return "ProjectLoaded"; };
+
+		const ProjectConfig& GetProjectConfig() const;
+
+	private:
+		 ProjectConfig& m_ProjectConfig;
 	};
 }

@@ -60,7 +60,7 @@ namespace Taverner
 		EditorCamera m_EditorCamera;
 
 		void CreateNewProject();
-		void OpenProject();
+		void OpenProject(const std::string& path);
 		void NewScene();
 		void LoadScene(const std::string& path);
 		void BuildDLL(const std::string& path);

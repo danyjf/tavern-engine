@@ -7,20 +7,20 @@
 
 #include "Taverner/Windows/FileSystemWindow.h"
 #include "Taverner/Events/EditorEvents.h"
+#include "Taverner/Core/ProjectConfig.h"
 
 namespace Taverner
 {
 	FileSystemWindow::FileSystemWindow(Tavern::Engine& engine)
-		: m_Engine(engine)
+		: m_Engine(engine),
+		  m_ProjectLoadedEvent(engine.GetEventManager(), std::bind(&FileSystemWindow::OnProjectLoaded, this, std::placeholders::_1))
 	{
 	}
 
-	void FileSystemWindow::LoadFileStructure(const std::string& path)
+	void FileSystemWindow::LoadFileStructure()
 	{
-		m_ContentPath = path;
-
 		m_Root = std::make_unique<FileSystemNode>(*this, m_ContentPath, true);
-		LoadDir(m_Root.get(), path);
+		LoadDir(m_Root.get(), m_ContentPath);
 	}
 
 	void FileSystemWindow::LoadDir(FileSystemNode* node, const std::filesystem::path& path)
@@ -60,6 +60,12 @@ namespace Taverner
 		{
 			m_Engine.GetEventManager().QueueEvent(std::make_shared<SceneSelectedEvent>(filePath.string()));
 		}
+	}
+
+	void FileSystemWindow::OnProjectLoaded(std::shared_ptr<ProjectLoadedEvent> event)
+	{
+		m_ContentPath = event->GetProjectConfig().GetProjectPath() + "/Content";
+		LoadFileStructure();
 	}
 
 	FileSystemNode::FileSystemNode(FileSystemWindow& fileSystemWindow, const std::filesystem::path& path, bool isDirectory)
