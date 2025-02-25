@@ -26,6 +26,7 @@ namespace Tavern
 		Entity* CreateEntity(Entity* parent = nullptr, const std::string& name = "Default");
 		void DestroyEntity(Entity* entity);
 		Entity* GetEntity(unsigned long id);
+		std::unordered_map<unsigned long, std::unique_ptr<Entity>>& GetEntities();
 
 		void Clear();
 

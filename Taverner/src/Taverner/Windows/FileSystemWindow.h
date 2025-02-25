@@ -44,7 +44,7 @@ namespace Taverner
 		std::filesystem::path m_ContentPath;
 		std::unique_ptr<FileSystemNode> m_Root;
 
-		void LoadFileStructure();
+		void ReloadFileStructure();
 		void LoadDir(FileSystemNode* node, const std::filesystem::path& path);
 		void OpenFile(const std::filesystem::path& filePath);
 		void OnProjectLoaded(std::shared_ptr<ProjectLoadedEvent> event);

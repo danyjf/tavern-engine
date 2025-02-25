@@ -17,7 +17,7 @@ namespace Taverner
 	{
 	}
 
-	void FileSystemWindow::LoadFileStructure()
+	void FileSystemWindow::ReloadFileStructure()
 	{
 		m_Root = std::make_unique<FileSystemNode>(*this, m_ContentPath, true);
 		LoadDir(m_Root.get(), m_ContentPath);
@@ -65,7 +65,7 @@ namespace Taverner
 	void FileSystemWindow::OnProjectLoaded(std::shared_ptr<ProjectLoadedEvent> event)
 	{
 		m_ContentPath = event->GetProjectConfig().GetProjectPath() + "/Content";
-		LoadFileStructure();
+		ReloadFileStructure();
 	}
 
 	FileSystemNode::FileSystemNode(FileSystemWindow& fileSystemWindow, const std::filesystem::path& path, bool isDirectory)

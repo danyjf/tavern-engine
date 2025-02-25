@@ -57,7 +57,7 @@ namespace Tavern
 			{
 				if (typeid(T) == typeid(*component))
 				{
-					return dynamic_cast<T*>(component.get());
+					return static_cast<T*>(component.get());
 				}
 			}
 			return nullptr;

@@ -33,6 +33,7 @@ namespace Tavern
 	Entity* Scene::CreateEntity(Entity* parent, const std::string& name)
 	{
 		std::unique_ptr<Entity> entity = std::make_unique<Entity>(m_Engine);
+		entity->SetName(name);
 		if (parent)
 		{
 			entity->SetParent(parent);
@@ -69,6 +70,11 @@ namespace Tavern
 	Entity* Scene::GetEntity(unsigned long id)
 	{
 		return m_Entities[id].get();
+	}
+
+	std::unordered_map<unsigned long, std::unique_ptr<Entity>>& Scene::GetEntities()
+	{
+		return m_Entities;
 	}
 
 	void Scene::Clear()
