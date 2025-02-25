@@ -6,6 +6,8 @@
 #include <Tavern/Events/EventManager.h>
 
 #include "Taverner/Windows/SceneWindow.h"
+#include "Taverner/Core/EditorCamera.h"
+#include "Taverner/Events/EditorEvents.h"
 
 namespace Taverner
 {
@@ -38,7 +40,13 @@ namespace Taverner
 
 	void SceneWindow::RenderEntityTree(Tavern::Entity* entity) const
 	{
-		if (!entity->GetChildren().empty() && ImGui::TreeNode(entity->GetName().c_str()))	// has children
+		if (entity->GetComponentOfType<EditorCameraScript>())
+		{
+			return;
+		}
+
+		if (!entity->GetChildren().empty()						// has children
+			&& ImGui::TreeNode(entity->GetName().c_str()))
 		{
 			for (Tavern::Entity* child : entity->GetChildren())
 			{
@@ -51,7 +59,7 @@ namespace Taverner
 			ImGui::TreeNodeEx(entity->GetName().c_str(), ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen);
 			if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && ImGui::IsItemClicked())
 			{
-				// Show inspect information
+				m_EventManager.QueueEvent<EntitySelectedEvent>(std::make_shared<EntitySelectedEvent>(entity));
 			}
 		}
 	}

@@ -58,7 +58,7 @@ namespace Taverner
 
 	void EditorCamera::AddToScene()
 	{
-		Entity* editorCamera = m_Engine.GetScene().CreateEntity();
+		Entity* editorCamera = m_Engine.GetScene().CreateEntity(nullptr, "EditorCamera");
 		CameraComponent* cameraComponent = editorCamera->CreateComponentOfType<CameraComponent>();
 		editorCamera->CreateComponentOfType<EditorCameraScript>();
 

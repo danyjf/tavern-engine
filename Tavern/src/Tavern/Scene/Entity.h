@@ -22,7 +22,7 @@ namespace Tavern
 		friend class Scene;
 
 	public:
-		Entity(Engine& engine);
+		Entity(Engine& engine, Entity* parent = nullptr, const std::string& name = "Default");
 		virtual ~Entity();
 
 		Entity(Entity& copy) = delete;
@@ -46,6 +46,8 @@ namespace Tavern
 		template <typename T>
 		T* CreateComponentOfType()
 		{
+			static_assert(std::is_base_of_v<Component, T>, "T must be derived from Component");
+
 			m_Components.push_back(std::make_unique<T>(GetEngine(), this));
 
 			return static_cast<T*>(m_Components.back().get());
@@ -53,6 +55,8 @@ namespace Tavern
 		template <typename T>
 		T* GetComponentOfType()
 		{
+			static_assert(std::is_base_of_v<Component, T>, "T must be derived from Component");
+
 			for (std::unique_ptr<Component>& component : m_Components)
 			{
 				if (typeid(T) == typeid(*component))

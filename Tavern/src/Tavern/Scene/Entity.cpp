@@ -11,10 +11,16 @@
 
 namespace Tavern
 {
-	Entity::Entity(Engine& engine)
-		: m_Engine(engine), m_ID(++s_Counter)
+	Entity::Entity(Engine& engine, Entity* parent, const std::string& name)
+		: m_Engine(engine),
+		  m_Name(name),
+		  m_ID(++s_Counter)
 	{
 		m_Transform = CreateComponentOfType<TransformComponent>();
+		if (parent)
+		{
+			SetParent(parent);
+		}
 	}
 
 	Entity::~Entity()

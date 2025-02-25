@@ -16,6 +16,7 @@ namespace Tavern
 			: m_EventManager(eventManager),
 			  m_Callback(callback)
 		{
+			static_assert(std::is_base_of_v<Event, T>, "T must be derived from Event");
 			m_CallbackID = m_EventManager.AddListener<T>(m_Callback);
 		}
 

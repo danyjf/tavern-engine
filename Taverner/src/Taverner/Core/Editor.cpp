@@ -30,7 +30,7 @@ namespace Taverner
 		  m_GameWindow(engine),
 		  m_FileSystemWindow(engine),
 		  m_SceneWindow(engine.GetScene(), engine.GetEventManager()),
-		  m_InspectorWindow(engine),
+		  m_InspectorWindow(engine.GetEventManager()),
 		  m_EditorCamera(engine, m_GameWindow),
 		  m_SceneSelectedListener(m_Engine.GetEventManager(), std::bind(&Editor::OnSceneSelected, this, std::placeholders::_1))
 	{

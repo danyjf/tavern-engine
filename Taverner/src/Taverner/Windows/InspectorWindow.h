@@ -6,14 +6,21 @@
 
 namespace Taverner
 {
+	class EntitySelectedEvent;
+
 	class InspectorWindow
 	{
 	public:
-		InspectorWindow(Tavern::Engine& engine);
+		InspectorWindow(Tavern::EventManager& eventManager);
 
 		void Render();
 
 	private:
-		Tavern::Engine& m_Engine;
+		Tavern::EventManager& m_EventManager;
+		Tavern::Entity* m_SelectedEntity = nullptr;
+
+		Tavern::EventListener<EntitySelectedEvent> m_EntitySelectedEvent;
+
+		void OnEntitySelected(std::shared_ptr<EntitySelectedEvent> event);
 	};
 }

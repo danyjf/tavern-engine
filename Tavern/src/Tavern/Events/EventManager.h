@@ -23,7 +23,7 @@ namespace Tavern
 		template <typename T>
 		void TriggerEvent(const std::shared_ptr<T> event)
 		{
-			static_assert(std::is_base_of<Event, T>::value, "T must be derived from Event");
+			static_assert(std::is_base_of_v<Event, T>, "T must be derived from Event");
 
 			// Ignore events that have no observer yet
 			auto it = m_EventListeners.find(typeid(T));
@@ -42,7 +42,7 @@ namespace Tavern
 		template <typename T>
 		void QueueEvent(const std::shared_ptr<T> event)
 		{
-			static_assert(std::is_base_of<Event, T>::value, "T must be derived from Event");
+			static_assert(std::is_base_of_v<Event, T>, "T must be derived from Event");
 
 			m_Events.emplace(typeid(T), event);
 		}
@@ -56,7 +56,7 @@ namespace Tavern
 		template <typename T>
 		unsigned long AddListener(std::function<void(const std::shared_ptr<T>)> callback)
 		{
-			static_assert(std::is_base_of<Event, T>::value, "T must be derived from Event");
+			static_assert(std::is_base_of_v<Event, T>, "T must be derived from Event");
 			unsigned long callbackID = s_CallbackCounter++;
 			m_EventListeners[typeid(T)].emplace_back(callbackID, [callback](const std::shared_ptr<Event> event) {
 				callback(std::static_pointer_cast<T>(event));
@@ -67,7 +67,7 @@ namespace Tavern
 		template <typename T>
 		void RemoveListener(unsigned long callbackID)
 		{
-			static_assert(std::is_base_of<Event, T>::value, "T must be derived from Event");
+			static_assert(std::is_base_of_v<Event, T>, "T must be derived from Event");
 
 			// Ignore if the event doesn't exist
 			auto it = m_EventListeners.find(typeid(T));

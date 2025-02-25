@@ -22,4 +22,14 @@ namespace Taverner
 	{
 		return m_ProjectConfig;
 	}
+
+	EntitySelectedEvent::EntitySelectedEvent(Tavern::Entity* entity)
+		: m_Entity(entity)
+	{
+	}
+	
+	Tavern::Entity* EntitySelectedEvent::GetEntity() const
+	{
+		return m_Entity;
+	}
 }
