@@ -42,6 +42,7 @@ namespace Tavern
 		void SetName(const std::string& name);
 
 		std::vector<Entity*>& GetChildren();
+		std::vector<std::unique_ptr<Component>>& GetComponents();
 
 		template <typename T>
 		T* CreateComponentOfType()

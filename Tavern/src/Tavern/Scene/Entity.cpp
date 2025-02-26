@@ -142,6 +142,11 @@ namespace Tavern
 		return m_Children;
 	}
 
+	std::vector<std::unique_ptr<Component>>& Entity::GetComponents()
+	{
+		return m_Components;
+	}
+
 	void Entity::RemoveChild(Entity* child)
 	{
 		m_Children.erase(std::remove(m_Children.begin(), m_Children.end(), child), m_Children.end());

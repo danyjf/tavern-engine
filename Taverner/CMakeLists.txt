@@ -23,6 +23,19 @@ set(SOURCES_TAVERNER_EVENTS
     src/Taverner/Events/EditorEvents.h
     src/Taverner/Events/EditorEvents.cpp
 )
+set(SOURCES_TAVERNER_COMPONENTINSPECTORS
+    src/Taverner/ComponentInspectors/ComponentInspector.h
+    src/Taverner/ComponentInspectors/TransformComponentInspector.h
+    src/Taverner/ComponentInspectors/TransformComponentInspector.cpp
+    src/Taverner/ComponentInspectors/CameraComponentInspector.h
+    src/Taverner/ComponentInspectors/CameraComponentInspector.cpp
+    src/Taverner/ComponentInspectors/LightComponentInspector.h
+    src/Taverner/ComponentInspectors/LightComponentInspector.cpp
+    src/Taverner/ComponentInspectors/MeshComponentInspector.h
+    src/Taverner/ComponentInspectors/MeshComponentInspector.cpp
+    src/Taverner/ComponentInspectors/ScriptComponentInspector.h
+    src/Taverner/ComponentInspectors/ScriptComponentInspector.cpp
+)
 set(VENDOR_IMGUI
     vendor/imgui/imconfig.h
     vendor/imgui/imgui.cpp
@@ -55,6 +68,7 @@ source_group(src/Taverner FILES ${SOURCES_TAVERNER})
 source_group(src/Taverner/Core FILES ${SOURCES_TAVERNER_CORE})
 source_group(src/Taverner/Windows FILES ${SOURCES_TAVERNER_WINDOWS})
 source_group(src/Taverner/Events FILES ${SOURCES_TAVERNER_EVENTS})
+source_group(src/Taverner/ComponentInspectors FILES ${SOURCES_TAVERNER_COMPONENTINSPECTORS})
 source_group(vendor/imgui FILES ${VENDOR_IMGUI})
 source_group(vendor/ImGuiFileDialog FILES ${VENDOR_IMGUIFILEDIALOG})
 
@@ -67,6 +81,7 @@ add_executable(Taverner
     ${SOURCES_TAVERNER_CORE}
     ${SOURCES_TAVERNER_WINDOWS}
     ${SOURCES_TAVERNER_EVENTS}
+    ${SOURCES_TAVERNER_COMPONENTINSPECTORS}
     ${VENDOR_IMGUI}
     ${VENDOR_IMGUIFILEDIALOG}
     CMakeLists.txt
