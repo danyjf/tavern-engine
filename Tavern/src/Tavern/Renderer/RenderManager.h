@@ -5,6 +5,7 @@
 
 #include "Tavern/Components/CameraComponent.h"
 #include "Tavern/Components/RenderComponent.h"
+#include "Tavern/Components/LightComponent.h"
 #include "Tavern/Core/Core.h"
 #include "Tavern/Events/ApplicationEvent.h"
 #include "Tavern/Events/EventListener.h"
@@ -15,7 +16,6 @@ namespace Tavern
 {
 	class Event;
 	class EventManager;
-	class LightComponent;
 	class ShaderResource;
 	class MaterialResource;
 

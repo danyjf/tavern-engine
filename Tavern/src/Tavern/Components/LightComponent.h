@@ -3,7 +3,6 @@
 #include <glm/glm.hpp>
 #include <nlohmann/json.hpp>
 
-#include "Tavern/Components/RenderComponent.h"
 #include "Tavern/Components/Component.h"
 #include "Tavern/Core/Core.h"
 

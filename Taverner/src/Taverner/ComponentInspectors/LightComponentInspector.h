@@ -8,5 +8,8 @@ namespace Taverner
 	{
 	public:
 		virtual void Render(Tavern::Component* component) override;
+
+	private:
+		glm::vec3 m_Color;
 	};
 }

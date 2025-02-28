@@ -8,5 +8,10 @@ namespace Taverner
 	{
 	public:
 		virtual void Render(Tavern::Component* component) override;
+
+	private:
+		glm::vec3 position;
+		glm::vec3 rotation;
+		glm::vec3 scale;
 	};
 }
