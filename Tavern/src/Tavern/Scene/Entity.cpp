@@ -11,10 +11,10 @@
 
 namespace Tavern
 {
-	Entity::Entity(Engine& engine, Entity* parent, const std::string& name)
+	Entity::Entity(Engine& engine, unsigned long id, Entity* parent, const std::string& name)
 		: m_Engine(engine),
 		  m_Name(name),
-		  m_ID(++s_Counter)
+		  m_ID(id)
 	{
 		m_Transform = CreateComponentOfType<TransformComponent>();
 		if (parent)
@@ -27,40 +27,25 @@ namespace Tavern
 	{
 	}
 
-	nlohmann::json Entity::ToJson()
+	nlohmann::ordered_json Entity::ToJson()
 	{
-		nlohmann::json json;
-		json["id"] = m_ID;
+		nlohmann::ordered_json json;
 		json["name"] = m_Name;
-		json["parent"] = -1;
-		if (m_Parent)
-		{
-			json["parent"] = m_Parent->GetID();		// -1 means no parent
-		}
-
-		for (Entity* child : m_Children)
-		{
-			json["children"].push_back(child->GetID());
-		}
-
 		for (const std::unique_ptr<Component>& component : m_Components)
 		{
 			json["components"].update(component->ToJson());
+		}
+		for (Entity* child : m_Children)
+		{
+			json["children"].push_back(child->ToJson());
 		}
 
 		return json;
 	}
 	
-	void Entity::FromJson(const nlohmann::json& data)
+	void Entity::FromJson(const nlohmann::ordered_json& data)
 	{
-		// TODO: Change IDs to GUIDs
-		m_ID = data["id"];
-		if (m_ID > s_Counter)
-		{
-			s_Counter = m_ID;
-		}
 		m_Name = data["name"];
-		
 		for (auto it = data["components"].begin(); it != data["components"].end(); it++)
 		{
 			const std::string& componentType = it.key();
@@ -91,6 +76,17 @@ namespace Tavern
 				ScriptComponent* script = ScriptRegistry::Get().Create(componentData["typeName"], this);
 				script->FromJson(componentData);
 			}
+		}
+		
+		if (!data.contains("children"))
+		{
+			return;
+		}
+
+		for (const nlohmann::json& childData : data["children"])
+		{
+			Entity* entity = GetEngine().GetScene().CreateEntity(this);
+			entity->FromJson(childData);
 		}
 	}
 

@@ -17,8 +17,8 @@ namespace Tavern
 		virtual ~RenderComponent() override;
 
 		virtual void Render() = 0;
-		nlohmann::json ToJson() override;
-		void FromJson(const nlohmann::json& data) override;
+		nlohmann::ordered_json ToJson() override;
+		void FromJson(const nlohmann::ordered_json& data) override;
 
 		bool IsVisible() const;
 		void SetIsVisible(bool isVisible);

@@ -17,8 +17,8 @@ namespace Tavern
 		CameraComponent(Engine& engine, Entity* owner);
 		virtual ~CameraComponent() override;
 
-		nlohmann::json ToJson() override;
-		void FromJson(const nlohmann::json& data) override;
+		nlohmann::ordered_json ToJson() override;
+		void FromJson(const nlohmann::ordered_json& data) override;
 
 		void SetFOV(float FOV);
 		const float GetFOV() const;

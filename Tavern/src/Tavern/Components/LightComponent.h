@@ -14,8 +14,8 @@ namespace Tavern
 		LightComponent(Engine& engine, Entity* owner);
 		virtual ~LightComponent() override;
 
-		nlohmann::json ToJson() override;
-		void FromJson(const nlohmann::json& data) override;
+		nlohmann::ordered_json ToJson() override;
+		void FromJson(const nlohmann::ordered_json& data) override;
 
 		const glm::vec3& GetColor() const;
 		void SetColor(const glm::vec3& color);

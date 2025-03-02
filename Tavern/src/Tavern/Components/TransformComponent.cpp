@@ -20,16 +20,16 @@ namespace Tavern
 		ComputeModelMatrix();
 	}
 	
-	nlohmann::json TransformComponent::ToJson()
+	nlohmann::ordered_json TransformComponent::ToJson()
 	{
-		nlohmann::json json;
+		nlohmann::ordered_json json;
 		json["transform"]["position"] = { m_Position.x, m_Position.y, m_Position.z };
 		json["transform"]["eulerRotation"] = {m_EulerRotation.x, m_EulerRotation.y, m_EulerRotation.z};
 		json["transform"]["scale"] = {m_Scale.x, m_Scale.y, m_Scale.z};
 		return json;
 	}
 
-	void TransformComponent::FromJson(const nlohmann::json& data)
+	void TransformComponent::FromJson(const nlohmann::ordered_json& data)
 	{
 		SetPosition(glm::vec3(
 			data["position"][0],

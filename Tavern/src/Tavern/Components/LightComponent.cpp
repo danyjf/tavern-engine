@@ -17,14 +17,14 @@ namespace Tavern
 		GetEngine().GetRenderManager().RemoveLightComponent(this);
 	}
 
-	nlohmann::json LightComponent::ToJson()
+	nlohmann::ordered_json LightComponent::ToJson()
 	{
-		nlohmann::json json;
+		nlohmann::ordered_json json;
 		json["light"]["color"] = { m_Color.x, m_Color.y, m_Color.z };
 		return json;
 	}
 
-	void LightComponent::FromJson(const nlohmann::json& data)
+	void LightComponent::FromJson(const nlohmann::ordered_json& data)
 	{
 		SetColor(glm::vec3(
 			data["color"][0],

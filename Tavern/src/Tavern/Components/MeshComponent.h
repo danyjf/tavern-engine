@@ -23,8 +23,8 @@ namespace Tavern
 		std::shared_ptr<MeshResource> GetMesh();
 
 		void Render() override;
-		nlohmann::json ToJson() override;
-		void FromJson(const nlohmann::json& data) override;
+		nlohmann::ordered_json ToJson() override;
+		void FromJson(const nlohmann::ordered_json& data) override;
 
 	private:
 		std::shared_ptr<MeshResource> m_Mesh = nullptr;

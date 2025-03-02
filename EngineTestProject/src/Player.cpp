@@ -86,10 +86,12 @@ void Player::OnKeyPressed(const std::shared_ptr<KeyPressedEvent>& event)
 		{
 			GetEngine().GetRenderManager().GetWindow()->GetCursor().SetIsLocked(false);
 			GetEngine().GetRenderManager().GetWindow()->GetCursor().SetIsVisible(true);
+			break;
 		}
-		default:
+		case Key::P:
 		{
-			return;
+			GetEngine().GetScene().Save("./Test.scene");
+			break;
 		}
 	}
 }

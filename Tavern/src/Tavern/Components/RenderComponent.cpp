@@ -17,15 +17,15 @@ namespace Tavern
 		GetEngine().GetRenderManager().RemoveRenderComponent(this);
 	}
 
-	nlohmann::json RenderComponent::ToJson()
+	nlohmann::ordered_json RenderComponent::ToJson()
 	{
-		nlohmann::json json;
+		nlohmann::ordered_json json;
 		json["isVisible"] = m_IsVisible;
 		json["materialPath"] = m_Material ? m_Material->GetPath() : "";
 		return json;
 	}
 
-	void RenderComponent::FromJson(const nlohmann::json& data)
+	void RenderComponent::FromJson(const nlohmann::ordered_json& data)
 	{
 
 	}

@@ -26,9 +26,9 @@ namespace Tavern
 		}
 	}
 
-	nlohmann::json CameraComponent::ToJson()
+	nlohmann::ordered_json CameraComponent::ToJson()
 	{
-		nlohmann::json json;
+		nlohmann::ordered_json json;
 		json["camera"]["fov"] = m_FOV;
 		json["camera"]["viewportWidth"] = m_ViewportWidth;
 		json["camera"]["viewportHeight"] = m_ViewportHeight;
@@ -37,7 +37,7 @@ namespace Tavern
 		return json;
 	}
 
-	void CameraComponent::FromJson(const nlohmann::json& data)
+	void CameraComponent::FromJson(const nlohmann::ordered_json& data)
 	{
 		SetFOV(data["fov"]);
 		SetViewportSize(data["viewportWidth"], data["viewportHeight"]);

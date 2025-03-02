@@ -16,8 +16,8 @@ namespace Tavern
 		TransformComponent(Engine& engine, Entity* owner);
 		virtual ~TransformComponent() = default;
 
-		nlohmann::json ToJson() override;
-		void FromJson(const nlohmann::json& data) override;
+		nlohmann::ordered_json ToJson() override;
+		void FromJson(const nlohmann::ordered_json& data) override;
 
 		const glm::vec3& GetLocalPosition() const;
 		void SetLocalPosition(const glm::vec3& localPosition);

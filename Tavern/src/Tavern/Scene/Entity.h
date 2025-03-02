@@ -22,14 +22,14 @@ namespace Tavern
 		friend class Scene;
 
 	public:
-		Entity(Engine& engine, Entity* parent = nullptr, const std::string& name = "Default");
+		Entity(Engine& engine, unsigned long id, Entity* parent = nullptr, const std::string& name = "Default");
 		virtual ~Entity();
 
 		Entity(Entity& copy) = delete;
 		Entity& operator=(const Entity& copy) = delete;
 
-		nlohmann::json ToJson();
-		void FromJson(const nlohmann::json& data);
+		nlohmann::ordered_json ToJson();
+		void FromJson(const nlohmann::ordered_json& data);
 
 		const unsigned long GetID() const;
 		Engine& GetEngine() const;
@@ -79,8 +79,6 @@ namespace Tavern
 		std::string m_Name = "Default";
 		TransformComponent* m_Transform;
 		std::vector<std::unique_ptr<Component>> m_Components;
-
-		static inline unsigned long s_Counter = 0;
 
 		void RemoveChild(Entity* child);
 		void AddChild(Entity* child);

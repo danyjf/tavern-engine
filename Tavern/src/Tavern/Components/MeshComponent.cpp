@@ -34,17 +34,17 @@ namespace Tavern
 		m_Mesh->Render();
 	}
 
-	nlohmann::json MeshComponent::ToJson()
+	nlohmann::ordered_json MeshComponent::ToJson()
 	{
-		nlohmann::json renderJson = RenderComponent::ToJson();
+		nlohmann::ordered_json renderJson = RenderComponent::ToJson();
 
-		nlohmann::json json;
+		nlohmann::ordered_json json;
 		json["mesh"] = renderJson;
 		json["mesh"]["meshPath"] = m_Mesh ? m_Mesh->GetPath().c_str() : "";
 		return json;
 	}
 
-	void MeshComponent::FromJson(const nlohmann::json& data)
+	void MeshComponent::FromJson(const nlohmann::ordered_json& data)
 	{
 		SetIsVisible(data["isVisible"]);
 		SetMesh(GetEngine().GetResourceManager().LoadMesh(data["meshPath"]));

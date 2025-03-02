@@ -12,6 +12,7 @@ namespace Tavern
 		: m_Engine(engine),
 		  m_Name("Default")
 	{
+		m_Root = CreateEntity(nullptr, "Root");
 		TAVERN_ENGINE_INFO("Scene initialized");
 	}
 
@@ -32,12 +33,19 @@ namespace Tavern
 
 	Entity* Scene::CreateEntity(Entity* parent, const std::string& name)
 	{
-		std::unique_ptr<Entity> entity = std::make_unique<Entity>(m_Engine, parent, name);
-		Entity* pEntity = entity.get();
+		Entity* entity = nullptr;
+		if (!parent)
+		{
+			entity = new Entity(m_Engine, m_EntityID, m_Root, name);
+		}
+		else
+		{
+			entity = new Entity(m_Engine, m_EntityID, parent, name);
+		}
+		m_Entities.emplace(m_EntityID, entity);
+		m_EntityID++;
 
-		m_Entities.emplace(entity->GetID(), std::move(entity));
-
-		return pEntity;
+		return entity;
 	}
 
 	void Scene::DestroyEntity(Entity* entity)
@@ -78,6 +86,8 @@ namespace Tavern
 	void Scene::Clear()
 	{
 		m_Entities.clear();
+		m_Root = nullptr;
+		m_EntityID = 0;
 	}
 
 	void Scene::Update()
@@ -88,34 +98,21 @@ namespace Tavern
 		}
 	}
 
-	nlohmann::json Scene::ToJson()
+	nlohmann::ordered_json Scene::ToJson()
 	{
-		nlohmann::json json;
+		nlohmann::ordered_json json;
 		json["name"] = m_Name;
-		for (const auto& [id, entity] : m_Entities)
-		{
-			json["entities"].push_back(entity->ToJson());
-		}
+		json["scene"] = m_Root->ToJson();
 		return json;
 	}
 
-	void Scene::FromJson(const nlohmann::json& data)
+	void Scene::FromJson(const nlohmann::ordered_json& data)
 	{
+		Clear();
+
 		m_Name = data["name"];
-
-		for (const nlohmann::json& entityData : data["entities"])
-		{
-			Entity* entity = CreateEntity();
-			entity->FromJson(entityData);
-		}
-
-		for (const nlohmann::json& entityData : data["entities"])
-		{
-			if (entityData["parent"] != -1)
-			{
-				GetEntity(entityData["id"])->SetParent(GetEntity(entityData["parent"]));
-			}
-		}
+		m_Root = CreateEntity();
+		m_Root->FromJson(data["scene"]);
 	}
 
 	void Scene::Save(const std::string& path)
@@ -130,10 +127,8 @@ namespace Tavern
 
 	void Scene::Load(const std::string& path)
 	{
-		Clear();
-
 		std::ifstream sceneFile(path);
-		FromJson(nlohmann::json::parse(sceneFile));
+		FromJson(nlohmann::ordered_json::parse(sceneFile));
 		sceneFile.close();
 	}
 
