@@ -23,13 +23,13 @@ namespace Taverner
 		return m_ProjectConfig;
 	}
 
-	EntitySelectedEvent::EntitySelectedEvent(Tavern::Entity* entity)
-		: m_Entity(entity)
+	EntitySelectedEvent::EntitySelectedEvent(unsigned long entityID)
+		: m_EntityID(entityID)
 	{
 	}
 	
-	Tavern::Entity* EntitySelectedEvent::GetEntity() const
+	unsigned long EntitySelectedEvent::GetEntityID() const
 	{
-		return m_Entity;
+		return m_EntityID;
 	}
 }

@@ -39,12 +39,12 @@ namespace Taverner
 	class EntitySelectedEvent : public Tavern::Event
 	{
 	public:
-		EntitySelectedEvent(Tavern::Entity* entity);
+		EntitySelectedEvent(unsigned long entityID);
 		const char* GetName() const override { return "EntitySelectedEvent"; };
 
-		Tavern::Entity* GetEntity() const;
+		unsigned long GetEntityID() const;
 
 	private:
-		Tavern::Entity* m_Entity;
+		unsigned long m_EntityID;
 	};
 }

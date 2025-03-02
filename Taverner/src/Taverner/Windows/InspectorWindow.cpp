@@ -19,8 +19,9 @@
 
 namespace Taverner
 {
-	InspectorWindow::InspectorWindow(Tavern::EventManager& eventManager)
+	InspectorWindow::InspectorWindow(Tavern::EventManager& eventManager, Tavern::Scene& scene)
 		: m_EventManager(eventManager),
+		  m_Scene(scene),
 		  m_EntitySelectedEvent(eventManager, std::bind(&InspectorWindow::OnEntitySelected, this, std::placeholders::_1))
 	{
 		RegisterComponentInspector<Tavern::TransformComponent, TransformComponentInspector>();
@@ -34,9 +35,10 @@ namespace Taverner
 	{
 		if (ImGui::Begin("Inspector", nullptr, ImGuiWindowFlags_None))
 		{
-			if (m_SelectedEntity)
+			Tavern::Entity* selectedEntity = m_Scene.GetEntity(m_SelectedEntityID);
+			if (selectedEntity)
 			{
-				for (const auto& component : m_SelectedEntity->GetComponents())
+				for (const auto& component : selectedEntity->GetComponents())
 				{
 					// Check if the component is a ScriptComponent
 					if (dynamic_cast<Tavern::ScriptComponent*>(component.get()))
@@ -55,6 +57,6 @@ namespace Taverner
 
 	void InspectorWindow::OnEntitySelected(std::shared_ptr<EntitySelectedEvent> event)
 	{
-		m_SelectedEntity = event->GetEntity();
+		m_SelectedEntityID = event->GetEntityID();
 	}
 }

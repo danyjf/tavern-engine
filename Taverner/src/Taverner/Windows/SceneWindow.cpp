@@ -59,7 +59,7 @@ namespace Taverner
 			ImGui::TreeNodeEx(entity->GetName().c_str(), ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen);
 			if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && ImGui::IsItemClicked())
 			{
-				m_EventManager.QueueEvent<EntitySelectedEvent>(std::make_shared<EntitySelectedEvent>(entity));
+				m_EventManager.QueueEvent<EntitySelectedEvent>(std::make_shared<EntitySelectedEvent>(entity->GetID()));
 			}
 		}
 	}

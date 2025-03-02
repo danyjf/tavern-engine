@@ -12,13 +12,14 @@ namespace Taverner
 	class InspectorWindow
 	{
 	public:
-		InspectorWindow(Tavern::EventManager& eventManager);
+		InspectorWindow(Tavern::EventManager& eventManager, Tavern::Scene& scene);
 
 		void Render();
 
 	private:
 		Tavern::EventManager& m_EventManager;
-		Tavern::Entity* m_SelectedEntity = nullptr;
+		Tavern::Scene& m_Scene;
+		unsigned long m_SelectedEntityID = -1;
 		std::unordered_map<std::type_index, std::unique_ptr<ComponentInspector>> m_ComponentInspectorRegistry;
 
 		Tavern::EventListener<EntitySelectedEvent> m_EntitySelectedEvent;

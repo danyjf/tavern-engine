@@ -63,7 +63,11 @@ namespace Tavern
 
 	Entity* Scene::GetEntity(unsigned long id)
 	{
-		return m_Entities[id].get();
+		if (m_Entities.contains(id))
+		{
+			return m_Entities[id].get();
+		}
+		return nullptr;
 	}
 
 	std::unordered_map<unsigned long, std::unique_ptr<Entity>>& Scene::GetEntities()
@@ -120,7 +124,7 @@ namespace Tavern
 			path,
 			std::ofstream::out | std::ofstream::trunc
 		);
-		saveSceneFile << std::setw(2) << ToJson();	// setw(4) sets indentation for pretty printing
+		saveSceneFile << std::setw(2) << ToJson();	// setw(2) sets indentation for pretty printing
 		saveSceneFile.close();
 	}
 
