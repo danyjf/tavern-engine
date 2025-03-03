@@ -34,8 +34,6 @@ namespace Taverner
 
 	void SceneWindow::RenderEntityTree(Tavern::Entity* entity)
 	{
-		//ImGui::ShowDemoWindow();
-
 		std::string label = entity->GetName() + "##" + std::to_string(entity->GetID()); 
 		ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_SpanAvailWidth;
 		if (m_SelectedEntityID == entity->GetID())

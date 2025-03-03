@@ -11,7 +11,7 @@ namespace Taverner
 		Tavern::LightComponent* light = static_cast<Tavern::LightComponent*>(component);
 		m_Color = light->GetColor();
 
-		ImGui::Text("Light");
+        ImGui::SeparatorText("Light");
 		if (ImGui::ColorPicker3("Color", glm::value_ptr(m_Color)))
 		{
 			light->SetColor(m_Color);

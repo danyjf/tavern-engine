@@ -78,6 +78,8 @@ namespace Taverner
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
+		ImGui::ShowDemoWindow();
+
 		if (ImGuiFileDialog::Instance()->Display("OpenProjectFile", ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDocking))
 		{			
 			if (ImGuiFileDialog::Instance()->IsOk()) 

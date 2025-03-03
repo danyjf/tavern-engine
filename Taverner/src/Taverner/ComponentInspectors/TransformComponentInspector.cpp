@@ -14,7 +14,7 @@ namespace Taverner
 		rotation = transform->GetLocalEulerRotation();
 		scale = transform->GetLocalScale();
 
-		ImGui::Text("Transform");
+        ImGui::SeparatorText("Transform");
 		if (ImGui::DragFloat3("Position", glm::value_ptr(position), 0.1f, 0.0f, 0.0f, "%.2f"))
 		{
 			transform->SetLocalPosition(position);

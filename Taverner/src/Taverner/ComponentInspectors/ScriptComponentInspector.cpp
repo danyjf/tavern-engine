@@ -6,6 +6,6 @@ namespace Taverner
 {
 	void ScriptComponentInspector::Render(Tavern::Component* component)
 	{
-		ImGui::Text("Script");
+        ImGui::SeparatorText("Script");
 	}
 }

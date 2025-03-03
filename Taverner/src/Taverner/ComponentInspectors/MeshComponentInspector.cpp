@@ -6,6 +6,6 @@ namespace Taverner
 {
 	void MeshComponentInspector::Render(Tavern::Component* component)
 	{
-		ImGui::Text("Mesh");
+        ImGui::SeparatorText("Mesh");
 	}
 }
