@@ -14,7 +14,7 @@ namespace Taverner
 		m_NearClipPlane = camera->GetNearClipPlane();
 		m_FarClipPlane = camera->GetFarClipPlane();
 
-		ImGui::Text("Light");
+		ImGui::Text("Camera");
 		if (ImGui::DragFloat("FOV", &m_FOV, 0.1f, 0.1f, 359.9f, "%.2f"))
 		{
 			camera->SetFOV(m_FOV);

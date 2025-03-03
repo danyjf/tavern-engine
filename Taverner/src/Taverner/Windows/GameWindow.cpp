@@ -27,7 +27,7 @@ namespace Taverner
 			}
 
 			unsigned int textureID = m_GameFramebuffer.GetColorTextures()[0];
-			ImGui::Image(textureID, m_ViewportSize);
+			ImGui::Image(textureID, m_ViewportSize, ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
 		}
 		ImGui::End();
 	}

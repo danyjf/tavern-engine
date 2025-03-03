@@ -20,10 +20,11 @@ namespace Taverner
 	private:
 		Tavern::Scene& m_Scene;
 		Tavern::EventManager& m_EventManager;
+		unsigned long m_SelectedEntityID = -1;
 
 		Tavern::EventListener<ProjectLoadedEvent> m_ProjectLoadedEvent;
 
 		void OnProjectLoaded(std::shared_ptr<ProjectLoadedEvent> event);
-		void RenderEntityTree(Tavern::Entity* entity) const;
+		void RenderEntityTree(Tavern::Entity* entity);
 	};
 }

@@ -27,38 +27,47 @@ namespace Taverner
 				TAVERN_INFO("Add Entity");
 			}
 
-			for (const auto& [id, entity] : m_Scene.GetEntities())
-			{
-				if (!entity->GetParent())	// is a root entity
-				{
-					RenderEntityTree(entity.get());
-				}
-			}
+			RenderEntityTree(m_Scene.GetRoot());
 		}
 		ImGui::End();
 	}
 
-	void SceneWindow::RenderEntityTree(Tavern::Entity* entity) const
+	void SceneWindow::RenderEntityTree(Tavern::Entity* entity)
 	{
-		if (entity->GetComponentOfType<EditorCameraScript>())
+		//ImGui::ShowDemoWindow();
+
+		std::string label = entity->GetName() + "##" + std::to_string(entity->GetID()); 
+		ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_SpanAvailWidth;
+		if (m_SelectedEntityID == entity->GetID())
 		{
-			return;
+			nodeFlags |= ImGuiTreeNodeFlags_Selected;
 		}
 
-		if (!entity->GetChildren().empty()						// has children
-			&& ImGui::TreeNode(entity->GetName().c_str()))
+		if (!entity->GetChildren().empty())
 		{
-			for (Tavern::Entity* child : entity->GetChildren())
+			nodeFlags |= ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
+			bool nodeOpen = ImGui::TreeNodeEx(label.c_str(), nodeFlags);
+			if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
 			{
-				RenderEntityTree(child);
+				m_SelectedEntityID = entity->GetID();
+				m_EventManager.QueueEvent<EntitySelectedEvent>(std::make_shared<EntitySelectedEvent>(entity->GetID()));
 			}
-			ImGui::TreePop();
+			if (nodeOpen)
+			{
+				for (Tavern::Entity* child : entity->GetChildren())
+				{
+					RenderEntityTree(child);
+				}
+				ImGui::TreePop();
+			}
 		}
 		else
 		{
-			ImGui::TreeNodeEx(entity->GetName().c_str(), ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen);
-			if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && ImGui::IsItemClicked())
+			nodeFlags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+			ImGui::TreeNodeEx(label.c_str(), nodeFlags);
+			if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen())
 			{
+				m_SelectedEntityID = entity->GetID();
 				m_EventManager.QueueEvent<EntitySelectedEvent>(std::make_shared<EntitySelectedEvent>(entity->GetID()));
 			}
 		}

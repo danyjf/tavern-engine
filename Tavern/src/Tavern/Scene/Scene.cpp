@@ -69,6 +69,11 @@ namespace Tavern
 		m_Entities.erase(entity->GetID());
 	}
 
+	Entity* Scene::GetRoot()
+	{
+		return m_Root;
+	}
+
 	Entity* Scene::GetEntity(unsigned long id)
 	{
 		if (m_Entities.contains(id))
