@@ -25,7 +25,7 @@ namespace Taverner
 {
 	Editor::Editor(Engine& engine)
 		: m_Engine(engine),
-		  m_Window(engine.GetRenderManager().GetWindow()), 
+		  m_Window(engine.GetRenderManager().GetWindow()),
 		  m_EditorPath(std::filesystem::current_path().generic_string()),
 		  m_GameWindow(engine),
 		  m_FileSystemWindow(engine),
@@ -78,35 +78,35 @@ namespace Taverner
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		ImGui::ShowDemoWindow();
+		// ImGui::ShowDemoWindow();
 
 		if (ImGuiFileDialog::Instance()->Display("OpenProjectFile", ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDocking))
-		{			
-			if (ImGuiFileDialog::Instance()->IsOk()) 
+		{
+			if (ImGuiFileDialog::Instance()->IsOk())
 			{
 				OpenProject(ImGuiFileDialog::Instance()->GetFilePathName());
 			}
-			
+
 			ImGuiFileDialog::Instance()->Close();
 		}
 		if (ImGuiFileDialog::Instance()->Display("NewScene", ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoDocking))
-		{			
-			if (ImGuiFileDialog::Instance()->IsOk()) 
+		{
+			if (ImGuiFileDialog::Instance()->IsOk())
 			{
 				NewScene();
 			}
-			
+
 			ImGuiFileDialog::Instance()->Close();
 		}
 
 		ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoTitleBar
-			| ImGuiWindowFlags_NoDocking
-			| ImGuiWindowFlags_NoCollapse 
-			| ImGuiWindowFlags_NoResize 
-			| ImGuiWindowFlags_NoMove 
-			| ImGuiWindowFlags_NoBringToFrontOnFocus 
-			| ImGuiWindowFlags_NoBackground
-			| ImGuiWindowFlags_NoNavFocus;
+									   | ImGuiWindowFlags_NoDocking
+									   | ImGuiWindowFlags_NoCollapse
+									   | ImGuiWindowFlags_NoResize
+									   | ImGuiWindowFlags_NoMove
+									   | ImGuiWindowFlags_NoBringToFrontOnFocus
+									   | ImGuiWindowFlags_NoBackground
+									   | ImGuiWindowFlags_NoNavFocus;
 		if (ImGui::Begin("Editor", nullptr, windowFlags))
 		{
 			ImGuiDockNodeFlags dockspaceFlags = ImGuiDockNodeFlags_PassthruCentralNode;
@@ -211,9 +211,9 @@ namespace Taverner
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 		GLFWwindow* backupCurrentContext = glfwGetCurrentContext();
-        ImGui::UpdatePlatformWindows();
-        ImGui::RenderPlatformWindowsDefault();
-        glfwMakeContextCurrent(backupCurrentContext);
+		ImGui::UpdatePlatformWindows();
+		ImGui::RenderPlatformWindowsDefault();
+		glfwMakeContextCurrent(backupCurrentContext);
 	}
 
 	void Editor::LoadScene(const std::string& path)
@@ -258,34 +258,36 @@ namespace Taverner
 		);
 
 		cMakeListsFile << "cmake_minimum_required(VERSION 3.30)\n\n"
-						  "project(" + name + ")\n\n"
-						  "set(CMAKE_CXX_STANDARD 20)\n\n"
-						  "set(CMAKE_EXPORT_COMPILE_COMMANDS ON)\n\n"
-						  "set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/Binaries)\n"
-						  "set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/Binaries)\n"
-						  "set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/Binaries)\n\n"
-						  "set(SOURCES\n"
-						  "    ./Source/Cube.h\n"
-						  "    ./Source/Cube.cpp\n"
-						  "    ./Source/Light.h\n"
-						  "    ./Source/Light.cpp\n"
-						  ")\n\n"
-						  "add_library(${PROJECT_NAME} SHARED ${SOURCES})\n\n"
-						  "target_include_directories(${PROJECT_NAME} PRIVATE\n"
-						  "    ../Tavern/src\n"
-						  "    ../Tavern/vendor/spdlog/include\n"
-						  "    ../Tavern/vendor/Glad/include\n"
-						  "    ../Tavern/vendor/GLFW/include\n"
-						  "    ../Tavern/vendor/glm/\n"
-						  "    ../Tavern/vendor/assimp/include\n"
-						  "    ../Tavern/vendor/imgui\n"
-						  "    ../Tavern/vendor/imgui/backends\n"
-						  "	   ../Tavern/vendor/ImGuiFileDialog\n"
-						  "    ../Tavern/vendor/nlohmann_json/include\n"
-						  ")\n\n"
-						  "target_link_libraries(${PROJECT_NAME} PRIVATE\n"
-						  "    " + m_EditorPath + "/Tavernd.lib\n"
-						  ")\n";
+						  "project("
+							  + name + ")\n\n"
+									   "set(CMAKE_CXX_STANDARD 20)\n\n"
+									   "set(CMAKE_EXPORT_COMPILE_COMMANDS ON)\n\n"
+									   "set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/Binaries)\n"
+									   "set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/Binaries)\n"
+									   "set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/Binaries)\n\n"
+									   "set(SOURCES\n"
+									   "    ./Source/Cube.h\n"
+									   "    ./Source/Cube.cpp\n"
+									   "    ./Source/Light.h\n"
+									   "    ./Source/Light.cpp\n"
+									   ")\n\n"
+									   "add_library(${PROJECT_NAME} SHARED ${SOURCES})\n\n"
+									   "target_include_directories(${PROJECT_NAME} PRIVATE\n"
+									   "    ../Tavern/src\n"
+									   "    ../Tavern/vendor/spdlog/include\n"
+									   "    ../Tavern/vendor/Glad/include\n"
+									   "    ../Tavern/vendor/GLFW/include\n"
+									   "    ../Tavern/vendor/glm/\n"
+									   "    ../Tavern/vendor/assimp/include\n"
+									   "    ../Tavern/vendor/imgui\n"
+									   "    ../Tavern/vendor/imgui/backends\n"
+									   "	   ../Tavern/vendor/ImGuiFileDialog\n"
+									   "    ../Tavern/vendor/nlohmann_json/include\n"
+									   ")\n\n"
+									   "target_link_libraries(${PROJECT_NAME} PRIVATE\n"
+									   "    "
+							  + m_EditorPath + "/Tavernd.lib\n"
+											   ")\n";
 
 		cMakeListsFile.close();
 
@@ -315,7 +317,7 @@ namespace Taverner
 
 	void Editor::NewScene()
 	{
-		std::string path = ImGuiFileDialog::Instance()->GetFilePathName(); 
+		std::string path = ImGuiFileDialog::Instance()->GetFilePathName();
 		m_Engine.GetScene().Clear();
 		m_Engine.GetScene().Save(path);
 		m_EditorCamera.AddToScene();

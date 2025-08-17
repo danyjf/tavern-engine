@@ -17,13 +17,6 @@ namespace Tavern
 {
 	class Event;
 
-	// TODO: Create editor interface
-	// TODO: Add PBR
-	// TODO: Add multiple lights
-	// TODO: Add different types of lights
-	// TODO: Add audio
-	// TODO: Add UI
-	// TODO: Add physics
 	class TAVERN_API Engine
 	{
 	public:
@@ -58,7 +51,7 @@ namespace Tavern
 		InputManager m_InputManager = InputManager(m_RenderManager);
 		TimeManager m_TimeManager = TimeManager();
 		Scene m_Scene = Scene(*this);
-		
+
 		EventListener<WindowCloseEvent> m_WindowCloseListener;
 
 		bool m_IsRunning = true;

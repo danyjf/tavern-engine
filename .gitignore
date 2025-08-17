@@ -1,5 +1,6 @@
 .vs/
 .cache/
+compile_commands.json
 Build/
 bin/
 EditorTestProject/
