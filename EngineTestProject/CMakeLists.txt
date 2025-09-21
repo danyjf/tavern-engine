@@ -41,6 +41,10 @@ if(WIN32)
     add_compile_definitions(TAVERN_PLATFORM_WINDOWS) 
 endif()
 
+if(UNIX)
+    add_compile_definitions(TAVERN_PLATFORM_UNIX) 
+endif()
+
 target_link_libraries(EngineTestProject PRIVATE
     Tavern
     glfw

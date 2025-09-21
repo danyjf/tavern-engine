@@ -1,6 +1,8 @@
 #include <nlohmann/json.hpp>
 
-#include <Windows.h>
+#ifdef TAVERN_PLATFORM_WINDOWS
+	#include <Windows.h>
+#endif
 #include <filesystem>
 #include <fstream>
 
@@ -333,7 +335,9 @@ namespace Taverner
 	void Editor::LoadDLL(const std::string& dllPath)
 	{
 		TAVERN_INFO("Loading game dll");
+#ifdef TAVERN_PLATFORM_WINDOWS
 		LoadLibrary(dllPath.c_str());
+#endif
 	}
 
 	void Editor::OnSceneSelected(const std::shared_ptr<SceneSelectedEvent>& event)

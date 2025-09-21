@@ -8,6 +8,7 @@
 
 #include "Tavern/Core/Core.h"
 #include "Tavern/Scene/Scene.h"
+#include "Tavern/Components/Component.h"
 
 namespace Tavern
 {
