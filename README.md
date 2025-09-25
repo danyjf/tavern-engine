@@ -2,6 +2,7 @@
 
 TODO:
 
+- Use conan package manager
 - Create editor interface
   - Add scene elements to scene hierarchy display
   - Display entity components on inspector

@@ -99,8 +99,9 @@ add_subdirectory(vendor/glm)
 set(JSON_BuildTests OFF CACHE INTERNAL "")
 add_subdirectory(vendor/nlohmann_json)
 
-set(ASSIMP_WARNINGS_AS_ERRORS OFF)
 set(ASSIMP_BUILD_ZLIB ON)
+set(ASSIMP_WARNINGS_AS_ERRORS OFF)
+set(ASSIMP_BUILD_TESTS OFF)
 add_subdirectory(vendor/assimp)
 
 add_library(Tavern SHARED 
