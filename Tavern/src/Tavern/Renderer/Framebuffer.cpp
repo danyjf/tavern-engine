@@ -24,6 +24,8 @@ namespace Tavern
 				case FramebufferTextureFormat::DEPTH24STENCIL8:
 					m_DepthTextureFormat = format;
 					break;
+				default:
+					break;
 			}
 		}
 
@@ -63,6 +65,8 @@ namespace Tavern
 				case FramebufferTextureFormat::RED16:
 					AddColorTextureToFramebuffer(i, GL_R16, m_FramebufferSettings.Width, m_FramebufferSettings.Height, GL_RED);
 					break;
+				default:
+					break;
 			}
 		}
 
@@ -72,6 +76,8 @@ namespace Tavern
 				break;
 			case FramebufferTextureFormat::DEPTH24STENCIL8:
 				AddDepthTextureToFramebuffer(GL_DEPTH24_STENCIL8, m_FramebufferSettings.Width, m_FramebufferSettings.Height, GL_DEPTH_STENCIL, GL_DEPTH_STENCIL_ATTACHMENT);
+				break;
+			default:
 				break;
 		}
 

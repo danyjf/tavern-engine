@@ -62,14 +62,10 @@ void Player::Update()
 	if (m_Cubes.size() >= 2)
 	{
 		const glm::vec3& cube1Rotation = m_Cubes[0]->GetOwner()->GetTransform()->GetLocalEulerRotation();
-		m_Cubes[0]->GetOwner()->GetTransform()->SetLocalEulerRotation({ cube1Rotation.x,
-															cube1Rotation.y,
-															cube1Rotation.z + 90.0f * GetEngine().GetTimeManager().GetDeltaTime() });
+		m_Cubes[0]->GetOwner()->GetTransform()->SetLocalEulerRotation({ cube1Rotation.x, cube1Rotation.y, cube1Rotation.z + 90.0f * GetEngine().GetTimeManager().GetDeltaTime() });
 
 		const glm::vec3& cube2Rotation = m_Cubes[1]->GetOwner()->GetTransform()->GetLocalEulerRotation();
-		m_Cubes[1]->GetOwner()->GetTransform()->SetLocalEulerRotation({ cube2Rotation.x + 90.0f * GetEngine().GetTimeManager().GetDeltaTime(),
-															cube2Rotation.y,
-															cube2Rotation.z });
+		m_Cubes[1]->GetOwner()->GetTransform()->SetLocalEulerRotation({ cube2Rotation.x + 90.0f * GetEngine().GetTimeManager().GetDeltaTime(), cube2Rotation.y, cube2Rotation.z });
 	}
 }
 
@@ -92,6 +88,9 @@ void Player::OnKeyPressed(const std::shared_ptr<KeyPressedEvent>& event)
 		{
 			GetEngine().GetScene().Save("./Test.scene");
 			break;
+		}
+		default:
+		{
 		}
 	}
 }

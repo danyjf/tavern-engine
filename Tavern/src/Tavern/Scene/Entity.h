@@ -59,11 +59,12 @@ namespace Tavern
 		{
 			static_assert(std::is_base_of_v<Component, T>, "T must be derived from Component");
 
-			for (std::unique_ptr<Component>& component : m_Components)
+			for (std::unique_ptr<Component>& componentPtr : m_Components)
 			{
-				if (typeid(T) == typeid(*component))
+				Component* component = componentPtr.get();
+				if (component && typeid(T) == typeid(component))
 				{
-					return static_cast<T*>(component.get());
+					return static_cast<T*>(component);
 				}
 			}
 			return nullptr;
