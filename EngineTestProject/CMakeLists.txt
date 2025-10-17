@@ -25,11 +25,6 @@ source_group(src FILES ${SOURCES})
 
 target_include_directories(EngineTestProject PRIVATE 
 	${CMAKE_SOURCE_DIR}/Tavern/src
-	${CMAKE_SOURCE_DIR}/Tavern/vendor/spdlog/include	
-    ${CMAKE_SOURCE_DIR}/Tavern/vendor/Glad/include
-    ${CMAKE_SOURCE_DIR}/Tavern/vendor/imgui
-    ${CMAKE_SOURCE_DIR}/Tavern/vendor/imgui/backends
-    ${CMAKE_SOURCE_DIR}/Tavern/vendor/ImGuiFileDialog
 )
 
 target_compile_definitions(EngineTestProject PRIVATE
@@ -45,12 +40,21 @@ if(UNIX)
     add_compile_definitions(TAVERN_PLATFORM_UNIX) 
 endif()
 
+find_package(glfw3 REQUIRED)
+find_package(glm REQUIRED)
+find_package(nlohmann_json REQUIRED)
+find_package(assimp REQUIRED)
+find_package(spdlog REQUIRED)
+find_package(glad REQUIRED)
+
 target_link_libraries(EngineTestProject PRIVATE
     Tavern
     glfw
     glm::glm
     nlohmann_json::nlohmann_json
-    assimp
+    assimp::assimp
+    spdlog::spdlog
+    glad::glad
 )
 
 set_target_properties(EngineTestProject PROPERTIES

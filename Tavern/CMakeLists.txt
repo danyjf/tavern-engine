@@ -1,6 +1,4 @@
 set(SOURCES
-	vendor/Glad/src/glad.c
-    vendor/stb/stb.cpp
 )
 set(SOURCES_TAVERN
 )
@@ -22,6 +20,7 @@ set(SOURCES_TAVERN_COMPONENTS
 )
 set(SOURCES_TAVERN_CORE
     src/Tavern/Core/Core.h
+    src/Tavern/Core/Core.cpp
     src/Tavern/Core/Engine.h
     src/Tavern/Core/Engine.cpp
     src/Tavern/Core/Log.h
@@ -91,19 +90,6 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)
 
-set(BUILD_SHARED_LIBS ON)
-add_subdirectory(vendor/GLFW)
-set(BUILD_SHARED_LIBS OFF)
-add_subdirectory(vendor/glm)
-
-set(JSON_BuildTests OFF CACHE INTERNAL "")
-add_subdirectory(vendor/nlohmann_json)
-
-set(ASSIMP_BUILD_ZLIB ON)
-set(ASSIMP_WARNINGS_AS_ERRORS OFF)
-set(ASSIMP_BUILD_TESTS OFF)
-add_subdirectory(vendor/assimp)
-
 add_library(Tavern SHARED 
     ${SOURCES} 
     ${SOURCES_TAVERN} 
@@ -117,18 +103,26 @@ add_library(Tavern SHARED
     CMakeLists.txt
 )
 
+find_package(glfw3 REQUIRED)
+find_package(glm REQUIRED)
+find_package(nlohmann_json REQUIRED)
+find_package(assimp REQUIRED)
+find_package(spdlog REQUIRED)
+find_package(stb REQUIRED)
+find_package(glad REQUIRED)
+
 target_link_libraries(Tavern PRIVATE 
     glfw
     glm::glm
     nlohmann_json::nlohmann_json
-    assimp
+    assimp::assimp
+    spdlog::spdlog
+    stb::stb
+    glad::glad
 )
 
 target_include_directories(Tavern PRIVATE 
     ${CMAKE_SOURCE_DIR}/Tavern/src
-    ${CMAKE_SOURCE_DIR}/Tavern/vendor/spdlog/include
-    ${CMAKE_SOURCE_DIR}/Tavern/vendor/Glad/include
-    ${CMAKE_SOURCE_DIR}/Tavern/vendor/stb/include
 )
 
 target_compile_definitions(Tavern PRIVATE
@@ -165,10 +159,8 @@ target_precompile_headers(Tavern PRIVATE
 add_custom_command(TARGET Tavern POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_DIRECTORY}/EngineTestProject
     COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Tavern> ${OUTPUT_DIRECTORY}/EngineTestProject
-    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:glfw> ${OUTPUT_DIRECTORY}/EngineTestProject
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Assets ${OUTPUT_DIRECTORY}/EngineTestProject/BuiltInAssets
     COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_DIRECTORY}/Taverner
     COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Tavern> ${OUTPUT_DIRECTORY}/Taverner
     COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_LINKER_FILE:Tavern> ${OUTPUT_DIRECTORY}/Taverner
-    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:glfw> ${OUTPUT_DIRECTORY}/Taverner
 )

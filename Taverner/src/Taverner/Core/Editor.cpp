@@ -278,7 +278,7 @@ namespace Taverner
 									   "    ../Tavern/src\n"
 									   "    ../Tavern/vendor/spdlog/include\n"
 									   "    ../Tavern/vendor/Glad/include\n"
-									   "    ../Tavern/vendor/GLFW/include\n"
+									   // "    ../Tavern/vendor/GLFW/include\n"
 									   "    ../Tavern/vendor/glm/\n"
 									   "    ../Tavern/vendor/assimp/include\n"
 									   "    ../Tavern/vendor/imgui\n"
