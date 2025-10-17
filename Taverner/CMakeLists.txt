@@ -101,6 +101,8 @@ if(WIN32)
     add_compile_definitions(TAVERN_PLATFORM_WINDOWS) 
 endif()
 
+find_package(glm REQUIRED)
+
 target_link_libraries(Taverner PRIVATE
     Tavern
     glfw

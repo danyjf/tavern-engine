@@ -91,10 +91,11 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/Tavern)
 
-set(BUILD_SHARED_LIBS ON)
-add_subdirectory(vendor/GLFW)
-set(BUILD_SHARED_LIBS OFF)
-add_subdirectory(vendor/glm)
+# set(BUILD_SHARED_LIBS ON)
+# add_subdirectory(vendor/GLFW)
+# set(BUILD_SHARED_LIBS OFF)
+find_package(glfw3 REQUIRED)
+find_package(glm REQUIRED)
 
 set(JSON_BuildTests OFF CACHE INTERNAL "")
 add_subdirectory(vendor/nlohmann_json)
@@ -165,10 +166,10 @@ target_precompile_headers(Tavern PRIVATE
 add_custom_command(TARGET Tavern POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_DIRECTORY}/EngineTestProject
     COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Tavern> ${OUTPUT_DIRECTORY}/EngineTestProject
-    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:glfw> ${OUTPUT_DIRECTORY}/EngineTestProject
+    # COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:glfw> ${OUTPUT_DIRECTORY}/EngineTestProject
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Assets ${OUTPUT_DIRECTORY}/EngineTestProject/BuiltInAssets
     COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_DIRECTORY}/Taverner
     COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:Tavern> ${OUTPUT_DIRECTORY}/Taverner
     COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_LINKER_FILE:Tavern> ${OUTPUT_DIRECTORY}/Taverner
-    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:glfw> ${OUTPUT_DIRECTORY}/Taverner
+    # COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:glfw> ${OUTPUT_DIRECTORY}/Taverner
 )

@@ -16,6 +16,8 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/EngineTestProject)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/EngineTestProject)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIRECTORY}/EngineTestProject)
 
+find_package(glm REQUIRED)
+
 add_executable(EngineTestProject 
     ${SOURCES}
     CMakeLists.txt
